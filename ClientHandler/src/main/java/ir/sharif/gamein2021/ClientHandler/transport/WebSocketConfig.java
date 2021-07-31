@@ -11,6 +11,7 @@ public class WebSocketConfig {
 
     private final SocketHandler socketHandler;
 
+    //TODO Ziaee Autowire SocketHandler
     public WebSocketConfig(SocketHandler socketHandler) {
         this.socketHandler = socketHandler;
     }

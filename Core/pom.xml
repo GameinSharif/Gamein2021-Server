@@ -18,7 +18,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>ir.sharif.gamein2021</groupId>
+            <groupId>ir.sharif.gamein</groupId>
             <artifactId>migrations</artifactId>
             <version>${migrations.version}</version>
         </dependency>

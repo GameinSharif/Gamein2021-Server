@@ -13,7 +13,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>ir.sharif.gamein2021</groupId>
+            <groupId>ir.sharif.gamein</groupId>
             <artifactId>core</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>

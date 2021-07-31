@@ -5,9 +5,11 @@
 	
     <packaging>pom</packaging>
 
-    <modules>
+	<modules>
         <module>Migrations</module>
         <module>Core</module>
+        <module>CentralEngine</module>
+        <module>ClientHandler</module>
     </modules>
 	
     <parent>

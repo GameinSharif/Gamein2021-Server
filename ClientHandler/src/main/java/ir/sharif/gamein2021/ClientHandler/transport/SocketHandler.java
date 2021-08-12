@@ -7,11 +7,13 @@ import ir.sharif.gamein2021.ClientHandler.authentication.model.ChangeResponseObj
 import ir.sharif.gamein2021.ClientHandler.authentication.util.AuthenticateHandler;
 import ir.sharif.gamein2021.ClientHandler.authentication.util.ChanceHandler;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
-import ir.sharif.gamein2021.core.util.RequestConstants;
 import ir.sharif.gamein2021.ClientHandler.view.ResponseObject;
 import ir.sharif.gamein2021.ClientHandler.view.View;
+import ir.sharif.gamein2021.core.util.RequestConstants;
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -33,12 +35,12 @@ public class SocketHandler extends TextWebSocketHandler {
     Map<String, String> usernameToSessionId = new HashMap<>();
     private Gson gson;
 
+    @Autowired
     private AuthenticateHandler authenticateHandler;
+    @Autowired
     private View view;
 
-    public SocketHandler(AuthenticateHandler authenticateHandler, View view) {
-        this.authenticateHandler = authenticateHandler;
-        this.view = view;
+    public SocketHandler() {
         gson = new Gson();
         mainThreadWorking = false;
     }
@@ -62,7 +64,7 @@ public class SocketHandler extends TextWebSocketHandler {
                             .authenticate(request
                                     , ChanceHandler.getInstance().getChance(session.getId()));
                     if (response.type == RequestConstants.AuthenticateResponse) {
-                        int playerId = ((AuthenticationResponse) response.data).getPlayerId();
+                        int playerId =  ((AuthenticationResponse) response.data).getPlayerId();
                         HashSet<String> sessionIds = playerIdToSessionId.get(playerId);
                         if (sessionIds == null) {
                             sessionIds = new HashSet<>();
@@ -168,12 +170,14 @@ public class SocketHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws IOException {
+        logger.log(Level.ERROR, "afterConnectionEstablished");
         ResponseObject<ChangeResponseObject> response = new ResponseObject<>(RequestConstants.CHANCE_RESPONSE, new ChangeResponseObject(ChanceHandler.getInstance().generateChance(session.getId())));
         session.sendMessage(new TextMessage(gson.toJson(response)));
     }
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+        logger.log(Level.DEBUG, "afterConnectionClosed");
         sessions.remove(session.getId());
         System.out.println("session " + session.getId() + " closed");
         logger.error("session " + session.getId() + " error");

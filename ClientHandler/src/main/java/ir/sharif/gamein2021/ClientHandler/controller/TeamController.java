@@ -1,30 +1,27 @@
 package ir.sharif.gamein2021.ClientHandler.controller;
 
 import com.google.gson.Gson;
-import ir.sharif.gamein2021.ClientHandler.transport.SocketHandler;
 import ir.sharif.gamein2021.ClientHandler.view.ResponseObject;
 import ir.sharif.gamein2021.ClientHandler.view.requests.CreatePlayerRequest;
 import ir.sharif.gamein2021.core.model.TeamModel;
 import ir.sharif.gamein2021.core.service.TeamService;
 import ir.sharif.gamein2021.core.util.RequestConstants;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 
 @Component
 public class TeamController {
 
-    private final TeamService teamService;
-    private SocketHandler handler;
+
+    private TeamService teamService;
 
     static Logger logger = Logger.getLogger(GameController.class.getName());
     private final Gson gson = new Gson();
 
-    public TeamController(TeamService teamService, SocketHandler handler) {
+    public TeamController(TeamService teamService) {
         this.teamService = teamService;
-        this.handler = handler;
     }
-
 
 
 //    public void addPlayer(String name, int playerId) {

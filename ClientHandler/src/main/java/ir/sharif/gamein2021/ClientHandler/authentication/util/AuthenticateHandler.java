@@ -7,6 +7,7 @@ import ir.sharif.gamein2021.ClientHandler.authentication.model.PlayerModel;
 import ir.sharif.gamein2021.ClientHandler.controller.TeamController;
 import ir.sharif.gamein2021.ClientHandler.view.ResponseObject;
 import ir.sharif.gamein2021.core.util.RequestConstants;
+import org.springframework.stereotype.Component;
 
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
@@ -15,6 +16,7 @@ import java.security.SignatureException;
 
 import static ir.sharif.gamein2021.core.util.RequestConstants.AuthenticateResponse;
 
+@Component
 public class AuthenticateHandler {
     private Gson gson;
 

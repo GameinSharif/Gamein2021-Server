@@ -7,10 +7,12 @@ import ir.sharif.gamein2021.ClientHandler.view.requests.CreatePlayerRequest;
 import ir.sharif.gamein2021.core.util.RequestConstants;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
+import org.springframework.stereotype.Component;
 
 import static ir.sharif.gamein2021.core.util.RequestConstants.CREATE_PLAYER_REQUEST;
 import static ir.sharif.gamein2021.core.util.RequestConstants.GET_PLAYER_DETAILS_REQUEST;
 
+@Component
 public class View {
     private final Gson gson = new Gson();
     static Logger logger = Logger.getLogger(ExecutorThread.class.getName());

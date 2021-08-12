@@ -40,35 +40,35 @@ public class ExecutorThread extends Thread {
     }
 
     public void run() {
-        try {
-            while (!isDone) {
-                readPacketNumber = sequenceNumberMap.get(inet);
-                if (receivedBuffer[readPacketNumber % RECEIVE_WINDOW_SIZE] != null && receivedBuffer[readPacketNumber % RECEIVE_WINDOW_SIZE].getPacketNumber() == readPacketNumber) {
-                    Packet packet;
-                    synchronized (receivedBuffer) {
-                        packet = receivedBuffer[readPacketNumber % RECEIVE_WINDOW_SIZE];
-                    }
-
-                    String response = view.processCommands(new String(packet.getData(), StandardCharsets.UTF_8));
-                    System.out.println("\treponse -> " + readPacketNumber + " : " + response);
-                    logger.info("\treponse -> " + readPacketNumber + " : " + response);
-                    byte[] data = response.getBytes();
-                    Packet sentPacket = new Packet(packet.getClientIp(), packet.getClientPort()
-                            , readPacketNumber, data);
-                    DatagramPacket sentDatagramPacket = new DatagramPacket(sentPacket.getByteArray(), sentPacket.getByteArray().length,
-                            InetAddress.getByName(NetworkConstants.GATEWAY_IP), NetworkConstants.GATEWAY_PORT);
-                    socket.send(sentDatagramPacket);
-                    synchronized (sentBuffer) {
-                        sentBuffer[readPacketNumber % SENT_WINDOW_SIZE] = sentPacket;
-                    }
-                    synchronized (sequenceNumberMap) {
-                        sequenceNumberMap.put(inet, readPacketNumber + 1);
-                    }
-                }
-            }
-        } catch (IOException e) {
-            logger.error("executor", e);
-        }
+//        try {
+//            while (!isDone) {
+//                readPacketNumber = sequenceNumberMap.get(inet);
+//                if (receivedBuffer[readPacketNumber % RECEIVE_WINDOW_SIZE] != null && receivedBuffer[readPacketNumber % RECEIVE_WINDOW_SIZE].getPacketNumber() == readPacketNumber) {
+//                    Packet packet;
+//                    synchronized (receivedBuffer) {
+//                        packet = receivedBuffer[readPacketNumber % RECEIVE_WINDOW_SIZE];
+//                    }
+//
+//                    String response = view.processCommands(new String(packet.getData(), StandardCharsets.UTF_8));
+//                    System.out.println("\treponse -> " + readPacketNumber + " : " + response);
+//                    logger.info("\treponse -> " + readPacketNumber + " : " + response);
+//                    byte[] data = response.getBytes();
+//                    Packet sentPacket = new Packet(packet.getClientIp(), packet.getClientPort()
+//                            , readPacketNumber, data);
+//                    DatagramPacket sentDatagramPacket = new DatagramPacket(sentPacket.getByteArray(), sentPacket.getByteArray().length,
+//                            InetAddress.getByName(NetworkConstants.GATEWAY_IP), NetworkConstants.GATEWAY_PORT);
+//                    socket.send(sentDatagramPacket);
+//                    synchronized (sentBuffer) {
+//                        sentBuffer[readPacketNumber % SENT_WINDOW_SIZE] = sentPacket;
+//                    }
+//                    synchronized (sequenceNumberMap) {
+//                        sequenceNumberMap.put(inet, readPacketNumber + 1);
+//                    }
+//                }
+//            }
+//        } catch (IOException e) {
+//            logger.error("executor", e);
+//        }
     }
 
     public void setDone() {

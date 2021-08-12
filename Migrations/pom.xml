@@ -19,16 +19,12 @@
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
 
+        <!-- Used for Spring Boot Auto Migration -->
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>runtime</scope>
-        </dependency>
 
     </dependencies>
 
@@ -37,6 +33,19 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <!-- Used for Handy Migrations -->
+                        <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <configuration>
+                    <url>jdbc:mysql://localhost:3306/db_example</url>
+                    <user>springuser</user>
+                    <password>12345</password>
+                    <schemas>
+                        <schema>db_example</schema>
+                    </schemas>
+                </configuration>
             </plugin>
         </plugins>
     </build>

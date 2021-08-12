@@ -9,39 +9,39 @@ import ir.sharif.gamein2021.core.util.RequestConstants;
 import org.apache.log4j.Logger;
 
 public class GameController {
-//    static Logger logger = Logger.getLogger(GameController.class.getName());
-//    private static GameController _instance = null;
-//    private final Gson gson;
+    static Logger logger = Logger.getLogger(GameController.class.getName());
+    private static GameController _instance = null;
+    private final Gson gson;
 //    SocketHandler handler = SocketHandler.getInstance();
+
+    private GameController() {
+        gson = new Gson();
+    }
+
+
+    public static GameController getInstance() {
+        if (_instance == null)
+            _instance = new GameController();
+        return _instance;
+    }
 //
-//    private GameController() {
-//        gson = new Gson();
-//    }
-//
-//
-//    public static GameController getInstance() {
-//        if (_instance == null)
-//            _instance = new GameController();
-//        return _instance;
-//    }
-//
-//    public void addPlayer(String name, int playerId) {
-//        String databaseResponse = playerCommands.get(String.valueOf(playerId));
-//        if (databaseResponse == null) {
-//            String data = "{\"name\":\"" + name + "\",\"id\":" + playerId + ",\"cash\":5000000}";
-//            Player player = gson.fromJson(data, Player.class);
-//            playerCommands.set(String.valueOf(playerId), data);
-//            String lastRankingString = mainThreadCommands.get("lastRanking");
-//            int i;
-//            if (lastRankingString == null) {
-//                i = 0;
-//            } else {
-//                i = Integer.parseInt(lastRankingString);
-//            }
-//            rankingsCommands.set(String.valueOf(i), String.valueOf(player.getId()));
-//            mainThreadCommands.set("lastRanking", String.valueOf(i + 1));
-//        }
-//    }
+////    public void addPlayer(String name, int playerId) {
+////        String databaseResponse = playerCommands.get(String.valueOf(playerId));
+////        if (databaseResponse == null) {
+////            String data = "{\"name\":\"" + name + "\",\"id\":" + playerId + ",\"cash\":5000000}";
+////            Player player = gson.fromJson(data, Player.class);
+////            playerCommands.set(String.valueOf(playerId), data);
+////            String lastRankingString = mainThreadCommands.get("lastRanking");
+////            int i;
+////            if (lastRankingString == null) {
+////                i = 0;
+////            } else {
+////                i = Integer.parseInt(lastRankingString);
+////            }
+////            rankingsCommands.set(String.valueOf(i), String.valueOf(player.getId()));
+////            mainThreadCommands.set("lastRanking", String.valueOf(i + 1));
+////        }
+////    }
 //
 //    public ResponseObject<Object> createPlayer(CreatePlayerRequest request, int playerId) {
 //        synchronized (this) {
@@ -70,5 +70,4 @@ public class GameController {
 //        }
 //        return responseObject;
 //    }
-
 }

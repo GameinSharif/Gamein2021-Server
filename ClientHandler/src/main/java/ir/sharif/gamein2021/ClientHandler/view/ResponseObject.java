@@ -6,6 +6,7 @@ public class ResponseObject<T> implements Serializable {
     public int type;
     public T data;
 
+
     public ResponseObject(int type, T data) {
         this.type = type;
         this.data = data;

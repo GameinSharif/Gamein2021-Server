@@ -1,15 +1,15 @@
 package ir.sharif.gamein2021.ClientHandler.transport;
 
 import com.google.gson.Gson;
-import ir.sharif.gamein2021.ClientHandler.authentication.model.AuthenticationRequest;
-import ir.sharif.gamein2021.ClientHandler.authentication.model.AuthenticationResponse;
+import ir.sharif.gamein2021.ClientHandler.authentication.model.LoginRequest;
 import ir.sharif.gamein2021.ClientHandler.authentication.model.ChangeResponseObject;
-import ir.sharif.gamein2021.ClientHandler.authentication.util.AuthenticateHandler;
+import ir.sharif.gamein2021.ClientHandler.authentication.model.LoginResponse;
 import ir.sharif.gamein2021.ClientHandler.authentication.util.ChanceHandler;
+import ir.sharif.gamein2021.ClientHandler.controller.TeamController;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
 import ir.sharif.gamein2021.ClientHandler.view.ResponseObject;
 import ir.sharif.gamein2021.ClientHandler.view.View;
-import ir.sharif.gamein2021.core.util.RequestConstants;
+import ir.sharif.gamein2021.core.util.RequestTypeConstant;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
@@ -28,21 +28,22 @@ import java.util.Map;
 @Component
 public class SocketHandler extends TextWebSocketHandler {
     static Logger logger = Logger.getLogger(ExecutorThread.class.getName());
-    private boolean mainThreadWorking;
 
     Map<String, WebSocketSession> sessions = new HashMap<>();
     Map<Integer, HashSet<String>> playerIdToSessionId = new HashMap<>();
     Map<String, String> usernameToSessionId = new HashMap<>();
     private Gson gson;
 
+    //    @Autowired
+//    private AuthenticateHandler authenticateHandler;
     @Autowired
-    private AuthenticateHandler authenticateHandler;
+    private TeamController teamController;
+
     @Autowired
     private View view;
 
     public SocketHandler() {
         gson = new Gson();
-        mainThreadWorking = false;
     }
 
     @Override
@@ -50,62 +51,69 @@ public class SocketHandler extends TextWebSocketHandler {
         try {
             String data = message.getPayload();
             JSONObject obj = new JSONObject(data);
-            int type = obj.getInt("type");
-            if (!mainThreadWorking) {
-                if (type == RequestConstants.AuthenticationRequest) {
-                    JSONObject decDataJsonObject;
-                    String decData = "";
-                    if (obj.has("decData")) {
-                        decDataJsonObject = obj.getJSONObject("decData");
-                        decData = decDataJsonObject.toString();
-                    }
-                    AuthenticationRequest request = gson.fromJson(decData, AuthenticationRequest.class);
-                    ResponseObject<Object> response = authenticateHandler
-                            .authenticate(request
-                                    , ChanceHandler.getInstance().getChance(session.getId()));
-                    if (response.type == RequestConstants.AuthenticateResponse) {
-                        int playerId =  ((AuthenticationResponse) response.data).getPlayerId();
-                        HashSet<String> sessionIds = playerIdToSessionId.get(playerId);
-                        if (sessionIds == null) {
-                            sessionIds = new HashSet<>();
-                        }
-                        sessionIds.add(session.getId());
-                        if (usernameToSessionId.containsKey(request.getUsername())) {
-                            String sessionId = usernameToSessionId.get(request.getUsername());
-                            sessionIds.remove(sessionId);
-                            if (sessions.containsKey(sessionId)) {
-                                WebSocketSession session1 = sessions.get(sessionId);
-                                session1.close();
-                            }
-                            sessions.remove(sessionId);
-                        }
-                        sessions.put(session.getId(), session);
-                        playerIdToSessionId.put(playerId, sessionIds);
-                        usernameToSessionId.put(request.getUsername(), session.getId());
-                        System.out.println("\tAuthenticated: " + request.getUsername());
-                        session.sendMessage(new TextMessage(gson.toJson(response)));
-                    } else {
-                        session.sendMessage(new TextMessage(gson.toJson(response)));
-                        session.close();
-                    }
-                } else {
-                    if (!sessions.containsKey(session.getId())) return;
-                    System.out.println("received: " + data);
-                    logger.info("received: " + data);
-                    String response = view.processCommands(data);
-                    System.out.println("res: " + response);
-                    logger.info("res: " + response);
-                    session.sendMessage(new TextMessage(response));
-                }
-            } else {
-                ResponseObject<Object> mainThreadWorking = new ResponseObject<>(RequestConstants.MAIN_THREAD_WORKING);
-                session.sendMessage(new TextMessage(gson.toJson(mainThreadWorking)));
+            RequestTypeConstant requestType = RequestTypeConstant.values()[obj.getInt("requestTypeConstant")];
+
+            JSONObject requestDataJsonObject;
+            String requestData = "";
+            if (obj.has("requestData")) {
+                requestDataJsonObject = obj.getJSONObject("requestData");
+                requestData = requestDataJsonObject.toString();
             }
-        } catch (Exception e) {
-            logger.error("Error on handle text message", e);
-            e.printStackTrace();
+
+            switch (requestType) {
+
+                case LOGIN -> {
+                    LoginRequest request = gson.fromJson(requestData, LoginRequest.class);
+//                    ResponseObject<Object> response = authenticateHandler
+//                            .authenticate(request
+//                                    , ChanceHandler.getInstance().getChance(session.getId()));
+
+                    String teamName = request.getTeamName();
+                    String password = request.getPassword();
+
+                    Long teamId = teamController.getTeamId(teamName, password);
+
+                    // TODO : add session to list
+
+                    LoginResponse loginResponse = new LoginResponse(teamId);
+
+//                    if (response.type == RequestTypeConstant.AuthenticateResponse) {
+//                        int playerId = ((AuthenticationResponse) response.data).getPlayerId();
+//                        HashSet<String> sessionIds = playerIdToSessionId.get(playerId);
+//                        if (sessionIds == null) {
+//                            sessionIds = new HashSet<>();
+//                        }
+//                        sessionIds.add(session.getId());
+//                        if (usernameToSessionId.containsKey(request.getTeamName())) {
+//                            String sessionId = usernameToSessionId.get(request.getTeamName());
+//                            sessionIds.remove(sessionId);
+//                            if (sessions.containsKey(sessionId)) {
+//                                WebSocketSession session1 = sessions.get(sessionId);
+//                                session1.close();
+//                            }
+//                            sessions.remove(sessionId);
+//                        }
+//                        sessions.put(session.getId(), session);
+//                        playerIdToSessionId.put(playerId, sessionIds);
+//                        usernameToSessionId.put(request.getTeamName(), session.getId());
+//                        System.out.println("\tAuthenticated: " + request.getTeamName());
+//                        session.sendMessage(new TextMessage(gson.toJson(response)));
+//                    } else {
+//                        session.sendMessage(new TextMessage(gson.toJson(response)));
+//                        session.close();
+//                    }
+                }
+
+
+                default -> {
+
+                }
+            }
+        } catch (Exception ignored) {
+
         }
     }
+
 
     public void sendMessage(int playerId, String message) {
         synchronized (this) {
@@ -171,7 +179,7 @@ public class SocketHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws IOException {
         logger.log(Level.ERROR, "afterConnectionEstablished");
-        ResponseObject<ChangeResponseObject> response = new ResponseObject<>(RequestConstants.CHANCE_RESPONSE, new ChangeResponseObject(ChanceHandler.getInstance().generateChance(session.getId())));
+        ResponseObject<ChangeResponseObject> response = new ResponseObject<>(RequestTypeConstant.CHANCE_RESPONSE, new ChangeResponseObject(ChanceHandler.getInstance().generateChance(session.getId())));
         session.sendMessage(new TextMessage(gson.toJson(response)));
     }
 
@@ -183,13 +191,13 @@ public class SocketHandler extends TextWebSocketHandler {
         logger.error("session " + session.getId() + " error");
     }
 
-    public boolean isMainThreadWorking() {
-        return mainThreadWorking;
-    }
-
-    public void setMainThreadWorking(boolean mainThreadWorking) {
-        this.mainThreadWorking = mainThreadWorking;
-    }
-
+//    public boolean isMainThreadWorking() {
+//        return mainThreadWorking;
+//    }
+//
+//    public void setMainThreadWorking(boolean mainThreadWorking) {
+//        this.mainThreadWorking = mainThreadWorking;
+//    }
+//
 
 }

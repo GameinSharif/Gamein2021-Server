@@ -1,21 +1,23 @@
 package ir.sharif.gamein2021.ClientHandler.transport.model;
 
+import ir.sharif.gamein2021.core.util.RequestTypeConstant;
+
 import java.io.Serializable;
 
 public class RequestObject implements Serializable {
-    private int type;
-    private Object decData;
-    private int playerId;
+    private RequestTypeConstant type;
+    private Object requestData;
+    private String token;
 
-    public int getType() {
+    public RequestTypeConstant getType() {
         return type;
     }
 
-    public Object getDecData() {
-        return decData;
+    public String getToken() {
+        return token;
     }
 
-    public int getPlayerId() {
-        return playerId;
+    public Object getRequestData() {
+        return requestData;
     }
 }

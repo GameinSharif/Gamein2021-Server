@@ -4,13 +4,13 @@ import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.controller.TeamController;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
 import ir.sharif.gamein2021.ClientHandler.view.requests.CreatePlayerRequest;
-import ir.sharif.gamein2021.core.util.RequestConstants;
+import ir.sharif.gamein2021.core.util.RequestTypeConstant;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 
-import static ir.sharif.gamein2021.core.util.RequestConstants.CREATE_PLAYER_REQUEST;
-import static ir.sharif.gamein2021.core.util.RequestConstants.GET_PLAYER_DETAILS_REQUEST;
+import static ir.sharif.gamein2021.core.util.RequestTypeConstant.CREATE_PLAYER_REQUEST;
+import static ir.sharif.gamein2021.core.util.RequestTypeConstant.GET_PLAYER_DETAILS_REQUEST;
 
 @Component
 public class View {
@@ -43,13 +43,13 @@ public class View {
                     response = teamController.getPlayerDetails(playerId);
                     break;
                 default:
-                    response = new ResponseObject<>(RequestConstants.UNKNOWN_TYPE_RESPONSE);
+                    response = new ResponseObject<>(RequestTypeConstant.UNKNOWN_TYPE_RESPONSE);
             }
             return gson.toJson(response);
         } catch (Exception e) {
             logger.error("view error", e);
             e.printStackTrace();
-            ResponseObject<Object> response = new ResponseObject<>(RequestConstants.UNKNOWN_TYPE_RESPONSE);
+            ResponseObject<Object> response = new ResponseObject<>(RequestTypeConstant.UNKNOWN_TYPE_RESPONSE);
             return gson.toJson(response);
         }
     }

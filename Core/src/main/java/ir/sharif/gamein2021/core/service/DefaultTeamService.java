@@ -51,14 +51,12 @@ public class DefaultTeamService implements TeamService {
         TeamModel teamData = new TeamModel();
         teamData.setId(team.getId());
         teamData.setName(team.getTeamName());
-        teamData.setEmail(team.getEmail());
         return teamData;
     }
 
     private Team populateTeamEntity(TeamModel teamData) {
         Team team = new Team();
         team.setTeamName(teamData.getName());
-        team.setEmail(teamData.getEmail());
         return team;
     }
 }

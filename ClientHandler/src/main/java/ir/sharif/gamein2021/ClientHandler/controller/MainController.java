@@ -33,7 +33,7 @@ public class MainController {
 
     public void HandleMessage(JSONObject requestDataJsonObject, RequestTypeConstant requestType, String requestData, WebSocketSession session){
         switch (requestType) {
-            case LOGIN -> {
+            case LOGIN : {
                 LoginRequest request = gson.fromJson(requestData, LoginRequest.class);
 //                    ResponseObject<Object> response = authenticateHandler
 //                            .authenticate(request
@@ -79,10 +79,11 @@ public class MainController {
 //                    session.sendMessage(new TextMessage(gson.toJson(response)));
 //                    session.close();
 //                }
+                break;
             }
 
 
-            default -> {
+            default : {
 
             }
         }

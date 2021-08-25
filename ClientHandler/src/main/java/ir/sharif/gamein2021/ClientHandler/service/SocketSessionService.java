@@ -6,6 +6,7 @@ import org.springframework.web.socket.WebSocketSession;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Scope("singleton")
@@ -105,7 +106,7 @@ public class SocketSessionService {
     }
 
     public List<WebSocketSession> getAllSessions(){
-        return sessionBySessionId.values().stream().toList();
+        return new ArrayList<WebSocketSession>(sessionBySessionId.values());
     }
 
     public String getSessionIdByUserId(String userId){
@@ -113,6 +114,6 @@ public class SocketSessionService {
     }
 
     public List<String> getSessionIdsByTeamId(String teamId){
-        return sessionIdsByTeamId.getOrDefault(teamId, new HashSet<>()).stream().toList();
+        return new ArrayList<String>(sessionIdsByTeamId.getOrDefault(teamId, new HashSet<>()));
     }
 }

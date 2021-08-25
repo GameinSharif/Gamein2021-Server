@@ -47,9 +47,6 @@ public class SocketHandler extends TextWebSocketHandler {
     @Autowired
     private SocketSessionService socketSessionService;
 
-    @Autowired
-    private View view;
-
     public SocketHandler() {
         gson = new Gson();
     }

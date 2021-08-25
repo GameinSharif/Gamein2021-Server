@@ -5,7 +5,10 @@ import ir.sharif.gamein2021.ClientHandler.authentication.model.LoginRequest;
 import ir.sharif.gamein2021.ClientHandler.authentication.model.ChangeResponseObject;
 import ir.sharif.gamein2021.ClientHandler.authentication.model.LoginResponse;
 import ir.sharif.gamein2021.ClientHandler.authentication.util.ChanceHandler;
+import ir.sharif.gamein2021.ClientHandler.controller.MainController;
 import ir.sharif.gamein2021.ClientHandler.controller.TeamController;
+import ir.sharif.gamein2021.ClientHandler.service.EncryptDecryptService;
+import ir.sharif.gamein2021.ClientHandler.service.SocketSessionService;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
 import ir.sharif.gamein2021.ClientHandler.view.ResponseObject;
 import ir.sharif.gamein2021.ClientHandler.view.View;
@@ -29,15 +32,21 @@ import java.util.Map;
 public class SocketHandler extends TextWebSocketHandler {
     static Logger logger = Logger.getLogger(ExecutorThread.class.getName());
 
-    Map<String, WebSocketSession> sessions = new HashMap<>();
-    Map<Integer, HashSet<String>> playerIdToSessionId = new HashMap<>();
-    Map<String, String> usernameToSessionId = new HashMap<>();
     private Gson gson;
 
     //    @Autowired
 //    private AuthenticateHandler authenticateHandler;
     @Autowired
     private TeamController teamController;
+
+    @Autowired
+    MainController mainController;
+
+    @Autowired
+    EncryptDecryptService encryptDecryptService;
+
+    @Autowired
+    private SocketSessionService socketSessionService;
 
     @Autowired
     private View view;
@@ -49,8 +58,10 @@ public class SocketHandler extends TextWebSocketHandler {
     @Override
     public void handleTextMessage(WebSocketSession session, TextMessage message) {
         try {
-            String data = message.getPayload();
-            JSONObject obj = new JSONObject(data);
+            String encryptedMessage = message.getPayload();
+            String decryptedMessage = encryptDecryptService.decryptMessage(encryptedMessage);
+
+            JSONObject obj = new JSONObject(decryptedMessage);
             RequestTypeConstant requestType = RequestTypeConstant.values()[obj.getInt("requestTypeConstant")];
 
             JSONObject requestDataJsonObject;
@@ -77,31 +88,31 @@ public class SocketHandler extends TextWebSocketHandler {
 
                     LoginResponse loginResponse = new LoginResponse(teamId);
 
-//                    if (response.type == RequestTypeConstant.AuthenticateResponse) {
-//                        int playerId = ((AuthenticationResponse) response.data).getPlayerId();
-//                        HashSet<String> sessionIds = playerIdToSessionId.get(playerId);
-//                        if (sessionIds == null) {
-//                            sessionIds = new HashSet<>();
-//                        }
-//                        sessionIds.add(session.getId());
-//                        if (usernameToSessionId.containsKey(request.getTeamName())) {
-//                            String sessionId = usernameToSessionId.get(request.getTeamName());
-//                            sessionIds.remove(sessionId);
-//                            if (sessions.containsKey(sessionId)) {
-//                                WebSocketSession session1 = sessions.get(sessionId);
-//                                session1.close();
-//                            }
-//                            sessions.remove(sessionId);
-//                        }
-//                        sessions.put(session.getId(), session);
-//                        playerIdToSessionId.put(playerId, sessionIds);
-//                        usernameToSessionId.put(request.getTeamName(), session.getId());
-//                        System.out.println("\tAuthenticated: " + request.getTeamName());
-//                        session.sendMessage(new TextMessage(gson.toJson(response)));
-//                    } else {
-//                        session.sendMessage(new TextMessage(gson.toJson(response)));
-//                        session.close();
-//                    }
+                    if (response.type == RequestTypeConstant.AuthenticateResponse) {
+                        int playerId = ((AuthenticationResponse) response.data).getPlayerId();
+                        HashSet<String> sessionIds = playerIdToSessionId.get(playerId);
+                        if (sessionIds == null) {
+                            sessionIds = new HashSet<>();
+                        }
+                        sessionIds.add(session.getId());
+                        if (usernameToSessionId.containsKey(request.getTeamName())) {
+                            String sessionId = usernameToSessionId.get(request.getTeamName());
+                            sessionIds.remove(sessionId);
+                            if (sessions.containsKey(sessionId)) {
+                                WebSocketSession session1 = sessions.get(sessionId);
+                                session1.close();
+                            }
+                            sessions.remove(sessionId);
+                        }
+                        sessions.put(session.getId(), session);
+                        playerIdToSessionId.put(playerId, sessionIds);
+                        usernameToSessionId.put(request.getTeamName(), session.getId());
+                        System.out.println("\tAuthenticated: " + request.getTeamName());
+                        session.sendMessage(new TextMessage(gson.toJson(response)));
+                    } else {
+                        session.sendMessage(new TextMessage(gson.toJson(response)));
+                        session.close();
+                    }
                 }
 
 
@@ -114,62 +125,10 @@ public class SocketHandler extends TextWebSocketHandler {
         }
     }
 
-
-    public void sendMessage(int playerId, String message) {
-        synchronized (this) {
-            if (!playerIdToSessionId.containsKey(playerId)) {
-                return;
-            }
-            HashSet<String> sessionIds = playerIdToSessionId.get(playerId);
-            if (sessionIds == null || sessionIds.size() == 0) {
-                return;
-            }
-            HashSet<String> toRemove = new HashSet<>();
-            for (String sessionId : sessionIds) {
-                if (sessions.containsKey(sessionId)) {
-                    WebSocketSession session = sessions.get(sessionId);
-                    if (session == null || !session.isOpen()) {
-                        toRemove.add(sessionId);
-                    } else {
-                        synchronized (sessions.get(sessionId)) {
-                            try {
-                                session.sendMessage(new TextMessage(message));
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                                System.out.println("\tError on send message to player Id : " + playerId);
-                            }
-                            logger.info("sent to user: " + playerId + " message: " + message);
-                        }
-                    }
-                } else {
-                    toRemove.add(sessionId);
-                }
-            }
-            sessionIds.removeAll(toRemove);
-            playerIdToSessionId.put(playerId, sessionIds);
-        }
-    }
-
-    public void sendToAll(String message) throws IOException {
-        synchronized (this) {
-            TextMessage textMessage = new TextMessage(message);
-            HashSet<String> sessionIds = new HashSet<>(sessions.keySet());
-            for (String sessionId : sessionIds) {
-                if (sessions.get(sessionId) == null || !sessions.get(sessionId).isOpen()) {
-                    sessions.remove(sessionId);
-                } else {
-                    synchronized (sessions.get(sessionId)) {
-                        sessions.get(sessionId).sendMessage(textMessage);
-                    }
-                }
-            }
-            logger.info("sent to all: " + message);
-        }
-    }
-
     @Override
     public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
-        sessions.remove(session.getId());
+        logger.log(Level.DEBUG, "handleTransportError");
+        socketSessionService.removeSession(session.getId());
         System.out.println("session " + session.getId() + " error");
         logger.error("session " + session.getId() + " error");
         logger.error("exception socket", exception);
@@ -186,18 +145,9 @@ public class SocketHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         logger.log(Level.DEBUG, "afterConnectionClosed");
-        sessions.remove(session.getId());
+        socketSessionService.removeSession(session.getId());
         System.out.println("session " + session.getId() + " closed");
         logger.error("session " + session.getId() + " error");
+        super.afterConnectionClosed(session,status);
     }
-
-//    public boolean isMainThreadWorking() {
-//        return mainThreadWorking;
-//    }
-//
-//    public void setMainThreadWorking(boolean mainThreadWorking) {
-//        this.mainThreadWorking = mainThreadWorking;
-//    }
-//
-
 }

@@ -3,12 +3,14 @@ package ir.sharif.gamein2021.ClientHandler.service;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.io.IOException;
 import java.util.List;
 
+@Service
 public class PushMessageService {
     static Logger logger = Logger.getLogger(ExecutorThread.class.getName());
 

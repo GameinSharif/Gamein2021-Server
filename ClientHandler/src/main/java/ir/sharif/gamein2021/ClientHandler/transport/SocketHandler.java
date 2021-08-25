@@ -32,15 +32,14 @@ import java.util.Map;
 public class SocketHandler extends TextWebSocketHandler {
     static Logger logger = Logger.getLogger(ExecutorThread.class.getName());
 
-    private Gson gson;
 
     //    @Autowired
 //    private AuthenticateHandler authenticateHandler;
-    @Autowired
-    private TeamController teamController;
 
     @Autowired
     MainController mainController;
+
+    private Gson gson;
 
     @Autowired
     EncryptDecryptService encryptDecryptService;
@@ -64,62 +63,14 @@ public class SocketHandler extends TextWebSocketHandler {
             JSONObject obj = new JSONObject(decryptedMessage);
             RequestTypeConstant requestType = RequestTypeConstant.values()[obj.getInt("requestTypeConstant")];
 
-            JSONObject requestDataJsonObject;
+            JSONObject requestDataJsonObject = null;
             String requestData = "";
             if (obj.has("requestData")) {
                 requestDataJsonObject = obj.getJSONObject("requestData");
                 requestData = requestDataJsonObject.toString();
             }
 
-            switch (requestType) {
-
-                case LOGIN -> {
-                    LoginRequest request = gson.fromJson(requestData, LoginRequest.class);
-//                    ResponseObject<Object> response = authenticateHandler
-//                            .authenticate(request
-//                                    , ChanceHandler.getInstance().getChance(session.getId()));
-
-                    String teamName = request.getTeamName();
-                    String password = request.getPassword();
-
-                    Long teamId = teamController.getTeamId(teamName, password);
-
-                    // TODO : add session to list
-
-                    LoginResponse loginResponse = new LoginResponse(teamId);
-
-                    if (response.type == RequestTypeConstant.AuthenticateResponse) {
-                        int playerId = ((AuthenticationResponse) response.data).getPlayerId();
-                        HashSet<String> sessionIds = playerIdToSessionId.get(playerId);
-                        if (sessionIds == null) {
-                            sessionIds = new HashSet<>();
-                        }
-                        sessionIds.add(session.getId());
-                        if (usernameToSessionId.containsKey(request.getTeamName())) {
-                            String sessionId = usernameToSessionId.get(request.getTeamName());
-                            sessionIds.remove(sessionId);
-                            if (sessions.containsKey(sessionId)) {
-                                WebSocketSession session1 = sessions.get(sessionId);
-                                session1.close();
-                            }
-                            sessions.remove(sessionId);
-                        }
-                        sessions.put(session.getId(), session);
-                        playerIdToSessionId.put(playerId, sessionIds);
-                        usernameToSessionId.put(request.getTeamName(), session.getId());
-                        System.out.println("\tAuthenticated: " + request.getTeamName());
-                        session.sendMessage(new TextMessage(gson.toJson(response)));
-                    } else {
-                        session.sendMessage(new TextMessage(gson.toJson(response)));
-                        session.close();
-                    }
-                }
-
-
-                default -> {
-
-                }
-            }
+            mainController.HandleMessage(requestDataJsonObject, requestType,  requestData, session);
         } catch (Exception ignored) {
 
         }
@@ -138,7 +89,7 @@ public class SocketHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws IOException {
         logger.log(Level.ERROR, "afterConnectionEstablished");
-        ResponseObject<ChangeResponseObject> response = new ResponseObject<>(RequestTypeConstant.CHANCE_RESPONSE, new ChangeResponseObject(ChanceHandler.getInstance().generateChance(session.getId())));
+        ResponseObject<ChangeResponseObject> response = new ResponseObject<>(1, new ChangeResponseObject(ChanceHandler.getInstance().generateChance(session.getId())));
         session.sendMessage(new TextMessage(gson.toJson(response)));
     }
 

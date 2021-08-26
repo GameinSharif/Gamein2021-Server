@@ -6,25 +6,27 @@ import org.springframework.web.socket.WebSocketSession;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @Scope("singleton")
 public class SocketSessionService {
-    private Map<String, WebSocketSession> sessionBySessionId = new HashMap<>();
+    private final Map<String, WebSocketSession> sessionBySessionId = new HashMap<>();
 
-    private Map<String, HashSet<String>> sessionIdsByTeamId = new HashMap<>();
-    private Map<String, String> teamIdByUserId = new HashMap<>();
+    private final Map<String, HashSet<String>> sessionIdsByTeamId = new HashMap<>();
+    private final Map<String, String> teamIdBySessionId = new HashMap<>();
 
-    private Map<String, String> sessionIdByUserId = new HashMap<>();
-    private Map<String, String> userIdBySessionId = new HashMap<>();
+    public boolean isAuthenticated(String sessionId){
+        synchronized (this){
+            return sessionBySessionId.containsKey(sessionId);
+        }
+    }
 
-    public void addSession(String teamId, String userId, WebSocketSession session) {
+    public void addSession(String teamId, WebSocketSession session) {
         synchronized (this) {
             String sessionId = session.getId();
             sessionBySessionId.put(sessionId, session);
 
-            teamIdByUserId.put(userId, teamId);
+            teamIdBySessionId.put(sessionId, teamId);
             if (sessionIdsByTeamId.containsKey(teamId)) {
                 HashSet<String> teamSessionsIds = sessionIdsByTeamId.get(teamId);
                 teamSessionsIds.add(sessionId);
@@ -33,9 +35,6 @@ public class SocketSessionService {
                 teamSessionIds.add(sessionId);
                 sessionIdsByTeamId.put(teamId, teamSessionIds);
             }
-
-            sessionIdByUserId.put(userId, sessionId);
-            userIdBySessionId.put(sessionId, userId);
         }
     }
 
@@ -43,10 +42,7 @@ public class SocketSessionService {
         synchronized (this) {
             WebSocketSession session = sessionBySessionId.remove(sessionId);
 
-            String userId = userIdBySessionId.remove(sessionId);
-            sessionIdByUserId.remove(userId);
-
-            String teamId = teamIdByUserId.remove(userId);
+            String teamId = teamIdBySessionId.remove(sessionId);
             HashSet<String> teamSessionIds = sessionIdsByTeamId.get(teamId);
             teamSessionIds.remove(sessionId);
 
@@ -62,11 +58,6 @@ public class SocketSessionService {
         WebSocketSession session = sessionBySessionId.get(sessionId);
         session.close();
         return session;
-    }
-
-    public WebSocketSession closeSessionByUserId(String userId) throws IOException {
-        String sessionId = sessionIdByUserId.get(userId);
-        return closeSessionBySessionId(sessionId);
     }
 
     public List<WebSocketSession> closeSessionsByTeamId(String teamId) throws IOException {
@@ -86,11 +77,6 @@ public class SocketSessionService {
         return sessionBySessionId.getOrDefault(sessionId, null);
     }
 
-    public WebSocketSession getSessionByUserId(String userId) {
-        String sessionId = sessionIdByUserId.getOrDefault(userId, "");
-        return getSessionBySessionId(sessionId);
-    }
-
     public List<WebSocketSession> getSessionsByTeamId(String teamId) {
         List<WebSocketSession> sessions = new ArrayList<>();
 
@@ -107,10 +93,6 @@ public class SocketSessionService {
 
     public List<WebSocketSession> getAllSessions(){
         return new ArrayList<WebSocketSession>(sessionBySessionId.values());
-    }
-
-    public String getSessionIdByUserId(String userId){
-        return sessionIdByUserId.getOrDefault(userId, null);
     }
 
     public List<String> getSessionIdsByTeamId(String teamId){

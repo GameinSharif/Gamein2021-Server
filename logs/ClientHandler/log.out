@@ -1,97 +1,39 @@
-07 Aug 2021 08:41:41,401 afterConnectionEstablished
-07 Aug 2021 08:41:41,422 Error on handle text message
-org.json.JSONException: JSONObject["type"] not found.
-	at org.json.JSONObject.get(JSONObject.java:572)
-	at org.json.JSONObject.getInt(JSONObject.java:744)
-	at ir.sharif.gamein2021.ClientHandler.transport.SocketHandler.handleTextMessage(SocketHandler.java:53)
-	at org.springframework.web.socket.handler.AbstractWebSocketHandler.handleMessage(AbstractWebSocketHandler.java:43)
-	at org.springframework.web.socket.handler.WebSocketHandlerDecorator.handleMessage(WebSocketHandlerDecorator.java:75)
-	at org.springframework.web.socket.handler.LoggingWebSocketHandlerDecorator.handleMessage(LoggingWebSocketHandlerDecorator.java:56)
-	at org.springframework.web.socket.handler.ExceptionWebSocketHandlerDecorator.handleMessage(ExceptionWebSocketHandlerDecorator.java:58)
-	at org.springframework.web.socket.adapter.standard.StandardWebSocketHandlerAdapter.handleTextMessage(StandardWebSocketHandlerAdapter.java:114)
-	at org.springframework.web.socket.adapter.standard.StandardWebSocketHandlerAdapter.access$000(StandardWebSocketHandlerAdapter.java:43)
-	at org.springframework.web.socket.adapter.standard.StandardWebSocketHandlerAdapter$3.onMessage(StandardWebSocketHandlerAdapter.java:85)
-	at org.springframework.web.socket.adapter.standard.StandardWebSocketHandlerAdapter$3.onMessage(StandardWebSocketHandlerAdapter.java:82)
-	at org.apache.tomcat.websocket.WsFrameBase.sendMessageText(WsFrameBase.java:415)
-	at org.apache.tomcat.websocket.server.WsFrameServer.sendMessageText(WsFrameServer.java:129)
-	at org.apache.tomcat.websocket.WsFrameBase.processDataText(WsFrameBase.java:515)
-	at org.apache.tomcat.websocket.WsFrameBase.processData(WsFrameBase.java:301)
-	at org.apache.tomcat.websocket.WsFrameBase.processInputBuffer(WsFrameBase.java:133)
-	at org.apache.tomcat.websocket.server.WsFrameServer.onDataAvailable(WsFrameServer.java:85)
-	at org.apache.tomcat.websocket.server.WsFrameServer.doOnDataAvailable(WsFrameServer.java:183)
-	at org.apache.tomcat.websocket.server.WsFrameServer.notifyDataAvailable(WsFrameServer.java:162)
-	at org.apache.tomcat.websocket.server.WsHttpUpgradeHandler.upgradeDispatch(WsHttpUpgradeHandler.java:156)
-	at org.apache.coyote.http11.upgrade.UpgradeProcessorInternal.dispatch(UpgradeProcessorInternal.java:60)
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:59)
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:893)
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1723)
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-	at java.base/java.lang.Thread.run(Thread.java:832)
-07 Aug 2021 08:45:29,943 afterConnectionEstablished
-07 Aug 2021 08:45:31,187 Error on handle text message
-org.json.JSONException: JSONObject["type"] not found.
-	at org.json.JSONObject.get(JSONObject.java:572)
-	at org.json.JSONObject.getInt(JSONObject.java:744)
-	at ir.sharif.gamein2021.ClientHandler.transport.SocketHandler.handleTextMessage(SocketHandler.java:53)
-	at org.springframework.web.socket.handler.AbstractWebSocketHandler.handleMessage(AbstractWebSocketHandler.java:43)
-	at org.springframework.web.socket.handler.WebSocketHandlerDecorator.handleMessage(WebSocketHandlerDecorator.java:75)
-	at org.springframework.web.socket.handler.LoggingWebSocketHandlerDecorator.handleMessage(LoggingWebSocketHandlerDecorator.java:56)
-	at org.springframework.web.socket.handler.ExceptionWebSocketHandlerDecorator.handleMessage(ExceptionWebSocketHandlerDecorator.java:58)
-	at org.springframework.web.socket.adapter.standard.StandardWebSocketHandlerAdapter.handleTextMessage(StandardWebSocketHandlerAdapter.java:114)
-	at org.springframework.web.socket.adapter.standard.StandardWebSocketHandlerAdapter.access$000(StandardWebSocketHandlerAdapter.java:43)
-	at org.springframework.web.socket.adapter.standard.StandardWebSocketHandlerAdapter$3.onMessage(StandardWebSocketHandlerAdapter.java:85)
-	at org.springframework.web.socket.adapter.standard.StandardWebSocketHandlerAdapter$3.onMessage(StandardWebSocketHandlerAdapter.java:82)
-	at org.apache.tomcat.websocket.WsFrameBase.sendMessageText(WsFrameBase.java:415)
-	at org.apache.tomcat.websocket.server.WsFrameServer.sendMessageText(WsFrameServer.java:129)
-	at org.apache.tomcat.websocket.WsFrameBase.processDataText(WsFrameBase.java:515)
-	at org.apache.tomcat.websocket.WsFrameBase.processData(WsFrameBase.java:301)
-	at org.apache.tomcat.websocket.WsFrameBase.processInputBuffer(WsFrameBase.java:133)
-	at org.apache.tomcat.websocket.server.WsFrameServer.onDataAvailable(WsFrameServer.java:85)
-	at org.apache.tomcat.websocket.server.WsFrameServer.doOnDataAvailable(WsFrameServer.java:183)
-	at org.apache.tomcat.websocket.server.WsFrameServer.notifyDataAvailable(WsFrameServer.java:162)
-	at org.apache.tomcat.websocket.server.WsHttpUpgradeHandler.upgradeDispatch(WsHttpUpgradeHandler.java:156)
-	at org.apache.coyote.http11.upgrade.UpgradeProcessorInternal.dispatch(UpgradeProcessorInternal.java:60)
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:59)
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:893)
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1723)
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-	at java.base/java.lang.Thread.run(Thread.java:832)
-07 Aug 2021 08:48:13,371 session 6ac227c9-7551-cf7e-4f63-8a71d6844260 error
-07 Aug 2021 22:26:02,022 afterConnectionEstablished
-07 Aug 2021 22:26:37,998 Error on handle text message
-org.json.JSONException: JSONObject["type"] not found.
-	at org.json.JSONObject.get(JSONObject.java:572)
-	at org.json.JSONObject.getInt(JSONObject.java:744)
-	at ir.sharif.gamein2021.ClientHandler.transport.SocketHandler.handleTextMessage(SocketHandler.java:53)
-	at org.springframework.web.socket.handler.AbstractWebSocketHandler.handleMessage(AbstractWebSocketHandler.java:43)
-	at org.springframework.web.socket.handler.WebSocketHandlerDecorator.handleMessage(WebSocketHandlerDecorator.java:75)
-	at org.springframework.web.socket.handler.LoggingWebSocketHandlerDecorator.handleMessage(LoggingWebSocketHandlerDecorator.java:56)
-	at org.springframework.web.socket.handler.ExceptionWebSocketHandlerDecorator.handleMessage(ExceptionWebSocketHandlerDecorator.java:58)
-	at org.springframework.web.socket.adapter.standard.StandardWebSocketHandlerAdapter.handleTextMessage(StandardWebSocketHandlerAdapter.java:114)
-	at org.springframework.web.socket.adapter.standard.StandardWebSocketHandlerAdapter.access$000(StandardWebSocketHandlerAdapter.java:43)
-	at org.springframework.web.socket.adapter.standard.StandardWebSocketHandlerAdapter$3.onMessage(StandardWebSocketHandlerAdapter.java:85)
-	at org.springframework.web.socket.adapter.standard.StandardWebSocketHandlerAdapter$3.onMessage(StandardWebSocketHandlerAdapter.java:82)
-	at org.apache.tomcat.websocket.WsFrameBase.sendMessageText(WsFrameBase.java:415)
-	at org.apache.tomcat.websocket.server.WsFrameServer.sendMessageText(WsFrameServer.java:129)
-	at org.apache.tomcat.websocket.WsFrameBase.processDataText(WsFrameBase.java:515)
-	at org.apache.tomcat.websocket.WsFrameBase.processData(WsFrameBase.java:301)
-	at org.apache.tomcat.websocket.WsFrameBase.processInputBuffer(WsFrameBase.java:133)
-	at org.apache.tomcat.websocket.server.WsFrameServer.onDataAvailable(WsFrameServer.java:85)
-	at org.apache.tomcat.websocket.server.WsFrameServer.doOnDataAvailable(WsFrameServer.java:183)
-	at org.apache.tomcat.websocket.server.WsFrameServer.notifyDataAvailable(WsFrameServer.java:162)
-	at org.apache.tomcat.websocket.server.WsHttpUpgradeHandler.upgradeDispatch(WsHttpUpgradeHandler.java:156)
-	at org.apache.coyote.http11.upgrade.UpgradeProcessorInternal.dispatch(UpgradeProcessorInternal.java:60)
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:59)
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:893)
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1723)
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-	at java.base/java.lang.Thread.run(Thread.java:832)
+26 Aug 2021 00:04:27,286 afterConnectionEstablished
+26 Aug 2021 00:08:33,069 afterConnectionEstablished
+26 Aug 2021 00:09:13,371 afterConnectionEstablished
+26 Aug 2021 00:10:17,046 afterConnectionEstablished
+26 Aug 2021 00:10:29,697 afterConnectionEstablished
+26 Aug 2021 00:15:17,136 afterConnectionEstablished
+26 Aug 2021 00:23:03,459 afterConnectionEstablished
+26 Aug 2021 00:31:46,080 afterConnectionEstablished
+26 Aug 2021 00:32:43,594 afterConnectionEstablished
+26 Aug 2021 00:34:45,288 afterConnectionEstablished
+26 Aug 2021 00:36:15,516 afterConnectionEstablished
+26 Aug 2021 00:36:51,022 afterConnectionEstablished
+26 Aug 2021 00:45:09,798 afterConnectionEstablished
+26 Aug 2021 00:46:23,228 afterConnectionEstablished
+26 Aug 2021 00:54:21,242 afterConnectionEstablished
+26 Aug 2021 00:55:00,034 afterConnectionEstablished
+26 Aug 2021 08:39:48,885 afterConnectionEstablished
+26 Aug 2021 08:39:51,625 afterConnectionEstablished
+26 Aug 2021 08:45:45,077 afterConnectionEstablished
+26 Aug 2021 08:46:04,978 afterConnectionEstablished
+26 Aug 2021 09:05:59,179 afterConnectionEstablished
+26 Aug 2021 09:48:50,790 afterConnectionEstablished
+26 Aug 2021 09:49:37,236 afterConnectionEstablished
+26 Aug 2021 09:50:23,312 afterConnectionEstablished
+26 Aug 2021 09:58:36,603 afterConnectionEstablished
+26 Aug 2021 09:59:09,499 afterConnectionEstablished
+26 Aug 2021 09:59:53,347 afterConnectionEstablished
+26 Aug 2021 10:04:49,027 afterConnectionEstablished
+26 Aug 2021 10:06:12,835 afterConnectionEstablished
+26 Aug 2021 10:07:07,942 afterConnectionEstablished
+26 Aug 2021 10:08:39,249 afterConnectionEstablished
+26 Aug 2021 10:09:29,487 afterConnectionEstablished
+26 Aug 2021 10:09:53,463 session 76de0cc5-cc08-5f5d-9fe3-f1476ba39f6e error
+26 Aug 2021 10:10:24,081 afterConnectionEstablished
+26 Aug 2021 10:10:50,727 session e45b35ba-b258-4cc0-af46-e13fbf667efa error
+26 Aug 2021 10:11:18,758 afterConnectionEstablished
+26 Aug 2021 10:11:40,865 session fc0b6cde-274f-75bf-4d5c-01f546b83b92 error
+26 Aug 2021 10:11:49,622 afterConnectionEstablished
+26 Aug 2021 10:11:54,930 session 9ed35fde-5d72-f304-ae0e-fc1869e58ec7 error

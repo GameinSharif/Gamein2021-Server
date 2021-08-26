@@ -1,8 +1,9 @@
-CREATE TABLE TEAM(
-    id  int,
-    teamName varchar ,
-    password varchar
+CREATE TABLE Team
+(
+    id       number,
+    teamName varchar(50),
+    password varchar(50)
 );
 
-INSERT INTO TEAM(id, teamName, password)
-VALUE (1, "ali", "1");
+INSERT INTO Team (id, teamName, password)
+values (1, 'ali', '12345');

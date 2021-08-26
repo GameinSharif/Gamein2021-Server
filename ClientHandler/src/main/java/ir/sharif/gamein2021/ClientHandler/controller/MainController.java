@@ -3,90 +3,43 @@ package ir.sharif.gamein2021.ClientHandler.controller;
 import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.authentication.model.LoginRequest;
 import ir.sharif.gamein2021.ClientHandler.authentication.model.LoginResponse;
+import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.service.PushMessageService;
+import ir.sharif.gamein2021.ClientHandler.service.ServiceRepository;
 import ir.sharif.gamein2021.ClientHandler.service.SocketSessionService;
 import ir.sharif.gamein2021.core.util.RequestTypeConstant;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
-import java.util.HashSet;
 
-@Controller
+@Component
 public class MainController {
-    private Gson gson;
 
-    @Autowired
-    private TeamController teamController;
+    private final ServiceRepository serviceRepository;
+    private final Gson gson;
 
-    @Autowired
-    private PushMessageService pushMessageService;
-
-    @Autowired
-    private SocketSessionService socketSessionService;
-
-    public MainController(Gson gson) {
-        this.gson = gson;
+    public MainController(ServiceRepository serviceRepository) {
+        this.serviceRepository = serviceRepository;
+        this.gson = new Gson();
     }
 
-    public void HandleMessage(JSONObject requestDataJsonObject, RequestTypeConstant requestType, String requestData, WebSocketSession session){
-        switch (requestType) {
-            case LOGIN : {
-                LoginRequest request = gson.fromJson(requestData, LoginRequest.class);
-//                    ResponseObject<Object> response = authenticateHandler
-//                            .authenticate(request
-//                                    , ChanceHandler.getInstance().getChance(session.getId()));
-
-                String teamName = request.getTeamName();
-                String password = request.getPassword();
-
-                try {
-                    Long teamId = teamController.getTeamId(teamName, password);
-                    socketSessionService.addSession(teamId.toString(), "1", session);
-                    LoginResponse loginResponse = new LoginResponse(teamId);
-                    pushMessageService.sendMessageBySessionId(session.getId(), gson.toJson(loginResponse));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                // TODO : add session to list
-
-
-//                if (response.type == RequestTypeConstant.AuthenticateResponse) {
-//                    int playerId = ((AuthenticationResponse) response.data).getPlayerId();
-//                    HashSet<String> sessionIds = playerIdToSessionId.get(playerId);
-//                    if (sessionIds == null) {
-//                        sessionIds = new HashSet<>();
-//                    }
-//                    sessionIds.add(session.getId());
-//                    if (usernameToSessionId.containsKey(request.getTeamName())) {
-//                        String sessionId = usernameToSessionId.get(request.getTeamName());
-//                        sessionIds.remove(sessionId);
-//                        if (sessions.containsKey(sessionId)) {
-//                            WebSocketSession session1 = sessions.get(sessionId);
-//                            session1.close();
-//                        }
-//                        sessions.remove(sessionId);
-//                    }
-//                    sessions.put(session.getId(), session);
-//                    playerIdToSessionId.put(playerId, sessionIds);
-//                    usernameToSessionId.put(request.getTeamName(), session.getId());
-//                    System.out.println("\tAuthenticated: " + request.getTeamName());
-//                    session.sendMessage(new TextMessage(gson.toJson(response)));
-//                } else {
-//                    session.sendMessage(new TextMessage(gson.toJson(response)));
-//                    session.close();
-//                }
+    public void HandleMessage(ProcessedRequest request) {
+        switch (request.requestType) {
+            case LOGIN: {
+                LoginRequest loginRequest = gson.fromJson(request.requestData, LoginRequest.class);
+                serviceRepository.loginService.authenticate(request,loginRequest);
                 break;
             }
 
-
-            default : {
+            default: {
 
             }
         }
     }
-
 }

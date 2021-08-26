@@ -14,26 +14,17 @@ import java.util.List;
 public class PushMessageService {
     static Logger logger = Logger.getLogger(ExecutorThread.class.getName());
 
-    @Autowired
-    private SocketSessionService socketSessionService;
+    private final SocketSessionService socketSessionService;
+    private final EncryptDecryptService encryptDecryptService;
 
-    @Autowired
-    private EncryptDecryptService encryptDecryptService;
+    public PushMessageService(SocketSessionService socketSessionService, EncryptDecryptService encryptDecryptService) {
+        this.socketSessionService = socketSessionService;
+        this.encryptDecryptService = encryptDecryptService;
+    }
 
     public void sendMessageBySessionId(String sessionId, String message) throws IOException {
         WebSocketSession session = socketSessionService.getSessionBySessionId(sessionId);
         sendMessage(session, message);
-    }
-
-    public void sendMessageByUserId(String userId, String message) {
-        WebSocketSession session = socketSessionService.getSessionByUserId(userId);
-
-        try {
-            sendMessage(session, message);
-        } catch (IOException e) {
-            e.printStackTrace();
-            logger.info("\tError on send message to user Id : " + userId);
-        }
     }
 
     public void sendMessageByTeamId(String teamId, String message) {

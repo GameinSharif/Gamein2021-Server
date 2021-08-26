@@ -74,8 +74,9 @@ public class SocketHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws IOException {
         logger.log(Level.ERROR, "afterConnectionEstablished");
-        ResponseObject<ChangeResponseObject> response = new ResponseObject<>(1, new ChangeResponseObject(ChanceHandler.getInstance().generateChance(session.getId())));
-        session.sendMessage(new TextMessage(gson.toJson(response)));
+        socketSessionService.addUnAuthenticatedSession(session);
+//        ResponseObject<ChangeResponseObject> response = new ResponseObject<>(1, new ChangeResponseObject(ChanceHandler.getInstance().generateChance(session.getId())));
+//        session.sendMessage(new TextMessage(gson.toJson(response)));
     }
 
     @Override

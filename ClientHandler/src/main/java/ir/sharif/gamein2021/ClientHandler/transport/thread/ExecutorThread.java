@@ -4,7 +4,6 @@ import ir.sharif.gamein2021.ClientHandler.transport.model.InetWrapper;
 import ir.sharif.gamein2021.ClientHandler.transport.model.Packet;
 import ir.sharif.gamein2021.core.util.DatagramSocketFactory;
 import ir.sharif.gamein2021.core.util.NetworkConstants;
-import ir.sharif.gamein2021.ClientHandler.view.View;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -25,9 +24,6 @@ public class ExecutorThread extends Thread {
     private boolean isDone = false;
     DatagramSocket socket;
     static Logger logger = Logger.getLogger(ExecutorThread.class.getName());
-
-    private View view;
-
 
 
 

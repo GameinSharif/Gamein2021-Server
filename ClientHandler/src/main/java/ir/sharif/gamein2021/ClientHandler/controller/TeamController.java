@@ -1,6 +1,5 @@
 package ir.sharif.gamein2021.ClientHandler.controller;
 
-
 import ir.sharif.gamein2021.core.entity.Team;
 import ir.sharif.gamein2021.core.repository.TeamRepository;
 
@@ -11,21 +10,20 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Component
-public class TeamController {
-
+public class TeamController
+{
     @Autowired
     TeamRepository teamRepository;
 
-    public Long getTeamId(String teamName, String password) throws Exception {
-
-        // TODO : decrypt password (or maybe not...)
-
+    public Long getTeamId(String teamName, String password) throws Exception
+    {
         Team team = new Team(teamName, password);
         Example<Team> teamExample = Example.of(team);
         Optional<Team> optionalTeam = teamRepository.findOne(teamExample);
-        if (optionalTeam.isPresent()) {
+        if (optionalTeam.isPresent())
+        {
             return optionalTeam.get().getId();
         }
-        throw new Exception("invalid user-pass");
+        throw new Exception("Wrong Username or Password");
     }
 }

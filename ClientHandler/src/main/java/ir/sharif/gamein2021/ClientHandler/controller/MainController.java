@@ -17,29 +17,33 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.socket.WebSocketSession;
 
+import java.io.IOException;
+
 
 @Component
-public class MainController {
+public class MainController
+{
 
     private final ServiceRepository serviceRepository;
     private final Gson gson;
 
-    public MainController(ServiceRepository serviceRepository) {
+    public MainController(ServiceRepository serviceRepository)
+    {
         this.serviceRepository = serviceRepository;
         this.gson = new Gson();
     }
 
-    public void HandleMessage(ProcessedRequest request) {
-        switch (request.requestType) {
-            case LOGIN: {
+    public void HandleMessage(ProcessedRequest request)
+    {
+        switch (request.requestType)
+        {
+            case LOGIN:
                 LoginRequest loginRequest = gson.fromJson(request.requestData, LoginRequest.class);
-                serviceRepository.loginService.authenticate(request,loginRequest);
+                serviceRepository.loginService.authenticate(request, loginRequest);
                 break;
-            }
 
-            default: {
-
-            }
+            default:
+                System.out.println("Request type is invalid.");
         }
     }
 }

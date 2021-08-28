@@ -1,18 +1,19 @@
 package ir.sharif.gamein2021.ClientHandler.view;
 
+import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
+
 import java.io.Serializable;
 
-public class ResponseObject<T> implements Serializable {
-    public int type;
-    public T data;
+public class ResponseObject implements Serializable
+{
+    public ResponseTypeConstant responseTypeConstant;
+    public Object responseData;
+    public String result;
 
-
-    public ResponseObject(int type, T data) {
-        this.type = type;
-        this.data = data;
-    }
-
-    public ResponseObject(int type) {
-        this.type = type;
+    public ResponseObject(ResponseTypeConstant responseTypeConstant, Object responseData, String result)
+    {
+        this.responseTypeConstant = responseTypeConstant;
+        this.responseData = responseData;
+        this.result = result;
     }
 }

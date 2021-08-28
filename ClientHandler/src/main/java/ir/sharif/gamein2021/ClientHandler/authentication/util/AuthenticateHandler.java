@@ -25,7 +25,7 @@ public class AuthenticateHandler {
     private TeamController teamController;
 
 
-    public ResponseObject<Object> authenticate(LoginRequest request, String chance) {
+//    public ResponseObject authenticate(LoginRequest request, String chance) {
 //        synchronized (this) {
 //            ResponseObject<Object> response;
 //            if (chance == null /*|| userPassCommands.get(request.getUsername()) == null */ || request.getPassAndSalt().get(1) == null) {
@@ -56,8 +56,8 @@ public class AuthenticateHandler {
 //            }
 //            return response;
 //        }
-        return null;
-    }
+//        return null;
+//    }
 
     public String sha256Digest(String data) throws SignatureException {
         return getDigest(data);

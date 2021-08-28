@@ -16,12 +16,15 @@ public class LoginService {
     private final TeamController teamController;
     private final SocketSessionService socketSessionService;
     private final PushMessageService pushMessageService;
+    private final EncryptDecryptService encryptDecryptService;
     private final Gson gson = new Gson();
 
-    public LoginService(TeamController teamController, SocketSessionService socketSessionService, PushMessageService pushMessageService) {
+    public LoginService(TeamController teamController, SocketSessionService socketSessionService,
+                        PushMessageService pushMessageService, EncryptDecryptService encryptDecryptService) {
         this.teamController = teamController;
         this.socketSessionService = socketSessionService;
         this.pushMessageService = pushMessageService;
+        this.encryptDecryptService = encryptDecryptService;
     }
 
     public void authenticate(ProcessedRequest request, LoginRequest loginRequest) {
@@ -31,7 +34,7 @@ public class LoginService {
         }
 
         String teamName = loginRequest.getTeamName();
-        String password = loginRequest.getPassword();
+        String password = encryptDecryptService.decryptMessage(loginRequest.getPassword());
 
         try {
             Long teamId = teamController.getTeamId(teamName, password);

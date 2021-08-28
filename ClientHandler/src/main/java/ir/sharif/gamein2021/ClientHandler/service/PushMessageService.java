@@ -41,8 +41,8 @@ public class PushMessageService {
             return;
         }
 
-        String encryptedMessage = encryptDecryptService.encryptMessage(message);
-        session.sendMessage(new TextMessage(encryptedMessage));
+        //String encryptedMessage = encryptDecryptService.encryptMessage(message);
+        session.sendMessage(new TextMessage(message));
     }
 
     private void sendMessage(List<WebSocketSession> sessions, String message) {
@@ -50,7 +50,7 @@ public class PushMessageService {
             return;
         }
 
-        String encryptedMessage = encryptDecryptService.encryptMessage(message);
+        //String encryptedMessage = encryptDecryptService.encryptMessage(message);
 
         for (WebSocketSession session : sessions) {
             if (session == null || !session.isOpen()) {
@@ -58,7 +58,7 @@ public class PushMessageService {
             }
 
             try {
-                session.sendMessage(new TextMessage(encryptedMessage));
+                session.sendMessage(new TextMessage(message));
             } catch (IOException e) {
                 logger.debug(e);
             }

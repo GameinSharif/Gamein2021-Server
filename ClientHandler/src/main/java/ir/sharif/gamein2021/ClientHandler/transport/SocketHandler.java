@@ -2,6 +2,7 @@ package ir.sharif.gamein2021.ClientHandler.transport;
 
 import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.authentication.model.ChangeResponseObject;
+import ir.sharif.gamein2021.ClientHandler.authentication.model.ConnectionResponse;
 import ir.sharif.gamein2021.ClientHandler.authentication.util.ChanceHandler;
 import ir.sharif.gamein2021.ClientHandler.controller.MainController;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
@@ -20,6 +21,7 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import java.io.IOException;
+import java.security.interfaces.RSAKey;
 
 @Component
 public class SocketHandler extends TextWebSocketHandler {
@@ -40,10 +42,10 @@ public class SocketHandler extends TextWebSocketHandler {
     @Override
     public void handleTextMessage(WebSocketSession session, TextMessage message) {
         try {
-            String encryptedMessage = message.getPayload();
-            String decryptedMessage = encryptDecryptService.decryptMessage(encryptedMessage);
+            //String encryptedMessage = message.getPayload();
+            //String decryptedMessage = encryptDecryptService.decryptMessage(encryptedMessage);
 
-            JSONObject obj = new JSONObject(decryptedMessage);
+            JSONObject obj = new JSONObject(message.getPayload());
 
             RequestTypeConstant requestType = RequestTypeConstant.values()[obj.getInt("requestTypeConstant")];
             JSONObject requestDataJsonObject = null;
@@ -75,8 +77,8 @@ public class SocketHandler extends TextWebSocketHandler {
     public void afterConnectionEstablished(WebSocketSession session) throws IOException {
         logger.log(Level.ERROR, "afterConnectionEstablished");
         socketSessionService.addUnAuthenticatedSession(session);
-//        ResponseObject<ChangeResponseObject> response = new ResponseObject<>(1, new ChangeResponseObject(ChanceHandler.getInstance().generateChance(session.getId())));
-//        session.sendMessage(new TextMessage(gson.toJson(response)));
+        ConnectionResponse response = new ConnectionResponse(encryptDecryptService.getPublicKey());
+        session.sendMessage(new TextMessage(gson.toJson(response)));
     }
 
     @Override

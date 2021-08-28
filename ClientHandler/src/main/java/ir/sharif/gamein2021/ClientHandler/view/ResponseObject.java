@@ -6,13 +6,13 @@ import java.io.Serializable;
 
 public class ResponseObject implements Serializable
 {
-    public ResponseTypeConstant responseTypeConstant;
+    public int responseTypeConstant;
     public Object responseData;
     public String result;
 
     public ResponseObject(ResponseTypeConstant responseTypeConstant, Object responseData, String result)
     {
-        this.responseTypeConstant = responseTypeConstant;
+        this.responseTypeConstant = responseTypeConstant.ordinal();
         this.responseData = responseData;
         this.result = result;
     }

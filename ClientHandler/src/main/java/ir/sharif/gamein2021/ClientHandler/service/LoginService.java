@@ -43,28 +43,20 @@ public class LoginService
 
         String teamName = loginRequest.getTeamName();
         String password = encryptDecryptService.decryptMessage(loginRequest.getPassword());
-        System.out.println(password);
+        ResponseObject responseObject;
         try
         {
             Long teamId = teamController.getTeamId(teamName, password);
             socketSessionService.addSession(teamId.toString(), request.session);
 
             LoginResponse loginResponse = new LoginResponse(teamId);
-            ResponseObject responseObject = new ResponseObject(ResponseTypeConstant.LOGIN, loginResponse, "Successful");
-            pushMessageService.sendMessageBySessionId(request.session.getId(), gson.toJson(responseObject));
+            responseObject = new ResponseObject(ResponseTypeConstant.LOGIN, loginResponse, "Successful");
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
             logger.debug(e);
-            ResponseObject responseObject = new ResponseObject(ResponseTypeConstant.LOGIN, null, e.getMessage());
-            try
-            {
-                pushMessageService.sendMessageBySessionId(request.session.getId(), gson.toJson(responseObject));
-            } catch (IOException ioException)
-            {
-                ioException.printStackTrace();
-            }
+            responseObject = new ResponseObject(ResponseTypeConstant.LOGIN, null, e.getMessage());
         }
+        pushMessageService.sendMessageBySessionId(request.session.getId(), gson.toJson(responseObject));
     }
 }

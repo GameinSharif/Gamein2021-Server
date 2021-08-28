@@ -21,8 +21,12 @@ public class PushMessageService {
         this.encryptDecryptService = encryptDecryptService;
     }
 
-    public void sendMessageBySessionId(String sessionId, String message) throws IOException {
+    public void sendMessageBySessionId(String sessionId, String message){
         WebSocketSession session = socketSessionService.getSessionBySessionId(sessionId);
+        sendMessage(session, message);
+    }
+
+    public void sendMessageBySession(WebSocketSession session, String message){
         sendMessage(session, message);
     }
 
@@ -36,13 +40,16 @@ public class PushMessageService {
         sendMessage(sessions, message);
     }
 
-    private void sendMessage(WebSocketSession session, String message) throws IOException {
+    private void sendMessage(WebSocketSession session, String message){
         if (session == null || !session.isOpen()) {
             return;
         }
-
-        //String encryptedMessage = encryptDecryptService.encryptMessage(message);
-        session.sendMessage(new TextMessage(message));
+        try
+        {
+            //String encryptedMessage = encryptDecryptService.encryptMessage(message);
+            session.sendMessage(new TextMessage(message));
+        }
+        catch (Exception ignored){}
     }
 
     private void sendMessage(List<WebSocketSession> sessions, String message) {

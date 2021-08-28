@@ -5,9 +5,12 @@ import ir.sharif.gamein2021.ClientHandler.authentication.model.ConnectionRespons
 import ir.sharif.gamein2021.ClientHandler.controller.MainController;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.service.EncryptDecryptService;
+import ir.sharif.gamein2021.ClientHandler.service.PushMessageService;
 import ir.sharif.gamein2021.ClientHandler.service.SocketSessionService;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
+import ir.sharif.gamein2021.ClientHandler.view.ResponseObject;
 import ir.sharif.gamein2021.core.util.RequestTypeConstant;
+import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
@@ -27,13 +30,15 @@ public class SocketHandler extends TextWebSocketHandler
     private final MainController mainController;
     private final SocketSessionService socketSessionService;
     private final EncryptDecryptService encryptDecryptService;
+    private final PushMessageService pushMessageService;
     private final Gson gson;
 
-    public SocketHandler(MainController mainController, SocketSessionService socketSessionService, EncryptDecryptService encryptDecryptService)
+    public SocketHandler(MainController mainController, SocketSessionService socketSessionService, EncryptDecryptService encryptDecryptService, PushMessageService pushMessageService)
     {
         this.mainController = mainController;
         this.socketSessionService = socketSessionService;
         this.encryptDecryptService = encryptDecryptService;
+        this.pushMessageService = pushMessageService;
         gson = new Gson();
     }
 
@@ -47,12 +52,12 @@ public class SocketHandler extends TextWebSocketHandler
 
             JSONObject obj = new JSONObject(message.getPayload());
 
-            RequestTypeConstant requestType = RequestTypeConstant.values()[obj.getInt("requestTypeConstant")];
+            RequestTypeConstant requestType = RequestTypeConstant.values()[obj.getInt("RequestTypeConstant")];
             JSONObject requestDataJsonObject = null;
             String requestData = "";
-            if (obj.has("requestData"))
+            if (obj.has("RequestData"))
             {
-                requestDataJsonObject = obj.getJSONObject("requestData");
+                requestDataJsonObject = obj.getJSONObject("RequestData");
                 requestData = requestDataJsonObject.toString();
             }
 
@@ -82,8 +87,9 @@ public class SocketHandler extends TextWebSocketHandler
         logger.log(Level.ERROR, "afterConnectionEstablished");
         socketSessionService.addUnAuthenticatedSession(session);
 
-        ConnectionResponse response = new ConnectionResponse(encryptDecryptService.getPublicKey());
-        session.sendMessage(new TextMessage(gson.toJson(response)));
+        ConnectionResponse connectionResponse = new ConnectionResponse(encryptDecryptService.getPublicKey());
+        ResponseObject responseObject = new ResponseObject(ResponseTypeConstant.CONNECTION, connectionResponse, "Successful");
+        pushMessageService.sendMessageBySession(session, gson.toJson(responseObject));
     }
 
     @Override

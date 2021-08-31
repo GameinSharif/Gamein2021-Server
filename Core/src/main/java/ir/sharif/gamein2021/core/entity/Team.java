@@ -4,47 +4,57 @@ import javax.persistence.*;
 
 @Table(name = "Team")
 @Entity
-public class Team {
+public class Team
+{
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     @Column(nullable = false, unique = true)
-    private String teamName;
+    private String username;
+    @Column(nullable = false)
     private String password;
 
-    public Team() {
+    public Team()
+    {
     }
 
-    public Team(String name, String password) {
-        this.teamName = name;
+    public Team(String username, String password)
+    {
+        this.username = username;
         this.password = password;
     }
 
-    public Long getId() {
+    public int getId()
+    {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public String getUsername()
+    {
+        return username;
     }
 
-    public String getTeamName() { return teamName; }
-
-    public String getPassword() {
+    public String getPassword()
+    {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(String password)
+    {
         this.password = password;
     }
 
-    public void setTeamName(String name) { this.teamName = name; }
+    public void setUsername(String name)
+    {
+        this.username = name;
+    }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return "TeamEntity{" +
-                "name='" + teamName + '\'' +
+                "name='" + username + '\'' +
                 ", id='" + id + '\'' +
                 '}';
     }

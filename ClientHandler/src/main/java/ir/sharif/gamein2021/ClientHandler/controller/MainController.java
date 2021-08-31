@@ -33,13 +33,17 @@ public class MainController
         this.gson = new Gson();
     }
 
-    public void HandleMessage(ProcessedRequest request)
+    public void HandleMessage(ProcessedRequest processedRequest)
     {
-        switch (request.requestType)
+        String requestData = processedRequest.requestData;
+        JSONObject obj = new JSONObject(requestData);
+        RequestTypeConstant requestType = RequestTypeConstant.values()[obj.getInt("requestTypeConstant")];
+
+        switch (requestType)
         {
             case LOGIN:
-                LoginRequest loginRequest = gson.fromJson(request.requestData, LoginRequest.class);
-                serviceRepository.loginService.authenticate(request, loginRequest);
+                LoginRequest loginRequest = gson.fromJson(requestData, LoginRequest.class);
+                serviceRepository.loginService.authenticate(processedRequest, loginRequest);
                 break;
 
             default:

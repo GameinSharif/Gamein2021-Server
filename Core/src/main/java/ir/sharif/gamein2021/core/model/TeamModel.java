@@ -1,44 +1,34 @@
 package ir.sharif.gamein2021.core.model;
 
 public class TeamModel {
-    private Long id;
-    private String name;
-    private String email;
+    private int id;
+    private String username;
 
     public TeamModel() {
     }
 
-    public TeamModel(Long id) {
+    public TeamModel(int id) {
         this.id = id;
     }
 
-    public TeamModel(Long id, String name, String email) {
+    public TeamModel(int id, String username) {
         this.id = id;
-        this.name = name;
-        this.email = email;
+        this.username = username;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

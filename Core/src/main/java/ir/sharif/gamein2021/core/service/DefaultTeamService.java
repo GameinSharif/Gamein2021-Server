@@ -27,7 +27,7 @@ public class DefaultTeamService implements TeamService {
     }
 
     @Override
-    public boolean deleteTeam(Long teamId) {
+    public boolean deleteTeam(int teamId) {
         teamRepository.deleteById(teamId);
         return true;
     }
@@ -43,20 +43,20 @@ public class DefaultTeamService implements TeamService {
     }
 
     @Override
-    public TeamModel getTeamById(Long teamId) {
+    public TeamModel getTeamById(int teamId) {
         return populateTeamModel(teamRepository.findById(teamId).orElseThrow(() -> new EntityNotFoundException("Team not found")));
     }
 
     private TeamModel populateTeamModel(final Team team) {
         TeamModel teamData = new TeamModel();
         teamData.setId(team.getId());
-        teamData.setName(team.getTeamName());
+        teamData.setUsername(team.getUsername());
         return teamData;
     }
 
     private Team populateTeamEntity(TeamModel teamData) {
         Team team = new Team();
-        team.setTeamName(teamData.getName());
+        team.setUsername(teamData.getUsername());
         return team;
     }
 }

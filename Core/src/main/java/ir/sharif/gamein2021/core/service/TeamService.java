@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface TeamService {
     TeamModel saveTeam(TeamModel team);
-    boolean deleteTeam(final Long teamId);
+    boolean deleteTeam(final int teamId);
     List<TeamModel> getAllTeams();
-    TeamModel getTeamById(final Long teamId);
+    TeamModel getTeamById(final int teamId);
 }

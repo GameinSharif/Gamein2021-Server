@@ -41,22 +41,21 @@ public class LoginService
             return;
         }
 
-        String teamName = loginRequest.getTeamName();
+        String username = loginRequest.getUsername();
         String password = encryptDecryptService.decryptMessage(loginRequest.getPassword());
-        ResponseObject responseObject;
+        LoginResponse loginResponse;
         try
         {
-            Long teamId = teamController.getTeamId(teamName, password);
-            socketSessionService.addSession(teamId.toString(), request.session);
+            int teamId = teamController.getTeamId(username, password);
+            socketSessionService.addSession(String.valueOf(teamId), request.session);
 
-            LoginResponse loginResponse = new LoginResponse(teamId);
-            responseObject = new ResponseObject(ResponseTypeConstant.LOGIN, loginResponse, "Successful");
+            loginResponse = new LoginResponse(ResponseTypeConstant.LOGIN, teamId, "Successful");
         }
         catch (Exception e)
         {
             logger.debug(e);
-            responseObject = new ResponseObject(ResponseTypeConstant.LOGIN, null, e.getMessage());
+            loginResponse = new LoginResponse(ResponseTypeConstant.LOGIN, 0, e.getMessage());
         }
-        pushMessageService.sendMessageBySessionId(request.session.getId(), gson.toJson(responseObject));
+        pushMessageService.sendMessageBySessionId(request.session.getId(), gson.toJson(loginResponse));
     }
 }

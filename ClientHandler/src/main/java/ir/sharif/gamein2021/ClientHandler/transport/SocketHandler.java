@@ -50,18 +50,7 @@ public class SocketHandler extends TextWebSocketHandler
             //String encryptedMessage = message.getPayload();
             //String decryptedMessage = encryptDecryptService.decryptMessage(encryptedMessage);
 
-            JSONObject obj = new JSONObject(message.getPayload());
-
-            RequestTypeConstant requestType = RequestTypeConstant.values()[obj.getInt("RequestTypeConstant")];
-            JSONObject requestDataJsonObject = null;
-            String requestData = "";
-            if (obj.has("RequestData"))
-            {
-                requestDataJsonObject = obj.getJSONObject("RequestData");
-                requestData = requestDataJsonObject.toString();
-            }
-
-            ProcessedRequest processedRequest = new ProcessedRequest(session, requestType, requestDataJsonObject, requestData);
+            ProcessedRequest processedRequest = new ProcessedRequest(session, message.getPayload());
             mainController.HandleMessage(processedRequest);
         }
         catch (Exception exception)
@@ -82,14 +71,13 @@ public class SocketHandler extends TextWebSocketHandler
     }
 
     @Override
-    public void afterConnectionEstablished(WebSocketSession session) throws IOException
+    public void afterConnectionEstablished(WebSocketSession session)
     {
         logger.log(Level.ERROR, "afterConnectionEstablished");
         socketSessionService.addUnAuthenticatedSession(session);
 
-        ConnectionResponse connectionResponse = new ConnectionResponse(encryptDecryptService.getPublicKey());
-        ResponseObject responseObject = new ResponseObject(ResponseTypeConstant.CONNECTION, connectionResponse, "Successful");
-        pushMessageService.sendMessageBySession(session, gson.toJson(responseObject));
+        ConnectionResponse connectionResponse = new ConnectionResponse(ResponseTypeConstant.CONNECTION, encryptDecryptService.getPublicKey());
+        pushMessageService.sendMessageBySession(session, gson.toJson(connectionResponse));
     }
 
     @Override

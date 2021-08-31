@@ -15,9 +15,10 @@ public class TeamController
     @Autowired
     TeamRepository teamRepository;
 
-    public Long getTeamId(String teamName, String password) throws Exception
+    public int getTeamId(String username, String password) throws Exception
     {
-        Team team = new Team(teamName, password);
+        //TODO this part has bugs
+        Team team = new Team(username, password);
         Example<Team> teamExample = Example.of(team);
         Optional<Team> optionalTeam = teamRepository.findOne(teamExample);
         if (optionalTeam.isPresent())

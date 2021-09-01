@@ -2,7 +2,7 @@ package ir.sharif.gamein2021.core.model;
 
 public class TeamModel {
     private int id;
-    private String username;
+    private String teamName;
 
     public TeamModel() {
     }
@@ -11,9 +11,9 @@ public class TeamModel {
         this.id = id;
     }
 
-    public TeamModel(int id, String username) {
+    public TeamModel(int id, String teamName) {
         this.id = id;
-        this.username = username;
+        this.teamName = teamName;
     }
 
     public int getId() {
@@ -24,11 +24,11 @@ public class TeamModel {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getTeamName() {
+        return teamName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
     }
 }

@@ -6,12 +6,12 @@ import ir.sharif.gamein2021.ClientHandler.authentication.model.LoginResponse;
 import ir.sharif.gamein2021.ClientHandler.controller.TeamController;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
-import ir.sharif.gamein2021.ClientHandler.view.ResponseObject;
+import ir.sharif.gamein2021.core.entity.User;
+import ir.sharif.gamein2021.core.model.UserModel;
+import ir.sharif.gamein2021.core.service.BaseServiceInterface;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
-
-import java.io.IOException;
 
 @Service
 public class LoginService
@@ -43,11 +43,12 @@ public class LoginService
 
         String username = loginRequest.getUsername();
         String password = encryptDecryptService.decryptMessage(loginRequest.getPassword());
+
         LoginResponse loginResponse;
         try
         {
             int teamId = teamController.getTeamId(username, password);
-            socketSessionService.addSession(String.valueOf(teamId), request.session);
+            socketSessionService.addSession(String.valueOf(teamId),"1", request.session);
 
             loginResponse = new LoginResponse(ResponseTypeConstant.LOGIN, teamId, "Successful");
         }
@@ -56,6 +57,7 @@ public class LoginService
             logger.debug(e);
             loginResponse = new LoginResponse(ResponseTypeConstant.LOGIN, 0, e.getMessage());
         }
+
         pushMessageService.sendMessageBySessionId(request.session.getId(), gson.toJson(loginResponse));
     }
 }

@@ -13,6 +13,9 @@ public class SocketSessionService {
     private final Map<String, WebSocketSession> unAuthenticatedSessions = new HashMap<>();
     private final Map<String, WebSocketSession> sessionBySessionId = new HashMap<>();
 
+    private final Map<String, String> sessionIdByUserId = new HashMap<>();
+    private final Map<String, String> userIdBySessionId = new HashMap<>();
+
     private final Map<String, HashSet<String>> sessionIdsByTeamId = new HashMap<>();
     private final Map<String, String> teamIdBySessionId = new HashMap<>();
 
@@ -28,7 +31,7 @@ public class SocketSessionService {
         }
     }
 
-    public void addSession(String teamId, WebSocketSession session) {
+    public void addSession(String teamId, String userId, WebSocketSession session) {
         synchronized (this) {
             String sessionId = session.getId();
 
@@ -36,14 +39,18 @@ public class SocketSessionService {
             sessionBySessionId.put(sessionId, session);
 
             teamIdBySessionId.put(sessionId, teamId);
+
             if (sessionIdsByTeamId.containsKey(teamId)) {
-                HashSet<String> teamSessionsIds = sessionIdsByTeamId.get(teamId);
-                teamSessionsIds.add(sessionId);
+                HashSet<String> teamSessionIds = sessionIdsByTeamId.get(teamId);
+                teamSessionIds.add(sessionId);
             } else {
                 HashSet<String> teamSessionIds = new HashSet<>();
                 teamSessionIds.add(sessionId);
                 sessionIdsByTeamId.put(teamId, teamSessionIds);
             }
+
+            sessionIdByUserId.put(userId, sessionId);
+            userIdBySessionId.put(sessionId, userId);
         }
     }
 
@@ -62,6 +69,9 @@ public class SocketSessionService {
             if (teamSessionIds.isEmpty()) {
                 sessionIdsByTeamId.remove(teamId);
             }
+
+            String userId = userIdBySessionId.remove(sessionId);
+            sessionIdByUserId.remove(userId);
 
             return session;
         }
@@ -104,11 +114,16 @@ public class SocketSessionService {
         return sessions;
     }
 
+    public WebSocketSession getSessionByUserId(String userId){
+        String sessionId = sessionIdByUserId.get(userId);
+        return getSessionBySessionId(sessionId);
+    }
+
     public List<WebSocketSession> getAllSessions() {
-        return new ArrayList<WebSocketSession>(sessionBySessionId.values());
+        return new ArrayList<>(sessionBySessionId.values());
     }
 
     public List<String> getSessionIdsByTeamId(String teamId) {
-        return new ArrayList<String>(sessionIdsByTeamId.getOrDefault(teamId, new HashSet<>()));
+        return new ArrayList<>(sessionIdsByTeamId.getOrDefault(teamId, new HashSet<>()));
     }
 }

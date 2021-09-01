@@ -1,17 +1,14 @@
 package ir.sharif.gamein2021.core.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
-public class BaseEntity {
+public abstract class BaseEntity {
     @Id
-    Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-    public BaseEntity() {
-    }
-
-    public Integer getId() {
+    public Integer getId(){
         return id;
     }
 }

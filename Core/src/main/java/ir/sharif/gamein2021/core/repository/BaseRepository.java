@@ -1,6 +1,10 @@
 package ir.sharif.gamein2021.core.repository;
 
+import ir.sharif.gamein2021.core.entity.BaseEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.NoRepositoryBean;
+import org.springframework.stereotype.Repository;
 
-public interface BaseRepository<TEntity, ID> extends JpaRepository<TEntity, ID> {
+@Repository
+public interface BaseRepository<TEntity extends BaseEntity, ID> extends JpaRepository<TEntity, ID> {
 }

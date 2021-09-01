@@ -3,6 +3,8 @@ package ir.sharif.gamein2021.core.service;
 import ir.sharif.gamein2021.core.adapters.EntityAdapter;
 import ir.sharif.gamein2021.core.entity.BaseEntity;
 import ir.sharif.gamein2021.core.model.BaseModel;
+import ir.sharif.gamein2021.core.repository.BaseRepository;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +15,10 @@ import java.util.List;
 @Service
 public class BaseService<TEntity extends BaseEntity, TModel extends BaseModel>
         implements BaseServiceInterface<TEntity, TModel> {
-    private final JpaRepository<TEntity, Integer> repository;
+    private final BaseRepository<TEntity, Integer> repository;
     private final EntityAdapter<TEntity, TModel> adapter;
 
-    public BaseService(JpaRepository<TEntity, Integer> repository, EntityAdapter<TEntity, TModel> adapter) {
+    public BaseService(BaseRepository<TEntity, Integer> repository, EntityAdapter<TEntity, TModel> adapter) {
         this.repository = repository;
         this.adapter = adapter;
     }

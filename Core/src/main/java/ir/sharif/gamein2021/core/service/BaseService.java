@@ -4,8 +4,6 @@ import ir.sharif.gamein2021.core.adapters.EntityAdapter;
 import ir.sharif.gamein2021.core.entity.BaseEntity;
 import ir.sharif.gamein2021.core.model.BaseModel;
 import ir.sharif.gamein2021.core.repository.BaseRepository;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;

@@ -1,10 +1,7 @@
 package ir.sharif.gamein2021.ClientHandler.authentication.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import ir.sharif.gamein2021.ClientHandler.view.ResponseObject;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
-import org.json.JSONPropertyIgnore;
 
 import java.io.Serializable;
 import java.security.PublicKey;

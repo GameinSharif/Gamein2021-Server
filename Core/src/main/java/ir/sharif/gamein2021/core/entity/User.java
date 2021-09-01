@@ -5,10 +5,6 @@ import javax.persistence.*;
 @Table(name = "User")
 @Entity
 public class User extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
     @Column(nullable = false, unique = true)
     private String username;
     @Column(nullable = false)
@@ -16,7 +12,7 @@ public class User extends BaseEntity {
 
     @OneToOne
     @JoinColumn(name = "id")
-    Team team;
+    private Team team;
 
 
     public User() {
@@ -25,10 +21,6 @@ public class User extends BaseEntity {
     public User(String username, String password) {
         this.username = username;
         this.password = password;
-    }
-
-    public Integer getId() {
-        return id;
     }
 
     public String getUsername() {
@@ -45,5 +37,13 @@ public class User extends BaseEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
     }
 }

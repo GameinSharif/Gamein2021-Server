@@ -4,11 +4,14 @@ import ir.sharif.gamein2021.core.adapters.EntityAdapter;
 import ir.sharif.gamein2021.core.entity.BaseEntity;
 import ir.sharif.gamein2021.core.model.BaseModel;
 import ir.sharif.gamein2021.core.repository.BaseRepository;
+import ir.sharif.gamein2021.core.service.exceptions.NotFoundEntityException;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BaseService<TEntity extends BaseEntity, TModel extends BaseModel>
@@ -46,5 +49,16 @@ public class BaseService<TEntity extends BaseEntity, TModel extends BaseModel>
     @Override
     public TModel getEntityById(Integer entityId) {
         return adapter.convertToModel(repository.findById(entityId).orElseThrow(() -> new EntityNotFoundException("Entity not found")));
+    }
+
+    @Override
+    public TModel findOne(Example<TEntity> entityExample) throws NotFoundEntityException {
+        Optional<TEntity> optionalEntity = repository.findOne(entityExample);
+        if (optionalEntity.isPresent())
+        {
+            return adapter.convertToModel(optionalEntity.get());
+        }
+
+        throw new EntityNotFoundException("Wrong Username or Password");
     }
 }

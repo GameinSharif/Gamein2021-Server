@@ -15,6 +15,6 @@ public class UserAdapter implements EntityAdapter<User, UserModel> {
 
     @Override
     public UserModel convertToModel(User user) {
-        return new UserModel(user.getId(), user.getUsername());
+        return new UserModel(user.getId(), user.getUsername(), user.getTeam());
     }
 }

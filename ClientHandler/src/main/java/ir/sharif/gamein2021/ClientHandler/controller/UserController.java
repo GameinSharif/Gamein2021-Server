@@ -4,7 +4,6 @@ import ir.sharif.gamein2021.core.adapters.UserAdapter;
 import ir.sharif.gamein2021.core.entity.User;
 import ir.sharif.gamein2021.core.model.UserModel;
 import ir.sharif.gamein2021.core.repository.BaseRepository;
-import ir.sharif.gamein2021.core.repository.UserRepository;
 import ir.sharif.gamein2021.core.service.BaseService;
 import ir.sharif.gamein2021.core.service.exceptions.NotFoundEntityException;
 import org.springframework.data.domain.Example;

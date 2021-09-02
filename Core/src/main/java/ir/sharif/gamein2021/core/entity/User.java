@@ -5,6 +5,10 @@ import javax.persistence.*;
 @Table(name = "User")
 @Entity
 public class User extends BaseEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
     @Column(nullable = false, unique = true)
     private String username;
     @Column(nullable = false)
@@ -45,5 +49,10 @@ public class User extends BaseEntity {
 
     public void setTeam(Team team) {
         this.team = team;
+    }
+
+    @Override
+    public Integer getId() {
+        return id;
     }
 }

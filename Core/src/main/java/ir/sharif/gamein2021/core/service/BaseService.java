@@ -6,20 +6,18 @@ import ir.sharif.gamein2021.core.model.BaseModel;
 import ir.sharif.gamein2021.core.repository.BaseRepository;
 import ir.sharif.gamein2021.core.service.exceptions.NotFoundEntityException;
 import org.springframework.data.domain.Example;
-import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Service
 public class BaseService<TEntity extends BaseEntity, TModel extends BaseModel>
         implements BaseServiceInterface<TEntity, TModel> {
-    private final BaseRepository<TEntity, Integer> repository;
+    private final BaseRepository<TEntity> repository;
     private final EntityAdapter<TEntity, TModel> adapter;
 
-    public BaseService(BaseRepository<TEntity, Integer> repository, EntityAdapter<TEntity, TModel> adapter) {
+    public BaseService(BaseRepository<TEntity> repository, EntityAdapter<TEntity, TModel> adapter) {
         this.repository = repository;
         this.adapter = adapter;
     }

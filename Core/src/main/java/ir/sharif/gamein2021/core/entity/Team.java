@@ -5,6 +5,10 @@ import javax.persistence.*;
 @Table(name = "Team")
 @Entity
 public class Team extends BaseEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
     @Column(nullable = false, unique = true)
     private String teamName;
 
@@ -22,5 +26,10 @@ public class Team extends BaseEntity {
 
     public void setTeamName(String teamName) {
         this.teamName = teamName;
+    }
+
+    @Override
+    public Integer getId() {
+        return id;
     }
 }

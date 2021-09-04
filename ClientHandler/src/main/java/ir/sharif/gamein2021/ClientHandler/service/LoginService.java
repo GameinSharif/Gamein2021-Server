@@ -6,13 +6,14 @@ import ir.sharif.gamein2021.ClientHandler.authentication.model.LoginResponse;
 import ir.sharif.gamein2021.ClientHandler.controller.UserController;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
-import ir.sharif.gamein2021.core.model.UserModel;
+import ir.sharif.gamein2021.core.db.Context;
+import ir.sharif.gamein2021.core.entity.User;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LoginService {
+public class LoginService extends Context {
     static Logger logger = Logger.getLogger(ExecutorThread.class.getName());
 
     private final UserController userController;
@@ -41,9 +42,9 @@ public class LoginService {
 
         LoginResponse loginResponse;
         try {
-            UserModel user = userController.getUser(username, password);
+            User user = userController.getUser(username, password);
             if (user != null) {
-                int teamId = user.getTeamModel().getId();
+                int teamId = user.getTeam().getId();
                 socketSessionService.addSession(String.valueOf(teamId), String.valueOf(user.getId()), request.session);
                 loginResponse = new LoginResponse(ResponseTypeConstant.LOGIN, user.getId(), "Successful");
             }

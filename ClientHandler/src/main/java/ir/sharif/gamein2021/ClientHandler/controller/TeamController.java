@@ -1,10 +1,8 @@
 package ir.sharif.gamein2021.ClientHandler.controller;
 
 import ir.sharif.gamein2021.core.entity.Team;
-import ir.sharif.gamein2021.core.model.TeamModel;
 import ir.sharif.gamein2021.core.repository.BaseRepository;
 import ir.sharif.gamein2021.core.repository.TeamRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Controller;
 

@@ -10,6 +10,8 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
 import java.util.Base64;
 
 @Service
@@ -18,14 +20,14 @@ public class EncryptDecryptService {
 
     static Logger logger = Logger.getLogger(ExecutorThread.class.getName());
 
-    private final PublicKey publicKey;
-    private final PrivateKey privateKey;
+    private final RSAPublicKey publicKey;
+    private final RSAPrivateKey privateKey;
 
     // ----------------------------------------  constructor  ----------------------------------------
     public EncryptDecryptService() {
         KeyPair keyPair = generateKeyPair();
-        this.privateKey = keyPair.getPrivate();
-        this.publicKey = keyPair.getPublic();
+        this.privateKey = (RSAPrivateKey) keyPair.getPrivate();
+        this.publicKey = (RSAPublicKey) keyPair.getPublic();
     }
 
     // ----------------------------------------  methods  ----------------------------------------
@@ -37,7 +39,6 @@ public class EncryptDecryptService {
             KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
             generator.initialize(2048);
             keyPair = generator.generateKeyPair();
-
         } catch (Exception e) {
             logger.debug(e);
         }
@@ -80,7 +81,7 @@ public class EncryptDecryptService {
 
     }
 
-    public PublicKey getPublicKey() {
+    public RSAPublicKey getPublicKey() {
         return publicKey;
     }
 }

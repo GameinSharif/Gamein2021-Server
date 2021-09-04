@@ -9,8 +9,7 @@ import org.springframework.stereotype.Controller;
 import java.util.Optional;
 
 @Controller
-public class TeamController
-{
+public class TeamController {
     private final TeamRepository teamRepository;
 
     public TeamController(TeamRepository teamRepository) {

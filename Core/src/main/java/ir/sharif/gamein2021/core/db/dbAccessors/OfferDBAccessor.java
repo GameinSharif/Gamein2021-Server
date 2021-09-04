@@ -1,6 +1,8 @@
 package ir.sharif.gamein2021.core.db.dbAccessors;
 
+import ir.sharif.gamein2021.core.db.DBSet;
 import ir.sharif.gamein2021.core.db.DBTools;
+import ir.sharif.gamein2021.core.entity.Offer;
 import ir.sharif.gamein2021.core.entity.Team;
 import org.hibernate.Session;
 
@@ -11,7 +13,7 @@ import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OfferDBAccessor {
+public class OfferDBAccessor implements DBSet<Offer> {
 
     @Override
     public Offer get(long id) {
@@ -19,8 +21,8 @@ public class OfferDBAccessor {
         Session session = DBTools.getSessionFactory().openSession();
         session.beginTransaction();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<Team> criteriaQuery = criteriaBuilder.createQuery(Team.class);
-        Root<Team> root = criteriaQuery.from(Team.class);
+        CriteriaQuery<Offer> criteriaQuery = criteriaBuilder.createQuery(Offer.class);
+        Root<Offer> root = criteriaQuery.from(Offer.class);
         criteriaQuery.select(root).where(criteriaBuilder.equal(root.get("id"), id));
         Query query = session.createQuery(criteriaQuery);
         List results = query.getResultList();
@@ -28,20 +30,20 @@ public class OfferDBAccessor {
         session.close();
 
         if (!results.isEmpty()) {
-            return (Team) results.get(0);
+            return (Offer) results.get(0);
         }
         return null;
 
     }
 
     @Override
-    public ArrayList<Team> all() {
+    public ArrayList<Offer> all() {
 
         Session session = DBTools.getSessionFactory().openSession();
         session.beginTransaction();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery <Team> criteriaQuery = criteriaBuilder.createQuery(Team.class);
-        Root <Team> root = criteriaQuery.from(Team.class);
+        CriteriaQuery <Offer> criteriaQuery = criteriaBuilder.createQuery(Offer.class);
+        Root <Offer> root = criteriaQuery.from(Offer.class);
         criteriaQuery.select(root);
         Query query = session.createQuery(criteriaQuery);
         List results = query.getResultList();
@@ -49,32 +51,32 @@ public class OfferDBAccessor {
         session.close();
 
         if (!results.isEmpty()){
-            return (ArrayList<Team>) results;
+            return (ArrayList<Offer>) results;
         }
         return null;
 
     }
 
     @Override
-    public void add(Team team) {
+    public void add(Offer offer) {
         Session session = DBTools.getSessionFactory().openSession();
         session.beginTransaction();
-        session.save(team);
+        session.save(offer);
         session.getTransaction().commit();
         session.close();
     }
 
     @Override
-    public void update(Team team) {
+    public void update(Offer offer) {
 
         Session session = DBTools.getSessionFactory().openSession();
         session.beginTransaction();
-        session.update(team);
+        session.update(offer);
         session.getTransaction().commit();
         session.close();
 
     }
 
-    public TeamDBAccessor() {}
+    public OfferDBAccessor() {}
 
 }

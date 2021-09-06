@@ -17,3 +17,6 @@ java.nio.channels.ClosedChannelException
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
 	at java.base/java.lang.Thread.run(Thread.java:831)
+06 Sep 2021 09:32:23,239 afterConnectionEstablished
+06 Sep 2021 09:34:57,405 session 59e97326-aca5-8903-03f2-1abec2d35d36 error
+06 Sep 2021 09:35:36,552 afterConnectionEstablished

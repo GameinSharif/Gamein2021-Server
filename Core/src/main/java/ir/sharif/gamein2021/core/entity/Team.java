@@ -9,12 +9,10 @@ public class Team extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "team_name", nullable = false, unique = true)
     private String teamName;
 
-    public Team()
-    {
-    }
+    public Team() {}
 
     public Team(String teamName) {
         this.teamName = teamName;

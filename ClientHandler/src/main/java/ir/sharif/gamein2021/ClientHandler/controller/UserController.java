@@ -22,4 +22,9 @@ public class UserController extends Context {
         return null;
 
     }
+
+    public User getUser(long id) {
+        return userDBAccessor.get(id);
+    }
+
 }

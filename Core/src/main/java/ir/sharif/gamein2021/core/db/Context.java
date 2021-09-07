@@ -6,5 +6,6 @@ public class Context {
 
     public UserDBAccessor userDBAccessor = new UserDBAccessor();
     public TeamDBAccessor teamDBAccessor = new TeamDBAccessor();
+    public OfferDBAccessor offerDBAccessor = new OfferDBAccessor();
 
 }

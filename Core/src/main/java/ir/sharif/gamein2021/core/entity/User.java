@@ -19,8 +19,7 @@ public class User extends BaseEntity {
     private Team team;
 
 
-    public User() {
-    }
+    public User() {}
 
     public User(String username, String password) {
         this.username = username;

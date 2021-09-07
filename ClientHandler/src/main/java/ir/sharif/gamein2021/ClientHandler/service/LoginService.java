@@ -1,8 +1,8 @@
 package ir.sharif.gamein2021.ClientHandler.service;
 
 import com.google.gson.Gson;
-import ir.sharif.gamein2021.ClientHandler.authentication.model.LoginRequest;
-import ir.sharif.gamein2021.ClientHandler.authentication.model.LoginResponse;
+import ir.sharif.gamein2021.ClientHandler.model.authentication.LoginRequest;
+import ir.sharif.gamein2021.ClientHandler.model.authentication.LoginResponse;
 import ir.sharif.gamein2021.ClientHandler.controller.UserController;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;

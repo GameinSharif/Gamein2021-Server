@@ -1,7 +1,9 @@
 package ir.sharif.gamein2021.ClientHandler.controller;
 
 import com.google.gson.Gson;
-import ir.sharif.gamein2021.ClientHandler.authentication.model.LoginRequest;
+import ir.sharif.gamein2021.ClientHandler.model.RFQ.GetOffersRequest;
+import ir.sharif.gamein2021.ClientHandler.model.RFQ.NewOfferRequest;
+import ir.sharif.gamein2021.ClientHandler.model.authentication.LoginRequest;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.service.ServiceRepository;
 import ir.sharif.gamein2021.core.util.RequestTypeConstant;
@@ -33,6 +35,16 @@ public class MainController
             case LOGIN:
                 LoginRequest loginRequest = gson.fromJson(requestData, LoginRequest.class);
                 serviceRepository.loginService.authenticate(processedRequest, loginRequest);
+                break;
+
+            case NEW_OFFER:
+                NewOfferRequest newOfferRequest = gson.fromJson(requestData, NewOfferRequest.class);
+                serviceRepository.rfqService.newOffer(processedRequest, newOfferRequest);
+                break;
+
+            case GET_OFFERS:
+                GetOffersRequest getOffersRequest = gson.fromJson(requestData, GetOffersRequest.class);
+                serviceRepository.rfqService.getOffers(processedRequest, getOffersRequest);
                 break;
 
             default:

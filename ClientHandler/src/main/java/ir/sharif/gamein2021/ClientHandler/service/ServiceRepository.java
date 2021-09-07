@@ -13,4 +13,11 @@ public class ServiceRepository {
 
     @Autowired
     public SocketSessionService socketSessionService;
+
+    @Autowired
+    public EncryptDecryptService encryptDecryptService;
+
+    @Autowired
+    public RFQService rfqService;
+
 }

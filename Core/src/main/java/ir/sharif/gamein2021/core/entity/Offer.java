@@ -9,7 +9,7 @@ public class Offer extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
+    @Column(name = "team_id", nullable = false)
     @JoinColumn(name = "id")
     private Team team;
 
@@ -19,16 +19,16 @@ public class Offer extends BaseEntity{
     @Column(nullable = false)
     private Integer volume;
 
-    @Column(nullable = false)
+    @Column(name = "cost_per_unit", nullable = false)
     private Integer costPerUnit;
 
-    @Column(nullable = false)
+    @Column(name = "earliest_expected_arrival", nullable = false)
     private LocalDateTime earliestExpectedArrival;
 
-    @Column(nullable = false)
+    @Column(name = "latest_expected_arrival", nullable = false)
     private LocalDateTime latestExpectedArrival;
 
-    @Column(nullable = false)
+    @Column(name = "offer_deadline", nullable = false)
     private LocalDateTime offerDeadline;
 
     public Offer() {}

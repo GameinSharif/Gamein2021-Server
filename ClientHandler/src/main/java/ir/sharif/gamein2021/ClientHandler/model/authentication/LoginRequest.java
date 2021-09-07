@@ -1,4 +1,4 @@
-package ir.sharif.gamein2021.ClientHandler.authentication.model;
+package ir.sharif.gamein2021.ClientHandler.model.authentication;
 
 import ir.sharif.gamein2021.ClientHandler.transport.model.RequestObject;
 
@@ -6,8 +6,8 @@ import java.io.Serializable;
 
 public class LoginRequest extends RequestObject implements Serializable
 {
-    public String username;
-    public String password;
+    private String username;
+    private String password;
 
     public String getUsername()
     {

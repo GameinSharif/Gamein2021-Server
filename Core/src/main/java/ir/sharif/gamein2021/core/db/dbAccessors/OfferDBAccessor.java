@@ -36,6 +36,26 @@ public class OfferDBAccessor implements DBSet<Offer> {
 
     }
 
+    public ArrayList<Offer> getOffersOf(long teamId) {
+
+        Session session = DBTools.getSessionFactory().openSession();
+        session.beginTransaction();
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery <Offer> criteriaQuery = criteriaBuilder.createQuery(Offer.class);
+        Root <Offer> root = criteriaQuery.from(Offer.class);
+        criteriaQuery.select(root).where(criteriaBuilder.equal(root.get("team_id"), teamId));
+        Query query = session.createQuery(criteriaQuery);
+        List results = query.getResultList();
+        session.getTransaction().commit();
+        session.close();
+
+        if (!results.isEmpty()){
+            return (ArrayList<Offer>) results;
+        }
+        return null;
+
+    }
+
     @Override
     public ArrayList<Offer> all() {
 

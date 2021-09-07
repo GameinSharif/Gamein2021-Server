@@ -1,4 +1,4 @@
-package ir.sharif.gamein2021.ClientHandler.authentication.model;
+package ir.sharif.gamein2021.ClientHandler.model.authentication;
 
 import java.io.Serializable;
 

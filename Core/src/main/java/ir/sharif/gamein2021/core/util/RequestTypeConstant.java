@@ -2,7 +2,9 @@ package ir.sharif.gamein2021.core.util;
 
 public enum RequestTypeConstant {
     // Requests
-    LOGIN(0);
+    LOGIN(0),
+    NEW_OFFER(1),
+    GET_OFFERS(2);
 
     private int value;
 

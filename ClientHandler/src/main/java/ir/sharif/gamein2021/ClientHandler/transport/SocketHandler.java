@@ -1,7 +1,7 @@
 package ir.sharif.gamein2021.ClientHandler.transport;
 
 import com.google.gson.Gson;
-import ir.sharif.gamein2021.ClientHandler.authentication.model.ConnectionResponse;
+import ir.sharif.gamein2021.ClientHandler.model.authentication.ConnectionResponse;
 import ir.sharif.gamein2021.ClientHandler.controller.MainController;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.service.EncryptDecryptService;

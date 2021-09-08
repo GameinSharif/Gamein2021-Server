@@ -1,4 +1,4 @@
-package ir.sharif.gamein2021.core.db;
+package ir.sharif.gamein2021.ClientHandler.db;
 
 import java.util.ArrayList;
 

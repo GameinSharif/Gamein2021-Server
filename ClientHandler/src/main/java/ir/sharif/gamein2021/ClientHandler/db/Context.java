@@ -1,6 +1,6 @@
-package ir.sharif.gamein2021.core.db;
+package ir.sharif.gamein2021.ClientHandler.db;
 
-import ir.sharif.gamein2021.core.db.dbAccessors.*;
+import ir.sharif.gamein2021.ClientHandler.db.dbAccessors.*;
 
 public class Context {
 

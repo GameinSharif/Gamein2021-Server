@@ -5,7 +5,7 @@ CREATE TABLE User
     password VARCHAR(50),
     team_id   INT DEFAULT 0,
     PRIMARY KEY (id),
-    FOREIGN KEY (teamId) REFERENCES Team (id) ON UPDATE CASCADE ON DELETE CASCADE
+    FOREIGN KEY (team_id) REFERENCES Team (id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 INSERT INTO User (username, password, team_id)

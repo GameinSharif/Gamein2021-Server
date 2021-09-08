@@ -71,8 +71,8 @@ public class SocketHandler extends TextWebSocketHandler
         logger.log(Level.ERROR, "afterConnectionEstablished");
         socketSessionService.addUnAuthenticatedSession(session);
 
-        ConnectionResponse connectionResponse = new ConnectionResponse(ResponseTypeConstant.CONNECTION, encryptDecryptService.getPublicKey());
-        pushMessageService.sendMessageBySession(session, gson.toJson(connectionResponse));
+        //ConnectionResponse connectionResponse = new ConnectionResponse(ResponseTypeConstant.CONNECTION, encryptDecryptService.getPublicKey());
+        //pushMessageService.sendMessageBySession(session, gson.toJson(connectionResponse));
     }
 
     @Override

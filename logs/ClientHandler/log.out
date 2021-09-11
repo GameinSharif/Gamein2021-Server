@@ -20,3 +20,65 @@ java.nio.channels.ClosedChannelException
 06 Sep 2021 09:32:23,239 afterConnectionEstablished
 06 Sep 2021 09:34:57,405 session 59e97326-aca5-8903-03f2-1abec2d35d36 error
 06 Sep 2021 09:35:36,552 afterConnectionEstablished
+11 Sep 2021 22:37:54,346 afterConnectionEstablished
+11 Sep 2021 22:40:22,992 afterConnectionEstablished
+11 Sep 2021 22:42:08,033 session 3f5374a5-6c30-3e05-3ab3-f0f2322940a9 error
+11 Sep 2021 22:42:08,034 session c617e04b-258b-c40b-f593-d825f382eeab error
+11 Sep 2021 22:42:34,204 afterConnectionEstablished
+11 Sep 2021 22:46:07,741 afterConnectionEstablished
+11 Sep 2021 22:46:21,037 session 574653a5-e5ab-681e-3315-8e7d739f1351 error
+11 Sep 2021 22:46:24,007 afterConnectionEstablished
+11 Sep 2021 22:49:54,728 session 161023ba-2a7f-b215-5f0c-8d6425e6d463 error
+11 Sep 2021 22:49:54,729 session 4672caa8-d25f-7afa-f11f-a8424cd72814 error
+11 Sep 2021 22:50:10,935 afterConnectionEstablished
+11 Sep 2021 22:50:26,641 session a9afd0d8-3195-33f7-0b9f-b1cdc3fb655d error
+11 Sep 2021 22:53:08,908 afterConnectionEstablished
+11 Sep 2021 22:53:15,965 afterConnectionEstablished
+11 Sep 2021 22:53:29,126 session b3d16f80-e5e7-fc65-ab88-d2fd7984ff0e error
+11 Sep 2021 22:53:29,126 session 304ce919-52d2-9a24-1b38-afd2309870c9 error
+11 Sep 2021 22:53:40,940 afterConnectionEstablished
+11 Sep 2021 22:55:17,685 session 94bb9ee9-e8d5-2768-8d26-dc6e6c750878 error
+11 Sep 2021 22:57:35,250 afterConnectionEstablished
+11 Sep 2021 22:57:56,345 session 6e4cb8d5-f279-640e-5a40-6e40ccd84364 error
+11 Sep 2021 22:59:16,487 afterConnectionEstablished
+11 Sep 2021 22:59:32,888 session 76e0b2c4-099b-8a63-5899-506a9fcb818b error
+11 Sep 2021 23:01:00,713 afterConnectionEstablished
+11 Sep 2021 23:01:08,780 afterConnectionEstablished
+11 Sep 2021 23:01:46,794 session b7c341c4-8bc3-6e37-7a07-d5a81d3bfb9c error
+11 Sep 2021 23:01:46,795 session ee86e028-2a50-1ce0-afd2-ef185e577ef9 error
+11 Sep 2021 23:01:58,901 afterConnectionEstablished
+11 Sep 2021 23:06:01,407 session aea1c738-bd20-1414-cb62-ac6a84d73d8e error
+11 Sep 2021 23:06:22,624 afterConnectionEstablished
+11 Sep 2021 23:09:58,980 session beee7dc7-7146-6cf2-f786-e2bfd614eaab error
+11 Sep 2021 23:10:17,974 afterConnectionEstablished
+11 Sep 2021 23:10:27,033 afterConnectionEstablished
+11 Sep 2021 23:11:54,283 session 2b150326-30bb-597f-e072-7237124dbbc0 error
+11 Sep 2021 23:11:54,284 session 0acfddec-900a-abf7-2646-d51604a68f70 error
+11 Sep 2021 23:14:13,433 afterConnectionEstablished
+11 Sep 2021 23:15:00,957 session afc5a034-df99-0425-ec43-2a287147e93b error
+11 Sep 2021 23:16:23,726 afterConnectionEstablished
+11 Sep 2021 23:17:29,682 session 562e7725-efa6-d54f-349f-94c07f5f9a4f error
+11 Sep 2021 23:19:21,329 afterConnectionEstablished
+11 Sep 2021 23:21:59,875 session 5960588f-abd5-f9bc-f6d9-36e7a14222a6 error
+11 Sep 2021 23:22:17,629 afterConnectionEstablished
+11 Sep 2021 23:23:31,423 session 008435fe-6c53-aae9-0fdc-759feea319f7 error
+11 Sep 2021 23:24:37,222 afterConnectionEstablished
+11 Sep 2021 23:25:24,655 session 4bfe7a9c-9c0a-fa6f-4160-5a7237c4a256 error
+11 Sep 2021 23:27:22,306 afterConnectionEstablished
+11 Sep 2021 23:28:20,818 session 8575094c-d241-f25b-eb27-c73f5b16d517 error
+11 Sep 2021 23:31:57,717 afterConnectionEstablished
+11 Sep 2021 23:33:25,779 session 23ac28d7-17a5-5bbb-b5ab-a1caa58f0735 error
+11 Sep 2021 23:35:38,845 afterConnectionEstablished
+11 Sep 2021 23:37:35,478 session 6ae133a1-a05b-ee2f-ce25-5d6ff75de17d error
+11 Sep 2021 23:37:56,049 afterConnectionEstablished
+11 Sep 2021 23:38:43,262 session 11b3467d-b1ca-ba50-e807-1129710913a9 error
+11 Sep 2021 23:38:55,145 afterConnectionEstablished
+11 Sep 2021 23:40:42,271 session e725ca4a-6c40-fd51-13bb-84795a03e9b1 error
+11 Sep 2021 23:40:59,044 afterConnectionEstablished
+11 Sep 2021 23:44:35,250 session 546125e7-fb5e-769a-2325-798347641bf2 error
+11 Sep 2021 23:44:55,116 afterConnectionEstablished
+11 Sep 2021 23:45:26,022 session 16e9dc42-2e16-a63f-9fb8-33e9df366fef error
+11 Sep 2021 23:46:08,952 afterConnectionEstablished
+11 Sep 2021 23:46:19,873 afterConnectionEstablished
+11 Sep 2021 23:46:31,887 session cf2c4882-2237-cef0-f5b4-9eb30382ffce error
+11 Sep 2021 23:46:31,887 session 73dcf8ff-3039-98b1-22ed-a9e17c226546 error

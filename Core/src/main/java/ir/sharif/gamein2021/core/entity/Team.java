@@ -1,6 +1,7 @@
 package ir.sharif.gamein2021.core.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Table(name = "Team")
 @Entity
@@ -11,6 +12,10 @@ public class Team {
 
     @Column(nullable = false, unique = true)
     private String teamName;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "teamId", referencedColumnName = "id")
+    private List<User> users;
 
     public Team()
     {
@@ -30,5 +35,17 @@ public class Team {
 
     public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 }

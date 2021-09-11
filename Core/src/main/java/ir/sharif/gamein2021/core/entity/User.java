@@ -14,10 +14,8 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @OneToOne
-    @JoinColumn(name = "id")
-    private Team team;
-
+    @Column(nullable = false)
+    private Integer teamId;
 
     public User() {
     }
@@ -43,15 +41,19 @@ public class User {
         this.password = password;
     }
 
-    public Team getTeam() {
-        return team;
-    }
-
-    public void setTeam(Team team) {
-        this.team = team;
-    }
-
     public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(Integer teamId) {
+        this.teamId = teamId;
     }
 }

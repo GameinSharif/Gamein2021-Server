@@ -82,3 +82,5 @@ java.nio.channels.ClosedChannelException
 11 Sep 2021 23:46:19,873 afterConnectionEstablished
 11 Sep 2021 23:46:31,887 session cf2c4882-2237-cef0-f5b4-9eb30382ffce error
 11 Sep 2021 23:46:31,887 session 73dcf8ff-3039-98b1-22ed-a9e17c226546 error
+11 Sep 2021 23:47:05,227 afterConnectionEstablished
+11 Sep 2021 23:47:37,764 session 27c733e5-7d89-023c-bbeb-719bfdc901e1 error

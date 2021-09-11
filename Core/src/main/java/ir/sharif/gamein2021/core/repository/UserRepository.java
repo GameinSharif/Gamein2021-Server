@@ -1,8 +1,7 @@
 package ir.sharif.gamein2021.core.repository;
 
 import ir.sharif.gamein2021.core.entity.User;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-@Repository
-public interface UserRepository extends BaseRepository<User> {
+public interface UserRepository extends JpaRepository<User, Integer> {
 }

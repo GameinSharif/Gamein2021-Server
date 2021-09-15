@@ -1,13 +1,13 @@
 package ir.sharif.gamein2021.ClientHandler.service;
 
 import com.google.gson.Gson;
-import ir.sharif.gamein2021.ClientHandler.model.authentication.LoginRequest;
-import ir.sharif.gamein2021.ClientHandler.model.authentication.LoginResponse;
+import ir.sharif.gamein2021.ClientHandler.domain.authentication.LoginRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.authentication.LoginResponse;
 import ir.sharif.gamein2021.ClientHandler.controller.UserController;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
 import ir.sharif.gamein2021.ClientHandler.db.Context;
-import ir.sharif.gamein2021.core.entity.User;
+import ir.sharif.gamein2021.core.domain.entity.User;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;

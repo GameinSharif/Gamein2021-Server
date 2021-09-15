@@ -1,7 +1,7 @@
 package ir.sharif.gamein2021.ClientHandler.controller;
 
 import ir.sharif.gamein2021.ClientHandler.db.Context;
-import ir.sharif.gamein2021.core.entity.User;
+import ir.sharif.gamein2021.core.domain.entity.User;
 import org.springframework.stereotype.Controller;
 
 @Controller

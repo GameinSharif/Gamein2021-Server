@@ -1,9 +1,9 @@
 package ir.sharif.gamein2021.ClientHandler.controller;
 
 import com.google.gson.Gson;
-import ir.sharif.gamein2021.ClientHandler.model.RFQ.GetOffersRequest;
-import ir.sharif.gamein2021.ClientHandler.model.RFQ.NewOfferRequest;
-import ir.sharif.gamein2021.ClientHandler.model.authentication.LoginRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.RFQ.GetOffersRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.RFQ.NewOfferRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.authentication.LoginRequest;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.service.ServiceRepository;
 import ir.sharif.gamein2021.core.util.RequestTypeConstant;

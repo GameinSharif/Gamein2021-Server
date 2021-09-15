@@ -1,4 +1,4 @@
-package ir.sharif.gamein2021.ClientHandler.model.RFQ;
+package ir.sharif.gamein2021.ClientHandler.domain.RFQ;
 
 import ir.sharif.gamein2021.ClientHandler.transport.model.RequestObject;
 

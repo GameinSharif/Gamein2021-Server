@@ -2,7 +2,7 @@ package ir.sharif.gamein2021.ClientHandler.db.dbAccessors;
 
 import ir.sharif.gamein2021.ClientHandler.db.DBSet;
 import ir.sharif.gamein2021.ClientHandler.db.DBTools;
-import ir.sharif.gamein2021.core.entity.User;
+import ir.sharif.gamein2021.core.domain.entity.User;
 import org.hibernate.Session;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;

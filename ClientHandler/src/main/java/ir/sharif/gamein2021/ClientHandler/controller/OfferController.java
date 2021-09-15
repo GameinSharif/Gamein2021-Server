@@ -1,10 +1,10 @@
 package ir.sharif.gamein2021.ClientHandler.controller;
 
-import ir.sharif.gamein2021.ClientHandler.model.RFQ.GetOffersTransitModel;
-import ir.sharif.gamein2021.ClientHandler.model.RFQ.NewOfferTransitModel;
+import ir.sharif.gamein2021.ClientHandler.domain.RFQ.GetOffersTransitModel;
+import ir.sharif.gamein2021.core.domain.dto.OfferDto;
 import ir.sharif.gamein2021.ClientHandler.db.Context;
-import ir.sharif.gamein2021.core.entity.Offer;
-import ir.sharif.gamein2021.core.entity.Team;
+import ir.sharif.gamein2021.core.domain.entity.Offer;
+import ir.sharif.gamein2021.core.domain.entity.Team;
 import org.springframework.stereotype.Controller;
 
 import java.util.ArrayList;
@@ -12,9 +12,8 @@ import java.util.ArrayList;
 @Controller
 public class OfferController extends Context {
 
-    public String newOffer(Team team, NewOfferTransitModel offer) {
-        offerDBAccessor.add(new Offer(
-                team,
+    public String newOffer(Team team, OfferDto offer) {
+        offerDBAccessor.add(new Offer(0 ,team,
                 offer.getType(),
                 offer.getVolume(),
                 offer.getCostPerUnit(),

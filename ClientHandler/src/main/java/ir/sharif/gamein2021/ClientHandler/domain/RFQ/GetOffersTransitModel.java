@@ -1,12 +1,10 @@
-package ir.sharif.gamein2021.ClientHandler.model.RFQ;
+package ir.sharif.gamein2021.ClientHandler.domain.RFQ;
 
-import ir.sharif.gamein2021.core.entity.Team;
-
-import javax.persistence.Column;
 import java.time.LocalDateTime;
 
-public class NewOfferTransitModel {
+public class GetOffersTransitModel {
 
+    private String teamName;
     private String type;
     private Integer volume;
     private Integer costPerUnit;
@@ -14,16 +12,21 @@ public class NewOfferTransitModel {
     private LocalDateTime latestExpectedArrival;
     private LocalDateTime offerDeadline;
 
-    public NewOfferTransitModel() {}
+    public GetOffersTransitModel() {}
 
-    public NewOfferTransitModel(Team team, String type, Integer volume, Integer costPerUnit,
+    public GetOffersTransitModel(String teamName, String type, Integer volume, Integer costPerUnit,
                                 LocalDateTime earliestExpectedArrival, LocalDateTime latestExpectedArrival, LocalDateTime offerDeadline) {
+        this.teamName = teamName;
         this.type = type;
         this.volume = volume;
         this.costPerUnit = costPerUnit;
         this.earliestExpectedArrival = earliestExpectedArrival;
         this.latestExpectedArrival = latestExpectedArrival;
         this.offerDeadline = offerDeadline;
+    }
+
+    public String getTeamName() {
+        return teamName;
     }
 
     public String getType() {

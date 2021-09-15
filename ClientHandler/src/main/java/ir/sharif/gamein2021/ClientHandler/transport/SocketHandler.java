@@ -1,14 +1,12 @@
 package ir.sharif.gamein2021.ClientHandler.transport;
 
 import com.google.gson.Gson;
-import ir.sharif.gamein2021.ClientHandler.model.authentication.ConnectionResponse;
 import ir.sharif.gamein2021.ClientHandler.controller.MainController;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.service.EncryptDecryptService;
 import ir.sharif.gamein2021.ClientHandler.service.PushMessageService;
 import ir.sharif.gamein2021.ClientHandler.service.SocketSessionService;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
-import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;

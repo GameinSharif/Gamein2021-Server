@@ -1,8 +1,7 @@
 package ir.sharif.gamein2021.ClientHandler.db.dbAccessors;
 
 import ir.sharif.gamein2021.ClientHandler.db.DBSet;
-import ir.sharif.gamein2021.ClientHandler.db.DBTools;
-import ir.sharif.gamein2021.core.entity.Offer;
+import ir.sharif.gamein2021.core.domain.entity.Offer;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;

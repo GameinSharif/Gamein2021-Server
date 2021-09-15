@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+xml version='1.0' encoding='utf-8'?>
 
 <!DOCTYPE hibernate-configuration PUBLIC
         "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
@@ -30,9 +30,9 @@
         <property name="hbm2ddl.auto">validate</property>
 
         <!-- Names the annotated entity class -->
-        <mapping class="ir.sharif.gamein2021.core.entity.User"/>
-        <mapping class="ir.sharif.gamein2021.core.entity.Team"/>
-        <mapping class="ir.sharif.gamein2021.core.entity.Offer"/>
+        <mapping class="ir.sharif.gamein2021.core.domain.entity.User"/>
+        <mapping class="ir.sharif.gamein2021.core.domain.entity.Team"/>
+        <mapping class="ir.sharif.gamein2021.core.domain.entity.Offer"/>
 
     </session-factory>
 

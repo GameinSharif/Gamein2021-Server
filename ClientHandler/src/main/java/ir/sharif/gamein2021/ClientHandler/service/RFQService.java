@@ -4,10 +4,10 @@ import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.controller.OfferController;
 import ir.sharif.gamein2021.ClientHandler.controller.UserController;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
-import ir.sharif.gamein2021.ClientHandler.model.RFQ.*;
+import ir.sharif.gamein2021.ClientHandler.domain.RFQ.*;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
-import ir.sharif.gamein2021.core.entity.Offer;
-import ir.sharif.gamein2021.core.entity.User;
+import ir.sharif.gamein2021.core.domain.dto.OfferDto;
+import ir.sharif.gamein2021.core.domain.entity.User;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -32,7 +32,7 @@ public class RFQService {
 
     public void newOffer(ProcessedRequest request, NewOfferRequest newOfferRequest) {
 
-        NewOfferTransitModel offer = newOfferRequest.getOffer();
+        OfferDto offer = newOfferRequest.getOffer();
 
         NewOfferResponse newOfferResponse;
         try {

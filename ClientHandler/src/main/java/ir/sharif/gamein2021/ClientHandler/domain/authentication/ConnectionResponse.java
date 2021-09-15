@@ -1,4 +1,4 @@
-package ir.sharif.gamein2021.ClientHandler.model.authentication;
+package ir.sharif.gamein2021.ClientHandler.domain.authentication;
 
 import ir.sharif.gamein2021.ClientHandler.view.ResponseObject;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;

@@ -10,9 +10,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
-
-import java.util.Set;
 
 @Service
 public class OfferService extends AbstractCrudService<OfferDto , Offer , Integer> {

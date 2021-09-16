@@ -11,14 +11,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "Offer")
+//@Table(name = "Offer")
 public class Offer implements BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "team_id", nullable = false)
     @ManyToOne
     private Team team;
 

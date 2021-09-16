@@ -6,7 +6,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.ComponentScan;
 
 @ComponentScan("ir.sharif.gamein2021.core")
-@SpringBootApplication(scanBasePackages = {"ir.sharif.gamein2021"})
+@SpringBootApplication
 public class ClientHandlerApplication extends SpringBootServletInitializer
 {
     public static void main(String[] args)

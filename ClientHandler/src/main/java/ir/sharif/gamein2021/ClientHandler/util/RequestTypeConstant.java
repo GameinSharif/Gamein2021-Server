@@ -1,4 +1,4 @@
-package ir.sharif.gamein2021.core.util;
+package ir.sharif.gamein2021.ClientHandler.util;
 
 public enum RequestTypeConstant {
     // Requests

@@ -9,7 +9,7 @@ import ir.sharif.gamein2021.ClientHandler.manager.PushMessageManager;
 import ir.sharif.gamein2021.ClientHandler.manager.SocketSessionManager;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
 import ir.sharif.gamein2021.core.domain.entity.User;
-import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
+import ir.sharif.gamein2021.ClientHandler.util.ResponseTypeConstant;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 

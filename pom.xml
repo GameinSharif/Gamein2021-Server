@@ -10,20 +10,24 @@
         <module>ClientHandler</module>
         <module>CentralEngine</module>
     </modules>
-    
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.5.3</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
     <groupId>ir.sharif.gamein</groupId>
-    <artifactId>Gamin2021-Server</artifactId>
+    <artifactId>gamein2021-server</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Gamin2021-Server</name>
+    <name>Server</name>
     <description>Server for Gamein2021</description>
+
     <properties>
         <java.version>11</java.version>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
     </properties>
     <dependencies>
 

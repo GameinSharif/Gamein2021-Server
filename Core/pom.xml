@@ -10,7 +10,7 @@
 <!--    </parent>-->
     <parent>
         <groupId>ir.sharif.gamein</groupId>
-        <artifactId>Gamin2021-Server</artifactId>
+        <artifactId>gamein2021-server</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>core</artifactId>
@@ -45,7 +45,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.21</version>
+            <version>8.0.26</version>
         </dependency>
 
         <dependency>

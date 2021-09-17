@@ -1,7 +1,7 @@
 package ir.sharif.gamein2021.ClientHandler.util;
 
-public enum ResponseTypeConstant {
-
+public enum ResponseTypeConstant
+{
     CONNECTION(0),
     LOGIN(1),
     NEW_OFFER(2),

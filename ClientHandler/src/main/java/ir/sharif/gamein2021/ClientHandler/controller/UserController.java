@@ -63,6 +63,6 @@ public class UserController
             loginResponse = new LoginResponse(ResponseTypeConstant.LOGIN, 0, e.getMessage());
         }
 
-        pushMessageManager.sendMessageBySessionId(request.session.getId(), gson.toJson(loginResponse));
+        pushMessageManager.sendMessageBySession(request.session, gson.toJson(loginResponse));
     }
 }

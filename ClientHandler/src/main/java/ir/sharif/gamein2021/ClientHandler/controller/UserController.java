@@ -1,34 +1,64 @@
 package ir.sharif.gamein2021.ClientHandler.controller;
 
-import ir.sharif.gamein2021.core.adapters.UserAdapter;
-import ir.sharif.gamein2021.core.entity.User;
-import ir.sharif.gamein2021.core.model.UserModel;
-import ir.sharif.gamein2021.core.repository.BaseRepository;
-import ir.sharif.gamein2021.core.service.BaseService;
-import ir.sharif.gamein2021.core.service.exceptions.NotFoundEntityException;
-import org.springframework.data.domain.Example;
-import org.springframework.stereotype.Controller;
+import com.google.gson.Gson;
+import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginResponse;
+import ir.sharif.gamein2021.ClientHandler.manager.EncryptDecryptManager;
+import ir.sharif.gamein2021.ClientHandler.manager.PushMessageManager;
+import ir.sharif.gamein2021.ClientHandler.manager.SocketSessionManager;
+import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
+import ir.sharif.gamein2021.core.Service.UserService;
+import ir.sharif.gamein2021.core.domain.dto.UserDto;
+import ir.sharif.gamein2021.ClientHandler.util.ResponseTypeConstant;
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
 
-@Controller
-public class UserController {
-    private final BaseService<User, UserModel> userService;
-    private final BaseRepository<User> userRepository;
+@Component
+public class UserController
+{
+    static Logger logger = Logger.getLogger(ExecutorThread.class.getName());
 
-    public UserController(BaseRepository<User> userRepository) {
-        this.userRepository = userRepository;
-        this.userService = new BaseService<>(userRepository, new UserAdapter());
+    private final SocketSessionManager socketSessionManager;
+    private final PushMessageManager pushMessageManager;
+    private final EncryptDecryptManager encryptDecryptManager;
+    private final UserService userService;
+    private final Gson gson = new Gson();
+
+    public UserController(SocketSessionManager socketSessionManager, PushMessageManager pushMessageManager, EncryptDecryptManager encryptDecryptManager, UserService userService)
+    {
+        this.socketSessionManager = socketSessionManager;
+        this.pushMessageManager = pushMessageManager;
+        this.encryptDecryptManager = encryptDecryptManager;
+        this.userService = userService;
     }
 
-    public UserModel getUser(String username, String password)
+    public void authenticate(ProcessedRequest request, LoginRequest loginRequest)
     {
-        //TODO this part has bugs
-        User user = new User(username, password);
-        Example<User> userExample = Example.of(user);
-        try {
-            return userService.findOne(userExample);
+        if (socketSessionManager.isAuthenticated(request.session.getId()))
+        {
+            //TODO Can send message to user.
         }
-        catch (NotFoundEntityException e){
-            return null;
+
+        String username = loginRequest.getUsername();
+        String password = loginRequest.getPassword();
+        //password = encryptDecryptService.decryptMessage(password);
+
+        LoginResponse loginResponse;
+        try
+        {
+            UserDto userDto = userService.read(username, password);
+
+            int teamId = userDto.getTeam().getId();
+            socketSessionManager.addSession(String.valueOf(teamId), String.valueOf(userDto.getId()), request.session);
+            loginResponse = new LoginResponse(ResponseTypeConstant.LOGIN, userDto.getId(), "Successful");
         }
+        catch (Exception e)
+        {
+            logger.debug(e);
+            loginResponse = new LoginResponse(ResponseTypeConstant.LOGIN, -1, "Username or Password in incorrect");
+        }
+
+        pushMessageManager.sendMessageBySession(request.session, gson.toJson(loginResponse));
     }
 }

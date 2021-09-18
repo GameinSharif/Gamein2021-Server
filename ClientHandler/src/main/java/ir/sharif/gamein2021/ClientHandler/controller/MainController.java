@@ -1,25 +1,25 @@
 package ir.sharif.gamein2021.ClientHandler.controller;
 
 import com.google.gson.Gson;
-import ir.sharif.gamein2021.ClientHandler.authentication.model.LoginRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginRequest;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
-import ir.sharif.gamein2021.ClientHandler.service.ServiceRepository;
-import ir.sharif.gamein2021.core.util.RequestTypeConstant;
+import ir.sharif.gamein2021.ClientHandler.util.RequestTypeConstant;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
 @Component
 public class MainController
 {
-
-    private final ServiceRepository serviceRepository;
+    private final UserController userController;
     private final Gson gson;
 
-    public MainController(ServiceRepository serviceRepository)
+    @Autowired
+    public MainController(UserController userController)
     {
-        this.serviceRepository = serviceRepository;
         this.gson = new Gson();
+        this.userController = userController;
     }
 
     public void HandleMessage(ProcessedRequest processedRequest)
@@ -32,9 +32,14 @@ public class MainController
         {
             case LOGIN:
                 LoginRequest loginRequest = gson.fromJson(requestData, LoginRequest.class);
-                serviceRepository.loginService.authenticate(processedRequest, loginRequest);
+                userController.authenticate(processedRequest, loginRequest);
                 break;
-
+            case NEW_OFFER:
+                //TODO
+                break;
+            case GET_OFFERS:
+                //TODO
+                break;
             default:
                 System.out.println("Request type is invalid.");
         }

@@ -47,7 +47,6 @@ public class OfferService extends AbstractCrudService<OfferDto , Offer , Integer
     }
 
 
-
     private OfferDto createUpdateOfferDto(Integer offerId, OfferDto newOffer) {
         OfferDto oldOffer = loadById(offerId);
 
@@ -74,8 +73,4 @@ public class OfferService extends AbstractCrudService<OfferDto , Offer , Integer
         }
         return oldOffer;
     }
-
-
-
-
 }

@@ -5,7 +5,10 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-//@AllArgsConstructor
+@AllArgsConstructor
 @Builder
-public class TeamDto {
+public class TeamDto
+{
+    private Integer id;
+    private String teamName;
 }

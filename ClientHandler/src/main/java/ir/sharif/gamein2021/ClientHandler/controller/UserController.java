@@ -8,7 +8,8 @@ import ir.sharif.gamein2021.ClientHandler.manager.EncryptDecryptManager;
 import ir.sharif.gamein2021.ClientHandler.manager.PushMessageManager;
 import ir.sharif.gamein2021.ClientHandler.manager.SocketSessionManager;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
-import ir.sharif.gamein2021.core.domain.entity.User;
+import ir.sharif.gamein2021.core.Service.UserService;
+import ir.sharif.gamein2021.core.domain.dto.UserDto;
 import ir.sharif.gamein2021.ClientHandler.util.ResponseTypeConstant;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
@@ -21,13 +22,15 @@ public class UserController
     private final SocketSessionManager socketSessionManager;
     private final PushMessageManager pushMessageManager;
     private final EncryptDecryptManager encryptDecryptManager;
+    private final UserService userService;
     private final Gson gson = new Gson();
 
-    public UserController(SocketSessionManager socketSessionManager, PushMessageManager pushMessageManager, EncryptDecryptManager encryptDecryptManager)
+    public UserController(SocketSessionManager socketSessionManager, PushMessageManager pushMessageManager, EncryptDecryptManager encryptDecryptManager, UserService userService)
     {
         this.socketSessionManager = socketSessionManager;
         this.pushMessageManager = pushMessageManager;
         this.encryptDecryptManager = encryptDecryptManager;
+        this.userService = userService;
     }
 
     public void authenticate(ProcessedRequest request, LoginRequest loginRequest)
@@ -35,32 +38,25 @@ public class UserController
         if (socketSessionManager.isAuthenticated(request.session.getId()))
         {
             //TODO Can send message to user.
-            return;
         }
 
         String username = loginRequest.getUsername();
-//        String password = encryptDecryptService.decryptMessage(loginRequest.getPassword());
         String password = loginRequest.getPassword();
+        //password = encryptDecryptService.decryptMessage(password);
 
         LoginResponse loginResponse;
         try
         {
-            User user = null;
-            //TODO
-            if (user != null)
-            {
-                int teamId = user.getTeam().getId();
-                socketSessionManager.addSession(String.valueOf(teamId), String.valueOf(user.getId()), request.session);
-                loginResponse = new LoginResponse(ResponseTypeConstant.LOGIN, user.getId(), "Successful");
-            }
-            else
-            {
-                loginResponse = new LoginResponse(ResponseTypeConstant.LOGIN, -1, "Username or Password in incorrect");
-            }
-        } catch (Exception e)
+            UserDto userDto = userService.read(username, password);
+
+            int teamId = userDto.getTeam().getId();
+            socketSessionManager.addSession(String.valueOf(teamId), String.valueOf(userDto.getId()), request.session);
+            loginResponse = new LoginResponse(ResponseTypeConstant.LOGIN, userDto.getId(), "Successful");
+        }
+        catch (Exception e)
         {
             logger.debug(e);
-            loginResponse = new LoginResponse(ResponseTypeConstant.LOGIN, 0, e.getMessage());
+            loginResponse = new LoginResponse(ResponseTypeConstant.LOGIN, -1, "Username or Password in incorrect");
         }
 
         pushMessageManager.sendMessageBySession(request.session, gson.toJson(loginResponse));

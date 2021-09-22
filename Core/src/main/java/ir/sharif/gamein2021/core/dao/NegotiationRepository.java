@@ -10,5 +10,5 @@ import java.util.List;
 
 @Repository
 public interface NegotiationRepository extends JpaRepository<Negotiation, Integer> {
-    List<Negotiation> findNegotiationByDemanderOrSupplier(Team team);
+    List<Negotiation> findAllByDemanderOrSupplier(Team demander, Team supplier);
 }

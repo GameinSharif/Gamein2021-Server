@@ -42,9 +42,9 @@ public class NegotiationService extends AbstractCrudService<NegotiationDto, Nego
     @Transactional(readOnly = true)
     public ArrayList<NegotiationDto> findByTeam(Team team) {
         ArrayList<NegotiationDto> negotiationDtos = new ArrayList<>();
-        List<Negotiation> negotiations = negotiationRepository.findNegotiationByDemanderOrSupplier(team);
+        List<Negotiation> negotiations = negotiationRepository.findAllByDemanderOrSupplier(team , team);
         for(Negotiation element: negotiations){
-            negotiationDtos.add(modelMapper.map(element, NegotiationDto.class));
+            negotiationDtos.add(modelMapper.map(element,NegotiationDto.class));
         }
         return negotiationDtos;
 
@@ -53,10 +53,8 @@ public class NegotiationService extends AbstractCrudService<NegotiationDto, Nego
 
     @Transactional
     public NegotiationDto save(NegotiationDto negotiationDto){
-        AssertionUtil.assertDtoNotNull(negotiationDto, Negotiation.class.getSimpleName());
-        var negotiation = modelMapper.map(negotiationDto, Negotiation.class);
-        Negotiation result = getRepository().save(negotiation).orElseThrow;
-        return modelMapper.map(result, NegotiationDto.class);
+        //TODO Exceptions
+        return saveOrUpdate(negotiationDto);
     }
 
 }

@@ -8,12 +8,13 @@ import ir.sharif.gamein2021.core.domain.entity.Negotiation;
 import ir.sharif.gamein2021.core.domain.entity.Team;
 import ir.sharif.gamein2021.core.exception.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Service
 public class NegotiationService extends AbstractCrudService<NegotiationDto, Negotiation, Integer>{
     private final NegotiationRepository negotiationRepository;
     private final ModelMapper modelMapper;

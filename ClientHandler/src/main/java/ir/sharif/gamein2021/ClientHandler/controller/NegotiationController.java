@@ -36,6 +36,7 @@ public class NegotiationController {
     public void getNegotiations(ProcessedRequest processedRequest, GetNegotiationsRequest getNegotiationsRequest){
         int playerid = getNegotiationsRequest.playerId;
         UserDto user = userService.findById(playerid);
+        //TODO check user is not null
         Team userTeam = user.getTeam();
         ArrayList<NegotiationDto> negotiations = negotiationService.findByTeam(userTeam);
         ArrayList<GetNegotiationsTransitModel> getNegotiationsTransitModels = new ArrayList<>();

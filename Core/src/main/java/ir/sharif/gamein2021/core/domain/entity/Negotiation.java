@@ -40,6 +40,7 @@ public class Negotiation implements BaseEntity{
     @Column(name = "latest_expected_arrival", nullable = false)
     private LocalDateTime latestExpectedArrival;
 
+    //TODO state should be string
     @Column(name = "state", nullable = false)
     private NegotiationState state;
 

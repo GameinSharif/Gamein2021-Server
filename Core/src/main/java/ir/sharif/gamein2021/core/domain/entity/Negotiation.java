@@ -1,5 +1,6 @@
 package ir.sharif.gamein2021.core.domain.entity;
 
+import ir.sharif.gamein2021.core.util.Enums.NegotiationState;
 import ir.sharif.gamein2021.core.domain.dto.NegotiationDto;
 import lombok.*;
 
@@ -40,7 +41,7 @@ public class Negotiation implements BaseEntity{
     private LocalDateTime latestExpectedArrival;
 
     @Column(name = "state", nullable = false)
-    private NegotiationDto.State state;
+    private NegotiationState state;
 
 
     @Override

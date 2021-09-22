@@ -1,6 +1,6 @@
 package ir.sharif.gamein2021.core.domain.dto;
 
-
+import ir.sharif.gamein2021.core.util.Enums.NegotiationState;
 import ir.sharif.gamein2021.core.domain.entity.Team;
 import lombok.*;
 
@@ -13,10 +13,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class NegotiationDto implements BaseDto<Integer> {
-    public enum State
-    {
-        closed, deal, in_progress
-    }
 
     private Integer id;
     private Team demander;
@@ -26,6 +22,6 @@ public class NegotiationDto implements BaseDto<Integer> {
     private Integer costPerUnit;
     private LocalDateTime earliestExpectedArrival;
     private LocalDateTime latestExpectedArrival;
-    private State state;
+    private NegotiationState state;
 
 }

@@ -46,7 +46,7 @@ public class MainController
                 break;
             case GET_NEGOTIATIONS:
                 GetNegotiationsRequest getNegotiationsRequest = gson.fromJson(requestData, GetNegotiationsRequest.class);
-                negotiationController.getNegotiations(getNegotiationsRequest);
+                negotiationController.getNegotiations( processedRequest, getNegotiationsRequest);
                 break;
             case NEW_NEGOTIATION:
                 NewNegotiationRequest newNegotiationRequest = gson.fromJson(requestData, NewNegotiationRequest.class);

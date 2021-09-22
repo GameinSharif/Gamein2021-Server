@@ -5,7 +5,9 @@ public enum ResponseTypeConstant
     CONNECTION(0),
     LOGIN(1),
     NEW_OFFER(2),
-    GET_OFFERS(3);
+    GET_OFFERS(3),
+    NEW_NEGOTIATION(4),
+    GET_NEGOTIATIONS(5);
 
     private int value;
 

@@ -1,26 +1,25 @@
 package ir.sharif.gamein2021.ClientHandler.domain.RFQ;
-
+import ir.sharif.gamein2021.core.util.Enums.NegotiationState;
 import ir.sharif.gamein2021.core.domain.entity.Team;
+import ir.sharif.gamein2021.core.util.Enums;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Getter
-@NoArgsConstructor
+@AllArgsConstructor
 public class GetNegotiationsTransitModel {
-    public enum State
-    {
-        closed, deal, in_progress
-    }
 
-    private Team demander;
-    private Team supplier;
+    private Integer id;
+    private String demander;
+    private String supplier;
     private String type;
     private Integer volume;
     private Integer costPerUnit;
     private LocalDateTime earliestExpectedArrival;
     private LocalDateTime latestExpectedArrival;
-    private State state;
+    private NegotiationState state;
 
     //public GetNegotiationsTransitModel() {}
 

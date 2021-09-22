@@ -1,4 +1,4 @@
-package ir.sharif.gamein2021.core.Service.core;
+package ir.sharif.gamein2021.core.service.core;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

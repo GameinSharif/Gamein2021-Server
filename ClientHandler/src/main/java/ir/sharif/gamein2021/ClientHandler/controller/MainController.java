@@ -3,6 +3,8 @@ package ir.sharif.gamein2021.ClientHandler.controller;
 import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginRequest;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.RFQ.GetNegotiationsRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.RFQ.NewNegotiationRequest;
 import ir.sharif.gamein2021.ClientHandler.util.RequestTypeConstant;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +15,15 @@ import org.springframework.stereotype.Component;
 public class MainController
 {
     private final UserController userController;
+    private final NegotiationController negotiationController;
     private final Gson gson;
 
     @Autowired
-    public MainController(UserController userController)
+    public MainController(UserController userController, NegotiationController negotiationController)
     {
         this.gson = new Gson();
         this.userController = userController;
+        this.negotiationController = negotiationController;
     }
 
     public void HandleMessage(ProcessedRequest processedRequest)
@@ -40,6 +44,13 @@ public class MainController
             case GET_OFFERS:
                 //TODO
                 break;
+            case GET_NEGOTIATIONS:
+                GetNegotiationsRequest getNegotiationsRequest = gson.fromJson(requestData, GetNegotiationsRequest.class);
+                negotiationController.getNegotiations(getNegotiationsRequest);
+                break;
+            case NEW_NEGOTIATION:
+                NewNegotiationRequest newNegotiationRequest = gson.fromJson(requestData, NewNegotiationRequest.class);
+                negotiationController.newNegotiation(newNegotiationRequest);
             default:
                 System.out.println("Request type is invalid.");
         }

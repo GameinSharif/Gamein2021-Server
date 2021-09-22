@@ -28,4 +28,11 @@ public class UserService extends AbstractCrudService<UserDto, User, Integer>
         User result = userRepository.findUserByUsernameAndPassword(username, password);
         return modelMapper.map(result, UserDto.class);
     }
+
+    @Transactional(readOnly = true)
+    public UserDto findById(Integer id)
+    {
+        User result = userRepository.findUserById(id);
+        return modelMapper.map(result, UserDto.class);
+    }
 }

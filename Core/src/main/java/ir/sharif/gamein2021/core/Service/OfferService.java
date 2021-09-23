@@ -7,9 +7,11 @@ import ir.sharif.gamein2021.core.domain.entity.Offer;
 import ir.sharif.gamein2021.core.exception.OfferNotFoundException;
 import ir.sharif.gamein2021.core.util.AssertionUtil;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class OfferService extends AbstractCrudService<OfferDto , Offer , Integer> {
@@ -46,6 +48,27 @@ public class OfferService extends AbstractCrudService<OfferDto , Offer , Integer
         return getRepository().findById(id).orElseThrow(OfferNotFoundException::new);
     }
 
+    @Transactional(readOnly = true)
+    public List<OfferDto> getAllOffers(){
+        List<Offer> offers = offerRepository.findAll();
+        List<OfferDto> offerDtos = new ArrayList<>();
+        for (Offer offer : offers) {
+            offerDtos.add(modelMapper.map(offer, OfferDto.class));
+        }
+        return offerDtos;
+    }
+
+    @Transactional(readOnly = true)
+    public List<OfferDto> getTeamOffers(Integer teamId) {
+        List<Offer> offers = offerRepository.findAll();
+        List<OfferDto> offerDtos = new ArrayList<>();
+        for (Offer offer : offers) {
+            if (offer.getTeam().getId().equals(teamId)) {
+                offerDtos.add(modelMapper.map(offer, OfferDto.class));
+            }
+        }
+        return offerDtos;
+    }
 
     private OfferDto createUpdateOfferDto(Integer offerId, OfferDto newOffer) {
         OfferDto oldOffer = loadById(offerId);
@@ -73,4 +96,17 @@ public class OfferService extends AbstractCrudService<OfferDto , Offer , Integer
         }
         return oldOffer;
     }
+
+    public OfferDto requestToDto(NewOfferRequest newOfferRequest) {
+        OfferDto offerDto = new OfferDto();
+        offerDto.setTeam(offerRepository.findById(newOfferRequest.getTeamId()).isPresent().get();
+        offerDto.setType(newOfferRequest.getType());
+        offerDto.setVolume(newOfferRequest.getVolume());
+        offerDto.setCostPerUnit(newOfferRequest.getCostPerUnit());
+        offerDto.setEarliestExpectedArrival(newOfferRequest.getEarliestExpectedArrival());
+        offerDto.setLatestExpectedArrival(newOfferRequest.getLatestExpectedArrival());
+        offerDto.setOfferDeadline(newOfferRequest.getOfferDeadline());
+        return offerDto;
+    }
+
 }

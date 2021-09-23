@@ -2,8 +2,12 @@ package ir.sharif.gamein2021.core.Service;
 
 import ir.sharif.gamein2021.core.Service.core.AbstractCrudService;
 import ir.sharif.gamein2021.core.dao.UserRepository;
+import ir.sharif.gamein2021.core.domain.dto.OfferDto;
 import ir.sharif.gamein2021.core.domain.dto.UserDto;
+import ir.sharif.gamein2021.core.domain.entity.Offer;
 import ir.sharif.gamein2021.core.domain.entity.User;
+import ir.sharif.gamein2021.core.exception.OfferNotFoundException;
+import ir.sharif.gamein2021.core.exception.UserNotFoundException;
 import ir.sharif.gamein2021.core.util.AssertionUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -28,4 +32,10 @@ public class UserService extends AbstractCrudService<UserDto, User, Integer>
         User result = userRepository.findUserByUsernameAndPassword(username, password);
         return modelMapper.map(result, UserDto.class);
     }
+
+    @Transactional(readOnly = true)
+    public User findById(Integer id) {
+        return getRepository().findById(id).orElseThrow(UserNotFoundException::new);
+    }
+
 }

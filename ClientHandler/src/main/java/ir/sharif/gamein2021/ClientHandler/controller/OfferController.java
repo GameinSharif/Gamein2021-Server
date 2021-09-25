@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.RFQ.*;
 import ir.sharif.gamein2021.ClientHandler.manager.PushMessageManager;
+import ir.sharif.gamein2021.ClientHandler.manager.RequestDtoConversionManager;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
 import ir.sharif.gamein2021.ClientHandler.util.ResponseTypeConstant;
 import ir.sharif.gamein2021.core.Service.OfferService;
@@ -22,14 +23,17 @@ public class OfferController {
     static Logger logger = Logger.getLogger(ExecutorThread.class.getName());
 
     private final PushMessageManager pushMessageManager;
+    private final RequestDtoConversionManager requestDtoConversionManager;
     private final OfferService offerService;
     private final UserService userService;
     private final Gson gson = new Gson();
 
     public OfferController(
-            PushMessageManager pushMessageManager, OfferService offerService, UserService userService
+            PushMessageManager pushMessageManager, RequestDtoConversionManager requestDtoConversionManager,
+            OfferService offerService, UserService userService
     ) {
         this.pushMessageManager = pushMessageManager;
+        this.requestDtoConversionManager = requestDtoConversionManager;
         this.offerService = offerService;
         this.userService = userService;
     }
@@ -76,12 +80,7 @@ public class OfferController {
         NewOfferResponse newOfferResponse;
         try
         {
-            if (!userService.findById(newOfferRequest.playerId).getTeam().getId().equals(
-                    newOfferRequest.getOfferDto().getTeam().getId())
-            ) {
-                throw new CheatingException();
-            }
-            offerService.save(offerService.requestToDto(newOfferRequest));
+            offerService.save(requestDtoConversionManager.newOfferRequestToOfferDto(newOfferRequest));
             newOfferResponse = new NewOfferResponse(ResponseTypeConstant.NEW_OFFER, "Your Offer Submitted Successfully!");
         }
         catch (Exception e)

@@ -1,0 +1,47 @@
+{
+  "playerId": 1,
+  "requestTypeConstant": 1,
+  "teamId": 1,
+  "type": "C7",
+  "volume": 20,
+  "costPerUnit": 3,
+  "earliestExpectedArrival": {
+    "date": {
+      "year": 2014,
+      "month": 3,
+      "day": 12
+    },
+    "time": {
+      "hour": 13,
+      "minute": 37,
+      "second": 27,
+      "nano": 0
+    }
+  },
+  "latestExpectedArrival": {
+    "date": {
+      "year": 2014,
+      "month": 3,
+      "day": 14
+    },
+    "time": {
+      "hour": 13,
+      "minute": 37,
+      "second": 27,
+      "nano": 0
+    }
+  },
+  "offerDeadline": {
+    "date": {
+      "year": 2014,
+      "month": 3,
+      "day": 14
+    },
+    "time": {
+      "hour": 13,
+      "minute": 37,
+      "second": 27,
+      "nano": 0
+    }
+  }
+}

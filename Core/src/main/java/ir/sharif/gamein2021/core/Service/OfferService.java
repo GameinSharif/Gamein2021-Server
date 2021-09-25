@@ -97,16 +97,4 @@ public class OfferService extends AbstractCrudService<OfferDto , Offer , Integer
         return oldOffer;
     }
 
-    public OfferDto requestToDto(NewOfferRequest newOfferRequest) {
-        OfferDto offerDto = new OfferDto();
-        offerDto.setTeam(offerRepository.findById(newOfferRequest.getTeamId()).isPresent().get();
-        offerDto.setType(newOfferRequest.getType());
-        offerDto.setVolume(newOfferRequest.getVolume());
-        offerDto.setCostPerUnit(newOfferRequest.getCostPerUnit());
-        offerDto.setEarliestExpectedArrival(newOfferRequest.getEarliestExpectedArrival());
-        offerDto.setLatestExpectedArrival(newOfferRequest.getLatestExpectedArrival());
-        offerDto.setOfferDeadline(newOfferRequest.getOfferDeadline());
-        return offerDto;
-    }
-
 }

@@ -1,6 +1,7 @@
 package ir.sharif.gamein2021.ClientHandler.manager;
 
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
+import ir.sharif.gamein2021.core.manager.PushMessageManagerInterface;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.TextMessage;
@@ -10,7 +11,7 @@ import java.io.IOException;
 import java.util.List;
 
 @Service
-public class PushMessageManager
+public class PushMessageManager implements PushMessageManagerInterface
 {
     static Logger logger = Logger.getLogger(ExecutorThread.class.getName());
 

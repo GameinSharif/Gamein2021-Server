@@ -1,4 +1,4 @@
-package ir.sharif.gamin2021.CentralEngine;
+package ir.sharif.gamein2021.CentralEngine;
 
 
 import org.springframework.boot.SpringApplication;

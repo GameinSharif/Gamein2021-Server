@@ -1,7 +1,7 @@
-{
-  "products": [
+[
 	{
 	  "id": 1,
+	  "categoryId": 1,
 	  "productionLineId": 1,
 	  "name": "CocaColaSmallBottle",
 	  "ingredientsPerUnit": [
@@ -17,6 +17,7 @@
 	},
 	{
 	  "id": 2,
+	  "categoryId": 1,
 	  "productionLineId": 1,
 	  "name": "CocaColaBigBottle",
 	  "ingredientsPerUnit": [
@@ -29,6 +30,5 @@
 		  "amount": 1
 		}
 	  ]
-	},
-  ]
-}
+	}
+]

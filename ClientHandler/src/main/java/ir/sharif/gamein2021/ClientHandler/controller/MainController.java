@@ -1,6 +1,7 @@
 package ir.sharif.gamein2021.ClientHandler.controller;
 
 import com.google.gson.Gson;
+import ir.sharif.gamein2021.ClientHandler.domain.GetGameDataRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginRequest;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.util.RequestTypeConstant;
@@ -13,13 +14,15 @@ import org.springframework.stereotype.Component;
 public class MainController
 {
     private final UserController userController;
+    private final GameDataController gameDataController;
     private final Gson gson;
 
     @Autowired
-    public MainController(UserController userController)
+    public MainController(UserController userController, GameDataController gameDataController)
     {
         this.gson = new Gson();
         this.userController = userController;
+        this.gameDataController = gameDataController;
     }
 
     public void HandleMessage(ProcessedRequest processedRequest)
@@ -39,6 +42,10 @@ public class MainController
                 break;
             case GET_OFFERS:
                 //TODO
+                break;
+            case GET_GAME_DATA:
+                GetGameDataRequest getGameDataRequest = gson.fromJson(requestData, GetGameDataRequest.class);
+                gameDataController.getGameData(processedRequest, getGameDataRequest);
                 break;
             default:
                 System.out.println("Request type is invalid.");

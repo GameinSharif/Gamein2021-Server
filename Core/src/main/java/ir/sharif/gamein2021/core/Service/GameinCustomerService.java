@@ -9,6 +9,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class GameinCustomerService extends AbstractCrudService<GameinCustomerDto, GameinCustomer, Integer>
 {
@@ -26,5 +28,11 @@ public class GameinCustomerService extends AbstractCrudService<GameinCustomerDto
     public GameinCustomer findById(Integer id)
     {
         return getRepository().findById(id).orElseThrow(EntityNotFoundException::new);
+    }
+
+    @Override
+    public List<GameinCustomerDto> list()
+    {
+        return super.list();
     }
 }

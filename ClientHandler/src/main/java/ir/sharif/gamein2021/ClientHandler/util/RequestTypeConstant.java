@@ -7,6 +7,7 @@ public enum RequestTypeConstant
     GET_OFFERS(2),
     NEW_NEGOTIATION(3),
     GET_NEGOTIATIONS(4);
+    GET_GAME_DATA(3);
 
     private int value;
 

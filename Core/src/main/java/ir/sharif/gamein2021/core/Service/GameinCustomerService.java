@@ -19,6 +19,7 @@ public class GameinCustomerService extends AbstractCrudService<GameinCustomerDto
     {
         this.gameinCustomerRepository = gameinCustomerRepository;
         this.modelMapper = modelMapper;
+        setRepository(gameinCustomerRepository);
     }
 
     @Transactional(readOnly = true)

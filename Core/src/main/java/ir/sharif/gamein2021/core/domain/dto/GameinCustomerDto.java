@@ -1,9 +1,7 @@
 package ir.sharif.gamein2021.core.domain.dto;
 
-import ir.sharif.gamein2021.core.domain.entity.Team;
 import lombok.*;
 
-import java.time.LocalDateTime;
 
 @Getter
 @Setter

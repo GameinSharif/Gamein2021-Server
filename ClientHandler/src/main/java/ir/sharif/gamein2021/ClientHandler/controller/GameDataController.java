@@ -2,6 +2,7 @@ package ir.sharif.gamein2021.ClientHandler.controller;
 
 import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.GetCurrentWeekDemandsResponse;
 import ir.sharif.gamein2021.ClientHandler.domain.GetGameDataRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.GetGameDataResponse;
 import ir.sharif.gamein2021.ClientHandler.manager.PushMessageManager;
@@ -34,18 +35,28 @@ public class GameDataController
         this.weekDemandService = weekDemandService;
     }
 
-    public void getGameData(ProcessedRequest request, GetGameDataRequest getGameDataRequest)
+    public void getGameData(ProcessedRequest request)
     {
         List<GameinCustomerDto> gameinCustomers = gameinCustomerService.list();
 
-        int week = 1; //TODO read week from another place and update it after every week
-        List<WeekDemandDto> thisWeekDemands = weekDemandService.findByWeek(week);
-
-        GetGameDataResponse getGameDataResponse = new GetGameDataResponse(ResponseTypeConstant.GET_GAME_DATA,
+        GetGameDataResponse getGameDataResponse = new GetGameDataResponse(
+                ResponseTypeConstant.GET_GAME_DATA,
                 gameinCustomers,
-                thisWeekDemands,
                 ReadJsonFilesManager.Products);
 
         pushMessageManager.sendMessageBySession(request.session, gson.toJson(getGameDataResponse));
+    }
+
+    public void getCurrentWeekDemands(ProcessedRequest request)
+    {
+        int week = 1; //TODO read week from another place and update it after every week
+        List<WeekDemandDto> currentWeekDemands = weekDemandService.findByWeek(week);
+
+        GetCurrentWeekDemandsResponse getCurrentWeekDemandsResponse = new GetCurrentWeekDemandsResponse(
+                ResponseTypeConstant.GET_CURRENT_WEEK_DEMANDS,
+                currentWeekDemands
+        );
+
+        pushMessageManager.sendMessageBySession(request.session, gson.toJson(getCurrentWeekDemandsResponse));
     }
 }

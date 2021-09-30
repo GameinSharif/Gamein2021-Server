@@ -44,8 +44,8 @@ public class MainController
                 //TODO
                 break;
             case GET_GAME_DATA:
-                GetGameDataRequest getGameDataRequest = gson.fromJson(requestData, GetGameDataRequest.class);
-                gameDataController.getGameData(processedRequest, getGameDataRequest);
+                gameDataController.getGameData(processedRequest);
+                gameDataController.getCurrentWeekDemands(processedRequest);
                 break;
             default:
                 System.out.println("Request type is invalid.");

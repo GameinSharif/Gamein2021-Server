@@ -7,8 +7,8 @@ public enum ResponseTypeConstant
     NEW_OFFER(2),
     GET_OFFERS(3),
     NEW_NEGOTIATION(4),
-    GET_NEGOTIATIONS(5);
-    GET_GAME_DATA(4);
+    GET_NEGOTIATIONS(5),
+    GET_GAME_DATA(6);
 
     private int value;
 

@@ -20,7 +20,7 @@ public class MainController
     private final GameDataController gameDataController;
     private final Gson gson;
     @Autowired
-    public MainController(UserController userController, NegotiationController negotiationController)
+    public MainController(UserController userController, NegotiationController negotiationController, GameDataController gameDataController)
     {
         this.gson = new Gson();
         this.userController = userController;

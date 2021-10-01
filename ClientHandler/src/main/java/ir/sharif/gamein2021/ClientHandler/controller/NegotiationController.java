@@ -15,6 +15,7 @@ import ir.sharif.gamein2021.core.domain.entity.Team;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.Null;
 import java.util.ArrayList;
 
 @Component
@@ -39,13 +40,14 @@ public class NegotiationController {
         //TODO check user is not null
         Team userTeam = user.getTeam();
         ArrayList<NegotiationDto> negotiations = negotiationService.findByTeam(userTeam);
-        ArrayList<GetNegotiationsTransitModel> getNegotiationsTransitModels = new ArrayList<>();
-        for(NegotiationDto element : negotiations){
+        //ArrayList<GetNegotiationsTransitModel> getNegotiationsTransitModels = new ArrayList<>();
+        /*for(NegotiationDto element : negotiations){
             getNegotiationsTransitModels.add(new GetNegotiationsTransitModel(element.getId(), element.getDemander().getTeamName(),
-                    element.getSupplier().getTeamName(), element.getType(), element.getVolume(), element.getCostPerUnit(),
-                    element.getEarliestExpectedArrival(), element.getLatestExpectedArrival(), element.getState()));
-        }
-        GetNegotiationsResponse getNegotiationsResponse = new GetNegotiationsResponse(ResponseTypeConstant.GET_NEGOTIATIONS, getNegotiationsTransitModels);
+                    element.getSupplier().getTeamName(), element.getType(), element.getVolume(), element.getCostPerUnitDemander(),
+                    element.getCostPerUnitSupplier(), element.getEarliestExpectedArrival(), element.getLatestExpectedArrival(), element.getState()));
+        }*/
+
+        GetNegotiationsResponse getNegotiationsResponse = new GetNegotiationsResponse(ResponseTypeConstant.GET_NEGOTIATIONS, negotiations);
         pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(getNegotiationsResponse));
 
     }

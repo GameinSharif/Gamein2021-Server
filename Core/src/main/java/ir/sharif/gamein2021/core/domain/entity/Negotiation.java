@@ -31,8 +31,11 @@ public class Negotiation implements BaseEntity{
     @Column(nullable = false)
     private Integer volume;
 
-    @Column(name = "cost_per_unit", nullable = false)
-    private Integer costPerUnit;
+    @Column(name = "cost_per_unit_demander", nullable = false)
+    private Integer costPerUnitDemander;
+
+    @Column(name = "cost_per_unit_supplier", nullable = false)
+    private Integer costPerUnitSupplier;
 
     @Column(name = "earliest_expected_arrival", nullable = false)
     private LocalDateTime earliestExpectedArrival;

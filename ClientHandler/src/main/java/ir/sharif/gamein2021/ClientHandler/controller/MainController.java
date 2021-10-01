@@ -1,7 +1,7 @@
 package ir.sharif.gamein2021.ClientHandler.controller;
 
 import com.google.gson.Gson;
-import ir.sharif.gamein2021.ClientHandler.domain.GetGameDataRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.GetContractsRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginRequest;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.util.RequestTypeConstant;
@@ -15,14 +15,16 @@ public class MainController
 {
     private final UserController userController;
     private final GameDataController gameDataController;
+    private final ContractController contractController;
     private final Gson gson;
 
     @Autowired
-    public MainController(UserController userController, GameDataController gameDataController)
+    public MainController(UserController userController, GameDataController gameDataController, ContractController contractController)
     {
         this.gson = new Gson();
         this.userController = userController;
         this.gameDataController = gameDataController;
+        this.contractController = contractController;
     }
 
     public void HandleMessage(ProcessedRequest processedRequest)
@@ -46,6 +48,10 @@ public class MainController
             case GET_GAME_DATA:
                 gameDataController.getGameData(processedRequest);
                 gameDataController.getCurrentWeekDemands(processedRequest);
+                break;
+            case GET_CONTRACTS:
+                GetContractsRequest getContractsRequest = gson.fromJson(requestData, GetContractsRequest.class);
+                contractController.getContracts(processedRequest, getContractsRequest);
                 break;
             default:
                 System.out.println("Request type is invalid.");

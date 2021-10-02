@@ -7,10 +7,12 @@ import ir.sharif.gamein2021.core.domain.entity.Provider;
 import ir.sharif.gamein2021.core.domain.entity.Team;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class ProviderService extends AbstractCrudService<ProviderDto, Provider, Integer> {
 
     private final ProviderRepository providerRepository;
@@ -40,5 +42,10 @@ public class ProviderService extends AbstractCrudService<ProviderDto, Provider, 
             providerDtos.add(modelMapper.map(provider, ProviderDto.class));
         }
         return providerDtos;
+    }
+
+    public ProviderDto save(ProviderDto providerDto) {
+        // TODO : Exception
+        return saveOrUpdate(providerDto);
     }
 }

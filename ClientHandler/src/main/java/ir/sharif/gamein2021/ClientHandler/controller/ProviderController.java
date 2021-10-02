@@ -27,14 +27,18 @@ public class ProviderController {
     private final ProviderService providerService;
     private final Gson gson = new Gson();
 
-    public ProviderController(PushMessageManager pushMessageManager, UserService userService, ProviderService providerService) {
+    public ProviderController(PushMessageManager pushMessageManager, UserService userService,
+                              ProviderService providerService) {
         this.pushMessageManager = pushMessageManager;
         this.userService = userService;
         this.providerService = providerService;
     }
 
     public void newProvider(NewProviderRequest newProviderRequest) {
-        // TODO
+        ProviderDto providerDto = newProviderRequest.getNewProviderDto();
+        // TODO : set three default values in providerDto
+        providerService.save(providerDto);
+        // TODO : what if couldn't save
     }
 
     public void getProviders(ProcessedRequest processedRequest, GetProvidersRequest getProvidersRequest) {

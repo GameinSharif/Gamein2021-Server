@@ -5,6 +5,7 @@ public enum RequestTypeConstant
     LOGIN(0),
     NEW_OFFER(1),
     GET_OFFERS(2),
+    GET_GAME_DATA(3),
     NEW_PROVIDER(5),
     GET_PROVIDERS(6);
 

@@ -1,6 +1,7 @@
 package ir.sharif.gamein2021.ClientHandler.controller;
 
 import com.google.gson.Gson;
+import ir.sharif.gamein2021.ClientHandler.domain.GetGameDataRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginRequest;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.RFQ.GetProvidersRequest;
@@ -16,6 +17,7 @@ public class MainController
 {
     private final UserController userController;
     private final ProviderController providerController;
+    private final GameDataController gameDataController;
     private final Gson gson;
 
     @Autowired
@@ -23,6 +25,7 @@ public class MainController
     {
         this.gson = new Gson();
         this.userController = userController;
+        this.gameDataController = gameDataController;
         this.providerController = providerController;
     }
 
@@ -51,6 +54,10 @@ public class MainController
                 break;
             case GET_OFFERS:
                 //TODO
+                break;
+            case GET_GAME_DATA:
+                GetGameDataRequest getGameDataRequest = gson.fromJson(requestData, GetGameDataRequest.class);
+                gameDataController.getGameData(processedRequest, getGameDataRequest);
                 break;
             default:
                 System.out.println("Request type is invalid.");

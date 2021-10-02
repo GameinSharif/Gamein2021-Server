@@ -11,4 +11,6 @@ public class TeamDto
 {
     private Integer id;
     private String teamName;
+    private Integer randomCountryIndex;
+    private int shopXCoordinate , shopYCoordinate = 0;
 }

@@ -1,13 +1,12 @@
 package ir.sharif.gamein2021.core.domain.entity;
 
+import ir.sharif.gamein2021.core.domain.model.Country;
 import lombok.*;
 
 import javax.persistence.*;
 
 @Table(name = "Team")
-@Getter
-@Setter
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
 @Builder
 @Entity
@@ -19,8 +18,11 @@ public class Team implements BaseEntity {
     @Column(name = "team_name", nullable = false, unique = true)
     private String teamName;
 
+    private Integer randomCountryIndex;
 
-
+    private int shopXCoordinate , shopYCoordinate = 0;
+    @Enumerated(value = EnumType.ORDINAL)
+    private Country country;
 
     @Override
     public Integer getId() {

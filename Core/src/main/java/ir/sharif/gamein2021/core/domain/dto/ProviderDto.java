@@ -1,5 +1,6 @@
 package ir.sharif.gamein2021.core.domain.dto;
 
+import ir.sharif.gamein2021.core.domain.entity.Team;
 import lombok.*;
 
 import javax.persistence.Column;
@@ -12,17 +13,12 @@ import javax.persistence.Column;
 public class ProviderDto implements BaseDto<Integer> {
 
     private Integer id;
-    private String company; // TODO : string?
-    private String type; // TODO : string?
+    private Team team;
+    private String productId;
     private Integer maxMonthlyCap;
     private Integer providerAverageCost;
     private Integer providerMinOnRecord;
     private Integer providerMaxOnRecord;
-
-    @Override
-    public void setId(Integer id) {
-        // TODO
-    }
 
     @Override
     public Integer getId() {

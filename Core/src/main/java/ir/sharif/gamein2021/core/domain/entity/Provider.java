@@ -16,12 +16,12 @@ public class Provider implements BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    // TODO : name?
     @Column(nullable = false)
-    private String company; // TODO : string?
+    @ManyToOne
+    private Team team;
 
-    @Column(nullable = false, unique = true)
-    private String type; // TODO : string?
+    @Column(nullable = false, name = "product_id", unique = true)
+    private String productId;
 
     @Column(nullable = false)
     private Integer maxMonthlyCap;

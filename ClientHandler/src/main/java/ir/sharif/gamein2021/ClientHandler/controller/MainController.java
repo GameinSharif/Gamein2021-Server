@@ -21,7 +21,7 @@ public class MainController
     private final Gson gson;
 
     @Autowired
-    public MainController(UserController userController, ProviderController providerController)
+    public MainController(UserController userController, ProviderController providerController, GameDataController gameDataController)
     {
         this.gson = new Gson();
         this.userController = userController;

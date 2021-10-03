@@ -1,10 +1,8 @@
 package ir.sharif.gamein2021.ClientHandler.controller;
 
 import com.google.gson.Gson;
-import ir.sharif.gamein2021.ClientHandler.domain.GetGameDataRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginRequest;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginRequest;
 import ir.sharif.gamein2021.ClientHandler.util.RequestTypeConstant;
 import ir.sharif.gamein2021.core.manager.clientConnection.PushMessageManagerInterface;
 import org.json.JSONObject;
@@ -20,9 +18,8 @@ public class MainController {
     private final PushMessageManagerInterface pushMessageManager;
 
     @Autowired
-    public MainController(UserController userController, GameDataController gameDataController)
+    public MainController(UserController userController, GameDataController gameDataController, PushMessageManagerInterface pushMessageManager)
     {
-    public MainController(UserController userController, PushMessageManagerInterface pushMessageManager) {
         this.pushMessageManager = pushMessageManager;
         this.gson = new Gson();
         this.userController = userController;

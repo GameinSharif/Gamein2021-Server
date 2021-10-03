@@ -1,6 +1,6 @@
 package ir.sharif.gamein2021.ClientHandler;
 
-import ir.sharif.gamein2021.core.mainThread.MainThread;
+import ir.sharif.gamein2021.core.CoreApplication;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
@@ -20,7 +20,7 @@ public class ClientHandlerApplication extends SpringBootServletInitializer {
         Environment environment = context.getEnvironment();
         String[] profiles = environment.getActiveProfiles();
         if (Arrays.stream(profiles).noneMatch(x -> x.equals("multiClient"))) {
-            MainThread.main(args);
+            CoreApplication.main(args);
         }
     }
 }

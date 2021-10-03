@@ -1,9 +1,0 @@
-{
-  "properties": [
-    {
-      "name": "is-single-node",
-      "type": "java.lang.Boolean",
-      "description": "Description for is-single-node."
-  }
-]
-}

@@ -1,4 +1,4 @@
-package ir.sharif.gamein2021.CentralEngine;
+package ir.sharif.gamein2021.core.mainThread;
 
 public class MainThread {
     public static void main(String[] args) {

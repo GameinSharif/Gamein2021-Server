@@ -1,17 +1,13 @@
 package ir.sharif.gamein2021.CentralEngine.handler;
 
-import ir.sharif.gamein2021.CentralEngine.manager.PushMessageManagerWrapper;
+import ir.sharif.gamein2021.core.manager.engineConnection.EngineQueueConsumerInterface;
+import ir.sharif.gamein2021.core.manager.engineConnection.requests.BaseEngineRequest;
 import org.springframework.stereotype.Component;
 
-@Component
-public class EngineRequestHandler {
-    private PushMessageManagerWrapper pushMessageManager;
+@Component(value = "EngineRequestHandler")
+public class EngineRequestHandler implements EngineQueueConsumerInterface {
 
-    public EngineRequestHandler(PushMessageManagerWrapper pushMessageManager) {
-        this.pushMessageManager = pushMessageManager;
-    }
-
-    public void handle(){
+    public void receive(BaseEngineRequest request) {
         //TODO
     }
 }

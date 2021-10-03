@@ -1,13 +1,14 @@
 package ir.sharif.gamein2021.ClientHandler;
 
-import ir.sharif.gamein2021.CentralEngine.configuration.ApplicationConfiguration;
-import ir.sharif.gamein2021.CentralEngine.MainThread;
+import ir.sharif.gamein2021.core.mainThread.MainThread;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
+
+import java.util.Arrays;
 
 @ComponentScan("ir.sharif.gamein2021")
 @SpringBootApplication
@@ -17,8 +18,8 @@ public class ClientHandlerApplication extends SpringBootServletInitializer {
         ApplicationContext context = SpringApplication.run(ClientHandlerApplication.class, args);
 
         Environment environment = context.getEnvironment();
-        ApplicationConfiguration configuration = new ApplicationConfiguration(environment);
-        if(configuration.isSingleNode){
+        String[] profiles = environment.getActiveProfiles();
+        if (Arrays.stream(profiles).noneMatch(x -> x.equals("multiClient"))) {
             MainThread.main(args);
         }
     }

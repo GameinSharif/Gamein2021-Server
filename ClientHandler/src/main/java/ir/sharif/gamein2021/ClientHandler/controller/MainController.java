@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.domain.GetGameDataRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginRequest;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.RFQ.EditNegotiationCostPerUnitRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.RFQ.GetNegotiationsRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.RFQ.NewNegotiationRequest;
 import ir.sharif.gamein2021.ClientHandler.util.RequestTypeConstant;
@@ -53,9 +54,14 @@ public class MainController
             case NEW_NEGOTIATION:
                 NewNegotiationRequest newNegotiationRequest = gson.fromJson(requestData, NewNegotiationRequest.class);
                 negotiationController.newNegotiation(processedRequest, newNegotiationRequest);
+                break;
             case GET_GAME_DATA:
                 GetGameDataRequest getGameDataRequest = gson.fromJson(requestData, GetGameDataRequest.class);
                 gameDataController.getGameData(processedRequest, getGameDataRequest);
+                break;
+            case EDIT_NEGOTIATION_COST_PER_UNIT:
+                EditNegotiationCostPerUnitRequest editRequest = gson.fromJson(requestData, EditNegotiationCostPerUnitRequest.class);
+                negotiationController.editNegotiationCostPerUnit(processedRequest, editRequest);
                 break;
             default:
                 System.out.println("Request type is invalid.");

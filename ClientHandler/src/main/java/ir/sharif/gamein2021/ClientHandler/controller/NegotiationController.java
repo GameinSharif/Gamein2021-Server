@@ -87,5 +87,31 @@ public class NegotiationController {
 
     }
 
+    public void editNegotiationCostPerUnit(ProcessedRequest processedRequest, EditNegotiationCostPerUnitRequest editRequest){
+        UserDto user = userService.findById(editRequest.playerId);
+        EditNegotiationCostPerUnitResponse editResponse;
+        if(user != null){
+            NegotiationDto negotiationDto = negotiationService.findById(editRequest.getNegotiationId());
+            Team userTeam = user.getTeam();
+            if(userTeam.getId() == negotiationDto.getDemander().getId()){
+                negotiationDto.setCostPerUnitDemander(editRequest.getNewCostPerUnit());
+                negotiationService.saveOrUpdate(negotiationDto);
+                editResponse = new EditNegotiationCostPerUnitResponse(negotiationDto, "success");
+                pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(editResponse));
+                return;
+            }else if(userTeam.getId() == negotiationDto.getSupplier().getId()){
+                negotiationDto.setCostPerUnitSupplier(editRequest.getNewCostPerUnit());
+                negotiationService.saveOrUpdate(negotiationDto);
+                editResponse = new EditNegotiationCostPerUnitResponse(negotiationDto, "success");
+                pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(editResponse));
+                return;
+            }
+        }
+        editResponse = new EditNegotiationCostPerUnitResponse(null, "fail");
+        pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(editResponse));
+    }
+
+
+
 
 }

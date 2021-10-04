@@ -26,8 +26,8 @@ public class NegotiationService extends AbstractCrudService<NegotiationDto, Nego
     }
 
     @Transactional(readOnly = true)
-    public Negotiation findById(Integer id) {
-        return getRepository().findById(id).orElseThrow(EntityNotFoundException::new);
+    public NegotiationDto findById(Integer id) {
+        return modelMapper.map(getRepository().findById(id).orElseThrow(EntityNotFoundException::new), NegotiationDto.class);
     }
 
     @Transactional(readOnly = true)

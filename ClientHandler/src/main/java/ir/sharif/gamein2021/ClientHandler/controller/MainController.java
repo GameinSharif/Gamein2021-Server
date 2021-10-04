@@ -52,7 +52,7 @@ public class MainController
                 break;
             case NEW_NEGOTIATION:
                 NewNegotiationRequest newNegotiationRequest = gson.fromJson(requestData, NewNegotiationRequest.class);
-                negotiationController.newNegotiation(newNegotiationRequest);
+                negotiationController.newNegotiation(processedRequest, newNegotiationRequest);
             case GET_GAME_DATA:
                 GetGameDataRequest getGameDataRequest = gson.fromJson(requestData, GetGameDataRequest.class);
                 gameDataController.getGameData(processedRequest, getGameDataRequest);

@@ -31,7 +31,7 @@ public class UserService extends AbstractCrudService<UserDto, User, Integer>
     @Transactional(readOnly = true)
     public UserDto findById(Integer id)
     {
-        User result = userRepository.findUserById(id).or;
+        User result = userRepository.findUserById(id);
         return modelMapper.map(result, UserDto.class);
     }
 }

@@ -1,6 +1,6 @@
-package ir.sharif.gamein2021.core.Service;
+package ir.sharif.gamein2021.core.service;
 
-import ir.sharif.gamein2021.core.Service.core.AbstractCrudService;
+import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
 import ir.sharif.gamein2021.core.dao.GameinCustomerRepository;
 import ir.sharif.gamein2021.core.domain.dto.GameinCustomerDto;
 import ir.sharif.gamein2021.core.domain.entity.GameinCustomer;

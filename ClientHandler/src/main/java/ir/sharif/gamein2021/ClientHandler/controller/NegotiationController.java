@@ -57,25 +57,34 @@ public class NegotiationController {
 
     public void newNegotiation(ProcessedRequest processedRequest, NewNegotiationRequest newNegotiationRequest){
         // this negotiation doesn't need to be with a provider
-
-        NegotiationDto newNegotiation = newNegotiationRequest.getNegotiation();
+        NegotiationDto requestedNegotiation = newNegotiationRequest.getNegotiationDto();
         UserDto user = userService.findById(newNegotiationRequest.playerId);
-        if (user.getTeam().getId() == newNegotiation.getDemander().getId()){
-            Team supplier = teamService.findTeamById(newNegotiation.getSupplier().getId());
-            // TODO does request send a negotiationDto though?
+        NewNegotiationResponse newNegotiationResponse;
+        if (user != null){
+            Team supplier = teamService.findTeamById(newNegotiationRequest.getSupplierId());
+            if(supplier != null) {
+                NegotiationDto newNegotiation = new NegotiationDto();
+                newNegotiation.setDemander(user.getTeam());
+                newNegotiation.setSupplier(supplier);
+                newNegotiation.setCostPerUnitSupplier(requestedNegotiation.getCostPerUnitSupplier());
+                newNegotiation.setCostPerUnitDemander(requestedNegotiation.getCostPerUnitDemander());
+                newNegotiation.setType(requestedNegotiation.getType());
+                newNegotiation.setVolume(requestedNegotiation.getVolume());
+                newNegotiation.setEarliestExpectedArrival(requestedNegotiation.getEarliestExpectedArrival());
+                newNegotiation.setLatestExpectedArrival(requestedNegotiation.getLatestExpectedArrival());
+                newNegotiation.setState(requestedNegotiation.getState());
 
-            NegotiationDto savedNegotiation = negotiationService.save(newNegotiation);
-            NewNegotiationResponse newNegotiationResponse;
-            if(savedNegotiation != null){
-                newNegotiationResponse = new NewNegotiationResponse(ResponseTypeConstant.NEW_NEGOTIATION, savedNegotiation, "success");
-            }else{
-                newNegotiationResponse = new NewNegotiationResponse(ResponseTypeConstant.NEW_NEGOTIATION, null, "fail");
+                NegotiationDto savedNegotiation = negotiationService.save(newNegotiation);
+                if (savedNegotiation != null) {
+                    newNegotiationResponse = new NewNegotiationResponse(ResponseTypeConstant.NEW_NEGOTIATION, requestedNegotiation, newNegotiationRequest.getSupplierId());
+                    pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(newNegotiationResponse));
+                    return;
+                }
             }
-            pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(newNegotiationResponse));
-        }else{
-            NewNegotiationResponse newNegotiationResponse = new NewNegotiationResponse(ResponseTypeConstant.NEW_NEGOTIATION, null,"fail");
-            pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(newNegotiationResponse));
         }
+        newNegotiationResponse = new NewNegotiationResponse(ResponseTypeConstant.NEW_NEGOTIATION, null, -1);
+        pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(newNegotiationResponse));
+
     }
 
 

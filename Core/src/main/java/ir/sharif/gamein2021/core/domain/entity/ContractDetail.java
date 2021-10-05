@@ -20,11 +20,17 @@ public class ContractDetail implements BaseEntity
     @Column(name = "contract_date", nullable = false)
     private LocalDateTime contractDate;
 
-    @Column(name = "amount", nullable = false)
-    private Integer amount;
+    @Column(name = "max_amount", nullable = false)
+    private Integer maxAmount;
+
+    @Column(name = "bought_amount", nullable = false)
+    private Integer boughtAmount;
 
     @Column(name = "price_per_unit", nullable = false)
     private Integer pricePerUnit;
+
+    @Column(name = "lost_sale_penalty", nullable = false)
+    private Integer lostSalePenalty;
 
 
     @Override

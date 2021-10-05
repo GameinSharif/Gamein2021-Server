@@ -21,4 +21,5 @@ public class ContractDto implements BaseDto<Integer>
     private Integer productId;
     private Enums.ContractType contractType;
     private List<ContractDetail> contractDetails;
+    private Integer terminatePenalty;
 }

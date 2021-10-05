@@ -36,6 +36,8 @@ public class Contract implements BaseEntity
     @JoinColumn(name = "contract_id")
     private List<ContractDetail> contractDetails;
 
+    @Column(name = "terminate_penalty", nullable = false)
+    private Integer terminatePenalty;
 
     @Override
     public Integer getId() {

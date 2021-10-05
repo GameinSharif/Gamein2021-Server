@@ -25,7 +25,7 @@ public class ClientGeneralQueueConsumer implements ClientQueueConsumerInterface 
 
     @RabbitHandler
     public void receive(ClientsInterconnectionRequest request) throws InterruptedException {
-        System.out.println(request.getMessage());
+        System.out.println("message received in client : " + request.getMessage());
         if (request instanceof ClientsSendMessageToAllRequest) {
             pushMessageManager.sendMessageToAll(request.getMessage());
         } else if (request instanceof ClientsSendMessageByTeamIdRequest) {

@@ -5,6 +5,8 @@ import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginRequest;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.util.RequestTypeConstant;
 import ir.sharif.gamein2021.core.manager.clientConnection.PushMessageManagerInterface;
+import ir.sharif.gamein2021.core.manager.engineConnection.ClientToEnginePublisherInterface;
+import ir.sharif.gamein2021.core.manager.engineConnection.requests.BaseEngineRequest;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,11 +18,13 @@ public class MainController {
     private final GameDataController gameDataController;
     private final Gson gson;
     private final PushMessageManagerInterface pushMessageManager;
+    private final ClientToEnginePublisherInterface clientToEnginePublisher;
 
     @Autowired
-    public MainController(UserController userController, GameDataController gameDataController, PushMessageManagerInterface pushMessageManager)
+    public MainController(UserController userController, GameDataController gameDataController, PushMessageManagerInterface pushMessageManager, ClientToEnginePublisherInterface clientToEnginePublisher)
     {
         this.pushMessageManager = pushMessageManager;
+        this.clientToEnginePublisher = clientToEnginePublisher;
         this.gson = new Gson();
         this.userController = userController;
         this.gameDataController = gameDataController;
@@ -28,7 +32,7 @@ public class MainController {
 
     public void HandleMessage(ProcessedRequest processedRequest) {
         pushMessageManager.sendMessageToAll(processedRequest.requestData);
-
+        clientToEnginePublisher.send(new BaseEngineRequest(processedRequest.requestData));
         String requestData = processedRequest.requestData;
         JSONObject obj = new JSONObject(requestData);
         RequestTypeConstant requestType = RequestTypeConstant.values()[obj.getInt("requestTypeConstant")];

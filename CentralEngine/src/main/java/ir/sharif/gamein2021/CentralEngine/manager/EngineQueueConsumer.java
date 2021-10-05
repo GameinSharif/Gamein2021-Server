@@ -21,9 +21,7 @@ public class EngineQueueConsumer implements EngineQueueConsumerInterface {
     }
 
     @RabbitHandler
-    public void receive(BaseEngineRequest request)
-    {
-        System.out.println(" [x] Received '" + request + "'");
+    public void receive(BaseEngineRequest request) {
         engineRequestHandler.receive(request);
     }
 }

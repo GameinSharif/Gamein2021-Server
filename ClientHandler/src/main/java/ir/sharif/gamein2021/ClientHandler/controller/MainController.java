@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.domain.GetContractsRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginRequest;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginRequest;
 import ir.sharif.gamein2021.ClientHandler.util.RequestTypeConstant;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;

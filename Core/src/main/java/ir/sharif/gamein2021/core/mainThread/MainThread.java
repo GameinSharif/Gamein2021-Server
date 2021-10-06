@@ -7,10 +7,10 @@ import org.springframework.context.annotation.Configuration;
 
 @ComponentScan
 @Configuration
-public class MainThread {
-    public static void main(String[] args) {
+public class MainThread
+{
+    public static void main(String[] args)
+    {
         ReadJsonFilesManager.ReadJsonFiles();
-        Product[] products = ReadJsonFilesManager.Products;
-        System.out.println("hello");
     }
 }

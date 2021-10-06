@@ -1,10 +1,9 @@
-package ir.sharif.gamein2021.core.Service;
+package ir.sharif.gamein2021.core.service;
 
-import ir.sharif.gamein2021.core.Service.core.AbstractCrudService;
+import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
 import ir.sharif.gamein2021.core.dao.UserRepository;
 import ir.sharif.gamein2021.core.domain.dto.UserDto;
 import ir.sharif.gamein2021.core.domain.entity.User;
-import ir.sharif.gamein2021.core.util.AssertionUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

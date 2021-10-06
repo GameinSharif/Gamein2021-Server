@@ -9,6 +9,11 @@ public enum ResponseTypeConstant
     GET_GAME_DATA(4),
     GET_CURRENT_WEEK_DEMANDS(5),
     GET_CONTRACTS(6);
+    NEW_NEGOTIATION(4),
+    GET_NEGOTIATIONS(5),
+    GET_GAME_DATA(6),
+    EDIT_NEGOTIATION_COST_PER_UNIT(7);
+
     private int value;
 
     ResponseTypeConstant(int value)

@@ -1,13 +1,12 @@
-package ir.sharif.gamein2021.core.Service;
+package ir.sharif.gamein2021.core.service;
 
-import ir.sharif.gamein2021.core.Service.core.AbstractCrudService;
+import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
 import ir.sharif.gamein2021.core.dao.OfferRepository;
 import ir.sharif.gamein2021.core.domain.dto.OfferDto;
 import ir.sharif.gamein2021.core.domain.entity.Offer;
 import ir.sharif.gamein2021.core.exception.OfferNotFoundException;
 import ir.sharif.gamein2021.core.util.AssertionUtil;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

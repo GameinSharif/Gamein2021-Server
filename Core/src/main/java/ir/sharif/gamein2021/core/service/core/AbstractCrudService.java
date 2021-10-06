@@ -1,4 +1,4 @@
-package ir.sharif.gamein2021.core.Service.core;
+package ir.sharif.gamein2021.core.service.core;
 
 import ir.sharif.gamein2021.core.exception.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;

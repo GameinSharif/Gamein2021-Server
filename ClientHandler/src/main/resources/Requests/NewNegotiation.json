@@ -1,0 +1,10 @@
+{
+  "requestTypeConstant":3,
+  "playerId": 1,
+
+  "type": "s",
+  "volume": 2,
+  "costPerUnitDemander": 10,
+  "costPerUnitSupplier": 12,
+  "supplierId": 2
+}

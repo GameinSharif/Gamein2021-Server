@@ -6,8 +6,6 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
-@Getter
-@NoArgsConstructor
 public class GetNegotiationsRequest extends RequestObject implements Serializable{
 
 }

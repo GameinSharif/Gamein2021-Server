@@ -10,15 +10,15 @@ import lombok.Getter;
 import java.io.Serializable;
 
 
-@Getter
-@AllArgsConstructor
-public class EditNegotiationCostPerUnitResponse extends ResponseObject implements Serializable {
-    NegotiationDto negotiationDto;
-    String result;
+public class EditNegotiationCostPerUnitResponse extends ResponseObject implements Serializable
+{
+    private NegotiationDto negotiationDto;
+    private String result;
 
-    public EditNegotiationCostPerUnitResponse(ResponseTypeConstant responseTypeConstant, NegotiationDto negotiationDto, String result){
+    public EditNegotiationCostPerUnitResponse(ResponseTypeConstant responseTypeConstant, NegotiationDto negotiationDto, String result)
+    {
         this.responseTypeConstant = responseTypeConstant.ordinal();
         this.negotiationDto = negotiationDto;
-        this.result =result;
+        this.result = result;
     }
 }

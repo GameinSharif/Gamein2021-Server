@@ -17,8 +17,8 @@ public class NegotiationDto implements BaseDto<Integer> {
     private Integer id;
     private Team demander;
     private Team supplier;
-    private String type;
-    private Integer volume;
+    private Integer productId;
+    private Integer amount;
     private Integer costPerUnitDemander;
     private Integer costPerUnitSupplier;
     private LocalDateTime earliestExpectedArrival;

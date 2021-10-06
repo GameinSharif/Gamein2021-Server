@@ -15,12 +15,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class NewNegotiationRequest extends RequestObject implements Serializable {
     //NegotiationDto negotiationDto; // the demander and supplier field is empty
-    String type;
-    Integer volume;
-    Integer costPerUnitDemander;
-    Integer costPerUnitSupplier;
+    private Integer productId;
+    private Integer amount;
+    private Integer costPerUnitDemander;
+    private Integer costPerUnitSupplier;
     //LocalDateTime earliestExpectedArrival;
     //LocalDateTime latestExpectedArrival;
-    //NegotiationState state;
-    Integer supplierId;
+    private Integer supplierId;
 }

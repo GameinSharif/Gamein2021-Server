@@ -16,19 +16,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class MainController {
     private final UserController userController;
-    private final NegotiationController negotiationController;
     private final GameDataController gameDataController;
     private final ContractController contractController;
+    private final NegotiationController negotiationController;
     private final Gson gson;
+
     @Autowired
-    public MainController(UserController userController, GameDataController gameDataController, ContractController contractController)
-    public MainController(UserController userController, NegotiationController negotiationController, GameDataController gameDataController)
+    public MainController(UserController userController, GameDataController gameDataController, ContractController contractController, NegotiationController negotiationController)
     {
         this.gson = new Gson();
         this.userController = userController;
-        this.negotiationController = negotiationController;
         this.gameDataController = gameDataController;
         this.contractController = contractController;
+        this.negotiationController = negotiationController;
     }
 
     public void HandleMessage(ProcessedRequest processedRequest) {
@@ -47,16 +47,6 @@ public class MainController {
             case GET_OFFERS:
                 //TODO
                 break;
-            case GET_NEGOTIATIONS:
-                GetNegotiationsRequest getNegotiationsRequest = gson.fromJson(requestData, GetNegotiationsRequest.class);
-                negotiationController.getNegotiations( processedRequest, getNegotiationsRequest);
-                break;
-            case NEW_NEGOTIATION:
-                System.out.println(requestData);
-                NewNegotiationRequest newNegotiationRequest = gson.fromJson(requestData, NewNegotiationRequest.class);
-                System.out.println("then here");
-                negotiationController.newNegotiation(processedRequest, newNegotiationRequest);
-                break;
             case GET_GAME_DATA:
                 gameDataController.getGameData(processedRequest);
                 gameDataController.getCurrentWeekDemands(processedRequest);
@@ -64,6 +54,14 @@ public class MainController {
             case GET_CONTRACTS:
                 GetContractsRequest getContractsRequest = gson.fromJson(requestData, GetContractsRequest.class);
                 contractController.getContracts(processedRequest, getContractsRequest);
+                break;
+            case GET_NEGOTIATIONS:
+                GetNegotiationsRequest getNegotiationsRequest = gson.fromJson(requestData, GetNegotiationsRequest.class);
+                negotiationController.getNegotiations( processedRequest, getNegotiationsRequest);
+                break;
+            case NEW_NEGOTIATION:
+                NewNegotiationRequest newNegotiationRequest = gson.fromJson(requestData, NewNegotiationRequest.class);
+                negotiationController.newNegotiation(processedRequest, newNegotiationRequest);
                 break;
             case EDIT_NEGOTIATION_COST_PER_UNIT:
                 EditNegotiationCostPerUnitRequest editRequest = gson.fromJson(requestData, EditNegotiationCostPerUnitRequest.class);

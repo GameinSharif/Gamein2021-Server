@@ -25,11 +25,11 @@ public class Negotiation implements BaseEntity{
     @ManyToOne
     private Team supplier;
 
-    @Column(nullable = false)
-    private String type;
+    @Column(name = "product_id", nullable = false)
+    private Integer productId;
 
-    @Column(nullable = false)
-    private Integer volume;
+    @Column(name = "amount", nullable = false)
+    private Integer amount;
 
     @Column(name = "cost_per_unit_demander", nullable = false)
     private Integer costPerUnitDemander;
@@ -43,7 +43,7 @@ public class Negotiation implements BaseEntity{
     @Column(name = "latest_expected_arrival", nullable = false)
     private LocalDateTime latestExpectedArrival;
 
-    //TODO state should be string
+    @Enumerated(EnumType.STRING)
     @Column(name = "state", nullable = false)
     private NegotiationState state;
 

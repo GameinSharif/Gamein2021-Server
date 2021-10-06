@@ -4,9 +4,11 @@ public class Enums
 {
     public enum ContractType
     {
-        ONCE, LONGTERM;
+        ONCE, LONGTERM
+    }
+
     public enum NegotiationState
     {
-        closed, deal, in_progress
+        CLOSED, DEAL, IN_PROGRESS, PENDING
     }
 }

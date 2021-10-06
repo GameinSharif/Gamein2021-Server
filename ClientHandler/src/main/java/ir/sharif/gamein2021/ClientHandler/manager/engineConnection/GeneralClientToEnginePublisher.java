@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-@Profile(value = {"multiClient"})
+@Profile(value = {"microservice"})
 @Primary
 @Component
 public class GeneralClientToEnginePublisher implements ClientToEnginePublisherInterface {

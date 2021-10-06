@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
-@Profile(value = {"multiClient"})
+@Profile(value = {"microservice"})
 @Primary
 @Service(value = "GlobalPushMessageManager")
 public class GeneralPushMessageManager implements PushMessageManagerInterface {

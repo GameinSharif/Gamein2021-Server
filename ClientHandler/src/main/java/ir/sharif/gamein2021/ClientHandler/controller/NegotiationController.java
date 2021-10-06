@@ -108,21 +108,31 @@ public class NegotiationController {
         if(user != null){
             NegotiationDto negotiationDto = negotiationService.findById(editRequest.getNegotiationId());
             Team userTeam = user.getTeam();
+            System.out.println("EDITING");
+            System.out.println(userTeam.getId());
             if(userTeam.getId() == negotiationDto.getDemander().getId()){
+                System.out.println("demander");
                 negotiationDto.setCostPerUnitDemander(editRequest.getNewCostPerUnit());
-                negotiationService.saveOrUpdate(negotiationDto);
-                editResponse = new EditNegotiationCostPerUnitResponse(negotiationDto, "success");
+                //negotiationService.saveOrUpdate(negotiationDto);
+                System.out.println(negotiationService.saveOrUpdate(negotiationDto).getCostPerUnitDemander());
+                editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT,
+                        negotiationDto, "success");
                 pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(editResponse));
                 return;
             }else if(userTeam.getId() == negotiationDto.getSupplier().getId()){
+                System.out.println("supplier");
                 negotiationDto.setCostPerUnitSupplier(editRequest.getNewCostPerUnit());
-                negotiationService.saveOrUpdate(negotiationDto);
-                editResponse = new EditNegotiationCostPerUnitResponse(negotiationDto, "success");
+                //negotiationService.saveOrUpdate(negotiationDto);
+                System.out.println(negotiationService.saveOrUpdate(negotiationDto).getCostPerUnitSupplier());
+                editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT,
+                        negotiationDto, "success");
                 pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(editResponse));
                 return;
             }
         }
-        editResponse = new EditNegotiationCostPerUnitResponse(null, "fail");
+        System.out.println("fail");
+        editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT,
+                null, "fail");
         pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(editResponse));
     }
 

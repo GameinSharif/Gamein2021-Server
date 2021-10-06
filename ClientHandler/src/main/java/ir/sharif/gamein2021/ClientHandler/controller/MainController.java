@@ -52,7 +52,9 @@ public class MainController
                 negotiationController.getNegotiations( processedRequest, getNegotiationsRequest);
                 break;
             case NEW_NEGOTIATION:
+                System.out.println(requestData);
                 NewNegotiationRequest newNegotiationRequest = gson.fromJson(requestData, NewNegotiationRequest.class);
+                System.out.println("then here");
                 negotiationController.newNegotiation(processedRequest, newNegotiationRequest);
                 break;
             case GET_GAME_DATA:

@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 /**
- * used for saying to all ClientHandler to send message to a player or a team or all players.
+ * used for saying to all ClientHandler to send message to a player or a team or all players if they have.
  */
 @Profile(value = {"microservice"})
 @Primary

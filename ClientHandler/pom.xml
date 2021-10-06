@@ -18,16 +18,6 @@
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.security</groupId>-->
-<!--            <artifactId>spring-security-test</artifactId>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-security</artifactId>-->
-<!--        </dependency>-->
-
         <!-- https://mvnrepository.com/artifact/log4j/log4j -->
         <dependency>
             <groupId>log4j</groupId>
@@ -76,7 +66,20 @@
             <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
     </dependencies>
 
-
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>

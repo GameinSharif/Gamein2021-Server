@@ -1,16 +1,19 @@
 package ir.sharif.gamein2021.core;
 
 import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
-@SpringBootApplication
+//@ComponentScan(value = "ir.sharif.gamein2021.core")
+@EnableAutoConfiguration
+@Configuration
+@EnableScheduling
 public class CoreApplication
 {
     public static void main(String[] args)
     {
-        //SpringApplication.run(CoreApplication.class, args);
-
         ReadJsonFilesManager.ReadJsonFiles();
     }
 }

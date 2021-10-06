@@ -1,9 +1,8 @@
 {
-  "requestTypeConstant":3,
+  "requestTypeConstant": 5,
   "playerId": 1,
-
-  "type": "s",
-  "volume": 2,
+  "productId": 1,
+  "amount": 2,
   "costPerUnitDemander": 10,
   "costPerUnitSupplier": 12,
   "supplierId": 2

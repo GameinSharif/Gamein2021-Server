@@ -25,19 +25,18 @@ public class SocketHandler extends TextWebSocketHandler {
     private final MainController mainController;
     private final SocketSessionManager socketSessionManager;
     private final EncryptDecryptManager encryptDecryptManager;
-    private final LocalPushMessageManager pushMessageManager;
+    private final LocalPushMessageManager localPushMessageManager;
     private final Gson gson;
-
 
     @Autowired
     public SocketHandler(MainController mainController,
                          SocketSessionManager socketSessionManager,
                          EncryptDecryptManager encryptDecryptManager,
-                         LocalPushMessageManager pushMessageManager) {
+                         LocalPushMessageManager localPushMessageManager) {
         this.mainController = mainController;
         this.socketSessionManager = socketSessionManager;
         this.encryptDecryptManager = encryptDecryptManager;
-        this.pushMessageManager = pushMessageManager;
+        this.localPushMessageManager = localPushMessageManager;
         gson = new Gson();
     }
 
@@ -69,7 +68,7 @@ public class SocketHandler extends TextWebSocketHandler {
         socketSessionManager.addUnAuthenticatedSession(session);
 
         ConnectionResponse connectionResponse = new ConnectionResponse(ResponseTypeConstant.CONNECTION, encryptDecryptManager.getPublicKey());
-        pushMessageManager.sendMessageBySession(session, gson.toJson(connectionResponse));
+        localPushMessageManager.sendMessageBySession(session, gson.toJson(connectionResponse));
     }
 
     @Override

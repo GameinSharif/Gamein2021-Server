@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class LocalClientToEnginePublisher  implements ClientToEnginePublisherInterface {
+public class LocalClientToEnginePublisher implements ClientToEnginePublisherInterface {
     @Autowired
     private EngineQueueConsumerInterface engineQueueConsumer;
 

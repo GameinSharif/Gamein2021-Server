@@ -15,8 +15,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserController
-{
+public class UserController {
     static Logger logger = Logger.getLogger(ExecutorThread.class.getName());
 
     private final SocketSessionManager socketSessionManager;
@@ -25,18 +24,15 @@ public class UserController
     private final UserService userService;
     private final Gson gson = new Gson();
 
-    public UserController(SocketSessionManager socketSessionManager, LocalPushMessageManager localPushMessageManager, EncryptDecryptManager encryptDecryptManager, UserService userService)
-    {
+    public UserController(SocketSessionManager socketSessionManager, LocalPushMessageManager localPushMessageManager, EncryptDecryptManager encryptDecryptManager, UserService userService) {
         this.socketSessionManager = socketSessionManager;
         this.localPushMessageManager = localPushMessageManager;
         this.encryptDecryptManager = encryptDecryptManager;
         this.userService = userService;
     }
 
-    public void authenticate(ProcessedRequest request, LoginRequest loginRequest)
-    {
-        if (socketSessionManager.isAuthenticated(request.session.getId()))
-        {
+    public void authenticate(ProcessedRequest request, LoginRequest loginRequest) {
+        if (socketSessionManager.isAuthenticated(request.session.getId())) {
             //TODO Can send message to user.
         }
 
@@ -45,16 +41,13 @@ public class UserController
         //password = encryptDecryptService.decryptMessage(password);
 
         LoginResponse loginResponse;
-        try
-        {
+        try {
             UserDto userDto = userService.read(username, password);
 
             int teamId = userDto.getTeam().getId();
             socketSessionManager.addSession(String.valueOf(teamId), String.valueOf(userDto.getId()), request.session);
             loginResponse = new LoginResponse(ResponseTypeConstant.LOGIN, userDto.getId(), "Successful");
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             logger.debug(e);
             loginResponse = new LoginResponse(ResponseTypeConstant.LOGIN, -1, "Username or Password in incorrect");
         }

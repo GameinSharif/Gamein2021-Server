@@ -11,8 +11,7 @@ import java.io.IOException;
 import java.util.List;
 
 @Service(value = "LocalPushMessageManager")
-public class LocalPushMessageManager implements PushMessageManagerInterface
-{
+public class LocalPushMessageManager implements PushMessageManagerInterface {
     static Logger logger = Logger.getLogger(ExecutorThread.class.getName());
 
     private final SocketSessionManager socketSessionManager;
@@ -23,16 +22,16 @@ public class LocalPushMessageManager implements PushMessageManagerInterface
         this.encryptDecryptManager = encryptDecryptManager;
     }
 
-    public void sendMessageBySessionId(String sessionId, String message){
+    public void sendMessageBySessionId(String sessionId, String message) {
         WebSocketSession session = socketSessionManager.getSessionBySessionId(sessionId);
         sendMessage(session, message);
     }
 
-    public void sendMessageBySession(WebSocketSession session, String message){
+    public void sendMessageBySession(WebSocketSession session, String message) {
         sendMessage(session, message);
     }
 
-    public void sendMessageByUserId(String userId, String message){
+    public void sendMessageByUserId(String userId, String message) {
         WebSocketSession session = socketSessionManager.getSessionByUserId(userId);
         sendMessage(session, message);
     }
@@ -47,16 +46,15 @@ public class LocalPushMessageManager implements PushMessageManagerInterface
         sendMessage(sessions, message);
     }
 
-    private void sendMessage(WebSocketSession session, String message){
+    private void sendMessage(WebSocketSession session, String message) {
         if (session == null || !session.isOpen()) {
             return;
         }
-        try
-        {
+        try {
             //String encryptedMessage = encryptDecryptService.encryptMessage(message);
             session.sendMessage(new TextMessage(message));
+        } catch (Exception ignored) {
         }
-        catch (Exception ignored){}
     }
 
     private void sendMessage(List<WebSocketSession> sessions, String message) {

@@ -13,8 +13,6 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-import javax.transaction.NotSupportedException;
-
 @Profile(value = {"multiClient"})
 @Primary
 @Component
@@ -31,12 +29,10 @@ public class ClientGeneralQueueConsumer implements ClientQueueConsumerInterface 
         } else if (request instanceof ClientsSendMessageByTeamIdRequest) {
             String teamId = ((ClientsSendMessageByTeamIdRequest) request).getTeamId();
             pushMessageManager.sendMessageByTeamId(teamId, request.getMessage());
-        }
-        else if(request instanceof ClientsSendMessageByUserIdRequest){
+        } else if (request instanceof ClientsSendMessageByUserIdRequest) {
             String userId = ((ClientsSendMessageByUserIdRequest) request).getUserId();
             pushMessageManager.sendMessageByUserId(userId, request.getMessage());
-        }
-        else {
+        } else {
             throw new RuntimeException();
         }
     }

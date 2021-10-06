@@ -28,4 +28,10 @@ public class UserService extends AbstractCrudService<UserDto, User, Integer>
         User result = userRepository.findUserByUsernameAndPassword(username, password);
         return modelMapper.map(result, UserDto.class);
     }
+
+    @Override
+    public UserDto loadById(Integer id)
+    {
+        return super.loadById(id);
+    }
 }

@@ -1,4 +1,4 @@
-package ir.sharif.gamein2021.core.manager.clientConnection;
+package ir.sharif.gamein2021.core.manager.clientHandlerConnection;
 
 import org.springframework.amqp.core.FanoutExchange;
 import org.springframework.context.annotation.Bean;
@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Profile;
 
 @Profile(value = {"microservice"})
 @Configuration
-public class ClientConnectionConfig {
+public class ClientHandlerConnectionConfig {
 
     @Bean
     public FanoutExchange fanoutExchange(){

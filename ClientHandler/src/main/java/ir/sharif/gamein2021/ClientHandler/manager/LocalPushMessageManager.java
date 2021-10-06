@@ -1,7 +1,7 @@
 package ir.sharif.gamein2021.ClientHandler.manager;
 
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
-import ir.sharif.gamein2021.core.manager.clientConnection.PushMessageManagerInterface;
+import ir.sharif.gamein2021.core.manager.PushMessageManagerInterface;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.TextMessage;
@@ -10,6 +10,9 @@ import org.springframework.web.socket.WebSocketSession;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Sends message just to clients which are connected to this clientHandler.
+ */
 @Service(value = "LocalPushMessageManager")
 public class LocalPushMessageManager implements PushMessageManagerInterface {
     static Logger logger = Logger.getLogger(ExecutorThread.class.getName());

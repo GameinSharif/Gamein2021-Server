@@ -1,6 +1,6 @@
-package ir.sharif.gamein2021.core.manager.clientConnection.requests;
+package ir.sharif.gamein2021.core.manager.clientHandlerConnection.requests;
 
-public class ClientsSendMessageByTeamIdRequest extends ClientsInterconnectionRequest {
+public class ClientsSendMessageByTeamIdRequest extends BaseClientHandlerRequest {
     private String teamId;
 
     public ClientsSendMessageByTeamIdRequest(String message, String teamId) {

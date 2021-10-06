@@ -12,7 +12,6 @@ import ir.sharif.gamein2021.core.Service.WeekDemandService;
 import ir.sharif.gamein2021.core.domain.dto.GameinCustomerDto;
 import ir.sharif.gamein2021.core.domain.dto.WeekDemandDto;
 import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
-import ir.sharif.gamein2021.core.manager.clientConnection.PushMessageManagerInterface;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 

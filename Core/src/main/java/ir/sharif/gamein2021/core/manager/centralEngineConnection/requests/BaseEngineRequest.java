@@ -1,4 +1,4 @@
-package ir.sharif.gamein2021.core.manager.engineConnection.requests;
+package ir.sharif.gamein2021.core.manager.centralEngineConnection.requests;
 
 import java.io.Serializable;
 

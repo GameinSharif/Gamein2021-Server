@@ -1,4 +1,4 @@
-package ir.sharif.gamein2021.ClientHandler.manager.clientConnection;
+package ir.sharif.gamein2021.ClientHandler.manager.clientHandlerConnection;
 
 import org.springframework.amqp.core.*;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Profile;
 
 @Profile(value = {"microservice"})
 @Configuration
-public class ClientQueueConsumerConfig {
+public class ReceiverClientHandlerConnectionConfig {
 
     @Bean(value = "receiverQueue")
     public Queue receiverQueue() {

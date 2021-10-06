@@ -24,4 +24,10 @@ public class ProviderDto implements BaseDto<Integer> {
     public Integer getId() {
         return id;
     }
+
+    public void setupToZero() {
+        this.providerAverageCost = 0;
+        this.providerMinOnRecord = 0;
+        this.providerMaxOnRecord = 0;
+    }
 }

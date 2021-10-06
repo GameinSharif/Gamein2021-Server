@@ -36,7 +36,8 @@ public class ProviderController {
 
     public void newProvider(NewProviderRequest newProviderRequest) {
         ProviderDto providerDto = newProviderRequest.getNewProviderDto();
-        // TODO : set three default values in providerDto
+        // TODO : validate newProviderDto
+        providerDto.setupToZero();
         providerService.save(providerDto);
         // TODO : what if couldn't save
     }

@@ -23,7 +23,6 @@ import java.util.ArrayList;
 @Component
 public class ProviderController
 {
-
     static Logger logger = Logger.getLogger(ExecutorThread.class.getName());
 
     private final LocalPushMessageManager pushMessageManager;
@@ -50,6 +49,7 @@ public class ProviderController
         providerDto.setProductId(newProviderRequest.getProductId());
         providerDto.setCapacity(newProviderRequest.getCapacity());
         //TODO set prices
+        //TODO every provider should have one provider for every product
         providerDto.setupToZero();
         providerService.save(providerDto);
         // TODO : what if couldn't save

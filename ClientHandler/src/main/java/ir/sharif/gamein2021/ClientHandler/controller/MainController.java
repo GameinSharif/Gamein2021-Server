@@ -41,13 +41,13 @@ public class MainController
                 LoginRequest loginRequest = gson.fromJson(requestData, LoginRequest.class);
                 userController.authenticate(processedRequest, loginRequest);
                 break;
+            case NEW_PROVIDER:
+                NewProviderRequest newProviderRequest = gson.fromJson(requestData, NewProviderRequest.class);
+                providerController.newProvider(processedRequest, newProviderRequest);
+                break;
             case GET_PROVIDERS:
                 GetProvidersRequest getProvidersRequest = gson.fromJson(requestData, GetProvidersRequest.class);
                 providerController.getProviders(processedRequest, getProvidersRequest);
-                break;
-            case NEW_PROVIDER:
-                NewProviderRequest newProviderRequest = gson.fromJson(requestData, NewProviderRequest.class);
-                providerController.newProvider(newProviderRequest);
                 break;
             case NEW_OFFER:
                 //TODO

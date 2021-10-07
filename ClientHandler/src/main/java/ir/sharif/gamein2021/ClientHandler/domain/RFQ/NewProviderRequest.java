@@ -9,6 +9,8 @@ import java.io.Serializable;
 
 @AllArgsConstructor
 @Getter
-public class NewProviderRequest extends RequestObject implements Serializable {
-    ProviderDto newProviderDto;
+public class NewProviderRequest extends RequestObject implements Serializable
+{
+    private Integer productId;
+    private Integer capacity;
 }

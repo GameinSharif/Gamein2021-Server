@@ -16,24 +16,23 @@ public class Provider implements BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
     @ManyToOne
     private Team team;
 
-    @Column(nullable = false, name = "product_id", unique = true)
-    private String productId;
+    @Column(name = "product_id", nullable = false)
+    private Integer productId;
 
-    @Column(nullable = false)
-    private Integer maxMonthlyCap;
+    @Column(name = "capacity", nullable = false)
+    private Integer capacity;
 
-    @Column(nullable = false)
-    private Integer providerAverageCost;
+    @Column(name = "average_price", nullable = false)
+    private Integer averagePrice;
 
-    @Column(nullable = false)
-    private Integer providerMinOnRecord;
+    @Column(name = "min_price_on_record", nullable = false)
+    private Integer minPriceOnRecord;
 
-    @Column(nullable = false)
-    private Integer providerMaxOnRecord;
+    @Column(name = "max_price_on_record", nullable = false)
+    private Integer maxPriceOnRecord;
 
     @Override
     public Integer getId() {

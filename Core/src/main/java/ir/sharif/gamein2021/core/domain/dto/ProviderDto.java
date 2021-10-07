@@ -14,11 +14,11 @@ public class ProviderDto implements BaseDto<Integer> {
 
     private Integer id;
     private Team team;
-    private String productId;
-    private Integer maxMonthlyCap;
-    private Integer providerAverageCost;
-    private Integer providerMinOnRecord;
-    private Integer providerMaxOnRecord;
+    private Integer productId;
+    private Integer capacity;
+    private Integer averagePrice;
+    private Integer minPriceOnRecord;
+    private Integer maxPriceOnRecord;
 
     @Override
     public Integer getId() {
@@ -26,8 +26,8 @@ public class ProviderDto implements BaseDto<Integer> {
     }
 
     public void setupToZero() {
-        this.providerAverageCost = 0;
-        this.providerMinOnRecord = 0;
-        this.providerMaxOnRecord = 0;
+        this.averagePrice = 0;
+        this.minPriceOnRecord = 0;
+        this.maxPriceOnRecord = 0;
     }
 }

@@ -10,6 +10,8 @@ public enum RequestTypeConstant
     NEW_NEGOTIATION(5),
     GET_NEGOTIATIONS(6),
     EDIT_NEGOTIATION_COST_PER_UNIT(7);
+    NEW_PROVIDER(4),
+    GET_PROVIDERS(5);
 
     private int value;
 

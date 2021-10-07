@@ -7,6 +7,8 @@ import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.RFQ.EditNegotiationCostPerUnitRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.RFQ.GetNegotiationsRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.RFQ.NewNegotiationRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.RFQ.GetProvidersRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.RFQ.NewProviderRequest;
 import ir.sharif.gamein2021.ClientHandler.util.RequestTypeConstant;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MainController {
     private final UserController userController;
+    private final ProviderController providerController;
     private final GameDataController gameDataController;
     private final ContractController contractController;
     private final NegotiationController negotiationController;
@@ -23,12 +26,14 @@ public class MainController {
 
     @Autowired
     public MainController(UserController userController, GameDataController gameDataController, ContractController contractController, NegotiationController negotiationController)
+    public MainController(UserController userController, ProviderController providerController, GameDataController gameDataController)
     {
         this.gson = new Gson();
         this.userController = userController;
         this.gameDataController = gameDataController;
         this.contractController = contractController;
         this.negotiationController = negotiationController;
+        this.providerController = providerController;
     }
 
     public void HandleMessage(ProcessedRequest processedRequest) {
@@ -40,6 +45,14 @@ public class MainController {
             case LOGIN:
                 LoginRequest loginRequest = gson.fromJson(requestData, LoginRequest.class);
                 userController.authenticate(processedRequest, loginRequest);
+                break;
+            case NEW_PROVIDER:
+                NewProviderRequest newProviderRequest = gson.fromJson(requestData, NewProviderRequest.class);
+                providerController.newProvider(processedRequest, newProviderRequest);
+                break;
+            case GET_PROVIDERS:
+                GetProvidersRequest getProvidersRequest = gson.fromJson(requestData, GetProvidersRequest.class);
+                providerController.getProviders(processedRequest, getProvidersRequest);
                 break;
             case NEW_OFFER:
                 //TODO

@@ -11,9 +11,9 @@ public enum ResponseTypeConstant
     GET_CONTRACTS(6),
     NEW_NEGOTIATION(7),
     GET_NEGOTIATIONS(8),
-    EDIT_NEGOTIATION_COST_PER_UNIT(9);
-    NEW_PROVIDER(5),
-    GET_PROVIDERS(6);
+    EDIT_NEGOTIATION_COST_PER_UNIT(9),
+    NEW_PROVIDER(10),
+    GET_PROVIDERS(11);
 
     private int value;
 

@@ -18,15 +18,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class MainController {
     private final UserController userController;
-    private final ProviderController providerController;
     private final GameDataController gameDataController;
     private final ContractController contractController;
     private final NegotiationController negotiationController;
+    private final ProviderController providerController;
     private final Gson gson;
 
     @Autowired
-    public MainController(UserController userController, GameDataController gameDataController, ContractController contractController, NegotiationController negotiationController)
-    public MainController(UserController userController, ProviderController providerController, GameDataController gameDataController)
+    public MainController(UserController userController, GameDataController gameDataController, ContractController contractController, NegotiationController negotiationController, ProviderController providerController)
     {
         this.gson = new Gson();
         this.userController = userController;
@@ -45,14 +44,6 @@ public class MainController {
             case LOGIN:
                 LoginRequest loginRequest = gson.fromJson(requestData, LoginRequest.class);
                 userController.authenticate(processedRequest, loginRequest);
-                break;
-            case NEW_PROVIDER:
-                NewProviderRequest newProviderRequest = gson.fromJson(requestData, NewProviderRequest.class);
-                providerController.newProvider(processedRequest, newProviderRequest);
-                break;
-            case GET_PROVIDERS:
-                GetProvidersRequest getProvidersRequest = gson.fromJson(requestData, GetProvidersRequest.class);
-                providerController.getProviders(processedRequest, getProvidersRequest);
                 break;
             case NEW_OFFER:
                 //TODO
@@ -79,6 +70,14 @@ public class MainController {
             case EDIT_NEGOTIATION_COST_PER_UNIT:
                 EditNegotiationCostPerUnitRequest editRequest = gson.fromJson(requestData, EditNegotiationCostPerUnitRequest.class);
                 negotiationController.editNegotiationCostPerUnit(processedRequest, editRequest);
+                break;
+            case NEW_PROVIDER:
+                NewProviderRequest newProviderRequest = gson.fromJson(requestData, NewProviderRequest.class);
+                providerController.newProvider(processedRequest, newProviderRequest);
+                break;
+            case GET_PROVIDERS:
+                GetProvidersRequest getProvidersRequest = gson.fromJson(requestData, GetProvidersRequest.class);
+                providerController.getProviders(processedRequest, getProvidersRequest);
                 break;
             default:
                 System.out.println("Request type is invalid.");

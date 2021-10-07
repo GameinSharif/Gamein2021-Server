@@ -7,11 +7,11 @@ import ir.sharif.gamein2021.ClientHandler.domain.RFQ.NewProviderRequest;
 
 import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.domain.RFQ.NewProviderResponse;
-import ir.sharif.gamein2021.ClientHandler.manager.PushMessageManager;
+import ir.sharif.gamein2021.ClientHandler.manager.LocalPushMessageManager;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
 import ir.sharif.gamein2021.ClientHandler.util.ResponseTypeConstant;
-import ir.sharif.gamein2021.core.Service.ProviderService;
-import ir.sharif.gamein2021.core.Service.UserService;
+import ir.sharif.gamein2021.core.service.ProviderService;
+import ir.sharif.gamein2021.core.service.UserService;
 import ir.sharif.gamein2021.core.domain.dto.ProviderDto;
 import ir.sharif.gamein2021.core.domain.dto.UserDto;
 import ir.sharif.gamein2021.core.domain.entity.Team;
@@ -26,12 +26,12 @@ public class ProviderController
 
     static Logger logger = Logger.getLogger(ExecutorThread.class.getName());
 
-    private final PushMessageManager pushMessageManager;
+    private final LocalPushMessageManager pushMessageManager;
     private final UserService userService;
     private final ProviderService providerService;
     private final Gson gson = new Gson();
 
-    public ProviderController(PushMessageManager pushMessageManager, UserService userService, ProviderService providerService)
+    public ProviderController(LocalPushMessageManager pushMessageManager, UserService userService, ProviderService providerService)
     {
         this.pushMessageManager = pushMessageManager;
         this.userService = userService;
@@ -41,7 +41,7 @@ public class ProviderController
     public void newProvider(ProcessedRequest processedRequest, NewProviderRequest newProviderRequest)
     {
         int playerId = newProviderRequest.playerId;
-        UserDto user = userService.findById(playerId);
+        UserDto user = userService.loadById(playerId);
         Team userTeam = user.getTeam();
 
         //TODO check team is not null, product id is valid, ...
@@ -61,7 +61,7 @@ public class ProviderController
     public void getProviders(ProcessedRequest processedRequest, GetProvidersRequest getProvidersRequest)
     {
         int playerId = getProvidersRequest.playerId;
-        UserDto user = userService.findById(playerId);
+        UserDto user = userService.loadById(playerId);
         Team userTeam = user.getTeam();
 
         ArrayList<ProviderDto> teamProviders = providerService.findProvidersByTeam(userTeam);

@@ -46,4 +46,17 @@ public class Offer implements BaseEntity{
         return id;
     }
 
+    @Override
+    public String toString() {
+        return "Offer{" +
+                "id=" + id +
+                ", team=" + team +
+                ", type='" + type + '\'' +
+                ", volume=" + volume +
+                ", costPerUnit=" + costPerUnit +
+                ", earliestExpectedArrival=" + earliestExpectedArrival +
+                ", latestExpectedArrival=" + latestExpectedArrival +
+                ", offerDeadline=" + offerDeadline +
+                '}';
+    }
 }

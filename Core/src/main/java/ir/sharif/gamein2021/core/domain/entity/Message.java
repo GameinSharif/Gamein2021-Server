@@ -1,0 +1,36 @@
+package ir.sharif.gamein2021.core.domain.entity;
+
+import lombok.*;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Message implements BaseEntity{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(nullable = false)
+    private Team senderTeam;
+
+    @Column(nullable = false)
+    private Team receiverTeam;
+
+    @Column(nullable = false)
+    private String text;
+
+    @Column(nullable = false)
+    private LocalDateTime dateTime;
+
+    @Override
+    public Integer getId() {
+        return null;
+    }
+}

@@ -3,6 +3,7 @@ package ir.sharif.gamein2021.ClientHandler.controller;
 import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginRequest;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.Messenger.NewMessageRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.RFQ.GetOffersRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.RFQ.GetTeamOffersRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.RFQ.NewOfferRequest;
@@ -18,14 +19,16 @@ public class MainController
 {
     private final UserController userController;
     private final OfferController offerController;
+    private final MessageController messageController;
     private final Gson gson;
 
     @Autowired
-    public MainController(UserController userController, OfferController offerController)
+    public MainController(UserController userController, OfferController offerController, MessageController messageController)
     {
         this.gson = new Gson();
         this.userController = userController;
         this.offerController = offerController;
+        this.messageController = messageController;
     }
 
     public void HandleMessage(ProcessedRequest processedRequest)
@@ -56,6 +59,11 @@ public class MainController
                 TerminateOfferRequest terminateOfferRequest = gson.fromJson(requestData, TerminateOfferRequest.class);
                 offerController.terminateOffer(processedRequest, terminateOfferRequest);
                 break;
+            case NEW_MESSAGE:
+                NewMessageRequest newMessageRequest = gson.fromJson(requestData, NewMessageRequest.class);
+                messageController.createNewOffer(processedRequest, newMessageRequest);
+                break;
+
             default:
                 System.out.println("Request type is invalid.");
         }

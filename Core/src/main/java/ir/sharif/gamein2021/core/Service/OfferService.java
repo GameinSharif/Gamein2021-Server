@@ -17,10 +17,12 @@ import java.util.List;
 public class OfferService extends AbstractCrudService<OfferDto , Offer , Integer> {
 
     private final OfferRepository offerRepository;
+    private final TeamService teamService;
     private final ModelMapper modelMapper;
 
-    public OfferService(OfferRepository offerRepository, ModelMapper modelMapper) {
+    public OfferService(OfferRepository offerRepository, TeamService teamService, ModelMapper modelMapper) {
         this.offerRepository = offerRepository;
+        this.teamService = teamService;
         this.modelMapper = modelMapper;
         setRepository(offerRepository);
     }
@@ -28,7 +30,7 @@ public class OfferService extends AbstractCrudService<OfferDto , Offer , Integer
     @Transactional
     public OfferDto save(OfferDto offerDto) {
         AssertionUtil.assertDtoNotNull(offerDto, Offer.class.getSimpleName());
-        var offer = modelMapper.map(offerDto, Offer.class);
+        var offer = toOffer(offerDto);
         Offer result = getRepository().save(offer);
         return modelMapper.map(result, OfferDto.class);
     }
@@ -53,7 +55,7 @@ public class OfferService extends AbstractCrudService<OfferDto , Offer , Integer
         List<Offer> offers = offerRepository.findAll();
         List<OfferDto> offerDtos = new ArrayList<>();
         for (Offer offer : offers) {
-            offerDtos.add(modelMapper.map(offer, OfferDto.class));
+            offerDtos.add(toOfferDto(offer));
         }
         return offerDtos;
     }
@@ -64,7 +66,7 @@ public class OfferService extends AbstractCrudService<OfferDto , Offer , Integer
         List<OfferDto> offerDtos = new ArrayList<>();
         for (Offer offer : offers) {
             if (offer.getTeam().getId().equals(teamId)) {
-                offerDtos.add(modelMapper.map(offer, OfferDto.class));
+                offerDtos.add(toOfferDto(offer));
             }
         }
         return offerDtos;
@@ -82,8 +84,8 @@ public class OfferService extends AbstractCrudService<OfferDto , Offer , Integer
         if(newOffer.getEarliestExpectedArrival() != null){
             oldOffer.setEarliestExpectedArrival(newOffer.getEarliestExpectedArrival());
         }
-        if(newOffer.getTeam() != null){
-            oldOffer.setTeam(newOffer.getTeam());
+        if(newOffer.getTeamId() != null){
+            oldOffer.setTeamId(newOffer.getTeamId());
         }
         if(newOffer.getType() != null){
             oldOffer.setType(newOffer.getType());
@@ -95,6 +97,30 @@ public class OfferService extends AbstractCrudService<OfferDto , Offer , Integer
             oldOffer.setLatestExpectedArrival(newOffer.getEarliestExpectedArrival());
         }
         return oldOffer;
+    }
+
+    public Offer toOffer(OfferDto offerDto) {
+        return Offer.builder()
+                .id(offerDto.getId())
+                .team(teamService.findById(offerDto.getTeamId()))
+                .type(offerDto.getType())
+                .volume(offerDto.getVolume())
+                .earliestExpectedArrival(offerDto.getEarliestExpectedArrival())
+                .latestExpectedArrival(offerDto.getLatestExpectedArrival())
+                .costPerUnit(offerDto.getCostPerUnit())
+                .offerDeadline(offerDto.getOfferDeadline()).build();
+    }
+
+    public OfferDto toOfferDto(Offer offer) {
+        return OfferDto.builder()
+                .id(offer.getId())
+                .teamName(offer.getTeam().getTeamName())
+                .type(offer.getType())
+                .volume(offer.getVolume())
+                .earliestExpectedArrival(offer.getEarliestExpectedArrival())
+                .latestExpectedArrival(offer.getLatestExpectedArrival())
+                .costPerUnit(offer.getCostPerUnit())
+                .offerDeadline(offer.getOfferDeadline()).build();
     }
 
 }

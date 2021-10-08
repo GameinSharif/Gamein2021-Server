@@ -14,7 +14,8 @@ import java.time.LocalDateTime;
 public class OfferDto implements BaseDto<Integer>{
 
     private Integer id;
-    private Team team;
+    private Integer teamId;
+    private String teamName;
     private String type;
     private Integer volume;
     private Integer costPerUnit;
@@ -22,4 +23,18 @@ public class OfferDto implements BaseDto<Integer>{
     private LocalDateTime latestExpectedArrival;
     private LocalDateTime offerDeadline;
 
+    @Override
+    public String toString() {
+        return "OfferDto{" +
+                "teamName='" + teamName + '\'' +
+                ", id=" + id +
+                ", teamId=" + teamId +
+                ", type='" + type + '\'' +
+                ", volume=" + volume +
+                ", costPerUnit=" + costPerUnit +
+                ", earliestExpectedArrival=" + earliestExpectedArrival +
+                ", latestExpectedArrival=" + latestExpectedArrival +
+                ", offerDeadline=" + offerDeadline +
+                '}';
+    }
 }

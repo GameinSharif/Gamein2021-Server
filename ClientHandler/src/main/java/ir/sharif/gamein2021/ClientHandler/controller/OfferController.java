@@ -10,8 +10,10 @@ import ir.sharif.gamein2021.ClientHandler.util.ResponseTypeConstant;
 import ir.sharif.gamein2021.core.Service.OfferService;
 import ir.sharif.gamein2021.core.Service.UserService;
 import ir.sharif.gamein2021.core.domain.dto.OfferDto;
+import ir.sharif.gamein2021.core.domain.entity.Offer;
 import ir.sharif.gamein2021.core.exception.CheatingException;
 import org.apache.log4j.Logger;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -45,7 +47,7 @@ public class OfferController {
             List<OfferDto> offerDtos = offerService.getAllOffers();
             List<OfferDto> showingOfferDtos = new ArrayList<>();
             for (OfferDto offerDto : offerDtos) {
-                if (!offerDto.getTeam().getId().equals(
+                if (!offerDto.getTeamId().equals(
                         userService.findById(getOffersRequest.playerId).getTeam().getId())
                 ) showingOfferDtos.add(offerDto);
             }
@@ -80,7 +82,11 @@ public class OfferController {
         NewOfferResponse newOfferResponse;
         try
         {
-            offerService.save(requestDtoConversionManager.newOfferRequestToOfferDto(newOfferRequest));
+            System.out.println(newOfferRequest.getOfferDto().toString());
+            System.out.println(offerService.toOffer(newOfferRequest.getOfferDto()).toString());
+            OfferDto savedOffer = offerService.save(newOfferRequest.getOfferDto());
+            System.out.println(savedOffer);
+
             newOfferResponse = new NewOfferResponse(ResponseTypeConstant.NEW_OFFER, "Your Offer Submitted Successfully!");
         }
         catch (Exception e)

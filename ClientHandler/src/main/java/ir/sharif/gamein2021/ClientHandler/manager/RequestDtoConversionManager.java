@@ -19,15 +19,15 @@ public class RequestDtoConversionManager {
         this.userService = userService;
     }
 
-    public OfferDto newOfferRequestToOfferDto(NewOfferRequest newOfferRequest) {
-        return OfferDto.builder()
-                .team(userService.findById(newOfferRequest.getTeamId()).getTeam())
-                .type(newOfferRequest.getType())
-                .volume(newOfferRequest.getVolume())
-                .costPerUnit(newOfferRequest.getCostPerUnit())
-                .earliestExpectedArrival(newOfferRequest.getEarliestExpectedArrival())
-                .latestExpectedArrival(newOfferRequest.getLatestExpectedArrival())
-                .offerDeadline(newOfferRequest.getOfferDeadline()).build();
-    }
+//    public OfferDto newOfferRequestToOfferDto(NewOfferRequest newOfferRequest) {
+//        return OfferDto.builder()
+//                .team(userService.findById(newOfferRequest.getTeamId()).getTeam())
+//                .type(newOfferRequest.getType())
+//                .volume(newOfferRequest.getVolume())
+//                .costPerUnit(newOfferRequest.getCostPerUnit())
+//                .earliestExpectedArrival(newOfferRequest.getEarliestExpectedArrival())
+//                .latestExpectedArrival(newOfferRequest.getLatestExpectedArrival())
+//                .offerDeadline(newOfferRequest.getOfferDeadline()).build();
+//    }
 
 }

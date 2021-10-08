@@ -46,7 +46,6 @@ public class MainController {
                 LoginRequest loginRequest = gson.fromJson(requestData, LoginRequest.class);
                 userController.authenticate(processedRequest, loginRequest);
                 break;
-            case REMOVE_PROVIDER:
             case NEW_OFFER:
                 //TODO
                 break;
@@ -80,6 +79,10 @@ public class MainController {
             case GET_PROVIDERS:
                 GetProvidersRequest getProvidersRequest = gson.fromJson(requestData, GetProvidersRequest.class);
                 providerController.getProviders(processedRequest, getProvidersRequest);
+                break;
+            case REMOVE_PROVIDER:
+                RemoveProviderRequest removeProviderRequest = gson.fromJson(requestData, RemoveProviderRequest.class);
+                providerController.removeProvider(processedRequest, removeProviderRequest);
                 break;
             default:
                 System.out.println("Request type is invalid.");

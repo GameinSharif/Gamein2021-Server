@@ -6,6 +6,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class RemoveProviderRequest extends RequestObject {
-    Integer providerId;
+public class RemoveProviderRequest extends RequestObject
+{
+    private Integer providerId;
 }

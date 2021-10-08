@@ -68,20 +68,24 @@ public class ProviderController
         pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(getProvidersResponse));
     }
 
-    public void removeProvider(ProcessedRequest processedRequest, RemoveProviderRequest removeProviderRequest) {
+    public void removeProvider(ProcessedRequest processedRequest, RemoveProviderRequest removeProviderRequest)
+    {
         int playerId = removeProviderRequest.playerId;
-        UserDto user = userService.findById(playerId);
+        UserDto user = userService.loadById(playerId);
         Team userTeam = user.getTeam();
 
         Integer providerId = removeProviderRequest.getProviderId();
         // TODO : Exception -> if provider does not exist
         ProviderDto requestedProvider = providerService.loadById(providerId);
         Team requestedProviderTeam = requestedProvider.getTeam();
-        if (userTeam.getId().equals(requestedProviderTeam.getId())) {
+        if (userTeam.getId().equals(requestedProviderTeam.getId()))
+        {
             ProviderDto removedProvider = providerService.removeProvider(providerId);
-            RemoveProviderResponse removeProviderResponse = new RemoveProviderResponse(removedProvider);
+            RemoveProviderResponse removeProviderResponse = new RemoveProviderResponse(ResponseTypeConstant.REMOVE_PROVIDER, removedProvider, "Success");
             pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(removeProviderResponse));
-        } else {
+        }
+        else
+        {
             // TODO : Exception -> provider team does not match
         }
     }

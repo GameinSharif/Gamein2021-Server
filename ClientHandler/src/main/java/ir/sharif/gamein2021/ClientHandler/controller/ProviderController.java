@@ -1,9 +1,7 @@
 package ir.sharif.gamein2021.ClientHandler.controller;
 
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.RFQ.GetProvidersRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.RFQ.GetProvidersResponse;
-import ir.sharif.gamein2021.ClientHandler.domain.RFQ.NewProviderRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.RFQ.*;
 
 import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.domain.RFQ.NewProviderResponse;
@@ -68,5 +66,23 @@ public class ProviderController
         ArrayList<ProviderDto> otherProviders = providerService.findProvidersExceptTeam(userTeam);
         GetProvidersResponse getProvidersResponse = new GetProvidersResponse(ResponseTypeConstant.GET_PROVIDERS, teamProviders, otherProviders);
         pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(getProvidersResponse));
+    }
+
+    public void removeProvider(ProcessedRequest processedRequest, RemoveProviderRequest removeProviderRequest) {
+        int playerId = removeProviderRequest.playerId;
+        UserDto user = userService.findById(playerId);
+        Team userTeam = user.getTeam();
+
+        Integer providerId = removeProviderRequest.getProviderId();
+        // TODO : Exception -> if provider does not exist
+        ProviderDto requestedProvider = providerService.loadById(providerId);
+        Team requestedProviderTeam = requestedProvider.getTeam();
+        if (userTeam.getId().equals(requestedProviderTeam.getId())) {
+            ProviderDto removedProvider = providerService.removeProvider(providerId);
+            RemoveProviderResponse removeProviderResponse = new RemoveProviderResponse(removedProvider);
+            pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(removeProviderResponse));
+        } else {
+            // TODO : Exception -> provider team does not match
+        }
     }
 }

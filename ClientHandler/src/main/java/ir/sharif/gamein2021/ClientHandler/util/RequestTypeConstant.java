@@ -13,6 +13,7 @@ public enum RequestTypeConstant
     NEW_PROVIDER(8),
     GET_PROVIDERS(9);
 
+    REMOVE_PROVIDER(6);
     private int value;
 
     RequestTypeConstant(int value)

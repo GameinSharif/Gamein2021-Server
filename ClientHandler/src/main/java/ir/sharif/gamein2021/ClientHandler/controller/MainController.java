@@ -6,6 +6,7 @@ import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginRequest;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.RFQ.GetProvidersRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.RFQ.NewProviderRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.RFQ.RemoveProviderRequest;
 import ir.sharif.gamein2021.ClientHandler.util.RequestTypeConstant;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,9 @@ public class MainController
                 GetProvidersRequest getProvidersRequest = gson.fromJson(requestData, GetProvidersRequest.class);
                 providerController.getProviders(processedRequest, getProvidersRequest);
                 break;
+            case REMOVE_PROVIDER:
+                RemoveProviderRequest removeProviderRequest = gson.fromJson(requestData, RemoveProviderRequest.class);
+                providerController.removeProvider(processedRequest, removeProviderRequest);
             case NEW_OFFER:
                 //TODO
                 break;

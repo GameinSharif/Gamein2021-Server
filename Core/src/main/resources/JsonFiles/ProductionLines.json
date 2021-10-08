@@ -1,0 +1,43 @@
+[
+	{
+	  "id": 1,
+	  "purchasePrice": 1000,
+	  "scrapPrice": 800,
+	  "batchCapacity": 6,
+	  "dailyProductionRate": [
+	    {
+			"upgradeCost": 0,
+			"dailyProductionRate": 6000
+	    },
+	    {
+			"upgradeCost": 5000,
+			"dailyProductionRate": 6600
+	    },
+	    {
+			"upgradeCost": 25000,
+			"dailyProductionRate": 7200
+	    },
+		{
+			"upgradeCost": 100000,
+			"dailyProductionRate": 7800
+	    }
+	  ],
+	  "dailyMaintenanceCost": 10,
+	  "setupCost": 100,
+	  "productionCostPerOneProduct": 1,
+	  "qualityLevels": [
+	    {
+			"upgradeCost": 0,
+			"brandIncreaseRatioPerProduct": 0
+	    },
+	    {
+			"upgradeCost": 1000,
+			"brandIncreaseRatioPerProduct": 0.001
+	    },
+	    {
+			"upgradeCost": 5000,
+			"brandIncreaseRatioPerProduct": 0.002
+	    }
+	  ]
+	}
+]

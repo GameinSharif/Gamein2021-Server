@@ -6,7 +6,10 @@ import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.RFQ.*;
 import ir.sharif.gamein2021.ClientHandler.manager.LocalPushMessageManager;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
+import ir.sharif.gamein2021.core.domain.dto.ProviderDto;
+import ir.sharif.gamein2021.core.domain.entity.Provider;
 import ir.sharif.gamein2021.core.service.NegotiationService;
+import ir.sharif.gamein2021.core.service.ProviderService;
 import ir.sharif.gamein2021.core.service.TeamService;
 import ir.sharif.gamein2021.core.service.UserService;
 import ir.sharif.gamein2021.core.domain.dto.UserDto;
@@ -29,14 +32,16 @@ public class NegotiationController
     private final UserService userService;
     private final TeamService teamService;
     private final NegotiationService negotiationService;
+    private final ProviderService providerService;
     private final Gson gson = new Gson();
 
-    public NegotiationController(LocalPushMessageManager pushMessageManager, UserService userService, TeamService teamService, NegotiationService negotiationService)
+    public NegotiationController(LocalPushMessageManager pushMessageManager, UserService userService, TeamService teamService, NegotiationService negotiationService, ProviderService providerService)
     {
         this.pushMessageManager = pushMessageManager;
         this.userService = userService;
         this.negotiationService = negotiationService;
         this.teamService = teamService;
+        this.providerService = providerService;
     }
 
     public void getNegotiations(ProcessedRequest processedRequest, GetNegotiationsRequest getNegotiationsRequest)
@@ -55,6 +60,8 @@ public class NegotiationController
         GetNegotiationsResponse getNegotiationsResponse = new GetNegotiationsResponse(ResponseTypeConstant.GET_NEGOTIATIONS, negotiations);
         pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(getNegotiationsResponse));
     }
+
+
 
     public void newNegotiation(ProcessedRequest processedRequest, NewNegotiationRequest newNegotiationRequest)
     {
@@ -88,6 +95,40 @@ public class NegotiationController
         }
         newNegotiationResponse = new NewNegotiationResponse(ResponseTypeConstant.NEW_NEGOTIATION, -1);
         pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(newNegotiationResponse));
+
+    }
+
+    public void newProviderNegotiation(ProcessedRequest processedRequest, NewProviderNegotiationRequest newProviderNegotiationRequest){
+        // TODO do the request send id of provider or id of a team. i assumed the first
+        UserDto user = userService.loadById(newProviderNegotiationRequest.playerId);
+        NewProviderNegotiationResponse newProviderNegotiationResponse;
+        if (user != null)
+        {
+            ProviderDto provider = providerService.findProviderById(newProviderNegotiationRequest.getProviderId());
+            if (provider != null)
+            {
+                NegotiationDto newNegotiation = new NegotiationDto();
+                newNegotiation.setDemander(user.getTeam());
+                newNegotiation.setSupplier(provider.getTeam());
+                newNegotiation.setCostPerUnitSupplier(newProviderNegotiationRequest.getCostPerUnitSupplier());
+                newNegotiation.setCostPerUnitDemander(newProviderNegotiationRequest.getCostPerUnitDemander());
+                newNegotiation.setProductId(newProviderNegotiationRequest.getProductId());
+                newNegotiation.setAmount(newProviderNegotiationRequest.getAmount());
+                newNegotiation.setEarliestExpectedArrival(LocalDateTime.of(2021, 10, 6, 20, 20, 20));
+                newNegotiation.setLatestExpectedArrival(LocalDateTime.of(2021, 10, 10, 20, 20, 20));
+                newNegotiation.setState(NegotiationState.PENDING);
+
+                NegotiationDto savedNegotiation = negotiationService.save(newNegotiation);
+                if (savedNegotiation != null)
+                {
+                    newProviderNegotiationResponse = new NewProviderNegotiationResponse(ResponseTypeConstant.NEW_PROVIDER_NEGOTIATION, newProviderNegotiationRequest.getProviderId());
+                    pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(newProviderNegotiationResponse));
+                    return;
+                }
+            }
+        }
+        newProviderNegotiationResponse = new NewProviderNegotiationResponse(ResponseTypeConstant.NEW_PROVIDER_NEGOTIATION, -1);
+        pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(newProviderNegotiationResponse));
 
     }
 

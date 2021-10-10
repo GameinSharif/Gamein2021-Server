@@ -13,4 +13,12 @@ public enum Country {
     public int getValue() {
         return value;
     }
+    public static Country getCountryById(int id){
+        for(Country country : Country.values()) {
+            if (country.getValue() == id) {
+                return country;
+            }
+        }
+        return null;
+    }
 }

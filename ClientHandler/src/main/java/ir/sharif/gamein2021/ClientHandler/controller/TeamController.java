@@ -28,13 +28,11 @@ public class TeamController {
         Integer id = teamDto.getId();
         try {
             teamDto = teamService.choiceRandomCountry(id);
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.debug(e);
         }
         //TODO Validation for teamDto
         //TODO exceptions and validations
         pushMessageManager.sendMessageBySession(request.session, gson.toJson(teamDto));
     }
-
-
 }

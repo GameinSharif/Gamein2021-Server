@@ -14,14 +14,13 @@ public class Team implements BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
+    @Column(nullable = false)
+    private boolean isFirstTime = true;
     @Column(name = "team_name", nullable = false, unique = true)
     private String teamName;
-
-    private Integer randomCountryIndex;
-
-    private int shopXCoordinate , shopYCoordinate = 0;
-    @Enumerated(value = EnumType.ORDINAL)
+    @Column(name = "factory_id")
+    private Integer factoryId;
+    @Enumerated(value = EnumType.ORDINAL) //TODO String
     private Country country;
 
     @Override

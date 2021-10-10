@@ -6,4 +6,5 @@ import java.io.Serializable;
 
 public class GetGameDataRequest extends RequestObject implements Serializable
 {
+
 }

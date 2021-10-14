@@ -1,29 +1,27 @@
 [
 	{
 	  "id": 1,
-	  "purchasePrice": 1000,
+	  "name": "SoftDrink",
+	  "constructionCost": 1000,
 	  "scrapPrice": 800,
-	  "batchCapacity": 6,
-	  "dailyProductionRate": [
+	  "batchSize": 6,
+	  "dailyProductionRate": 1000,
+	  "efficiencyLevels": [
 	    {
-			"upgradeCost": 0,
-			"dailyProductionRate": 6000
+			"efficiencyPercentage": 50,
+			"upgradeCost": 0
 	    },
 	    {
-			"upgradeCost": 5000,
-			"dailyProductionRate": 6600
+			"efficiencyPercentage": 75,
+			"upgradeCost": 10000
 	    },
 	    {
-			"upgradeCost": 25000,
-			"dailyProductionRate": 7200
-	    },
-		{
-			"upgradeCost": 100000,
-			"dailyProductionRate": 7800
+			"efficiencyPercentage": 95,
+			"upgradeCost": 10000
 	    }
 	  ],
-	  "dailyMaintenanceCost": 10,
-	  "setupCost": 100,
+	  "weeklyMaintenanceCost": 200,
+	  "setupCost": 5000,
 	  "productionCostPerOneProduct": 1,
 	  "qualityLevels": [
 	    {
@@ -31,11 +29,11 @@
 			"brandIncreaseRatioPerProduct": 0
 	    },
 	    {
-			"upgradeCost": 1000,
+			"upgradeCost": 10000,
 			"brandIncreaseRatioPerProduct": 0.001
 	    },
 	    {
-			"upgradeCost": 5000,
+			"upgradeCost": 10000,
 			"brandIncreaseRatioPerProduct": 0.002
 	    }
 	  ]

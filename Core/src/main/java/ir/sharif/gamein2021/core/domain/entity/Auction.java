@@ -1,5 +1,6 @@
 package ir.sharif.gamein2021.core.domain.entity;
 
+import ir.sharif.gamein2021.core.domain.model.Country;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,10 +20,12 @@ public class Auction implements BaseEntity {
     //Also this field should be unique and not null
     @Column(nullable = false, unique = true, name = "factory_id")
     private Integer factoryId;
-    @Column(name = "winner-price")
-    private int winnerPrice;
+    @Column(name = "higher_price")
+    private int higherPrice;
     @OneToOne
-    @Column(unique = true, name = "winner_team", nullable = true)
-    private Team winnerTeam;
+    private Team higherTeam;
+    private int numberOfOffers;
+    @Enumerated(value = EnumType.STRING)
+    private Country country;
     //TODO if auction should have maximum or minimum
 }

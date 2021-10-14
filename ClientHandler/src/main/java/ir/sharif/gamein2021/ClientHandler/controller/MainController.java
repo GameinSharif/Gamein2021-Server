@@ -2,29 +2,22 @@ package ir.sharif.gamein2021.ClientHandler.controller;
 
 import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginRequest;
+import ir.sharif.gamein2021.ClientHandler.request.BidForAuctionRequest;
+import ir.sharif.gamein2021.ClientHandler.request.Login.LoginRequest;
 import ir.sharif.gamein2021.ClientHandler.util.RequestTypeConstant;
+import lombok.AllArgsConstructor;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
 @Component
+@AllArgsConstructor
 public class MainController {
     private final UserController userController;
     private final GameDataController gameDataController;
     private final TeamController teamController;
+    private final AuctionController auctionController;
     private final Gson gson;
-
-    @Autowired
-    public MainController(UserController userController,
-                          GameDataController gameDataController,
-                          TeamController teamController, Gson gson) {
-        this.userController = userController;
-        this.gameDataController = gameDataController;
-        this.teamController = teamController;
-        this.gson = gson;
-    }
 
 
     public void HandleMessage(ProcessedRequest processedRequest) {
@@ -49,6 +42,9 @@ public class MainController {
                 break;
             case GET_RANDOM_COUNTRY:
                 teamController.setRandomCountryForTeam(processedRequest);
+            case BID_FOR_AUCTION:
+                BidForAuctionRequest bidForAuctionRequest = gson.fromJson(requestData, BidForAuctionRequest.class);
+                auctionController.addBidForAuction(processedRequest, bidForAuctionRequest);
             default:
                 System.out.println("Request type is invalid.");
         }

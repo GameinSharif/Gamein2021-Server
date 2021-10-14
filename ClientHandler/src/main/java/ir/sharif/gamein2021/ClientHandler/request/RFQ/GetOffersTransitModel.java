@@ -1,4 +1,4 @@
-package ir.sharif.gamein2021.ClientHandler.domain.RFQ;
+package ir.sharif.gamein2021.ClientHandler.request.RFQ;
 
 import java.time.LocalDateTime;
 

@@ -10,6 +10,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class TeamService extends AbstractCrudService<TeamDto, Team, Integer> {
 
@@ -29,11 +32,17 @@ public class TeamService extends AbstractCrudService<TeamDto, Team, Integer> {
         if (teamDto.getCountry() == null) {
             //TODO logic for random part
             int randomIndex = (int) (Math.random() * 7 + 1);
-            Country country = Country.getCountryById(randomIndex);
+            Country country = Country.getCountries()[randomIndex];
             //TODO logic for random part
             teamDto.setCountry(country);
         }
         return saveOrUpdate(teamDto);
+    }
+
+    @Transactional
+    public List<TeamDto> findAllEmptyTeamWithCountry(Country country) {
+        return repository.findAllByFactoryIdIsNullAndCountry(country).stream().
+                map(e -> modelMapper.map(e, TeamDto.class)).collect(Collectors.toList());
     }
 
 }

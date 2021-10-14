@@ -7,8 +7,9 @@ import javax.persistence.*;
 
 @Table(name = "Team")
 @Data
-@NoArgsConstructor
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Team implements BaseEntity {
     @Id
@@ -20,9 +21,8 @@ public class Team implements BaseEntity {
     private String teamName;
     @Column(name = "factory_id")
     private Integer factoryId;
-    @Enumerated(value = EnumType.ORDINAL) //TODO String
+    @Enumerated(value = EnumType.STRING) //TODO String
     private Country country;
-
     @Override
     public Integer getId() {
         return id;

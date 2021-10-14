@@ -1,4 +1,4 @@
-package ir.sharif.gamein2021.ClientHandler.domain;
+package ir.sharif.gamein2021.ClientHandler.request;
 
 import ir.sharif.gamein2021.ClientHandler.util.ResponseTypeConstant;
 import ir.sharif.gamein2021.ClientHandler.view.ResponseObject;
@@ -10,7 +10,8 @@ public class BidForAuctionResponse extends ResponseObject implements Serializabl
     private AuctionDto auction;
     private String result;  //TODO change to enum
 
-    public BidForAuctionResponse(ResponseTypeConstant responseTypeConstant, AuctionDto auction, String result) {
+    public BidForAuctionResponse(ResponseTypeConstant responseTypeConstant,
+                                 AuctionDto auction, String result) {
         this.responseTypeConstant = responseTypeConstant.ordinal();
         this.auction = auction;
         this.result = result;

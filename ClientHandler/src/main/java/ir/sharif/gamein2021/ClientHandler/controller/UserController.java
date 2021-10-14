@@ -2,8 +2,8 @@ package ir.sharif.gamein2021.ClientHandler.controller;
 
 import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginResponse;
+import ir.sharif.gamein2021.ClientHandler.request.Login.LoginRequest;
+import ir.sharif.gamein2021.ClientHandler.request.Login.LoginResponse;
 import ir.sharif.gamein2021.ClientHandler.manager.EncryptDecryptManager;
 import ir.sharif.gamein2021.ClientHandler.manager.PushMessageManager;
 import ir.sharif.gamein2021.ClientHandler.manager.SocketSessionManager;
@@ -49,7 +49,7 @@ public class UserController
         {
             UserDto userDto = userService.read(username, password);
 
-            int teamId = userDto.getTeam().getId();
+            int teamId = userDto.getTeamId();
             socketSessionManager.addSession(String.valueOf(teamId), String.valueOf(userDto.getId()), request.session);
             loginResponse = new LoginResponse(ResponseTypeConstant.LOGIN, userDto.getId(), "Successful");
         }

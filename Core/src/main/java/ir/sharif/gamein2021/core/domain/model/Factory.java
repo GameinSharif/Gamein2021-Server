@@ -1,5 +1,6 @@
 package ir.sharif.gamein2021.core.domain.model;
 
+import ir.sharif.gamein2021.core.domain.entity.Team;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,6 +16,7 @@ public class Factory {
     private Integer id;
     private Integer x;
     private Integer y;
+    private Country country;
     //TODO ect ....
 
     public static Factory findFactoryById(Integer id) {
@@ -24,5 +26,4 @@ public class Factory {
         }
         return null;
     }
-
 }

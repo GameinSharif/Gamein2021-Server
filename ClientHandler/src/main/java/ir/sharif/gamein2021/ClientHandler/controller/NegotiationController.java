@@ -7,6 +7,7 @@ import ir.sharif.gamein2021.ClientHandler.domain.RFQ.*;
 import ir.sharif.gamein2021.ClientHandler.manager.LocalPushMessageManager;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
 import ir.sharif.gamein2021.core.domain.dto.ProviderDto;
+import ir.sharif.gamein2021.core.domain.entity.Negotiation;
 import ir.sharif.gamein2021.core.domain.entity.Provider;
 import ir.sharif.gamein2021.core.service.NegotiationService;
 import ir.sharif.gamein2021.core.service.ProviderService;
@@ -20,7 +21,6 @@ import ir.sharif.gamein2021.core.util.Enums.NegotiationState;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 @Component
@@ -80,8 +80,8 @@ public class NegotiationController
                 newNegotiation.setCostPerUnitDemander(newNegotiationRequest.getCostPerUnitDemander());
                 newNegotiation.setProductId(newNegotiationRequest.getProductId());
                 newNegotiation.setAmount(newNegotiationRequest.getAmount());
-                newNegotiation.setEarliestExpectedArrival(LocalDateTime.of(2021, 10, 6, 20, 20, 20));
-                newNegotiation.setLatestExpectedArrival(LocalDateTime.of(2021, 10, 10, 20, 20, 20));
+                //newNegotiation.setEarliestExpectedArrival(LocalDateTime.of(2021, 10, 6, 20, 20, 20));
+                //newNegotiation.setLatestExpectedArrival(LocalDateTime.of(2021, 10, 10, 20, 20, 20));
                 newNegotiation.setState(NegotiationState.PENDING);
 
                 NegotiationDto savedNegotiation = negotiationService.save(newNegotiation);
@@ -98,8 +98,8 @@ public class NegotiationController
 
     }
 
-    public void newProviderNegotiation(ProcessedRequest processedRequest, NewProviderNegotiationRequest newProviderNegotiationRequest){
-        // TODO do the request send id of provider or id of a team. i assumed the first
+    public void newProviderNegotiation(ProcessedRequest processedRequest, NewProviderNegotiationRequest newProviderNegotiationRequest)
+    {
         UserDto user = userService.loadById(newProviderNegotiationRequest.playerId);
         NewProviderNegotiationResponse newProviderNegotiationResponse;
         if (user != null)
@@ -107,27 +107,27 @@ public class NegotiationController
             ProviderDto provider = providerService.findProviderById(newProviderNegotiationRequest.getProviderId());
             if (provider != null)
             {
+                System.out.println(newProviderNegotiationRequest.getEarliestExpectedArrival());
                 NegotiationDto newNegotiation = new NegotiationDto();
                 newNegotiation.setDemander(user.getTeam());
                 newNegotiation.setSupplier(provider.getTeam());
-                newNegotiation.setCostPerUnitSupplier(newProviderNegotiationRequest.getCostPerUnitSupplier());
                 newNegotiation.setCostPerUnitDemander(newProviderNegotiationRequest.getCostPerUnitDemander());
-                newNegotiation.setProductId(newProviderNegotiationRequest.getProductId());
+                newNegotiation.setCostPerUnitSupplier(newProviderNegotiationRequest.getCostPerUnitDemander());
+                newNegotiation.setProductId(provider.getProductId());
                 newNegotiation.setAmount(newProviderNegotiationRequest.getAmount());
-                newNegotiation.setEarliestExpectedArrival(LocalDateTime.of(2021, 10, 6, 20, 20, 20));
-                newNegotiation.setLatestExpectedArrival(LocalDateTime.of(2021, 10, 10, 20, 20, 20));
+                newNegotiation.setEarliestExpectedArrival(newProviderNegotiationRequest.getEarliestExpectedArrival());
+                newNegotiation.setLatestExpectedArrival(newProviderNegotiationRequest.getLatestExpectedArrival());
                 newNegotiation.setState(NegotiationState.PENDING);
-
                 NegotiationDto savedNegotiation = negotiationService.save(newNegotiation);
                 if (savedNegotiation != null)
                 {
-                    newProviderNegotiationResponse = new NewProviderNegotiationResponse(ResponseTypeConstant.NEW_PROVIDER_NEGOTIATION, newProviderNegotiationRequest.getProviderId());
+                    newProviderNegotiationResponse = new NewProviderNegotiationResponse(ResponseTypeConstant.NEW_PROVIDER_NEGOTIATION, savedNegotiation);
                     pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(newProviderNegotiationResponse));
                     return;
                 }
             }
         }
-        newProviderNegotiationResponse = new NewProviderNegotiationResponse(ResponseTypeConstant.NEW_PROVIDER_NEGOTIATION, -1);
+        newProviderNegotiationResponse = new NewProviderNegotiationResponse(ResponseTypeConstant.NEW_PROVIDER_NEGOTIATION, null);
         pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(newProviderNegotiationResponse));
 
     }

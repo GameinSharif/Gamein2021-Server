@@ -9,17 +9,16 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @AllArgsConstructor
-public class NewNegotiationRequest extends RequestObject implements Serializable {
-    //NegotiationDto negotiationDto; // the demander and supplier field is empty
+public class NewNegotiationRequest extends RequestObject implements Serializable
+{
+    private Integer supplierId;
     private Integer productId;
     private Integer amount;
     private Integer costPerUnitDemander;
-    private Integer costPerUnitSupplier;
-    //LocalDateTime earliestExpectedArrival;
-    //LocalDateTime latestExpectedArrival;
-    private Integer supplierId;
+    private LocalDate earliestExpectedArrival;
+    private LocalDate latestExpectedArrival;
 }

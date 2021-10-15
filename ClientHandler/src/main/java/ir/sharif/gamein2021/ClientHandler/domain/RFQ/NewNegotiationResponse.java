@@ -12,13 +12,13 @@ import java.time.LocalDateTime;
 
 @Getter
 @AllArgsConstructor
-public class NewNegotiationResponse extends ResponseObject implements Serializable {
+public class NewNegotiationResponse extends ResponseObject implements Serializable
+{
+    private NegotiationDto negotiation;
 
-    Integer supplierId;
-
-    public NewNegotiationResponse(ResponseTypeConstant responseTypeConstant, Integer supplierId)
+    public NewNegotiationResponse(ResponseTypeConstant responseTypeConstant, NegotiationDto negotiation)
     {
         this.responseTypeConstant = responseTypeConstant.ordinal();
-        this.supplierId = supplierId;
+        this.negotiation = negotiation;
     }
 }

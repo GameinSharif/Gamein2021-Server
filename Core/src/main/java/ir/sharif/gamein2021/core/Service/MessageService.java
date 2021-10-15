@@ -21,8 +21,8 @@ public class MessageService extends AbstractCrudService<MessageDto, Message, Int
         AssertionUtil.assertDtoNotNull(messageDto, Message.class.getSimpleName());
         messageDto.setDateTime(LocalDateTime.now());
         var message = toMessage(messageDto);
-        Message result = getRepository().save(message);
-        return toMessageDto(result);
+        getRepository().save(message);
+        return toMessageDto(message);
     }
 
     public Message toMessage(MessageDto messageDto) {
@@ -36,7 +36,11 @@ public class MessageService extends AbstractCrudService<MessageDto, Message, Int
     }
 
     public MessageDto toMessageDto(Message message) {
-
+        return MessageDto.builder()
+                .id(message.getId())
+                .dateTime(message.getDateTime())
+                .text(message.getText())
+                .build();
     }
 
 }

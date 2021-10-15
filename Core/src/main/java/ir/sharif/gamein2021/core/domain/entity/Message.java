@@ -17,10 +17,10 @@ public class Message implements BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
+    @OneToOne
     private Team senderTeam;
 
-    @Column(nullable = false)
+    @OneToOne
     private Team receiverTeam;
 
     @Column(nullable = false)

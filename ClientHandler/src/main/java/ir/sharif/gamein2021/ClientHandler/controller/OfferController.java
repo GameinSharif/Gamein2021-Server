@@ -82,10 +82,8 @@ public class OfferController {
         NewOfferResponse newOfferResponse;
         try
         {
-            System.out.println(newOfferRequest.getOfferDto().toString());
-            System.out.println(offerService.toOffer(newOfferRequest.getOfferDto()).toString());
-            OfferDto savedOffer = offerService.save(newOfferRequest.getOfferDto());
-            System.out.println(savedOffer);
+            OfferDto offerDto = offerService.save(newOfferRequest.getOfferDto());
+            System.out.println(offerDto);
 
             newOfferResponse = new NewOfferResponse(ResponseTypeConstant.NEW_OFFER, "Your Offer Submitted Successfully!");
         }
@@ -108,6 +106,11 @@ public class OfferController {
             }
             offerService.delete(terminateOfferRequest.getOfferId());
             terminateOfferResponse = new TerminateOfferResponse(ResponseTypeConstant.TERMINATE_OFFER, "The Offer Terminated Successfully!");
+        }
+        catch (CheatingException ch) {
+            terminateOfferResponse = new TerminateOfferResponse(ResponseTypeConstant.TERMINATE_OFFER, "You Idiot!");
+
+            // ban like shit
         }
         catch (Exception e)
         {

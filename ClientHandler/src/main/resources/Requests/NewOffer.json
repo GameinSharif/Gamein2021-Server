@@ -3,7 +3,7 @@
   "requestTypeConstant": 1,
   "offerDto": {
     "teamName": null,
-    "teamId": null,
+    "teamId": 1,
     "type": "C7",
     "volume": 20,
     "costPerUnit": 3,

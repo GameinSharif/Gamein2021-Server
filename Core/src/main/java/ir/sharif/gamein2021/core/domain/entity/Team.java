@@ -19,9 +19,6 @@ public class Team implements BaseEntity {
     @Column(name = "team_name", nullable = false, unique = true)
     private String teamName;
 
-
-
-
     @Override
     public Integer getId() {
         return id;

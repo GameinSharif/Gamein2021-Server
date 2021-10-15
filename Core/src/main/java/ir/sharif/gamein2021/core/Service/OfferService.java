@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class OfferService extends AbstractCrudService<OfferDto , Offer , Integer
         AssertionUtil.assertDtoNotNull(offerDto, Offer.class.getSimpleName());
         var offer = toOffer(offerDto);
         Offer result = getRepository().save(offer);
-        return modelMapper.map(result, OfferDto.class);
+        return toOfferDto(result);
     }
 
     @Transactional
@@ -40,9 +41,9 @@ public class OfferService extends AbstractCrudService<OfferDto , Offer , Integer
         AssertionUtil.assertIdNotNull(offerId, OfferDto.class.getSimpleName());
         AssertionUtil.assertDtoNotNull(newOffer, Offer.class.getSimpleName());
         var updatedUserDto = createUpdateOfferDto(offerId, newOffer);
-        var updatedUser = modelMapper.map(updatedUserDto, Offer.class);
+        var updatedUser = toOffer(updatedUserDto);
         Offer result = getRepository().save(updatedUser);
-        return modelMapper.map(result, OfferDto.class);
+        return toOfferDto(result);
     }
 
     @Transactional(readOnly = true)

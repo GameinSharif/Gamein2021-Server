@@ -4,12 +4,7 @@ import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.domain.GetContractsRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginRequest;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.RFQ.EditNegotiationCostPerUnitRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.RFQ.GetNegotiationsRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.RFQ.NewNegotiationRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.RFQ.GetProvidersRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.RFQ.NewProviderRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.RFQ.RemoveProviderRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.RFQ.*;
 import ir.sharif.gamein2021.ClientHandler.util.RequestTypeConstant;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,6 +78,10 @@ public class MainController {
             case REMOVE_PROVIDER:
                 RemoveProviderRequest removeProviderRequest = gson.fromJson(requestData, RemoveProviderRequest.class);
                 providerController.removeProvider(processedRequest, removeProviderRequest);
+                break;
+            case NEW_PROVIDER_NEGOTIATION:
+                NewProviderNegotiationRequest newProviderNegotiationRequest = gson.fromJson(requestData, NewProviderNegotiationRequest.class);
+                negotiationController.newProviderNegotiation(processedRequest, newProviderNegotiationRequest);
                 break;
             default:
                 System.out.println("Request type is invalid.");

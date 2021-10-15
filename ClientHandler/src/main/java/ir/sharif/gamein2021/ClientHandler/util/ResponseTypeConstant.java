@@ -14,7 +14,8 @@ public enum ResponseTypeConstant
     EDIT_NEGOTIATION_COST_PER_UNIT(9),
     NEW_PROVIDER(10),
     GET_PROVIDERS(11),
-    REMOVE_PROVIDER(12);
+    REMOVE_PROVIDER(12),
+    NEW_PROVIDER_NEGOTIATION(13);
 
     private int value;
 

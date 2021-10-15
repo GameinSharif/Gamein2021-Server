@@ -1,5 +1,7 @@
 package ir.sharif.gamein2021.core.service;
 
+import ir.sharif.gamein2021.core.domain.dto.NegotiationDto;
+import ir.sharif.gamein2021.core.exception.EntityNotFoundException;
 import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
 import ir.sharif.gamein2021.core.dao.ProviderRepository;
 import ir.sharif.gamein2021.core.domain.dto.ProviderDto;
@@ -8,6 +10,7 @@ import ir.sharif.gamein2021.core.domain.entity.Team;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +26,11 @@ public class ProviderService extends AbstractCrudService<ProviderDto, Provider, 
         this.providerRepository = providerRepository;
         this.modelMapper = modelMapper;
         setRepository(providerRepository);
+    }
+
+    @Transactional(readOnly = true)
+    public ProviderDto findProviderById(Integer id) {
+        return modelMapper.map(getRepository().findById(id).orElseThrow(EntityNotFoundException::new), ProviderDto.class);
     }
 
     public ArrayList<ProviderDto> findProvidersByTeam(Team userTeam) {

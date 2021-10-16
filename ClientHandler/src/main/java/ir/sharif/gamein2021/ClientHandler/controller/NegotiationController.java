@@ -7,8 +7,6 @@ import ir.sharif.gamein2021.ClientHandler.domain.RFQ.*;
 import ir.sharif.gamein2021.ClientHandler.manager.LocalPushMessageManager;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
 import ir.sharif.gamein2021.core.domain.dto.ProviderDto;
-import ir.sharif.gamein2021.core.domain.entity.Negotiation;
-import ir.sharif.gamein2021.core.domain.entity.Provider;
 import ir.sharif.gamein2021.core.service.NegotiationService;
 import ir.sharif.gamein2021.core.service.ProviderService;
 import ir.sharif.gamein2021.core.service.TeamService;

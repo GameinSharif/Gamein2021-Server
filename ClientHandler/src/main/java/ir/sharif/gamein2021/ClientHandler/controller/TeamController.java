@@ -1,11 +1,8 @@
 package ir.sharif.gamein2021.ClientHandler.controller;
 
 import com.google.gson.Gson;
-import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
-import ir.sharif.gamein2021.ClientHandler.manager.PushMessageManager;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
-import ir.sharif.gamein2021.core.Service.TeamService;
-import ir.sharif.gamein2021.core.domain.dto.TeamDto;
+import ir.sharif.gamein2021.core.service.TeamService;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
@@ -15,11 +12,9 @@ public class TeamController {
 
     private final TeamService teamService;
     private final Gson gson;
-    private final PushMessageManager pushMessageManager;
 
-    public TeamController(TeamService teamService, Gson gson, PushMessageManager pushMessageManager) {
+    public TeamController(TeamService teamService, Gson gson) {
         this.teamService = teamService;
         this.gson = gson;
-        this.pushMessageManager = pushMessageManager;
     }
 }

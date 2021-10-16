@@ -1,7 +1,8 @@
-package ir.sharif.gamein2021.core.Service;
+package ir.sharif.gamein2021.core.service;
 
 
-import ir.sharif.gamein2021.core.Service.core.AbstractCrudService;
+import ir.sharif.gamein2021.core.exception.TeamNotFoundException;
+import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
 import ir.sharif.gamein2021.core.dao.TeamRepository;
 import ir.sharif.gamein2021.core.domain.dto.TeamDto;
 import ir.sharif.gamein2021.core.domain.entity.Team;
@@ -25,6 +26,11 @@ public class TeamService extends AbstractCrudService<TeamDto, Team, Integer>
         this.repository = repository;
         this.modelMapper = modelMapper;
         setRepository(repository);
+    }
+
+    @Transactional(readOnly = true)
+    public Team findTeamById(Integer id){
+        return getRepository().findById(id).orElseThrow(TeamNotFoundException::new);
     }
 
     @Transactional

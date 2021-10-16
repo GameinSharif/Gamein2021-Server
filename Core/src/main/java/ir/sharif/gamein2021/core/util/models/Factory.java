@@ -1,13 +1,13 @@
-package ir.sharif.gamein2021.core.util;
+package ir.sharif.gamein2021.core.util.models;
 
 import ir.sharif.gamein2021.core.util.Enums.Country;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 @Getter
-@Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class Factory
 {
     private int id;

@@ -1,6 +1,5 @@
 package ir.sharif.gamein2021.core.service;
 
-import ir.sharif.gamein2021.core.domain.dto.NegotiationDto;
 import ir.sharif.gamein2021.core.exception.EntityNotFoundException;
 import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
 import ir.sharif.gamein2021.core.dao.ProviderRepository;

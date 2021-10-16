@@ -13,7 +13,7 @@ public class AuctionDto
     private Integer id;
     private Integer factoryId;
     private int highestBid;
-    private Integer highestBidTeam;
+    private Integer highestBidTeamId;
     private int bidsCount;
     private AuctionBidStatus auctionBidStatus;
 }

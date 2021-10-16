@@ -11,7 +11,7 @@ import lombok.AllArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 
-
+@AllArgsConstructor
 @Component
 public class MainController {
     private final UserController userController;
@@ -19,19 +19,8 @@ public class MainController {
     private final ContractController contractController;
     private final NegotiationController negotiationController;
     private final ProviderController providerController;
-    private final Gson gson;
-
-    @Autowired
-    public MainController(UserController userController, GameDataController gameDataController, ContractController contractController, NegotiationController negotiationController, ProviderController providerController)
-    {
-        this.gson = new Gson();
-        this.userController = userController;
-        this.gameDataController = gameDataController;
-        this.contractController = contractController;
-        this.negotiationController = negotiationController;
-        this.providerController = providerController;
-    }
     private final AuctionController auctionController;
+    private final Gson gson;
 
     public void HandleMessage(ProcessedRequest processedRequest) {
         String requestData = processedRequest.requestData;

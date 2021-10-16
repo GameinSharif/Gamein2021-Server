@@ -44,7 +44,7 @@ public class UserController {
         try {
             UserDto userDto = userService.read(username, password);
 
-            int teamId = userDto.getTeamId();
+            int teamId = userDto.getTeam().getId();
             socketSessionManager.addSession(String.valueOf(teamId), String.valueOf(userDto.getId()), request.session);
             loginResponse = new LoginResponse(ResponseTypeConstant.LOGIN, userDto.getId(), "Successful");
         } catch (Exception e) {

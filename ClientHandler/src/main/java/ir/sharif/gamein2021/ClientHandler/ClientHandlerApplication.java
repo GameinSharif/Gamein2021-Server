@@ -12,14 +12,17 @@ import java.util.Arrays;
 
 @ComponentScan("ir.sharif.gamein2021")
 @SpringBootApplication
-public class ClientHandlerApplication extends SpringBootServletInitializer {
+public class ClientHandlerApplication extends SpringBootServletInitializer
+{
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         ApplicationContext context = SpringApplication.run(ClientHandlerApplication.class, args);
 
         Environment environment = context.getEnvironment();
         String[] profiles = environment.getActiveProfiles();
-        if (Arrays.stream(profiles).noneMatch(x -> x.equals("microservice"))) {
+        if (Arrays.stream(profiles).noneMatch(x -> x.equals("microservice")))
+        {
             MainThread.main(args);
         }
     }

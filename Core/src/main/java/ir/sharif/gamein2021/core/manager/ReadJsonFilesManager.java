@@ -1,9 +1,8 @@
 package ir.sharif.gamein2021.core.manager;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ir.sharif.gamein2021.core.util.Factory;
-import ir.sharif.gamein2021.core.util.Product;
-import lombok.Getter;
+import ir.sharif.gamein2021.core.util.models.Factory;
+import ir.sharif.gamein2021.core.util.models.Product;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
 

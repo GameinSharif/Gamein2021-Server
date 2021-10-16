@@ -1,5 +1,6 @@
 package ir.sharif.gamein2021.core.domain.dto;
 
+import ir.sharif.gamein2021.core.domain.entity.Team;
 import lombok.*;
 
 @Getter
@@ -11,5 +12,5 @@ public class UserDto {
     private Integer id;
     private String username;
     private String password;
-    private Integer teamId;
+    private Team team;
 }

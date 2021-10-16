@@ -41,16 +41,18 @@ public class AuctionController {
             TeamDto teamDto = teamService.loadById(teamId);
             Integer factoryId = bidForAuctionRequest.getFactoryId();
             AuctionDto auctionDto = auctionService.findAuctionByFactory(factoryId);
-            Integer highestPrice = auctionDto.getHigherPrice();
+            int highestPrice = auctionDto.getHigherPrice();
             //TODO this is only for testing
             auctionService.changeHigherTeam(auctionDto , teamDto , highestPrice +100 );
+            auctionDto = auctionService.loadById(auctionDto.getId());
             AuctionDto responseAuction = AuctionDto.builder().higherPrice(auctionDto.getHigherPrice())
                     .factoryId(auctionDto.getFactoryId()).HigherTeamId(auctionDto.getHigherTeamId())
                     .country(auctionDto.getCountry()).build();
             response = new BidForAuctionResponse(ResponseTypeConstant.BID_FOR_AUCTION
                     ,responseAuction , "Bid has added successfully!");
-        }catch (EntityNotFoundException | InvalidCountryException | InvalidOfferForAuction | InvalidRequestException e){
-            logger.debug(e);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            logger.debug(e.getMessage());
             response = new BidForAuctionResponse(ResponseTypeConstant.BID_FOR_AUCTION , null , e.getMessage());
         }
         pushMessageManager.sendMessageBySession(request.session, gson.toJson(response));

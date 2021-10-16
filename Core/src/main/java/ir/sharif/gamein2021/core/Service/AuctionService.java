@@ -48,13 +48,16 @@ public class AuctionService extends AbstractCrudService<AuctionDto, Auction, Int
         teamDto = teamService.loadById(teamDto.getId());
         auctionDto = loadById(auctionDto.getId());
         if (teamDto.getFactoryId() != null)
-            throw new InvalidRequestException("Not allowed to have another factory");
+            throw new InvalidRequestException("Not allowed to bid for this auction because you already have one factory");
+        if(auctionDto.getHigherTeamId() != null && auctionDto.getHigherTeamId() == teamDto.getId())
+            throw new InvalidRequestException("You are not allowed to bid for this auction because you are number of for this auction");
         if (auctionDto.getHigherPrice() >= offerPrice)
             throw new InvalidOfferForAuction("" + offerPrice + " is not enough!");
         if (auctionDto.getCountry() == teamDto.getCountry()) {
             TeamDto oldTeamDto = teamService.loadById(teamDto.getId());
             auctionDto.setHigherTeamId(oldTeamDto.getId());
             auctionDto.setHigherPrice(offerPrice);
+            auctionDto.setNumberOfOffers(auctionDto.getNumberOfOffers() + 1);
             saveOrUpdate(auctionDto);
         } else {
             throw new InvalidCountryException("This factory is not in your country");

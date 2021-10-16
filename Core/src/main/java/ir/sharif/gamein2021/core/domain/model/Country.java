@@ -1,7 +1,5 @@
 package ir.sharif.gamein2021.core.domain.model;
 
-import java.util.ArrayList;
-
 public enum Country {
     //This is just an example
     IRAN,

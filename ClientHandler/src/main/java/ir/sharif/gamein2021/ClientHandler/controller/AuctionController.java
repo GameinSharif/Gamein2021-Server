@@ -13,10 +13,6 @@ import ir.sharif.gamein2021.core.Service.UserService;
 import ir.sharif.gamein2021.core.domain.dto.AuctionDto;
 import ir.sharif.gamein2021.core.domain.dto.TeamDto;
 import ir.sharif.gamein2021.core.domain.dto.UserDto;
-import ir.sharif.gamein2021.core.exception.EntityNotFoundException;
-import ir.sharif.gamein2021.core.exception.InvalidCountryException;
-import ir.sharif.gamein2021.core.exception.InvalidOfferForAuction;
-import ir.sharif.gamein2021.core.exception.InvalidRequestException;
 import lombok.AllArgsConstructor;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
@@ -41,13 +37,13 @@ public class AuctionController {
             TeamDto teamDto = teamService.loadById(teamId);
             Integer factoryId = bidForAuctionRequest.getFactoryId();
             AuctionDto auctionDto = auctionService.findAuctionByFactory(factoryId);
-            int highestPrice = auctionDto.getHigherPrice();
+            int highestPrice = auctionDto.getHighestBid();
             //TODO this is only for testing
             auctionService.changeHigherTeam(auctionDto , teamDto , highestPrice +100 );
             auctionDto = auctionService.loadById(auctionDto.getId());
-            AuctionDto responseAuction = AuctionDto.builder().higherPrice(auctionDto.getHigherPrice())
-                    .factoryId(auctionDto.getFactoryId()).HigherTeamId(auctionDto.getHigherTeamId())
-                    .country(auctionDto.getCountry()).build();
+            AuctionDto responseAuction = AuctionDto.builder().highestBid(auctionDto.getHighestBid())
+                    .factoryId(auctionDto.getFactoryId()).highestBidTeam(auctionDto.getHighestBidTeam())
+                    .build();
             response = new BidForAuctionResponse(ResponseTypeConstant.BID_FOR_AUCTION
                     ,responseAuction , "Bid has added successfully!");
         }catch (Exception e){

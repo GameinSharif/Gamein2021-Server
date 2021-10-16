@@ -1,7 +1,6 @@
 package ir.sharif.gamein2021.core.domain.dto;
 
-import ir.sharif.gamein2021.core.domain.model.Country;
-import ir.sharif.gamein2021.core.domain.model.Factory;
+import ir.sharif.gamein2021.core.util.Enums.Country;
 import lombok.*;
 
 @Getter

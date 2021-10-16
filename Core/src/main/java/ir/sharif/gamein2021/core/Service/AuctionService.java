@@ -5,16 +5,18 @@ import ir.sharif.gamein2021.core.dao.AuctionRepository;
 import ir.sharif.gamein2021.core.domain.dto.AuctionDto;
 import ir.sharif.gamein2021.core.domain.dto.TeamDto;
 import ir.sharif.gamein2021.core.domain.entity.Auction;
-import ir.sharif.gamein2021.core.domain.model.Country;
 import ir.sharif.gamein2021.core.exception.EntityNotFoundException;
 import ir.sharif.gamein2021.core.exception.InvalidCountryException;
 import ir.sharif.gamein2021.core.exception.InvalidOfferForAuction;
 import ir.sharif.gamein2021.core.exception.InvalidRequestException;
+import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
+import ir.sharif.gamein2021.core.util.Enums;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,7 +27,6 @@ public class AuctionService extends AbstractCrudService<AuctionDto, Auction, Int
     private final AuctionRepository repository;
     private final TeamService teamService;
     private final ModelMapper modelMapper;
-
 
     public AuctionService(AuctionRepository repository, ModelMapper modelMapper, TeamService teamService) {
         this.repository = repository;
@@ -49,15 +50,15 @@ public class AuctionService extends AbstractCrudService<AuctionDto, Auction, Int
         auctionDto = loadById(auctionDto.getId());
         if (teamDto.getFactoryId() != null)
             throw new InvalidRequestException("Not allowed to bid for this auction because you already have one factory");
-        if(auctionDto.getHigherTeamId() != null && auctionDto.getHigherTeamId() == teamDto.getId())
+        if(auctionDto.getHighestBidTeam().equals(teamDto.getId()))
             throw new InvalidRequestException("You are not allowed to bid for this auction because you are number of for this auction");
-        if (auctionDto.getHigherPrice() >= offerPrice)
+        if (auctionDto.getHighestBid() >= offerPrice)
             throw new InvalidOfferForAuction("" + offerPrice + " is not enough!");
-        if (auctionDto.getCountry() == teamDto.getCountry()) {
+        if (ReadJsonFilesManager.Factories[auctionDto.getFactoryId()].getCountry() == teamDto.getCountry()) {
             TeamDto oldTeamDto = teamService.loadById(teamDto.getId());
-            auctionDto.setHigherTeamId(oldTeamDto.getId());
-            auctionDto.setHigherPrice(offerPrice);
-            auctionDto.setNumberOfOffers(auctionDto.getNumberOfOffers() + 1);
+            auctionDto.setHighestBidTeam(oldTeamDto.getId());
+            auctionDto.setHighestBid(offerPrice);
+            auctionDto.setBidsCount(auctionDto.getBidsCount() + 1);
             saveOrUpdate(auctionDto);
         } else {
             throw new InvalidCountryException("This factory is not in your country");
@@ -66,7 +67,7 @@ public class AuctionService extends AbstractCrudService<AuctionDto, Auction, Int
 
     @Transactional(readOnly = true)
     public List<AuctionDto> getAllAuctionsWithTeam() {
-        return repository.findAllByHigherTeamIdIsNotNull()
+        return repository.findAllByAuctionBidStatus(Enums.AuctionBidStatus.Active)
                 .stream().map(e -> modelMapper.map(e, AuctionDto.class))
                 .collect(Collectors.toList());
     }
@@ -75,47 +76,9 @@ public class AuctionService extends AbstractCrudService<AuctionDto, Auction, Int
     public AuctionDto findAuctionByFactory(Integer id) {
         Assert.notNull(id, "The id must not be null!");
         Auction auction = repository.findByFactoryId(id);
-        if (auction == null)
+        if (auction == null || auction.getAuctionBidStatus() == Enums.AuctionBidStatus.Over)
             throw new EntityNotFoundException("can not find entity " + getEntityClass().getSimpleName() + "by id: " + id + " ");
         else
             return modelMapper.map(auction, AuctionDto.class);
     }
-
-
-    @Transactional
-    public void completeAllAuctions() {
-        completeAvailableAuctions();
-        for (Country country : Country.getCountries()) {
-
-            List<AuctionDto> allUnFinishedAuctionsByCountry = repository.
-                    findAllByHigherTeamIdIsNotNullAndCountry(country).stream().map(e -> modelMapper.map(e, AuctionDto.class))
-                    .collect(Collectors.toList());
-
-            List<TeamDto> emptyTeams = teamService.findAllEmptyTeamWithCountry(country);
-
-            Collections.shuffle(allUnFinishedAuctionsByCountry);
-            Collections.shuffle(emptyTeams);
-
-            for (int i = 0; i < emptyTeams.size(); i++) {
-                TeamDto emptyTeam = emptyTeams.get(i);
-                AuctionDto auctionDto = allUnFinishedAuctionsByCountry.get(i);
-                emptyTeam.setFactoryId(auctionDto.getFactoryId());
-                auctionDto.setHigherTeamId(emptyTeam.getId());
-                //TODO setting auction highest price and payments
-                teamService.saveOrUpdate(emptyTeam);
-                saveOrUpdate(auctionDto);
-            }
-        }
-    }
-
-    @Transactional
-    public void completeAvailableAuctions() {
-        getAllAuctionsWithTeam().forEach(e -> {
-            TeamDto winnerTeam = teamService.loadById(e.getHigherTeamId());
-            //TODO Payment
-            winnerTeam.setFactoryId(e.getFactoryId());
-            teamService.saveOrUpdate(winnerTeam);
-        });
-    }
-
 }

@@ -1,6 +1,6 @@
 package ir.sharif.gamein2021.core.domain.dto;
 
-import ir.sharif.gamein2021.core.domain.model.Country;
+import ir.sharif.gamein2021.core.util.Enums.AuctionBidStatus;
 import lombok.*;
 
 @Getter
@@ -8,12 +8,12 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AuctionDto {
-
+public class AuctionDto
+{
     private Integer id;
     private Integer factoryId;
-    private int higherPrice;
-    private Integer HigherTeamId;
-    private int numberOfOffers;
-    private Country country;
+    private int highestBid;
+    private Integer highestBidTeam;
+    private int bidsCount;
+    private AuctionBidStatus auctionBidStatus;
 }

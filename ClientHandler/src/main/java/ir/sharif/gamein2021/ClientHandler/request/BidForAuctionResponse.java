@@ -6,12 +6,13 @@ import ir.sharif.gamein2021.core.domain.dto.AuctionDto;
 
 import java.io.Serializable;
 
-public class BidForAuctionResponse extends ResponseObject implements Serializable {
+public class BidForAuctionResponse extends ResponseObject implements Serializable
+{
     private AuctionDto auction;
     private String result;  //TODO change to enum
 
-    public BidForAuctionResponse(ResponseTypeConstant responseTypeConstant,
-                                 AuctionDto auction, String result) {
+    public BidForAuctionResponse(ResponseTypeConstant responseTypeConstant, AuctionDto auction, String result)
+    {
         this.responseTypeConstant = responseTypeConstant.ordinal();
         this.auction = auction;
         this.result = result;

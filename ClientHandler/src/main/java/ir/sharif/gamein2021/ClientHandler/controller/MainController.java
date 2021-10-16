@@ -40,11 +40,10 @@ public class MainController {
                 gameDataController.getGameData(processedRequest);
                 gameDataController.getCurrentWeekDemands(processedRequest);
                 break;
-            case GET_RANDOM_COUNTRY:
-                teamController.setRandomCountryForTeam(processedRequest);
             case BID_FOR_AUCTION:
                 BidForAuctionRequest bidForAuctionRequest = gson.fromJson(requestData, BidForAuctionRequest.class);
                 auctionController.addBidForAuction(processedRequest, bidForAuctionRequest);
+                break;
             default:
                 System.out.println("Request type is invalid.");
         }

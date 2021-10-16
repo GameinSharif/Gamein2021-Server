@@ -1,10 +1,9 @@
 package ir.sharif.gamein2021.core.domain.entity;
 
-import ir.sharif.gamein2021.core.domain.model.Country;
+import ir.sharif.gamein2021.core.util.Enums.AuctionBidStatus;
 import lombok.*;
 
 import javax.persistence.*;
-
 
 @Entity
 @Getter
@@ -12,20 +11,24 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Auction implements BaseEntity {
+public class Auction implements BaseEntity
+{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    //This field is for factories and because factories are not entity this should be an id
-    //Also this field should be unique and not null
-    @Column(nullable = false, unique = true, name = "factory_id")
+
+    @Column(name = "factory_id", nullable = false, unique = true)
     private Integer factoryId;
-    @Column(name = "higher_price")
-    private int higherPrice;
+
+    @Column(name = "highest_bid")
+    private int highestBid;
+
     @OneToOne
-    private Team higherTeam;
-    private int numberOfOffers;
+    private Team highestBidTeam;
+
+    @Column(name = "bids_count")
+    private int bidsCount;
+
     @Enumerated(value = EnumType.STRING)
-    private Country country;
-    //TODO if auction should have maximum or minimum
+    private AuctionBidStatus auctionBidStatus;
 }

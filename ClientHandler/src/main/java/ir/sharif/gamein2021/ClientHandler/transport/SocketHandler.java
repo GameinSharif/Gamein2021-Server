@@ -3,7 +3,7 @@ package ir.sharif.gamein2021.ClientHandler.transport;
 import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.controller.MainController;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
-import ir.sharif.gamein2021.ClientHandler.request.Login.ConnectionResponse;
+import ir.sharif.gamein2021.ClientHandler.domain.Login.ConnectionResponse;
 import ir.sharif.gamein2021.ClientHandler.manager.EncryptDecryptManager;
 import ir.sharif.gamein2021.ClientHandler.manager.PushMessageManager;
 import ir.sharif.gamein2021.ClientHandler.manager.SocketSessionManager;

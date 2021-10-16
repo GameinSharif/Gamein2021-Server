@@ -1,4 +1,4 @@
-package ir.sharif.gamein2021.ClientHandler.request;
+package ir.sharif.gamein2021.ClientHandler.domain;
 
 import ir.sharif.gamein2021.ClientHandler.util.ResponseTypeConstant;
 import ir.sharif.gamein2021.ClientHandler.view.ResponseObject;

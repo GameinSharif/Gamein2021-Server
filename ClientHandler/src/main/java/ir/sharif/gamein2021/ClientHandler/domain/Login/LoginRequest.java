@@ -1,4 +1,4 @@
-package ir.sharif.gamein2021.ClientHandler.request.Login;
+package ir.sharif.gamein2021.ClientHandler.domain.Login;
 
 import ir.sharif.gamein2021.ClientHandler.view.RequestObject;
 import lombok.Getter;

@@ -2,8 +2,8 @@ package ir.sharif.gamein2021.ClientHandler.controller;
 
 import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
-import ir.sharif.gamein2021.ClientHandler.request.BidForAuctionRequest;
-import ir.sharif.gamein2021.ClientHandler.request.Login.LoginRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.BidForAuctionRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginRequest;
 import ir.sharif.gamein2021.ClientHandler.util.RequestTypeConstant;
 import lombok.AllArgsConstructor;
 import org.json.JSONObject;

@@ -2,8 +2,8 @@ package ir.sharif.gamein2021.ClientHandler.controller;
 
 import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
-import ir.sharif.gamein2021.ClientHandler.request.GetCurrentWeekDemandsResponse;
-import ir.sharif.gamein2021.ClientHandler.request.GetGameDataResponse;
+import ir.sharif.gamein2021.ClientHandler.domain.GetCurrentWeekDemandsResponse;
+import ir.sharif.gamein2021.ClientHandler.domain.GetGameDataResponse;
 import ir.sharif.gamein2021.ClientHandler.manager.PushMessageManager;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
 import ir.sharif.gamein2021.ClientHandler.util.ResponseTypeConstant;

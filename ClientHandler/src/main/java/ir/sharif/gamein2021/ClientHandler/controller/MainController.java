@@ -1,9 +1,11 @@
 package ir.sharif.gamein2021.ClientHandler.controller;
 
 import com.google.gson.Gson;
-import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.BidForAuctionRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.GetContractsRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginRequest;
+import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.RFQ.*;
+import ir.sharif.gamein2021.ClientHandler.domain.BidForAuctionRequest;
 import ir.sharif.gamein2021.ClientHandler.util.RequestTypeConstant;
 import lombok.AllArgsConstructor;
 import org.json.JSONObject;
@@ -11,14 +13,25 @@ import org.springframework.stereotype.Component;
 
 
 @Component
-@AllArgsConstructor
 public class MainController {
     private final UserController userController;
     private final GameDataController gameDataController;
-    private final TeamController teamController;
-    private final AuctionController auctionController;
+    private final ContractController contractController;
+    private final NegotiationController negotiationController;
+    private final ProviderController providerController;
     private final Gson gson;
 
+    @Autowired
+    public MainController(UserController userController, GameDataController gameDataController, ContractController contractController, NegotiationController negotiationController, ProviderController providerController)
+    {
+        this.gson = new Gson();
+        this.userController = userController;
+        this.gameDataController = gameDataController;
+        this.contractController = contractController;
+        this.negotiationController = negotiationController;
+        this.providerController = providerController;
+    }
+    private final AuctionController auctionController;
 
     public void HandleMessage(ProcessedRequest processedRequest) {
         String requestData = processedRequest.requestData;
@@ -40,6 +53,37 @@ public class MainController {
                 gameDataController.getGameData(processedRequest);
                 gameDataController.getCurrentWeekDemands(processedRequest);
                 break;
+            case GET_CONTRACTS:
+                GetContractsRequest getContractsRequest = gson.fromJson(requestData, GetContractsRequest.class);
+                contractController.getContracts(processedRequest, getContractsRequest);
+                break;
+            case GET_NEGOTIATIONS:
+                GetNegotiationsRequest getNegotiationsRequest = gson.fromJson(requestData, GetNegotiationsRequest.class);
+                negotiationController.getNegotiations( processedRequest, getNegotiationsRequest);
+                break;
+            case NEW_NEGOTIATION:
+                NewNegotiationRequest newNegotiationRequest = gson.fromJson(requestData, NewNegotiationRequest.class);
+                negotiationController.newNegotiation(processedRequest, newNegotiationRequest);
+                break;
+            case EDIT_NEGOTIATION_COST_PER_UNIT:
+                EditNegotiationCostPerUnitRequest editRequest = gson.fromJson(requestData, EditNegotiationCostPerUnitRequest.class);
+                negotiationController.editNegotiationCostPerUnit(processedRequest, editRequest);
+                break;
+            case NEW_PROVIDER:
+                NewProviderRequest newProviderRequest = gson.fromJson(requestData, NewProviderRequest.class);
+                providerController.newProvider(processedRequest, newProviderRequest);
+                break;
+            case GET_PROVIDERS:
+                GetProvidersRequest getProvidersRequest = gson.fromJson(requestData, GetProvidersRequest.class);
+                providerController.getProviders(processedRequest, getProvidersRequest);
+                break;
+            case REMOVE_PROVIDER:
+                RemoveProviderRequest removeProviderRequest = gson.fromJson(requestData, RemoveProviderRequest.class);
+                providerController.removeProvider(processedRequest, removeProviderRequest);
+                break;
+            case NEW_PROVIDER_NEGOTIATION:
+                NewProviderNegotiationRequest newProviderNegotiationRequest = gson.fromJson(requestData, NewProviderNegotiationRequest.class);
+                negotiationController.newProviderNegotiation(processedRequest, newProviderNegotiationRequest);
             case BID_FOR_AUCTION:
                 BidForAuctionRequest bidForAuctionRequest = gson.fromJson(requestData, BidForAuctionRequest.class);
                 auctionController.addBidForAuction(processedRequest, bidForAuctionRequest);

@@ -12,5 +12,4 @@ public class LoginRequest extends RequestObject implements Serializable
 {
     private String username;
     private String password;
-
 }

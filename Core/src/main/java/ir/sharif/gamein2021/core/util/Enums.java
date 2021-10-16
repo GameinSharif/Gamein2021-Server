@@ -18,4 +18,13 @@ public class Enums
         Over
     }
 
+    public enum ContractType
+    {
+        ONCE, LONGTERM
+    }
+
+    public enum NegotiationState
+    {
+        CLOSED, DEAL, IN_PROGRESS, PENDING
+    }
 }

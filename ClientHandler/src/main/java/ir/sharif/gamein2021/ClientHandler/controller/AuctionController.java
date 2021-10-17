@@ -57,7 +57,7 @@ public class AuctionController
         catch (EntityNotFoundException e)
         {
             //This is the first bid for this factory
-            if (factoryId <= ReadJsonFilesManager.Factories.length)
+            try
             {
                 AuctionDto auctionDto = auctionService.bidForFirstTimeForThisFactory(teamDto, factoryId);
                 AuctionDto responseAuction = AuctionDto.builder()
@@ -67,9 +67,11 @@ public class AuctionController
                         .build();
                 response = new BidForAuctionResponse(ResponseTypeConstant.BID_FOR_AUCTION, responseAuction, "success");
             }
-            else
+            catch (Exception e2)
             {
-                response = new BidForAuctionResponse(ResponseTypeConstant.BID_FOR_AUCTION, null, e.getMessage());
+                System.out.println(e2.getMessage());
+                logger.debug(e2.getMessage());
+                response = new BidForAuctionResponse(ResponseTypeConstant.BID_FOR_AUCTION, null, e2.getMessage());
             }
         }
         catch (Exception e)

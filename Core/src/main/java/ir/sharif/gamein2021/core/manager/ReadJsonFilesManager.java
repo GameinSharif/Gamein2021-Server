@@ -1,6 +1,7 @@
 package ir.sharif.gamein2021.core.manager;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import ir.sharif.gamein2021.core.service.AuctionService;
 import ir.sharif.gamein2021.core.util.models.Factory;
 import ir.sharif.gamein2021.core.util.models.Product;
 import org.springframework.stereotype.Component;
@@ -8,6 +9,8 @@ import org.springframework.util.ResourceUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 @Component
 public class ReadJsonFilesManager
@@ -26,6 +29,7 @@ public class ReadJsonFilesManager
 
             File factoriesJsonFile = ResourceUtils.getFile("classpath:JsonFiles/Factories.json");
             Factories = objectMapper.readValue(factoriesJsonFile, Factory[].class);
+            AuctionService.RemainedFactories = new ArrayList<>(Arrays.asList(Arrays.copyOf(Factories, Factories.length)));
         }
         catch (IOException ignored)
         {

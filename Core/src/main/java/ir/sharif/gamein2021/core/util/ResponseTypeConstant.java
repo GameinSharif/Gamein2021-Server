@@ -1,4 +1,4 @@
-package ir.sharif.gamein2021.ClientHandler.util;
+package ir.sharif.gamein2021.core.util;
 
 public enum ResponseTypeConstant
 {
@@ -16,7 +16,9 @@ public enum ResponseTypeConstant
     GET_PROVIDERS(11),
     REMOVE_PROVIDER(12),
     NEW_PROVIDER_NEGOTIATION(13),
-    BID_FOR_AUCTION(14);
+    GET_ALL_AUCTIONS(14),
+    BID_FOR_AUCTION(15);
+
     private int value;
 
     ResponseTypeConstant(int value)

@@ -5,8 +5,8 @@ import ir.sharif.gamein2021.ClientHandler.domain.GetContractsRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginRequest;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.RFQ.*;
-import ir.sharif.gamein2021.ClientHandler.domain.BidForAuctionRequest;
-import ir.sharif.gamein2021.ClientHandler.util.RequestTypeConstant;
+import ir.sharif.gamein2021.ClientHandler.domain.Auction.BidForAuctionRequest;
+import ir.sharif.gamein2021.core.util.RequestTypeConstant;
 import lombok.AllArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
@@ -41,6 +41,7 @@ public class MainController {
             case GET_GAME_DATA:
                 gameDataController.getGameData(processedRequest);
                 gameDataController.getCurrentWeekDemands(processedRequest);
+                gameDataController.getAllAuctions(processedRequest);
                 break;
             case GET_CONTRACTS:
                 GetContractsRequest getContractsRequest = gson.fromJson(requestData, GetContractsRequest.class);

@@ -56,6 +56,23 @@ public class AuctionService extends AbstractCrudService<AuctionDto, Auction, Int
         return super.list();
     }
 
+    public List<AuctionDto> readAllAuctionsWithStatus()
+    {
+        List<AuctionDto> auctions = list();
+        List<AuctionDto> responseAuctions = new ArrayList<>();
+
+        for (AuctionDto auctionDto : auctions)
+        {
+            responseAuctions.add(AuctionDto.builder()
+                    .highestBid(auctionDto.getHighestBid())
+                    .factoryId(auctionDto.getFactoryId())
+                    .highestBidTeamId(auctionDto.getHighestBidTeamId())
+                    .auctionBidStatus(auctionDto.getAuctionBidStatus())
+                    .build());
+        }
+        return  responseAuctions;
+    }
+
     @Transactional
     public AuctionDto changeHighestBid(AuctionDto auctionDto, TeamDto teamDto)
     {
@@ -190,7 +207,5 @@ public class AuctionService extends AbstractCrudService<AuctionDto, Auction, Int
             auction.setAuctionBidStatus(Enums.AuctionBidStatus.Over);
             saveOrUpdate(auction);
         });
-
-        //TODO send winners to client?
     }
 }

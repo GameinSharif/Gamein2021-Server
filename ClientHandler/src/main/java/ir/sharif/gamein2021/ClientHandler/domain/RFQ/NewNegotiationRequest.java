@@ -1,10 +1,6 @@
 package ir.sharif.gamein2021.ClientHandler.domain.RFQ;
 
-import ir.sharif.gamein2021.ClientHandler.util.ResponseTypeConstant;
-import ir.sharif.gamein2021.ClientHandler.view.RequestObject;
-import ir.sharif.gamein2021.core.domain.dto.NegotiationDto;
-import ir.sharif.gamein2021.core.domain.entity.Team;
-import ir.sharif.gamein2021.core.util.Enums.NegotiationState;
+import ir.sharif.gamein2021.core.view.RequestObject;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

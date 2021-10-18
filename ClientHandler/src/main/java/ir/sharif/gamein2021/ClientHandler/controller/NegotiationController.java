@@ -13,7 +13,7 @@ import ir.sharif.gamein2021.core.service.TeamService;
 import ir.sharif.gamein2021.core.service.UserService;
 import ir.sharif.gamein2021.core.domain.dto.UserDto;
 import ir.sharif.gamein2021.core.domain.dto.NegotiationDto;
-import ir.sharif.gamein2021.ClientHandler.util.ResponseTypeConstant;
+import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import ir.sharif.gamein2021.core.domain.entity.Team;
 import ir.sharif.gamein2021.core.util.Enums.NegotiationState;
 import org.apache.log4j.Logger;

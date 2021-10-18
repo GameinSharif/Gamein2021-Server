@@ -1,7 +1,7 @@
 package ir.sharif.gamein2021.ClientHandler.domain;
 
-import ir.sharif.gamein2021.ClientHandler.util.ResponseTypeConstant;
-import ir.sharif.gamein2021.ClientHandler.view.ResponseObject;
+import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
+import ir.sharif.gamein2021.core.view.ResponseObject;
 import ir.sharif.gamein2021.core.domain.dto.ContractDto;
 
 import java.io.Serializable;

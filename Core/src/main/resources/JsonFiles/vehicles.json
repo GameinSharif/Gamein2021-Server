@@ -1,0 +1,10 @@
+[
+  {
+    "id": 1,
+    "name": "airplane",
+    "speed": 1,
+    "capacity": 2,
+    "costPerKilometer": 2,
+    "coefficient": 2
+  }
+]

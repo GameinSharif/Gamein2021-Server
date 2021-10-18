@@ -11,4 +11,14 @@ public class Enums
     {
         CLOSED, DEAL, IN_PROGRESS, PENDING
     }
+
+    public enum VehicleType
+    {
+        AIRPLANE, TRUCK, TRAIN, VANET
+    }
+
+    public enum TransportState
+    {
+
+    }
 }

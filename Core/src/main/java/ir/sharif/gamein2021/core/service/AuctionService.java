@@ -78,7 +78,7 @@ public class AuctionService extends AbstractCrudService<AuctionDto, Auction, Int
     {
         teamDto = teamService.loadById(teamDto.getId());
         auctionDto = loadById(auctionDto.getId());
-        int bidPrice = auctionDto.getHighestBid() + GameConstants.AuctionStepValue;
+        int bidPrice = auctionDto.getHighestBid() + GameConstants.Instance.AuctionStepValue;
 
         if (teamDto.getFactoryId() != null)
         {
@@ -117,7 +117,7 @@ public class AuctionService extends AbstractCrudService<AuctionDto, Auction, Int
 
             auctionDto.setFactoryId(factoryId);
             auctionDto.setHighestBidTeamId(teamDto.getId());
-            auctionDto.setHighestBid(GameConstants.AuctionStartValue);
+            auctionDto.setHighestBid(GameConstants.Instance.AuctionStartValue);
             auctionDto.setBidsCount(1);
             auctionDto.setAuctionBidStatus(Enums.AuctionBidStatus.Active);
             return saveOrUpdate(auctionDto);

@@ -8,9 +8,9 @@ import org.springframework.scheduling.annotation.Scheduled;
 @Profile(value = {"scheduled"})
 public class WeeklySchedule
 {
-    @Scheduled(fixedDelayString = "${weekLengthMilliSecond}")
+    @Scheduled(fixedRateString = "${weekLengthMilliSecond}")
     private void scheduledTask()
     {
-        System.out.println("weekly schedule");
+        //System.out.println("weekly schedule");
     }
 }

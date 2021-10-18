@@ -22,7 +22,8 @@ public class AuctionSchedule
     private final AuctionService auctionService;
     private final Gson gson;
 
-    @Scheduled(fixedRateString = "${auctionRoundLengthMilliSecond}")
+    //Second, Minute, Hour, DayOfMonth, Month, WeekDays
+    @Scheduled(cron = "0 0,5,10 9 25 11 ?")
     public void endAuctionCurrentRound()
     {
         System.out.println("Complete auction this round.");
@@ -31,8 +32,7 @@ public class AuctionSchedule
         sendAllAuctionsDataToAllClients();
     }
 
-    //Second, Minute, Hour, DayOfMonth, Month, WeekDays
-    @Scheduled(cron = "0 39 18 18 10 ?")
+    @Scheduled(cron = "0 30 9 25 11 ?")
     public void endAuctionPhase()
     {
         System.out.println("Auction is Over!");

@@ -17,8 +17,13 @@ public class Enums
         AIRPLANE, TRUCK, TRAIN, VANET
     }
 
+    public enum TransportNodeType
+    {
+        SUPPLIER, GAMEIN_CUSTOMER, DC, COMPANY
+    }
+
     public enum TransportState
     {
-
+        SUCCESSFUL, IN_WAY, CRUSHED, PENDING
     }
 }

@@ -1,4 +1,4 @@
-package ir.sharif.gamein2021.ClientHandler.view;
+package ir.sharif.gamein2021.core.view;
 
 import java.io.Serializable;
 

@@ -4,18 +4,14 @@ import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.domain.GetContractsRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginRequest;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.RFQ.EditNegotiationCostPerUnitRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.RFQ.GetNegotiationsRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.RFQ.NewNegotiationRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.RFQ.GetProvidersRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.RFQ.NewProviderRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.RFQ.RemoveProviderRequest;
-import ir.sharif.gamein2021.ClientHandler.util.RequestTypeConstant;
+import ir.sharif.gamein2021.ClientHandler.domain.RFQ.*;
+import ir.sharif.gamein2021.ClientHandler.domain.Auction.BidForAuctionRequest;
+import ir.sharif.gamein2021.core.util.RequestTypeConstant;
+import lombok.AllArgsConstructor;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-
+@AllArgsConstructor
 @Component
 public class MainController {
     private final UserController userController;
@@ -23,18 +19,8 @@ public class MainController {
     private final ContractController contractController;
     private final NegotiationController negotiationController;
     private final ProviderController providerController;
+    private final AuctionController auctionController;
     private final Gson gson;
-
-    @Autowired
-    public MainController(UserController userController, GameDataController gameDataController, ContractController contractController, NegotiationController negotiationController, ProviderController providerController)
-    {
-        this.gson = new Gson();
-        this.userController = userController;
-        this.gameDataController = gameDataController;
-        this.contractController = contractController;
-        this.negotiationController = negotiationController;
-        this.providerController = providerController;
-    }
 
     public void HandleMessage(ProcessedRequest processedRequest) {
         String requestData = processedRequest.requestData;
@@ -55,6 +41,7 @@ public class MainController {
             case GET_GAME_DATA:
                 gameDataController.getGameData(processedRequest);
                 gameDataController.getCurrentWeekDemands(processedRequest);
+                gameDataController.getAllAuctions(processedRequest);
                 break;
             case GET_CONTRACTS:
                 GetContractsRequest getContractsRequest = gson.fromJson(requestData, GetContractsRequest.class);
@@ -83,6 +70,13 @@ public class MainController {
             case REMOVE_PROVIDER:
                 RemoveProviderRequest removeProviderRequest = gson.fromJson(requestData, RemoveProviderRequest.class);
                 providerController.removeProvider(processedRequest, removeProviderRequest);
+                break;
+            case NEW_PROVIDER_NEGOTIATION:
+                NewProviderNegotiationRequest newProviderNegotiationRequest = gson.fromJson(requestData, NewProviderNegotiationRequest.class);
+                negotiationController.newProviderNegotiation(processedRequest, newProviderNegotiationRequest);
+            case BID_FOR_AUCTION:
+                BidForAuctionRequest bidForAuctionRequest = gson.fromJson(requestData, BidForAuctionRequest.class);
+                auctionController.addBidForAuction(processedRequest, bidForAuctionRequest);
                 break;
             default:
                 System.out.println("Request type is invalid.");

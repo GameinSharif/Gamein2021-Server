@@ -1,4 +1,4 @@
-package ir.sharif.gamein2021.ClientHandler.util;
+package ir.sharif.gamein2021.core.util;
 
 public enum RequestTypeConstant
 {
@@ -12,7 +12,9 @@ public enum RequestTypeConstant
     EDIT_NEGOTIATION_COST_PER_UNIT(7),
     NEW_PROVIDER(8),
     GET_PROVIDERS(9),
-    REMOVE_PROVIDER(10);
+    REMOVE_PROVIDER(10),
+    NEW_PROVIDER_NEGOTIATION(11),
+    BID_FOR_AUCTION(12);
 
     private int value;
 

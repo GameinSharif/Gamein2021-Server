@@ -40,9 +40,9 @@ public class OfferService extends AbstractCrudService<OfferDto , Offer , Integer
     public OfferDto update(Integer offerId, OfferDto newOffer) {
         AssertionUtil.assertIdNotNull(offerId, OfferDto.class.getSimpleName());
         AssertionUtil.assertDtoNotNull(newOffer, Offer.class.getSimpleName());
-        var updatedUserDto = createUpdateOfferDto(offerId, newOffer);
-        var updatedUser = toOffer(updatedUserDto);
-        Offer result = getRepository().save(updatedUser);
+        var updatedOfferDto = createUpdateOfferDto(offerId, newOffer);
+        var updatedOffer = toOffer(updatedOfferDto);
+        Offer result = getRepository().save(updatedOffer);
         return toOfferDto(result);
     }
 

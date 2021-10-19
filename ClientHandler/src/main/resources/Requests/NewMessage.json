@@ -1,0 +1,12 @@
+{
+  "playerId": 1,
+  "requestTypeConstant": 5,
+  "messageDto": {
+    "id": null,
+    "chatId": null,
+    "senderTeamId": 1,
+    "receiverTeamId": 2,
+    "text": "hi team 2",
+    "dateTime": null
+  }
+}

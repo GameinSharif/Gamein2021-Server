@@ -1,6 +1,7 @@
 package ir.sharif.gamein2021.core.Service;
 
 import ir.sharif.gamein2021.core.Service.core.AbstractCrudService;
+import ir.sharif.gamein2021.core.dao.MessageRepository;
 import ir.sharif.gamein2021.core.domain.dto.MessageDto;
 import ir.sharif.gamein2021.core.domain.entity.Message;
 import ir.sharif.gamein2021.core.util.AssertionUtil;
@@ -11,10 +12,13 @@ import java.time.LocalDateTime;
 @Service
 public class MessageService extends AbstractCrudService<MessageDto, Message, Integer> {
 
+    MessageRepository messageRepository;
     TeamService teamService;
 
-    public MessageService(TeamService teamService) {
+    public MessageService(MessageRepository messageRepository, TeamService teamService) {
+        this.messageRepository = messageRepository;
         this.teamService = teamService;
+        setRepository(messageRepository);
     }
 
     public MessageDto save(MessageDto messageDto) {

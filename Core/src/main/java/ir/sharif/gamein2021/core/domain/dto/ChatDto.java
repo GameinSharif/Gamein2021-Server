@@ -16,7 +16,18 @@ public class ChatDto implements BaseDto<Integer> {
 
     private Integer id;
     private LocalDateTime latestMessageDate;
-    private List<Integer> teamIds;
-    private ArrayList<MessageDto> messageDtos;
+    private Integer team1Id;
+    private Integer team2Id;
+    private List<MessageDto> messageDtos;
 
+    @Override
+    public String toString() {
+        return "ChatDto{" +
+                "id=" + id +
+                ", latestMessageDate=" + latestMessageDate +
+                ", team1=" + team1Id +
+                ", team2=" + team2Id +
+                ", messageDtos=" + messageDtos +
+                '}';
+    }
 }

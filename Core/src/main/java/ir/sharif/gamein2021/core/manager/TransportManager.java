@@ -4,9 +4,11 @@ import ir.sharif.gamein2021.core.domain.dto.TransportDto;
 import ir.sharif.gamein2021.core.service.TransportService;
 import ir.sharif.gamein2021.core.util.Enums;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 @Component
 public class TransportManager {
@@ -16,6 +18,17 @@ public class TransportManager {
     @Autowired
     public TransportManager(TransportService transportService) {
         this.transportService = transportService;
+    }
+
+    public void updateTransports() {
+        ArrayList<TransportDto> pending_transports = transportService.getPendingTransports();
+        // TODO : handle transport crashing
+        LocalDate today = LocalDate.now();
+        ArrayList<TransportDto> startingTransports = transportService.getStartingTransports(today);
+        // TODO : update state to in_way, send response
+        // TODO : could transport crash on first day?
+        ArrayList<TransportDto> arrivedTransports = transportService.getEndingTransports(today);
+        // TODO : update state to finished, send response
     }
 
     public TransportDto createTransport(Enums.VehicleType vehicleType, Enums.TransportNodeType sourceType, Integer sourceId

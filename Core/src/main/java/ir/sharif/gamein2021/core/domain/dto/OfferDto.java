@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class OfferDto implements BaseDto<Integer>{
-
     private Integer id;
     private Integer teamId;
     private String teamName;

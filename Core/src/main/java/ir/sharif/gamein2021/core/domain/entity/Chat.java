@@ -20,7 +20,7 @@ public class Chat implements BaseEntity {
     @Column(name = "chat_id")
     private Integer id;
 
-    @Column
+    @Column(name = "latest_mssage_Date", nullable = false)
     private LocalDateTime latestMessageDate;
 
     @OneToOne

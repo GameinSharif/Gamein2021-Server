@@ -14,12 +14,10 @@ public class MessageService extends AbstractCrudService<MessageDto, Message, Int
 
     MessageRepository messageRepository;
     TeamService teamService;
-    ChatService chatService;
 
-    public MessageService(MessageRepository messageRepository, ChatService chatService, TeamService teamService) {
+    public MessageService(MessageRepository messageRepository, TeamService teamService) {
         this.messageRepository = messageRepository;
         this.teamService = teamService;
-        this.chatService = chatService;
         setRepository(messageRepository);
     }
 

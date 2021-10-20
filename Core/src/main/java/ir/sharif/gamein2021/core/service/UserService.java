@@ -2,9 +2,7 @@ package ir.sharif.gamein2021.core.service;
 
 import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
 import ir.sharif.gamein2021.core.dao.UserRepository;
-import ir.sharif.gamein2021.core.domain.dto.OfferDto;
 import ir.sharif.gamein2021.core.domain.dto.UserDto;
-import ir.sharif.gamein2021.core.domain.entity.Offer;
 import ir.sharif.gamein2021.core.domain.entity.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;

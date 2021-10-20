@@ -27,7 +27,7 @@ public class Message implements BaseEntity
     private String text;
 
     @Column(nullable = false)
-    private LocalDateTime dateTime;
+    private LocalDateTime insertedAt;
 
     @Override
     public Integer getId()

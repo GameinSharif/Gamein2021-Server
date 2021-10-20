@@ -1,6 +1,8 @@
 package ir.sharif.gamein2021.core.domain.entity;
 
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -20,7 +22,7 @@ public class Chat implements BaseEntity {
     @Column(name = "chat_id")
     private Integer id;
 
-    @Column(name = "latest_mssage_Date", nullable = false)
+    @Column(name = "latest_message_date", nullable = false)
     private LocalDateTime latestMessageDate;
 
     @OneToOne
@@ -29,7 +31,7 @@ public class Chat implements BaseEntity {
     @OneToOne
     private Team team2;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "chat_id")
     private List<Message> messages;
 }

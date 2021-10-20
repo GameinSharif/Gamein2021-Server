@@ -1,30 +1,42 @@
-package ir.sharif.gamein2021.core.Service;
+package ir.sharif.gamein2021.core.service;
 
-import ir.sharif.gamein2021.core.Service.core.AbstractCrudService;
+
+import ir.sharif.gamein2021.core.exception.TeamNotFoundException;
+import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
 import ir.sharif.gamein2021.core.dao.TeamRepository;
 import ir.sharif.gamein2021.core.domain.dto.TeamDto;
 import ir.sharif.gamein2021.core.domain.entity.Team;
-import ir.sharif.gamein2021.core.exception.TeamNotFoundException;
+import ir.sharif.gamein2021.core.util.Enums.Country;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
-public class TeamService extends AbstractCrudService<TeamDto, Team, Integer> {
+import java.util.List;
+import java.util.stream.Collectors;
 
-    private final TeamRepository teamRepository;
+@Service
+public class TeamService extends AbstractCrudService<TeamDto, Team, Integer>
+{
+
+    private final TeamRepository repository;
     private final ModelMapper modelMapper;
 
-    public TeamService(TeamRepository teamRepository, ModelMapper modelMapper) {
-        this.teamRepository = teamRepository;
+    public TeamService(TeamRepository repository, ModelMapper modelMapper)
+    {
+        this.repository = repository;
         this.modelMapper = modelMapper;
-        setRepository(teamRepository);
+        setRepository(repository);
     }
 
     @Transactional(readOnly = true)
-    public Team findById(Integer id) {
+    public Team findTeamById(Integer id){
         return getRepository().findById(id).orElseThrow(TeamNotFoundException::new);
     }
 
-
+    @Transactional
+    public List<TeamDto> findAllEmptyTeamWithCountry(Country country)
+    {
+        return repository.findAllByFactoryIdIsNullAndCountry(country).stream().
+                map(e -> modelMapper.map(e, TeamDto.class)).collect(Collectors.toList());
+    }
 }

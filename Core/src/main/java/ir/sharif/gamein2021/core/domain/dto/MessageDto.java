@@ -9,12 +9,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MessageDto implements BaseDto<Integer> {
-
+public class MessageDto implements BaseDto<Integer>
+{
     private Integer id;
     private Integer senderTeamId;
     private Integer receiverTeamId;
     private String text;
-    private LocalDateTime dateTime;
-
+    private LocalDateTime insertedAt;
 }

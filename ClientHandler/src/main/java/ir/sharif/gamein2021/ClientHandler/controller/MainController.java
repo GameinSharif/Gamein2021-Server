@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.domain.GetContractsRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginRequest;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.Messenger.NewMessageRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.RFQ.*;
 import ir.sharif.gamein2021.ClientHandler.domain.Auction.BidForAuctionRequest;
 import ir.sharif.gamein2021.core.util.RequestTypeConstant;
@@ -13,22 +14,26 @@ import org.springframework.stereotype.Component;
 
 @AllArgsConstructor
 @Component
-public class MainController {
+public class MainController
+{
     private final UserController userController;
+    private final OfferController offerController;
     private final GameDataController gameDataController;
     private final ContractController contractController;
     private final NegotiationController negotiationController;
     private final ProviderController providerController;
     private final AuctionController auctionController;
+    private final MessageController messageController;
     private final Gson gson;
 
-    public void HandleMessage(ProcessedRequest processedRequest) {
-    private final MessageController messageController;
+    public void HandleMessage(ProcessedRequest processedRequest)
+    {
         String requestData = processedRequest.requestData;
         JSONObject obj = new JSONObject(requestData);
         RequestTypeConstant requestType = RequestTypeConstant.values()[obj.getInt("requestTypeConstant")];
 
-        switch (requestType) {
+        switch (requestType)
+        {
             case LOGIN:
                 LoginRequest loginRequest = gson.fromJson(requestData, LoginRequest.class);
                 userController.authenticate(processedRequest, loginRequest);
@@ -52,7 +57,7 @@ public class MainController {
                 break;
             case GET_NEGOTIATIONS:
                 GetNegotiationsRequest getNegotiationsRequest = gson.fromJson(requestData, GetNegotiationsRequest.class);
-                negotiationController.getNegotiations( processedRequest, getNegotiationsRequest);
+                negotiationController.getNegotiations(processedRequest, getNegotiationsRequest);
                 break;
             case NEW_NEGOTIATION:
                 NewNegotiationRequest newNegotiationRequest = gson.fromJson(requestData, NewNegotiationRequest.class);
@@ -87,7 +92,7 @@ public class MainController {
                 break;
             case NEW_MESSAGE:
                 NewMessageRequest newMessageRequest = gson.fromJson(requestData, NewMessageRequest.class);
-                messageController.createNewOffer(processedRequest, newMessageRequest);
+                messageController.addNewChatMessage(processedRequest, newMessageRequest);
                 break;
 
             default:

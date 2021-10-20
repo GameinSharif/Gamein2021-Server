@@ -12,11 +12,11 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 
-public class ChatDto implements BaseDto<Integer> {
-
+public class ChatDto implements BaseDto<Integer>
+{
     private Integer id;
     private LocalDateTime latestMessageDate;
     private Integer team1Id;
     private Integer team2Id;
-    private List<MessageDto> messageDtos;
+    private List<MessageDto> messages;
 }

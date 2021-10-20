@@ -1,5 +1,8 @@
 package ir.sharif.gamein2021.core.service;
 
+import ir.sharif.gamein2021.core.domain.dto.ContractDto;
+import ir.sharif.gamein2021.core.domain.entity.Contract;
+import ir.sharif.gamein2021.core.domain.entity.Team;
 import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
 import ir.sharif.gamein2021.core.dao.OfferRepository;
 import ir.sharif.gamein2021.core.domain.dto.OfferDto;
@@ -10,118 +13,60 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
-public class OfferService extends AbstractCrudService<OfferDto , Offer , Integer> {
+public class OfferService extends AbstractCrudService<OfferDto, Offer, Integer>
+{
 
     private final OfferRepository offerRepository;
     private final TeamService teamService;
     private final ModelMapper modelMapper;
 
-    public OfferService(OfferRepository offerRepository, TeamService teamService, ModelMapper modelMapper) {
+    public OfferService(OfferRepository offerRepository, TeamService teamService, ModelMapper modelMapper)
+    {
         this.offerRepository = offerRepository;
         this.teamService = teamService;
         this.modelMapper = modelMapper;
         setRepository(offerRepository);
     }
 
-    @Transactional
-    public OfferDto save(OfferDto offerDto) {
-        AssertionUtil.assertDtoNotNull(offerDto, Offer.class.getSimpleName());
-        var offer = toOffer(offerDto);
-        Offer result = getRepository().save(offer);
-        return toOfferDto(result);
-    }
-
-    @Transactional
-    public OfferDto update(Integer offerId, OfferDto newOffer) {
-        AssertionUtil.assertIdNotNull(offerId, OfferDto.class.getSimpleName());
-        AssertionUtil.assertDtoNotNull(newOffer, Offer.class.getSimpleName());
-        var updatedOfferDto = createUpdateOfferDto(offerId, newOffer);
-        var updatedOffer = toOffer(updatedOfferDto);
-        Offer result = getRepository().save(updatedOffer);
-        return toOfferDto(result);
-    }
-
     @Transactional(readOnly = true)
-    public Offer findById(Integer id) {
+    public Offer findById(Integer id)
+    {
         return getRepository().findById(id).orElseThrow(OfferNotFoundException::new);
     }
 
     @Transactional(readOnly = true)
-    public List<OfferDto> getAllOffers(){
-        List<Offer> offers = offerRepository.findAll();
-        List<OfferDto> offerDtos = new ArrayList<>();
-        for (Offer offer : offers) {
-            offerDtos.add(toOfferDto(offer));
-        }
-        return offerDtos;
+    public List<OfferDto> findByTeam(Team team)
+    {
+        List<Offer> offers = offerRepository.findOffersByTeam(team);
+        return offers.stream()
+                .map(e -> modelMapper.map(e, OfferDto.class))
+                .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
-    public List<OfferDto> getTeamOffers(Integer teamId) {
-        List<Offer> offers = offerRepository.findAll();
-        List<OfferDto> offerDtos = new ArrayList<>();
-        for (Offer offer : offers) {
-            if (offer.getTeam().getId().equals(teamId)) {
-                offerDtos.add(toOfferDto(offer));
-            }
-        }
-        return offerDtos;
+    public List<OfferDto> findOffersExceptTeam(Team team)
+    {
+        List<Offer> offers = offerRepository.findAllByTeamIsNot(team);
+        return offers.stream()
+                .map(e -> modelMapper.map(e, OfferDto.class))
+                .collect(Collectors.toList());
     }
 
-    private OfferDto createUpdateOfferDto(Integer offerId, OfferDto newOffer) {
-        OfferDto oldOffer = loadById(offerId);
-
-        if(newOffer.getOfferDeadline() != null){
-            oldOffer.setOfferDeadline(newOffer.getOfferDeadline());
-        }
-        if(newOffer.getCostPerUnit() != null){
-            oldOffer.setCostPerUnit(newOffer.getCostPerUnit());
-        }
-        if(newOffer.getEarliestExpectedArrival() != null){
-            oldOffer.setEarliestExpectedArrival(newOffer.getEarliestExpectedArrival());
-        }
-        if(newOffer.getTeamId() != null){
-            oldOffer.setTeamId(newOffer.getTeamId());
-        }
-        if(newOffer.getType() != null){
-            oldOffer.setType(newOffer.getType());
-        }
-        if(newOffer.getVolume() != null){
-            oldOffer.setVolume(newOffer.getVolume());
-        }
-        if(newOffer.getLatestExpectedArrival() != null){
-            oldOffer.setLatestExpectedArrival(newOffer.getEarliestExpectedArrival());
-        }
-        return oldOffer;
+    @Transactional
+    public OfferDto addOffer(OfferDto offerDto)
+    {
+        AssertionUtil.assertDtoNotNull(offerDto, Offer.class.getSimpleName());
+        return saveOrUpdate(offerDto);
     }
 
-    public Offer toOffer(OfferDto offerDto) {
-        return Offer.builder()
-                .id(offerDto.getId())
-                .team(teamService.findById(offerDto.getTeamId()))
-                .type(offerDto.getType())
-                .volume(offerDto.getVolume())
-                .earliestExpectedArrival(offerDto.getEarliestExpectedArrival())
-                .latestExpectedArrival(offerDto.getLatestExpectedArrival())
-                .costPerUnit(offerDto.getCostPerUnit())
-                .offerDeadline(offerDto.getOfferDeadline()).build();
+    @Override
+    public void delete(Integer id)
+    {
+        super.delete(id);
     }
-
-    public OfferDto toOfferDto(Offer offer) {
-        return OfferDto.builder()
-                .id(offer.getId())
-                .teamName(offer.getTeam().getTeamName())
-                .type(offer.getType())
-                .volume(offer.getVolume())
-                .earliestExpectedArrival(offer.getEarliestExpectedArrival())
-                .latestExpectedArrival(offer.getLatestExpectedArrival())
-                .costPerUnit(offer.getCostPerUnit())
-                .offerDeadline(offer.getOfferDeadline()).build();
-    }
-
 }

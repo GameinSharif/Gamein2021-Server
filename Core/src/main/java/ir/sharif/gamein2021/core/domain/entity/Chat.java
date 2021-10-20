@@ -17,6 +17,7 @@ public class Chat implements BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "chat_id")
     private Integer id;
 
     @Column
@@ -29,16 +30,6 @@ public class Chat implements BaseEntity {
     private Team team2;
 
     @OneToMany
+    @JoinColumn(name = "chat_id")
     private List<Message> messages;
-
-    @Override
-    public String toString() {
-        return "Chat{" +
-                "id=" + id +
-                ", latestMessageDate=" + latestMessageDate +
-                ", team1=" + team1 +
-                ", team2=" + team2 +
-                ", messages=" + messages +
-                '}';
-    }
 }

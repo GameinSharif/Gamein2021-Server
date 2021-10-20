@@ -14,10 +14,12 @@ public class MessageService extends AbstractCrudService<MessageDto, Message, Int
 
     MessageRepository messageRepository;
     TeamService teamService;
+    ChatService chatService;
 
-    public MessageService(MessageRepository messageRepository, TeamService teamService) {
+    public MessageService(MessageRepository messageRepository, ChatService chatService, TeamService teamService) {
         this.messageRepository = messageRepository;
         this.teamService = teamService;
+        this.chatService = chatService;
         setRepository(messageRepository);
     }
 
@@ -42,8 +44,10 @@ public class MessageService extends AbstractCrudService<MessageDto, Message, Int
     public MessageDto toMessageDto(Message message) {
         return MessageDto.builder()
                 .id(message.getId())
-                .dateTime(message.getDateTime())
                 .text(message.getText())
+                .senderTeamId(message.getSenderTeam().getId())
+                .receiverTeamId(message.getReceiverTeam().getId())
+                .dateTime(message.getDateTime())
                 .build();
     }
 

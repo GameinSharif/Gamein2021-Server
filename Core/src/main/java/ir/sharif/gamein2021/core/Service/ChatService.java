@@ -9,6 +9,8 @@ import ir.sharif.gamein2021.core.domain.entity.Chat;
 import ir.sharif.gamein2021.core.domain.entity.Message;
 import ir.sharif.gamein2021.core.domain.entity.Offer;
 import ir.sharif.gamein2021.core.domain.entity.Team;
+import ir.sharif.gamein2021.core.exception.ChatNotFoundException;
+import ir.sharif.gamein2021.core.exception.OfferNotFoundException;
 import ir.sharif.gamein2021.core.util.AssertionUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,13 +34,20 @@ public class ChatService extends AbstractCrudService<ChatDto, Chat, Integer> {
         setRepository(chatRepository);
     }
 
+    @Transactional(readOnly = true)
+    public Chat findById(Integer id) {
+        return getRepository().findById(id).orElseThrow(ChatNotFoundException::new);
+    }
+
     public ChatDto save(ChatDto chatDto) {
         AssertionUtil.assertDtoNotNull(chatDto, Chat.class.getSimpleName());
         if (chatDto.getLatestMessageDate() == null) {
             chatDto.setLatestMessageDate(LocalDateTime.now());
         }
         var chat = toChat(chatDto);
-        return toChatDto(getRepository().save(chat));
+        Chat savedChat = getRepository().save(chat);
+        System.out.println(savedChat.getId());
+        return toChatDto(savedChat);
     }
 
     @Transactional

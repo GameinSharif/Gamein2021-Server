@@ -56,27 +56,28 @@ public class MessageController {
         {
             if (chatDto == null) {
 
-                List<MessageDto> messageDtos = new ArrayList<>();
-                ChatDto createdChatDto = ChatDto.builder()
-                        .team1Id(newMessageRequest.getMessageDto().getSenderTeamId())
-                        .team2Id(newMessageRequest.getMessageDto().getReceiverTeamId())
-                        .messageDtos(messageDtos)
-                        .build();
-                ChatDto savedChatDto = chatService.save(createdChatDto);
 
                 MessageDto createdMessageDto = MessageDto.builder()
                         .dateTime(LocalDateTime.now())
-                        .chatId(savedChatDto.getId())
                         .senderTeamId(newMessageRequest.getMessageDto().getSenderTeamId())
                         .receiverTeamId(newMessageRequest.getMessageDto().getReceiverTeamId())
                         .text(newMessageRequest.getMessageDto().getText())
                         .build();
+                MessageDto savedMessageDto = messageService.save(createdMessageDto);
 
-                MessageDto savedMessageDto = messageService.save(newMessageRequest.getMessageDto());
-                savedChatDto.getMessageDtos().add(savedMessageDto);
-                chatService.update(savedChatDto);
+                List<MessageDto> messageDtos = new ArrayList<>();
+                messageDtos.add(savedMessageDto);
 
-                newMessageResponse = new NewMessageResponse(ResponseTypeConstant.NEW_MESSAGE, createdMessageDto, "OK");
+                chatService.save(
+                        ChatDto.builder()
+                                .team1Id(newMessageRequest.getMessageDto().getSenderTeamId())
+                                .team2Id(newMessageRequest.getMessageDto().getReceiverTeamId())
+                                .messageDtos(messageDtos)
+                                .latestMessageDate(createdMessageDto.getDateTime())
+                                .build()
+                );
+
+                newMessageResponse = new NewMessageResponse(ResponseTypeConstant.NEW_MESSAGE, savedMessageDto, "OK");
 
             } else {
                 if (chatDto.getMessageDtos().size() >= 20) {
@@ -93,6 +94,7 @@ public class MessageController {
         catch (Exception e)
         {
             logger.debug(e);
+            System.out.println(e);
             newMessageResponse = new NewMessageResponse(ResponseTypeConstant.NEW_MESSAGE, null, "Failed to Send the Message!");
         }
         pushMessageManager.sendMessageBySession(request.session, gson.toJson(newMessageResponse));

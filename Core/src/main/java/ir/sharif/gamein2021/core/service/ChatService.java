@@ -40,12 +40,14 @@ public class ChatService extends AbstractCrudService<ChatDto, Chat, Integer>
         return getRepository().findById(id).orElseThrow(ChatNotFoundException::new);
     }
 
+    @Transactional
     public void addNewChat(ChatDto chatDto)
     {
         AssertionUtil.assertDtoNotNull(chatDto, Chat.class.getSimpleName());
         saveOrUpdate(chatDto);
     }
 
+    @Transactional(readOnly = true)
     public ChatDto getChatByTeamId(Team team1, Team team2)
     {
         Chat chat = chatRepository.findByTeam1AndTeam2(team1, team2);
@@ -60,6 +62,7 @@ public class ChatService extends AbstractCrudService<ChatDto, Chat, Integer>
         return modelMapper.map(chat, ChatDto.class);
     }
 
+    @Transactional(readOnly = true)
     public List<ChatDto> getChatsByTeamId(Team team) {
         List<Chat> chats = new ArrayList<>();
         chats.addAll(chatRepository.findByTeam1(team));

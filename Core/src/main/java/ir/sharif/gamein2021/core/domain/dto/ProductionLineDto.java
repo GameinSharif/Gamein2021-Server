@@ -5,6 +5,7 @@ import ir.sharif.gamein2021.core.domain.entity.Team;
 import ir.sharif.gamein2021.core.util.Enums;
 import lombok.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 @Getter
@@ -16,8 +17,7 @@ public class ProductionLineDto {
     private Integer id;
     private Integer productionLineTemplateId;
     private List<ProductionLineProduct> products;
-    private Team team;
-    private Enums.QualityLevel qualityLevel;
-    private Enums.EfficiencyLevel efficiencyLevel;
+    private Integer qualityLevel;
+    private Integer efficiencyLevel;
     private Enums.ProductionLineStatus status;
 }

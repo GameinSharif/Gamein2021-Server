@@ -7,9 +7,11 @@ import org.springframework.scheduling.annotation.Scheduled;
 
 @Configuration
 @Profile(value = {"scheduled"})
-public class DailySchedule {
-    @Scheduled(fixedDelayString = "${dayLengthMilliSecond}")
-    public void scheduledTask() {
-        System.out.println("daily schedule");
+public class DailySchedule
+{
+    @Scheduled(fixedRateString = "${dayLengthMilliSecond}")
+    public void scheduledTask()
+    {
+        //System.out.println("daily schedule");
     }
 }

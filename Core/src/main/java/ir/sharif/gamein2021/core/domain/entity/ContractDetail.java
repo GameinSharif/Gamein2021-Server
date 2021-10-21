@@ -3,7 +3,7 @@ package ir.sharif.gamein2021.core.domain.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -18,7 +18,7 @@ public class ContractDetail implements BaseEntity
     private Integer id;
 
     @Column(name = "contract_date", nullable = false)
-    private LocalDateTime contractDate;
+    private LocalDate contractDate;
 
     @Column(name = "max_amount", nullable = false)
     private Integer maxAmount;

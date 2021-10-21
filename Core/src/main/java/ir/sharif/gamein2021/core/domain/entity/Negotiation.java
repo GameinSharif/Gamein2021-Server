@@ -1,11 +1,11 @@
 package ir.sharif.gamein2021.core.domain.entity;
 
 import ir.sharif.gamein2021.core.util.Enums.NegotiationState;
-import ir.sharif.gamein2021.core.domain.dto.NegotiationDto;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -38,10 +38,10 @@ public class Negotiation implements BaseEntity{
     private Integer costPerUnitSupplier;
 
     @Column(name = "earliest_expected_arrival", nullable = false)
-    private LocalDateTime earliestExpectedArrival;
+    private LocalDate earliestExpectedArrival;
 
     @Column(name = "latest_expected_arrival", nullable = false)
-    private LocalDateTime latestExpectedArrival;
+    private LocalDate latestExpectedArrival;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "state", nullable = false)

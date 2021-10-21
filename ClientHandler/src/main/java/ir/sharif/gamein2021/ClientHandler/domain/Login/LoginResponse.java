@@ -1,8 +1,8 @@
 package ir.sharif.gamein2021.ClientHandler.domain.Login;
 
-import ir.sharif.gamein2021.ClientHandler.view.ResponseObject;
+import ir.sharif.gamein2021.core.view.ResponseObject;
 import lombok.AllArgsConstructor;
-import ir.sharif.gamein2021.ClientHandler.util.ResponseTypeConstant;
+import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 
 import java.io.Serializable;
 

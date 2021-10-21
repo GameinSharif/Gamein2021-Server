@@ -4,8 +4,7 @@ import ir.sharif.gamein2021.core.util.Enums.NegotiationState;
 import ir.sharif.gamein2021.core.domain.entity.Team;
 import lombok.*;
 
-import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -21,8 +20,8 @@ public class NegotiationDto implements BaseDto<Integer> {
     private Integer amount;
     private Integer costPerUnitDemander;
     private Integer costPerUnitSupplier;
-    private LocalDateTime earliestExpectedArrival;
-    private LocalDateTime latestExpectedArrival;
+    private LocalDate earliestExpectedArrival;
+    private LocalDate latestExpectedArrival;
     private NegotiationState state;
 
 }

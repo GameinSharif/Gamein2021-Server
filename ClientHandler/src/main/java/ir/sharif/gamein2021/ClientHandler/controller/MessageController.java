@@ -2,10 +2,14 @@ package ir.sharif.gamein2021.ClientHandler.controller;
 
 import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.Messenger.GetAllChatsRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.Messenger.GetAllChatsResponse;
 import ir.sharif.gamein2021.ClientHandler.domain.Messenger.NewMessageRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Messenger.NewMessageResponse;
+import ir.sharif.gamein2021.ClientHandler.domain.RFQ.GetOffersResponse;
 import ir.sharif.gamein2021.ClientHandler.manager.LocalPushMessageManager;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
+import ir.sharif.gamein2021.core.domain.dto.OfferDto;
 import ir.sharif.gamein2021.core.domain.dto.UserDto;
 import ir.sharif.gamein2021.core.service.ChatService;
 import ir.sharif.gamein2021.core.service.MessageService;
@@ -110,4 +114,24 @@ public class MessageController
         pushMessageManager.sendMessageByTeamId(newMessageResponse.getMessageDto().getReceiverTeamId().toString(), gson.toJson(newMessageResponse));
     }
 
+    public void getAllChats(ProcessedRequest request, GetAllChatsRequest getAllChatsRequest) {
+        GetAllChatsResponse getAllChatsResponse;
+        try
+        {
+            List<ChatDto> chatDtos = chatService.getChatsByTeamId(userService.loadById(getAllChatsRequest.playerId).getTeam());
+            for (ChatDto chatDto: chatDtos) {
+                for (MessageDto messageDto : chatDto.getMessages()) {
+                    messageDto.setId(null);
+                }
+                chatDto.setId(null);
+            }
+
+            getAllChatsResponse = new GetAllChatsResponse(ResponseTypeConstant.GET_ALL_CHATS, chatDtos);
+        } catch (Exception e)
+        {
+            logger.debug(e);
+            getAllChatsResponse = new GetAllChatsResponse(ResponseTypeConstant.GET_ALL_CHATS, null);
+        }
+        pushMessageManager.sendMessageBySession(request.session, gson.toJson(getAllChatsResponse));
+    }
 }

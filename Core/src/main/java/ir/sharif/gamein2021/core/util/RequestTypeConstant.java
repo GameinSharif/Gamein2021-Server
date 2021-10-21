@@ -16,7 +16,8 @@ public enum RequestTypeConstant
     NEW_PROVIDER_NEGOTIATION(11),
     BID_FOR_AUCTION(12),
     TERMINATE_OFFER(13),
-    NEW_MESSAGE(14);
+    NEW_MESSAGE(14),
+    GET_ALL_CHATS(15);
 
     private int value;
 

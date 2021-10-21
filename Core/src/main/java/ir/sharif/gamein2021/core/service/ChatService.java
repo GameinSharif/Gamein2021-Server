@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -58,4 +59,15 @@ public class ChatService extends AbstractCrudService<ChatDto, Chat, Integer>
         }
         return modelMapper.map(chat, ChatDto.class);
     }
+
+    public List<ChatDto> getChatsByTeamId(Team team) {
+        List<Chat> chats = new ArrayList<>();
+        chats.addAll(chatRepository.findByTeam1(team));
+        chats.addAll(chatRepository.findByTeam2(team));
+
+        return chats.stream()
+                .map(e -> modelMapper.map(e, ChatDto.class))
+                .collect(Collectors.toList());
+    }
+
 }

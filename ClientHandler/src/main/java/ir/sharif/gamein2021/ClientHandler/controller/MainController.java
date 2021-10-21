@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.domain.GetContractsRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginRequest;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.Messenger.GetAllChatsRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Messenger.NewMessageRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.RFQ.*;
 import ir.sharif.gamein2021.ClientHandler.domain.Auction.BidForAuctionRequest;
@@ -94,6 +95,9 @@ public class MainController
                 NewMessageRequest newMessageRequest = gson.fromJson(requestData, NewMessageRequest.class);
                 messageController.addNewChatMessage(processedRequest, newMessageRequest);
                 break;
+            case GET_ALL_CHATS:
+                GetAllChatsRequest getAllChatsRequest = gson.fromJson(requestData, GetAllChatsRequest.class);
+                messageController.getAllChats(processedRequest, getAllChatsRequest);
 
             default:
                 System.out.println("Request type is invalid.");

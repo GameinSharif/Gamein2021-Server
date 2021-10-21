@@ -9,6 +9,7 @@ import ir.sharif.gamein2021.core.domain.dto.OfferDto;
 import ir.sharif.gamein2021.core.domain.entity.Offer;
 import ir.sharif.gamein2021.core.exception.OfferNotFoundException;
 import ir.sharif.gamein2021.core.util.AssertionUtil;
+import ir.sharif.gamein2021.core.util.Enums.OfferStatus;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,9 +35,9 @@ public class OfferService extends AbstractCrudService<OfferDto, Offer, Integer>
     }
 
     @Transactional(readOnly = true)
-    public Offer findById(Integer id)
+    public OfferDto findById(Integer id)
     {
-        return getRepository().findById(id).orElseThrow(OfferNotFoundException::new);
+        return modelMapper.map(getRepository().findById(id).orElseThrow(OfferNotFoundException::new), OfferDto.class);
     }
 
     @Transactional(readOnly = true)
@@ -51,7 +52,7 @@ public class OfferService extends AbstractCrudService<OfferDto, Offer, Integer>
     @Transactional(readOnly = true)
     public List<OfferDto> findOffersExceptTeam(Team team)
     {
-        List<Offer> offers = offerRepository.findAllByTeamIsNot(team);
+        List<Offer> offers = offerRepository.findAllByTeamIsNotAndOfferStatusIs(team, OfferStatus.ACTIVE);
         return offers.stream()
                 .map(e -> modelMapper.map(e, OfferDto.class))
                 .collect(Collectors.toList());

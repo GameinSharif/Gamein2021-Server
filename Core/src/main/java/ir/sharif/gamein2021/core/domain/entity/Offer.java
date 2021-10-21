@@ -1,5 +1,6 @@
 package ir.sharif.gamein2021.core.domain.entity;
 
+import ir.sharif.gamein2021.core.util.Enums.OfferStatus;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,6 +21,9 @@ public class Offer implements BaseEntity{
 
     @ManyToOne
     private Team team;
+
+    @Enumerated(value = EnumType.STRING)
+    private OfferStatus offerStatus;
 
     @Column(nullable = false)
     private String type;

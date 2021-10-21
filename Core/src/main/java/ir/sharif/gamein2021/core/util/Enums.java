@@ -12,6 +12,13 @@ public class Enums
         Switzerland
     }
 
+    public enum OfferStatus {
+        ACTIVE,
+        ACCEPTED,
+        TERMINATED,
+        PASSED_DEADLINE
+    }
+
     public enum ProductType
     {
         RawMaterial,

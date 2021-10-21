@@ -5,13 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
-@Getter
 @NoArgsConstructor
-public class NewMessageRequest extends RequestObject implements Serializable
+@Getter
+public class GetAllChatsRequest  extends RequestObject implements Serializable
 {
-    private Integer receiverTeamId;
-    private String text;
-    private LocalDateTime insertedAt;
 }

@@ -1,9 +1,8 @@
 package ir.sharif.gamein2021.core.domain.dto;
 
-import ir.sharif.gamein2021.core.domain.entity.Team;
+import ir.sharif.gamein2021.core.util.Enums.OfferStatus;
 import lombok.*;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
@@ -17,6 +16,7 @@ public class OfferDto implements BaseDto<Integer>
     private Integer teamId;
     private String type;
     private Integer volume;
+    private OfferStatus offerStatus;
     private Integer costPerUnit;
     private LocalDateTime earliestExpectedArrival;
     private LocalDateTime latestExpectedArrival;

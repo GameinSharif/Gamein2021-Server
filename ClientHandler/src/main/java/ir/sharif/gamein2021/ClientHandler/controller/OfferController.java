@@ -9,6 +9,7 @@ import ir.sharif.gamein2021.core.service.OfferService;
 import ir.sharif.gamein2021.core.service.UserService;
 import ir.sharif.gamein2021.core.domain.dto.OfferDto;
 import ir.sharif.gamein2021.core.exception.CheatingException;
+import ir.sharif.gamein2021.core.util.Enums.OfferStatus;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import lombok.AllArgsConstructor;
 import org.apache.log4j.Logger;
@@ -68,12 +69,14 @@ public class OfferController
         try
         {
             int teamId = userService.loadById(terminateOfferRequest.playerId).getTeam().getId();
-            int offerTeamId = offerService.findById(terminateOfferRequest.getOfferId()).getTeam().getId();
+            int offerTeamId = offerService.findById(terminateOfferRequest.getOfferId()).getTeamId();
             if (teamId != offerTeamId)
             {
                 throw new CheatingException();
             }
-            offerService.delete(terminateOfferRequest.getOfferId());
+            OfferDto offerDto = offerService.findById(terminateOfferRequest.getOfferId());
+            offerDto.setOfferStatus(OfferStatus.TERMINATED);
+            offerService.saveOrUpdate(offerDto);
             terminateOfferResponse = new TerminateOfferResponse(ResponseTypeConstant.TERMINATE_OFFER, terminateOfferRequest.getOfferId());
         }
         catch (CheatingException ch)

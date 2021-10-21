@@ -11,4 +11,8 @@ import java.util.List;
 public interface ChatRepository extends JpaRepository<Chat, Integer>
 {
     Chat findByTeam1AndTeam2(Team team1, Team team2);
+
+    List<Chat> findByTeam1(Team team);
+    List<Chat> findByTeam2(Team team);
+
 }

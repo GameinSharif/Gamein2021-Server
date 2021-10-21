@@ -18,7 +18,10 @@ public enum ResponseTypeConstant
     NEW_PROVIDER_NEGOTIATION(13),
     GET_ALL_AUCTIONS(14),
     BID_FOR_AUCTION(15),
-    GET_PRODUCTION_LINES(16);
+    TERMINATE_OFFER(16),
+    NEW_MESSAGE(17),
+    GET_ALL_CHATS(18),
+    GET_PRODUCTION_LINES(19);
 
     private int value;
 

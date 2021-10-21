@@ -32,6 +32,7 @@ public class ProviderService extends AbstractCrudService<ProviderDto, Provider, 
         return modelMapper.map(getRepository().findById(id).orElseThrow(EntityNotFoundException::new), ProviderDto.class);
     }
 
+    @Transactional(readOnly = true)
     public ArrayList<ProviderDto> findProvidersByTeam(Team userTeam) {
         ArrayList<ProviderDto> providerDtos = new ArrayList<>();
         List<Provider> providers = providerRepository.findAllByTeam(userTeam);
@@ -39,9 +40,9 @@ public class ProviderService extends AbstractCrudService<ProviderDto, Provider, 
             providerDtos.add(modelMapper.map(provider, ProviderDto.class));
         }
         return providerDtos;
-
     }
 
+    @Transactional(readOnly = true)
     public ArrayList<ProviderDto> findProvidersExceptTeam(Team userTeam) {
         ArrayList<ProviderDto> providerDtos = new ArrayList<>();
         List<Provider> providers = providerRepository.findAllByTeamIsNot(userTeam);
@@ -51,11 +52,12 @@ public class ProviderService extends AbstractCrudService<ProviderDto, Provider, 
         return providerDtos;
     }
 
-    public ProviderDto removeProvider(Integer providerId) {
-        Provider removedProvider = providerRepository.removeProviderById(providerId);
-        return modelMapper.map(removedProvider, ProviderDto.class);
+    @Transactional
+    public void deleteProvider(Integer providerId) {
+        providerRepository.deleteById(providerId);
     }
 
+    @Transactional
     public ProviderDto save(ProviderDto providerDto) {
         // TODO : Exception
         return saveOrUpdate(providerDto);

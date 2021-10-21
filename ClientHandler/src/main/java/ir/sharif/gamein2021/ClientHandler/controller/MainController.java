@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.domain.GetContractsRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginRequest;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.Messenger.GetAllChatsRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.Messenger.NewMessageRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.RFQ.*;
 import ir.sharif.gamein2021.ClientHandler.domain.Auction.BidForAuctionRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.productionLine.GetProductionLinesRequest;
@@ -14,17 +16,21 @@ import org.springframework.stereotype.Component;
 
 @AllArgsConstructor
 @Component
-public class MainController {
+public class MainController
+{
     private final UserController userController;
+    private final OfferController offerController;
     private final GameDataController gameDataController;
     private final ContractController contractController;
     private final NegotiationController negotiationController;
     private final ProviderController providerController;
     private final AuctionController auctionController;
     private final ProductionLineController productionLineController;
+    private final MessageController messageController;
     private final Gson gson;
 
-    public void HandleMessage(ProcessedRequest processedRequest) {
+    public void HandleMessage(ProcessedRequest processedRequest)
+    {
         String requestData = processedRequest.requestData;
         JSONObject obj = new JSONObject(requestData);
         RequestTypeConstant requestType = RequestTypeConstant.values()[obj.getInt("requestTypeConstant")];
@@ -35,10 +41,12 @@ public class MainController {
                 userController.authenticate(processedRequest, loginRequest);
                 break;
             case NEW_OFFER:
-                //TODO
+                NewOfferRequest newOfferRequest = gson.fromJson(requestData, NewOfferRequest.class);
+                offerController.createNewOffer(processedRequest, newOfferRequest);
                 break;
             case GET_OFFERS:
-                //TODO
+                GetOffersRequest getOffersRequest = gson.fromJson(requestData, GetOffersRequest.class);
+                offerController.handleGetOffers(processedRequest, getOffersRequest);
                 break;
             case GET_GAME_DATA:
                 gameDataController.getGameData(processedRequest);
@@ -80,10 +88,23 @@ public class MainController {
                 BidForAuctionRequest bidForAuctionRequest = gson.fromJson(requestData, BidForAuctionRequest.class);
                 auctionController.addBidForAuction(processedRequest, bidForAuctionRequest);
                 break;
+            case TERMINATE_OFFER:
+                TerminateOfferRequest terminateOfferRequest = gson.fromJson(requestData, TerminateOfferRequest.class);
+                offerController.terminateOffer(processedRequest, terminateOfferRequest);
+                break;
+            case NEW_MESSAGE:
+                NewMessageRequest newMessageRequest = gson.fromJson(requestData, NewMessageRequest.class);
+                messageController.addNewChatMessage(processedRequest, newMessageRequest);
+                break;
+            case GET_ALL_CHATS:
+                GetAllChatsRequest getAllChatsRequest = gson.fromJson(requestData, GetAllChatsRequest.class);
+                messageController.getAllChats(processedRequest, getAllChatsRequest);
+                break;
             case GET_PRODUCTION_LINES:
                 GetProductionLinesRequest getProductionLinesRequest = gson.fromJson(requestData, GetProductionLinesRequest.class);
                 productionLineController.GetProductionLines(processedRequest, getProductionLinesRequest);
                 break;
+
             default:
                 System.out.println("Request type is invalid.");
         }

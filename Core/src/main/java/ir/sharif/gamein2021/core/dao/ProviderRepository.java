@@ -10,5 +10,7 @@ public interface ProviderRepository extends JpaRepository<Provider, Integer> {
 
     List<Provider> findAllByTeam(Team team);
     List<Provider> findAllByTeamIsNot(Team team);
-    Provider removeProviderById(Integer providerId);
+
+    @Override
+    void deleteById(Integer integer);
 }

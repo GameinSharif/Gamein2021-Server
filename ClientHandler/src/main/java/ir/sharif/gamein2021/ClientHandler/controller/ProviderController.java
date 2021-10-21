@@ -80,8 +80,8 @@ public class ProviderController
         Team requestedProviderTeam = requestedProvider.getTeam();
         if (userTeam.getId().equals(requestedProviderTeam.getId()))
         {
-            ProviderDto removedProvider = providerService.removeProvider(providerId);
-            RemoveProviderResponse removeProviderResponse = new RemoveProviderResponse(ResponseTypeConstant.REMOVE_PROVIDER, removedProvider, "Success");
+            providerService.deleteProvider(providerId);
+            RemoveProviderResponse removeProviderResponse = new RemoveProviderResponse(ResponseTypeConstant.REMOVE_PROVIDER, providerId, "Success");
             pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(removeProviderResponse));
         }
         else

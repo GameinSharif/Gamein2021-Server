@@ -15,7 +15,10 @@ public enum RequestTypeConstant
     REMOVE_PROVIDER(10),
     NEW_PROVIDER_NEGOTIATION(11),
     BID_FOR_AUCTION(12),
-    GET_PRODUCTION_LINES(13);
+    TERMINATE_OFFER(13),
+    NEW_MESSAGE(14),
+    GET_ALL_CHATS(15),
+    GET_PRODUCTION_LINES(16);
 
     private int value;
 

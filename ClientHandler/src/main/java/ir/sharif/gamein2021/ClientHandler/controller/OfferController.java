@@ -51,10 +51,12 @@ public class OfferController
         NewOfferResponse newOfferResponse;
         try
         {
-            OfferDto offerDto = offerService.addOffer(newOfferRequest.getOfferDto());
-            System.out.println(offerDto);
+            OfferDto offerDto = newOfferRequest.getOfferDto();
+            offerDto.setOfferStatus(OfferStatus.ACTIVE);
+            offerDto.setTeamId(userService.loadById(newOfferRequest.playerId).getTeam().getId());
+            OfferDto savedOfferDto = offerService.addOffer(offerDto);
 
-            newOfferResponse = new NewOfferResponse(ResponseTypeConstant.NEW_OFFER, offerDto);
+            newOfferResponse = new NewOfferResponse(ResponseTypeConstant.NEW_OFFER, savedOfferDto);
         } catch (Exception e)
         {
             logger.debug(e);

@@ -2,8 +2,7 @@
   "playerId": 1,
   "requestTypeConstant": 1,
   "offerDto": {
-    "teamName": null,
-    "teamId": 1,
+    "teamId": null,
     "type": "C7",
     "volume": 20,
     "costPerUnit": 3,

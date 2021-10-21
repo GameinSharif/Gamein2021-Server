@@ -6,6 +6,8 @@ public class GameConstants
 {
     public static GameConstants Instance = new GameConstants();
 
+    public static final int ChatMaxMessagesCount = 20;
+
     public final int AuctionStartValue = 1000;
     public final int AuctionStepValue = 100;
     public final LocalDateTime[] AuctionRoundsStartTime = new LocalDateTime[]{

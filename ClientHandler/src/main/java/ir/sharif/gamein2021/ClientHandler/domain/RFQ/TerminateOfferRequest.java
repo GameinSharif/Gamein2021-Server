@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 @AllArgsConstructor
 @Getter
-public class GetOffersRequest extends RequestObject implements Serializable
+public class TerminateOfferRequest extends RequestObject implements Serializable
 {
+    private final Integer offerId;
 }

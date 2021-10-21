@@ -18,6 +18,8 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import java.time.LocalDateTime;
+
 @Component
 public class SocketHandler extends TextWebSocketHandler {
     static Logger logger = Logger.getLogger(ExecutorThread.class.getName());

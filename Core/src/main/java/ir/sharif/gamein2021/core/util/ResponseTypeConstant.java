@@ -17,7 +17,8 @@ public enum ResponseTypeConstant
     REMOVE_PROVIDER(12),
     NEW_PROVIDER_NEGOTIATION(13),
     GET_ALL_AUCTIONS(14),
-    BID_FOR_AUCTION(15);
+    BID_FOR_AUCTION(15),
+    GET_PRODUCTION_LINES(16);
 
     private int value;
 

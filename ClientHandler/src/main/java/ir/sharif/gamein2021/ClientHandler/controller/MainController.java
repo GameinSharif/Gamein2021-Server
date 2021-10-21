@@ -6,6 +6,7 @@ import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginRequest;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.RFQ.*;
 import ir.sharif.gamein2021.ClientHandler.domain.Auction.BidForAuctionRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.productionLine.GetProductionLinesRequest;
 import ir.sharif.gamein2021.core.util.RequestTypeConstant;
 import lombok.AllArgsConstructor;
 import org.json.JSONObject;
@@ -20,6 +21,7 @@ public class MainController {
     private final NegotiationController negotiationController;
     private final ProviderController providerController;
     private final AuctionController auctionController;
+    private final ProductionLineController productionLineController;
     private final Gson gson;
 
     public void HandleMessage(ProcessedRequest processedRequest) {
@@ -49,7 +51,7 @@ public class MainController {
                 break;
             case GET_NEGOTIATIONS:
                 GetNegotiationsRequest getNegotiationsRequest = gson.fromJson(requestData, GetNegotiationsRequest.class);
-                negotiationController.getNegotiations( processedRequest, getNegotiationsRequest);
+                negotiationController.getNegotiations(processedRequest, getNegotiationsRequest);
                 break;
             case NEW_NEGOTIATION:
                 NewNegotiationRequest newNegotiationRequest = gson.fromJson(requestData, NewNegotiationRequest.class);
@@ -77,6 +79,10 @@ public class MainController {
             case BID_FOR_AUCTION:
                 BidForAuctionRequest bidForAuctionRequest = gson.fromJson(requestData, BidForAuctionRequest.class);
                 auctionController.addBidForAuction(processedRequest, bidForAuctionRequest);
+                break;
+            case GET_PRODUCTION_LINES:
+                GetProductionLinesRequest getProductionLinesRequest = gson.fromJson(requestData, GetProductionLinesRequest.class);
+                productionLineController.GetProductionLines(processedRequest, getProductionLinesRequest);
                 break;
             default:
                 System.out.println("Request type is invalid.");

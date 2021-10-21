@@ -8,6 +8,7 @@ import ir.sharif.gamein2021.ClientHandler.domain.Messenger.GetAllChatsRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Messenger.NewMessageRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.RFQ.*;
 import ir.sharif.gamein2021.ClientHandler.domain.Auction.BidForAuctionRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.productionLine.ConstructProductionLineRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.productionLine.GetProductionLinesRequest;
 import ir.sharif.gamein2021.core.util.RequestTypeConstant;
 import lombok.AllArgsConstructor;
@@ -103,6 +104,10 @@ public class MainController
             case GET_PRODUCTION_LINES:
                 GetProductionLinesRequest getProductionLinesRequest = gson.fromJson(requestData, GetProductionLinesRequest.class);
                 productionLineController.GetProductionLines(processedRequest, getProductionLinesRequest);
+                break;
+            case CONSTRUCT_PRODUCTION_LINE:
+                ConstructProductionLineRequest constructProductionLineRequest = gson.fromJson(requestData, ConstructProductionLineRequest.class);
+                productionLineController.constructProductionLine(processedRequest, constructProductionLineRequest);
                 break;
 
             default:

@@ -18,7 +18,8 @@ public enum RequestTypeConstant
     TERMINATE_OFFER(13),
     NEW_MESSAGE(14),
     GET_ALL_CHATS(15),
-    GET_PRODUCTION_LINES(16);
+    GET_PRODUCTION_LINES(16),
+    CONSTRUCT_PRODUCTION_LINE(17);
 
     private int value;
 

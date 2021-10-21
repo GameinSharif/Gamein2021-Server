@@ -21,7 +21,8 @@ public enum ResponseTypeConstant
     TERMINATE_OFFER(16),
     NEW_MESSAGE(17),
     GET_ALL_CHATS(18),
-    GET_PRODUCTION_LINES(19);
+    GET_PRODUCTION_LINES(19),
+    CONSTRUCT_PRODUCTION_LINE(20);
 
     private int value;
 

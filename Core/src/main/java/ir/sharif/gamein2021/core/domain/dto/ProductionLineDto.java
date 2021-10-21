@@ -16,6 +16,7 @@ import java.util.List;
 public class ProductionLineDto {
     private Integer id;
     private Integer productionLineTemplateId;
+    private Integer teamId;
     private List<ProductionLineProduct> products;
     private Integer qualityLevel;
     private Integer efficiencyLevel;

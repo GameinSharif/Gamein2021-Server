@@ -15,10 +15,10 @@ import java.util.List;
 @Getter
 public class GetAllChatsResponse  extends ResponseObject implements Serializable {
 
-    List<ChatDto> chatDtos;
+    List<ChatDto> chats;
 
-    public GetAllChatsResponse(ResponseTypeConstant responseTypeConstant, List<ChatDto> chatDtos) {
+    public GetAllChatsResponse(ResponseTypeConstant responseTypeConstant, List<ChatDto> chats) {
         this.responseTypeConstant = responseTypeConstant.ordinal();
-        this.chatDtos = chatDtos;
+        this.chats = chats;
     }
 }

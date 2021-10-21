@@ -1,7 +1,5 @@
 package ir.sharif.gamein2021.core.service;
 
-import ir.sharif.gamein2021.core.domain.dto.ContractDto;
-import ir.sharif.gamein2021.core.domain.entity.Contract;
 import ir.sharif.gamein2021.core.domain.entity.Team;
 import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
 import ir.sharif.gamein2021.core.dao.OfferRepository;
@@ -21,7 +19,6 @@ import java.util.stream.Collectors;
 @Service
 public class OfferService extends AbstractCrudService<OfferDto, Offer, Integer>
 {
-
     private final OfferRepository offerRepository;
     private final TeamService teamService;
     private final ModelMapper modelMapper;

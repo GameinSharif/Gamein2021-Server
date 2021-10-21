@@ -3,7 +3,7 @@ package ir.sharif.gamein2021.core.domain.dto;
 import ir.sharif.gamein2021.core.util.Enums.OfferStatus;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -14,13 +14,13 @@ public class OfferDto implements BaseDto<Integer>
 {
     private Integer id;
     private Integer teamId;
-    private String type;
+    private Integer productId;
     private Integer volume;
     private OfferStatus offerStatus;
     private Integer costPerUnit;
-    private LocalDateTime earliestExpectedArrival;
-    private LocalDateTime latestExpectedArrival;
-    private LocalDateTime offerDeadline;
+    private LocalDate earliestExpectedArrival;
+    private LocalDate latestExpectedArrival;
+    private LocalDate offerDeadline;
 
     @Override
     public String toString()
@@ -28,7 +28,7 @@ public class OfferDto implements BaseDto<Integer>
         return "OfferDto{" +
                 ", id=" + id +
                 ", teamId=" + teamId +
-                ", type='" + type + '\'' +
+                ", productId='" + productId + '\'' +
                 ", volume=" + volume +
                 ", costPerUnit=" + costPerUnit +
                 ", earliestExpectedArrival=" + earliestExpectedArrival +

@@ -4,7 +4,7 @@ import ir.sharif.gamein2021.core.util.Enums.OfferStatus;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -25,8 +25,8 @@ public class Offer implements BaseEntity{
     @Enumerated(value = EnumType.STRING)
     private OfferStatus offerStatus;
 
-    @Column(nullable = false)
-    private String type;
+    @Column(name = "product_id", nullable = false)
+    private Integer productId;
 
     @Column(nullable = false)
     private Integer volume;
@@ -35,14 +35,13 @@ public class Offer implements BaseEntity{
     private Integer costPerUnit;
 
     @Column(name = "earliest_expected_arrival", nullable = false)
-    private LocalDateTime earliestExpectedArrival;
+    private LocalDate earliestExpectedArrival;
 
     @Column(name = "latest_expected_arrival", nullable = false)
-    private LocalDateTime latestExpectedArrival;
+    private LocalDate latestExpectedArrival;
 
     @Column(name = "offer_deadline", nullable = false)
-    private LocalDateTime offerDeadline;
-
+    private LocalDate offerDeadline;
 
 
     @Override
@@ -55,7 +54,7 @@ public class Offer implements BaseEntity{
         return "Offer{" +
                 "id=" + id +
                 ", team=" + team +
-                ", type='" + type + '\'' +
+                ", productId='" + productId + '\'' +
                 ", volume=" + volume +
                 ", costPerUnit=" + costPerUnit +
                 ", earliestExpectedArrival=" + earliestExpectedArrival +

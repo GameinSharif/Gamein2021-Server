@@ -4,16 +4,17 @@ import ir.sharif.gamein2021.core.domain.dto.TransportDto;
 import ir.sharif.gamein2021.core.service.TransportService;
 import ir.sharif.gamein2021.core.util.Enums;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Random;
 
 @Component
 public class TransportManager {
 
     private final TransportService transportService;
+    private final static float CrushProbability = 0.1f;
 
     @Autowired
     public TransportManager(TransportService transportService) {
@@ -21,14 +22,39 @@ public class TransportManager {
     }
 
     public void updateTransports() {
-        ArrayList<TransportDto> pending_transports = transportService.getPendingTransports();
-        // TODO : handle transport crashing
+        handleTransportCrush();
+        // TODO : handle transport crashing when day starts or ends?
+        // TODO : how to get game's today?
         LocalDate today = LocalDate.now();
+        startTransports(today);
+        endTransports(today);
+    }
+
+    private void handleTransportCrush() {
+        ArrayList<TransportDto> inWayTransports = transportService.getTransportsByState(Enums.TransportState.IN_WAY);
+        // TODO : needs seed?
+        Random random = new Random();
+        ArrayList<TransportDto> crushingTransports = new ArrayList<>();
+        for (TransportDto inWayTransport : inWayTransports) {
+            if (random.nextFloat() < CrushProbability) {
+                crushingTransports.add(inWayTransport);
+            }
+        }
+        transportService.changeTransportsStates(crushingTransports, Enums.TransportState.CRUSHED);
+        // TODO : send response
+    }
+
+    private void startTransports(LocalDate today) {
         ArrayList<TransportDto> startingTransports = transportService.getStartingTransports(today);
-        // TODO : update state to in_way, send response
-        // TODO : could transport crash on first day?
+        transportService.changeTransportsStates(startingTransports, Enums.TransportState.IN_WAY);
+        // TODO : send response
+    }
+
+    private void endTransports(LocalDate today) {
         ArrayList<TransportDto> arrivedTransports = transportService.getEndingTransports(today);
-        // TODO : update state to finished, send response
+        transportService.changeTransportsStates(arrivedTransports, Enums.TransportState.SUCCESSFUL);
+        // TODO : send response
+        // TODO : do transport actions
     }
 
     public TransportDto createTransport(Enums.VehicleType vehicleType, Enums.TransportNodeType sourceType, Integer sourceId

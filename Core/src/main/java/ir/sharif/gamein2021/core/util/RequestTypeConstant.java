@@ -19,7 +19,8 @@ public enum RequestTypeConstant
     NEW_MESSAGE(14),
     GET_ALL_CHATS(15),
     GET_PRODUCTION_LINES(16),
-    CONSTRUCT_PRODUCTION_LINE(17);
+    CONSTRUCT_PRODUCTION_LINE(17),
+    SCRAP_PRODUCTION_LINE(18);
 
     private int value;
 

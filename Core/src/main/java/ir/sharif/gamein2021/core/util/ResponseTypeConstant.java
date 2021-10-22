@@ -22,7 +22,8 @@ public enum ResponseTypeConstant
     NEW_MESSAGE(17),
     GET_ALL_CHATS(18),
     GET_PRODUCTION_LINES(19),
-    CONSTRUCT_PRODUCTION_LINE(20);
+    CONSTRUCT_PRODUCTION_LINE(20),
+    SCRAP_PRODUCTION_LINE(21);
 
     private int value;
 

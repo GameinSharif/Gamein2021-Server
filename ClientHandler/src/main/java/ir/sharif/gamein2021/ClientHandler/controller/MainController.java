@@ -10,6 +10,7 @@ import ir.sharif.gamein2021.ClientHandler.domain.RFQ.*;
 import ir.sharif.gamein2021.ClientHandler.domain.Auction.BidForAuctionRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.productionLine.ConstructProductionLineRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.productionLine.GetProductionLinesRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.productionLine.ScrapProductionLineRequest;
 import ir.sharif.gamein2021.core.util.RequestTypeConstant;
 import lombok.AllArgsConstructor;
 import org.json.JSONObject;
@@ -109,7 +110,10 @@ public class MainController
                 ConstructProductionLineRequest constructProductionLineRequest = gson.fromJson(requestData, ConstructProductionLineRequest.class);
                 productionLineController.constructProductionLine(processedRequest, constructProductionLineRequest);
                 break;
-
+            case SCRAP_PRODUCTION_LINE:
+                ScrapProductionLineRequest scrapProductionLineRequest = gson.fromJson(requestData, ScrapProductionLineRequest.class);
+                productionLineController.scrapProductionLine(processedRequest, scrapProductionLineRequest);
+                break;
             default:
                 System.out.println("Request type is invalid.");
         }

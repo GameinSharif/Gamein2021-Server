@@ -2,15 +2,13 @@ package ir.sharif.gamein2021.ClientHandler.controller;
 
 import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.productionLine.ConstructProductionLineRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.productionLine.ConstructProductionLineResponse;
-import ir.sharif.gamein2021.ClientHandler.domain.productionLine.GetProductionLinesRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.productionLine.GetProductionLinesResponse;
+import ir.sharif.gamein2021.ClientHandler.domain.productionLine.*;
 import ir.sharif.gamein2021.ClientHandler.manager.LocalPushMessageManager;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
 import ir.sharif.gamein2021.core.domain.dto.ProductionLineDto;
 import ir.sharif.gamein2021.core.domain.dto.UserDto;
 import ir.sharif.gamein2021.core.domain.entity.Team;
+import ir.sharif.gamein2021.core.exception.InvalidProductionLineIdException;
 import ir.sharif.gamein2021.core.exception.InvalidProductionLineTemplateIdException;
 import ir.sharif.gamein2021.core.service.ProductionLineService;
 import ir.sharif.gamein2021.core.service.UserService;
@@ -64,6 +62,19 @@ public class ProductionLineController {
             ConstructProductionLineResponse response = new ConstructProductionLineResponse(createdProductionLine);
             pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(response));
         } catch (InvalidProductionLineTemplateIdException e) {
+            pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(e));
+        }
+    }
+
+    public void scrapProductionLine(ProcessedRequest processedRequest, ScrapProductionLineRequest scrapProductionLineRequest) {
+        int playerId = scrapProductionLineRequest.playerId;
+        UserDto user = userService.loadById(playerId);
+
+        try {
+            ProductionLineDto savedProductionLine = productionLineService.scrapProductionLine(user.getTeam(), scrapProductionLineRequest.getProductionLineId());
+            ScrapProductionLineResponse response = new ScrapProductionLineResponse(savedProductionLine);
+            pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(response));
+        } catch (InvalidProductionLineIdException e) {
             pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(e));
         }
     }

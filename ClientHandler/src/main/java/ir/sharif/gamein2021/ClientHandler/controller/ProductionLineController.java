@@ -62,6 +62,7 @@ public class ProductionLineController {
             ConstructProductionLineResponse response = new ConstructProductionLineResponse(createdProductionLine);
             pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(response));
         } catch (InvalidProductionLineTemplateIdException e) {
+            logger.debug(e);
             pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(e));
         }
     }
@@ -75,6 +76,24 @@ public class ProductionLineController {
             ScrapProductionLineResponse response = new ScrapProductionLineResponse(savedProductionLine);
             pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(response));
         } catch (InvalidProductionLineIdException e) {
+            logger.debug(e);
+            pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(e));
+        }
+    }
+
+    public void StartProduction(ProcessedRequest processedRequest, StartProductionRequest startProductionRequest) {
+        int playerId = startProductionRequest.playerId;
+        UserDto user = userService.loadById(playerId);
+
+        try {
+            ProductionLineDto savedProductionLine = productionLineService.startProduction(user.getTeam(),
+                    startProductionRequest.getProductionLineId(),
+                    startProductionRequest.getProductId(),
+                    startProductionRequest.getAmount());
+            StartProductionResponse response = new StartProductionResponse(savedProductionLine);
+            pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(response));
+        } catch (InvalidProductionLineIdException e) {
+            logger.debug(e);
             pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(e));
         }
     }

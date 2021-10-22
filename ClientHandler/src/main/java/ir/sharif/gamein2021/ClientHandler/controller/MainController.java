@@ -11,6 +11,7 @@ import ir.sharif.gamein2021.ClientHandler.domain.Auction.BidForAuctionRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.productionLine.ConstructProductionLineRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.productionLine.GetProductionLinesRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.productionLine.ScrapProductionLineRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.productionLine.StartProductionRequest;
 import ir.sharif.gamein2021.core.util.RequestTypeConstant;
 import lombok.AllArgsConstructor;
 import org.json.JSONObject;
@@ -113,6 +114,10 @@ public class MainController
             case SCRAP_PRODUCTION_LINE:
                 ScrapProductionLineRequest scrapProductionLineRequest = gson.fromJson(requestData, ScrapProductionLineRequest.class);
                 productionLineController.scrapProductionLine(processedRequest, scrapProductionLineRequest);
+                break;
+            case START_PRODUCTION:
+                StartProductionRequest startProductionRequest = gson.fromJson(requestData, StartProductionRequest.class);
+                productionLineController.StartProduction(processedRequest, startProductionRequest);
                 break;
             default:
                 System.out.println("Request type is invalid.");

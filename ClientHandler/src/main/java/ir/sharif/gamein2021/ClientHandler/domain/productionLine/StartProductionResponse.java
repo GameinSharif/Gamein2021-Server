@@ -6,11 +6,11 @@ import ir.sharif.gamein2021.core.view.ResponseObject;
 
 import java.io.Serializable;
 
-public class ConstructProductionLineResponse extends ResponseObject implements Serializable {
-    ProductionLineDto productionLine;
+public class StartProductionResponse extends ResponseObject implements Serializable {
+    private ProductionLineDto productionLine;
 
-    public ConstructProductionLineResponse(ProductionLineDto productionLine) {
-        responseTypeConstant = ResponseTypeConstant.CONSTRUCT_PRODUCTION_LINE.ordinal();
+    public StartProductionResponse(ProductionLineDto productionLine) {
+        responseTypeConstant = ResponseTypeConstant.START_PRODUCTION.ordinal();
         this.productionLine = productionLine;
     }
 }

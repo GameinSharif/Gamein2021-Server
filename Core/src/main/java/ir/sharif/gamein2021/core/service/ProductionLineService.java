@@ -52,6 +52,35 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
 
     @Transactional(readOnly = true)
     public ProductionLineDto scrapProductionLine(Team team, Integer productionLineId) throws InvalidProductionLineIdException {
+        ProductionLine productionLine = getProductionLine(team, productionLineId);
+
+        if (productionLine.getStatus() != Enums.ProductionLineStatus.ACTIVE) {
+            throw new InvalidProductionLineIdException("Invalid Operation. Tried to scrap a production line with not active status");
+        }
+
+        // TODO check no product is in production.
+
+        // TODO what to with scarp price. better to use e dictionary for saving productionLineTemplates.
+        ProductionLineTemplate template = Arrays.stream(ReadJsonFilesManager.ProductionLineTemplates).filter(x -> x.getId() == productionLine.getProductionLineTemplateId()).findFirst().orElse(null);
+        int scrapPrice = template.getScrapPrice();
+
+        productionLine.setStatus(Enums.ProductionLineStatus.SCRAPPED);
+        ProductionLine savedProductionLine = productionLineRepository.save(productionLine);
+        return modelMapper.map(savedProductionLine, ProductionLineDto.class);
+    }
+
+    @Transactional(readOnly = true)
+    public ProductionLineDto startProduction(Team team, Integer productionLineId, Integer productId, Integer amount) throws InvalidProductionLineIdException {
+        ProductionLine productionLine = getProductionLine(team, productionLineId);
+
+        if (productionLine.getStatus() != Enums.ProductionLineStatus.ACTIVE) {
+            throw new InvalidProductionLineIdException("Invalid Operation. Tried to start a production on a scrapped production line.");
+        }
+        //TODO what to do?
+        return null;
+    }
+
+    private ProductionLine getProductionLine(Team team, Integer productionLineId) throws InvalidProductionLineIdException {
         ProductionLine productionLine = productionLineRepository.findById(productionLineId).orElse(null);
 
         if (productionLine == null) {
@@ -62,18 +91,6 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
             throw new InvalidProductionLineIdException("Production line with id = " + productionLineId + " doesn't belong to team with id = " + team.getId());
         }
 
-        if (productionLine.getStatus() != Enums.ProductionLineStatus.ACTIVE) {
-            throw new InvalidProductionLineIdException("Invalid Operation. Tried to scrap a production line with not active status");
-        }
-
-        // TODO check no product is in production.
-
-        // TODO what to with scarp price. better to use e dictionary for saving productionLineTemplates.
-        ProductionLineTemplate template = Arrays.stream(ReadJsonFilesManager.ProductionLineTemplates).filter(x->x.getId() == productionLine.getProductionLineTemplateId()).findFirst().orElse(null);
-        int scrapPrice = template.getScrapPrice();
-
-        productionLine.setStatus(Enums.ProductionLineStatus.SCRAPPED);
-        ProductionLine savedProductionLine = productionLineRepository.save(productionLine);
-        return modelMapper.map(savedProductionLine, ProductionLineDto.class);
+        return productionLine;
     }
 }

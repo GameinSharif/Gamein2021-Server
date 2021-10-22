@@ -8,8 +8,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Factory
-{
+public class Factory {
     private int id;
     private String name;
     private Country country;

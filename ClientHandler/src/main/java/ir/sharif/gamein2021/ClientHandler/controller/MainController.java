@@ -1,6 +1,8 @@
 package ir.sharif.gamein2021.ClientHandler.controller;
 
 import com.google.gson.Gson;
+import ir.sharif.gamein2021.ClientHandler.domain.Dc.BuyingDcRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.Dc.SellingDcRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.GetContractsRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginRequest;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
@@ -20,6 +22,7 @@ public class MainController {
     private final NegotiationController negotiationController;
     private final ProviderController providerController;
     private final AuctionController auctionController;
+    private final DcController dcController;
     private final Gson gson;
 
     public void HandleMessage(ProcessedRequest processedRequest) {
@@ -78,6 +81,12 @@ public class MainController {
                 BidForAuctionRequest bidForAuctionRequest = gson.fromJson(requestData, BidForAuctionRequest.class);
                 auctionController.addBidForAuction(processedRequest, bidForAuctionRequest);
                 break;
+            case BUY_DC:
+                BuyingDcRequest buyingDcRequest = gson.fromJson(requestData, BuyingDcRequest.class);
+                dcController.buyDc(processedRequest , buyingDcRequest);
+            case SELL_DC:
+                SellingDcRequest sellingDcRequest = gson.fromJson(requestData, SellingDcRequest.class);
+                dcController.sellDc(processedRequest , sellingDcRequest);
             default:
                 System.out.println("Request type is invalid.");
         }

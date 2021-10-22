@@ -8,6 +8,7 @@ import ir.sharif.gamein2021.ClientHandler.domain.Messenger.GetAllChatsRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Messenger.NewMessageRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.RFQ.*;
 import ir.sharif.gamein2021.ClientHandler.domain.Auction.BidForAuctionRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.productionLine.*;
 import ir.sharif.gamein2021.core.util.RequestTypeConstant;
 import lombok.AllArgsConstructor;
 import org.json.JSONObject;
@@ -24,6 +25,7 @@ public class MainController
     private final NegotiationController negotiationController;
     private final ProviderController providerController;
     private final AuctionController auctionController;
+    private final ProductionLineController productionLineController;
     private final MessageController messageController;
     private final Gson gson;
 
@@ -33,8 +35,7 @@ public class MainController
         JSONObject obj = new JSONObject(requestData);
         RequestTypeConstant requestType = RequestTypeConstant.values()[obj.getInt("requestTypeConstant")];
 
-        switch (requestType)
-        {
+        switch (requestType) {
             case LOGIN:
                 LoginRequest loginRequest = gson.fromJson(requestData, LoginRequest.class);
                 userController.authenticate(processedRequest, loginRequest);
@@ -98,7 +99,30 @@ public class MainController
             case GET_ALL_CHATS:
                 GetAllChatsRequest getAllChatsRequest = gson.fromJson(requestData, GetAllChatsRequest.class);
                 messageController.getAllChats(processedRequest, getAllChatsRequest);
-
+                break;
+            case GET_PRODUCTION_LINES:
+                GetProductionLinesRequest getProductionLinesRequest = gson.fromJson(requestData, GetProductionLinesRequest.class);
+                productionLineController.GetProductionLines(processedRequest, getProductionLinesRequest);
+                break;
+            case CONSTRUCT_PRODUCTION_LINE:
+                ConstructProductionLineRequest constructProductionLineRequest = gson.fromJson(requestData, ConstructProductionLineRequest.class);
+                productionLineController.constructProductionLine(processedRequest, constructProductionLineRequest);
+                break;
+            case SCRAP_PRODUCTION_LINE:
+                ScrapProductionLineRequest scrapProductionLineRequest = gson.fromJson(requestData, ScrapProductionLineRequest.class);
+                productionLineController.scrapProductionLine(processedRequest, scrapProductionLineRequest);
+                break;
+            case START_PRODUCTION:
+                StartProductionRequest startProductionRequest = gson.fromJson(requestData, StartProductionRequest.class);
+                productionLineController.StartProduction(processedRequest, startProductionRequest);
+                break;
+            case UPGRADE_PRODUCTION_LINE_QUALITY:
+                UpgradeProductionLineQualityRequest upgradeQualityRequest = gson.fromJson(requestData, UpgradeProductionLineQualityRequest.class);
+                productionLineController.UpgradeProductionLineQuality(processedRequest, upgradeQualityRequest);
+                break;
+            case UPGRADE_PRODUCTION_LINE_EFFICIENCY:
+                UpgradeProductionLineEfficiencyRequest upgradeEfficiencyRequest = gson.fromJson(requestData, UpgradeProductionLineEfficiencyRequest.class);
+                productionLineController.UpgradeProductionLineEfficiency(processedRequest, upgradeEfficiencyRequest);
             default:
                 System.out.println("Request type is invalid.");
         }

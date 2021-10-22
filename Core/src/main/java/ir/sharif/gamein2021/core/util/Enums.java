@@ -41,4 +41,16 @@ public class Enums
     {
         CLOSED, DEAL, IN_PROGRESS, PENDING
     }
+
+    public enum QualityLevel {
+        LOW, MEDIUM, HIGH
+    }
+
+    public enum EfficiencyLevel {
+        LOW, MEDIUM, HIGH
+    }
+
+    public enum ProductionLineStatus {
+        ACTIVE, SCRAPPED
+    }
 }

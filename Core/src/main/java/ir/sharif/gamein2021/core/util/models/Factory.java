@@ -15,4 +15,7 @@ public class Factory
     private Country country;
     private double latitude;
     private double longitude;
+    private int rawMaterialCapacity;
+    private int secondaryMaterialCapacity;
+    private int finalMaterialCapacity;
 }

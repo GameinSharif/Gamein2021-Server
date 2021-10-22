@@ -8,10 +8,7 @@ import ir.sharif.gamein2021.ClientHandler.domain.Messenger.GetAllChatsRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Messenger.NewMessageRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.RFQ.*;
 import ir.sharif.gamein2021.ClientHandler.domain.Auction.BidForAuctionRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.productionLine.ConstructProductionLineRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.productionLine.GetProductionLinesRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.productionLine.ScrapProductionLineRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.productionLine.StartProductionRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.productionLine.*;
 import ir.sharif.gamein2021.core.util.RequestTypeConstant;
 import lombok.AllArgsConstructor;
 import org.json.JSONObject;
@@ -119,6 +116,13 @@ public class MainController
                 StartProductionRequest startProductionRequest = gson.fromJson(requestData, StartProductionRequest.class);
                 productionLineController.StartProduction(processedRequest, startProductionRequest);
                 break;
+            case UPGRADE_PRODUCTION_LINE_QUALITY:
+                UpgradeProductionLineQualityRequest upgradeQualityRequest = gson.fromJson(requestData, UpgradeProductionLineQualityRequest.class);
+                productionLineController.UpgradeProductionLineQuality(processedRequest, upgradeQualityRequest);
+                break;
+            case UPGRADE_PRODUCTION_LINE_EFFICIENCY:
+                UpgradeProductionLineEfficiencyRequest upgradeEfficiencyRequest = gson.fromJson(requestData, UpgradeProductionLineEfficiencyRequest.class);
+                productionLineController.UpgradeProductionLineEfficiency(processedRequest, upgradeEfficiencyRequest);
             default:
                 System.out.println("Request type is invalid.");
         }

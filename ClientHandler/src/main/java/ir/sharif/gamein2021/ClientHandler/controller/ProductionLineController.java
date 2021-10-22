@@ -34,8 +34,8 @@ public class ProductionLineController {
         this.productionLineService = productionLineService;
     }
 
-    public void GetProductionLines(ProcessedRequest processedRequest, GetProductionLinesRequest getProductionLinesRequest) {
-        int playerId = getProductionLinesRequest.playerId;
+    public void GetProductionLines(ProcessedRequest processedRequest, GetProductionLinesRequest request) {
+        int playerId = request.playerId;
         UserDto user = userService.loadById(playerId);
         Team userTeam = user.getTeam();
 
@@ -45,14 +45,14 @@ public class ProductionLineController {
         pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(response));
     }
 
-    public void constructProductionLine(ProcessedRequest processedRequest, ConstructProductionLineRequest constructProductionLineRequest) {
-        int playerId = constructProductionLineRequest.playerId;
+    public void constructProductionLine(ProcessedRequest processedRequest, ConstructProductionLineRequest request) {
+        int playerId = request.playerId;
         UserDto user = userService.loadById(playerId);
 
         ProductionLineDto productionLine = new ProductionLineDto();
 
         productionLine.setStatus(Enums.ProductionLineStatus.ACTIVE);
-        productionLine.setProductionLineTemplateId(constructProductionLineRequest.getProductionLineTemplateId());
+        productionLine.setProductionLineTemplateId(request.getProductionLineTemplateId());
         productionLine.setTeamId(user.getTeam().getId());
         productionLine.setEfficiencyLevel(0);
         productionLine.setQualityLevel(0);
@@ -67,12 +67,12 @@ public class ProductionLineController {
         }
     }
 
-    public void scrapProductionLine(ProcessedRequest processedRequest, ScrapProductionLineRequest scrapProductionLineRequest) {
-        int playerId = scrapProductionLineRequest.playerId;
+    public void scrapProductionLine(ProcessedRequest processedRequest, ScrapProductionLineRequest request) {
+        int playerId = request.playerId;
         UserDto user = userService.loadById(playerId);
 
         try {
-            ProductionLineDto savedProductionLine = productionLineService.scrapProductionLine(user.getTeam(), scrapProductionLineRequest.getProductionLineId());
+            ProductionLineDto savedProductionLine = productionLineService.scrapProductionLine(user.getTeam(), request.getProductionLineId());
             ScrapProductionLineResponse response = new ScrapProductionLineResponse(savedProductionLine);
             pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(response));
         } catch (InvalidProductionLineIdException e) {
@@ -81,18 +81,48 @@ public class ProductionLineController {
         }
     }
 
-    public void StartProduction(ProcessedRequest processedRequest, StartProductionRequest startProductionRequest) {
-        int playerId = startProductionRequest.playerId;
+    public void StartProduction(ProcessedRequest processedRequest, StartProductionRequest request) {
+        int playerId = request.playerId;
         UserDto user = userService.loadById(playerId);
 
         try {
             ProductionLineDto savedProductionLine = productionLineService.startProduction(user.getTeam(),
-                    startProductionRequest.getProductionLineId(),
-                    startProductionRequest.getProductId(),
-                    startProductionRequest.getAmount());
+                    request.getProductionLineId(),
+                    request.getProductId(),
+                    request.getAmount());
             StartProductionResponse response = new StartProductionResponse(savedProductionLine);
             pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(response));
         } catch (InvalidProductionLineIdException e) {
+            logger.debug(e);
+            pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(e));
+        }
+    }
+
+    public void UpgradeProductionLineQuality(ProcessedRequest processedRequest, UpgradeProductionLineQualityRequest request) {
+        int playerId = request.playerId;
+        UserDto user = userService.loadById(playerId);
+
+        try {
+            ProductionLineDto savedProductionLine = productionLineService.upgradeProductionLineQuality(user.getTeam(),
+                    request.getProductionLineId());
+            UpgradeProductionLineQualityResponse response = new UpgradeProductionLineQualityResponse(savedProductionLine);
+            pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(response));
+        } catch (Exception e) {
+            logger.debug(e);
+            pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(e));
+        }
+    }
+
+    public void UpgradeProductionLineEfficiency(ProcessedRequest processedRequest, UpgradeProductionLineEfficiencyRequest request) {
+        int playerId = request.playerId;
+        UserDto user = userService.loadById(playerId);
+
+        try {
+            ProductionLineDto savedProductionLine = productionLineService.upgradeProductionLineEfficiency(user.getTeam(),
+                    request.getProductionLineId());
+            UpgradeProductionLineEfficiencyResponse response = new UpgradeProductionLineEfficiencyResponse(savedProductionLine);
+            pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(response));
+        } catch (Exception e) {
             logger.debug(e);
             pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(e));
         }

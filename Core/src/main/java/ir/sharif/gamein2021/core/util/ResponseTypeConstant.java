@@ -1,7 +1,6 @@
 package ir.sharif.gamein2021.core.util;
 
-public enum ResponseTypeConstant
-{
+public enum ResponseTypeConstant {
     CONNECTION(0),
     LOGIN(1),
     NEW_OFFER(2),
@@ -24,12 +23,13 @@ public enum ResponseTypeConstant
     GET_PRODUCTION_LINES(19),
     CONSTRUCT_PRODUCTION_LINE(20),
     SCRAP_PRODUCTION_LINE(21),
-    START_PRODUCTION(22);
+    START_PRODUCTION(22),
+    UPGRADE_PRODUCTION_LINE_QUALITY(23),
+    UPGRADE_PRODUCTION_LINE_EFFICIENCY(24);
 
     private int value;
 
-    ResponseTypeConstant(int value)
-    {
+    ResponseTypeConstant(int value) {
         this.value = value;
     }
 }

@@ -42,13 +42,15 @@ public class ProviderController
         Team userTeam = user.getTeam();
 
         //TODO check team is not null, product id is valid, ...
+
+        //TODO this product is semi-Finished
+        //TODO have productionLineTemplate of this product
+        //TODO every provider should have one provider for every product
         ProviderDto providerDto = new ProviderDto();
         providerDto.setTeam(userTeam);
         providerDto.setProductId(newProviderRequest.getProductId());
         providerDto.setCapacity(newProviderRequest.getCapacity());
-        //TODO set prices
-        //TODO every provider should have one provider for every product
-        providerDto.setupToZero();
+        providerDto.setPrice(newProviderRequest.getPrice());
         providerService.save(providerDto);
         // TODO : what if couldn't save
 

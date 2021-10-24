@@ -25,14 +25,8 @@ public class Provider implements BaseEntity {
     @Column(name = "capacity", nullable = false)
     private Integer capacity;
 
-    @Column(name = "average_price", nullable = false)
-    private Integer averagePrice;
-
-    @Column(name = "min_price_on_record", nullable = false)
-    private Integer minPriceOnRecord;
-
-    @Column(name = "max_price_on_record", nullable = false)
-    private Integer maxPriceOnRecord;
+    @Column(name = "price", nullable = false)
+    private Float price;
 
     @Override
     public Integer getId() {

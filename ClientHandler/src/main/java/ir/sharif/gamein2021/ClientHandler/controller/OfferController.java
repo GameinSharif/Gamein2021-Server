@@ -32,14 +32,12 @@ public class OfferController
     public void handleGetOffers(ProcessedRequest request, GetOffersRequest getOffersRequest)
     {
         GetOffersResponse getOffersResponse;
-        try
-        {
+        try {
             List<OfferDto> myTeamOffers = offerService.findByTeam(userService.loadById(getOffersRequest.playerId).getTeam());
             List<OfferDto> otherTeamsOffers = offerService.findOffersExceptTeam(userService.loadById(getOffersRequest.playerId).getTeam());
 
             getOffersResponse = new GetOffersResponse(ResponseTypeConstant.GET_OFFERS, myTeamOffers, otherTeamsOffers);
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             logger.debug(e);
             getOffersResponse = new GetOffersResponse(ResponseTypeConstant.GET_OFFERS, null, null);
         }
@@ -49,16 +47,14 @@ public class OfferController
     public void createNewOffer(ProcessedRequest request, NewOfferRequest newOfferRequest)
     {
         NewOfferResponse newOfferResponse;
-        try
-        {
+        try {
             OfferDto offerDto = newOfferRequest.getOfferDto();
             offerDto.setOfferStatus(OfferStatus.ACTIVE);
             offerDto.setTeamId(userService.loadById(newOfferRequest.playerId).getTeam().getId());
             OfferDto savedOfferDto = offerService.addOffer(offerDto);
 
             newOfferResponse = new NewOfferResponse(ResponseTypeConstant.NEW_OFFER, savedOfferDto);
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             logger.debug(e);
             newOfferResponse = new NewOfferResponse(ResponseTypeConstant.NEW_OFFER, null);
         }
@@ -68,26 +64,20 @@ public class OfferController
     public void terminateOffer(ProcessedRequest request, TerminateOfferRequest terminateOfferRequest)
     {
         TerminateOfferResponse terminateOfferResponse;
-        try
-        {
+        try {
             int teamId = userService.loadById(terminateOfferRequest.playerId).getTeam().getId();
             int offerTeamId = offerService.findById(terminateOfferRequest.getOfferId()).getTeamId();
-            if (teamId != offerTeamId)
-            {
+            if (teamId != offerTeamId) {
                 throw new CheatingException();
             }
             OfferDto offerDto = offerService.findById(terminateOfferRequest.getOfferId());
             offerDto.setOfferStatus(OfferStatus.TERMINATED);
             offerService.saveOrUpdate(offerDto);
             terminateOfferResponse = new TerminateOfferResponse(ResponseTypeConstant.TERMINATE_OFFER, terminateOfferRequest.getOfferId());
-        }
-        catch (CheatingException ch)
-        {
+        } catch (CheatingException ch) {
             //TODO cheating response
             terminateOfferResponse = new TerminateOfferResponse(ResponseTypeConstant.TERMINATE_OFFER, null);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             logger.debug(e);
             terminateOfferResponse = new TerminateOfferResponse(ResponseTypeConstant.TERMINATE_OFFER, null);
         }

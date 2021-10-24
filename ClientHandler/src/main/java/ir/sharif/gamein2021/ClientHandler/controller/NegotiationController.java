@@ -75,8 +75,6 @@ public class NegotiationController
                 newNegotiation.setCostPerUnitDemander(newNegotiationRequest.getCostPerUnitDemander());
                 newNegotiation.setCostPerUnitSupplier(newNegotiationRequest.getCostPerUnitDemander());
                 newNegotiation.setAmount(newNegotiationRequest.getAmount());
-                newNegotiation.setEarliestExpectedArrival(newNegotiationRequest.getEarliestExpectedArrival());
-                newNegotiation.setLatestExpectedArrival(newNegotiationRequest.getLatestExpectedArrival());
                 newNegotiation.setState(NegotiationState.PENDING);
 
                 NegotiationDto savedNegotiation = negotiationService.save(newNegotiation);
@@ -101,7 +99,6 @@ public class NegotiationController
             ProviderDto provider = providerService.findProviderById(newProviderNegotiationRequest.getProviderId());
             if (provider != null)
             {
-                System.out.println(newProviderNegotiationRequest.getEarliestExpectedArrival());
                 NegotiationDto newNegotiation = new NegotiationDto();
                 newNegotiation.setDemander(user.getTeam());
                 newNegotiation.setSupplier(provider.getTeam());
@@ -109,8 +106,6 @@ public class NegotiationController
                 newNegotiation.setCostPerUnitSupplier(newProviderNegotiationRequest.getCostPerUnitDemander());
                 newNegotiation.setProductId(provider.getProductId());
                 newNegotiation.setAmount(newProviderNegotiationRequest.getAmount());
-                newNegotiation.setEarliestExpectedArrival(newProviderNegotiationRequest.getEarliestExpectedArrival());
-                newNegotiation.setLatestExpectedArrival(newProviderNegotiationRequest.getLatestExpectedArrival());
                 newNegotiation.setState(NegotiationState.PENDING);
                 NegotiationDto savedNegotiation = negotiationService.save(newNegotiation);
                 if (savedNegotiation != null)

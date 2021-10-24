@@ -37,12 +37,6 @@ public class Negotiation implements BaseEntity{
     @Column(name = "cost_per_unit_supplier", nullable = false)
     private Integer costPerUnitSupplier;
 
-    @Column(name = "earliest_expected_arrival", nullable = false)
-    private LocalDate earliestExpectedArrival;
-
-    @Column(name = "latest_expected_arrival", nullable = false)
-    private LocalDate latestExpectedArrival;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "state", nullable = false)
     private NegotiationState state;

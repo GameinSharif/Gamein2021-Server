@@ -6,16 +6,6 @@
     "productId": 1,
     "volume": 20,
     "costPerUnit": 3,
-    "earliestExpectedArrival": {
-      "year": 2021,
-      "month": 10,
-      "day": 13
-    },
-    "latestExpectedArrival": {
-      "year": 2021,
-      "month": 10,
-      "day": 20
-    },
     "offerDeadline": {
       "year": 2021,
       "month": 10,

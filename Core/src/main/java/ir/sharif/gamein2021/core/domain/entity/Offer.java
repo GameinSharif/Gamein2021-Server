@@ -34,12 +34,6 @@ public class Offer implements BaseEntity{
     @Column(name = "cost_per_unit", nullable = false)
     private Integer costPerUnit;
 
-    @Column(name = "earliest_expected_arrival", nullable = false)
-    private LocalDate earliestExpectedArrival;
-
-    @Column(name = "latest_expected_arrival", nullable = false)
-    private LocalDate latestExpectedArrival;
-
     @Column(name = "offer_deadline", nullable = false)
     private LocalDate offerDeadline;
 
@@ -57,8 +51,6 @@ public class Offer implements BaseEntity{
                 ", productId='" + productId + '\'' +
                 ", volume=" + volume +
                 ", costPerUnit=" + costPerUnit +
-                ", earliestExpectedArrival=" + earliestExpectedArrival +
-                ", latestExpectedArrival=" + latestExpectedArrival +
                 ", offerDeadline=" + offerDeadline +
                 '}';
     }

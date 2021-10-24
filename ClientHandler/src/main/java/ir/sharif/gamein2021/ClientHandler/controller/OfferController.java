@@ -48,7 +48,7 @@ public class OfferController
     {
         NewOfferResponse newOfferResponse;
         try {
-            OfferDto offerDto = newOfferRequest.getOfferDto();
+            OfferDto offerDto = newOfferRequest.getOffer();
             offerDto.setOfferStatus(OfferStatus.ACTIVE);
             offerDto.setTeamId(userService.loadById(newOfferRequest.playerId).getTeam().getId());
             OfferDto savedOfferDto = offerService.addOffer(offerDto);

@@ -11,5 +11,5 @@ import java.io.Serializable;
 @Getter
 public class NewOfferRequest extends RequestObject implements Serializable
 {
-    private OfferDto offerDto;
+    private OfferDto offer;
 }

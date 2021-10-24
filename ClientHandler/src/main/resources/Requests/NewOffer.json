@@ -1,8 +1,7 @@
 {
   "requestTypeConstant": 1,
   "playerId": 1,
-  "offerDto": {
-    "teamId": null,
+  "offer": {
     "productId": 1,
     "volume": 20,
     "costPerUnit": 3,

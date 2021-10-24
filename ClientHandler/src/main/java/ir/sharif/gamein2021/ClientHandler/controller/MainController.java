@@ -35,7 +35,8 @@ public class MainController
         JSONObject obj = new JSONObject(requestData);
         RequestTypeConstant requestType = RequestTypeConstant.values()[obj.getInt("requestTypeConstant")];
 
-        switch (requestType) {
+        switch (requestType)
+        {
             case LOGIN:
                 LoginRequest loginRequest = gson.fromJson(requestData, LoginRequest.class);
                 userController.authenticate(processedRequest, loginRequest);
@@ -84,6 +85,7 @@ public class MainController
             case NEW_PROVIDER_NEGOTIATION:
                 NewProviderNegotiationRequest newProviderNegotiationRequest = gson.fromJson(requestData, NewProviderNegotiationRequest.class);
                 negotiationController.newProviderNegotiation(processedRequest, newProviderNegotiationRequest);
+                break;
             case BID_FOR_AUCTION:
                 BidForAuctionRequest bidForAuctionRequest = gson.fromJson(requestData, BidForAuctionRequest.class);
                 auctionController.addBidForAuction(processedRequest, bidForAuctionRequest);
@@ -123,6 +125,7 @@ public class MainController
             case UPGRADE_PRODUCTION_LINE_EFFICIENCY:
                 UpgradeProductionLineEfficiencyRequest upgradeEfficiencyRequest = gson.fromJson(requestData, UpgradeProductionLineEfficiencyRequest.class);
                 productionLineController.UpgradeProductionLineEfficiency(processedRequest, upgradeEfficiencyRequest);
+                break;
             default:
                 System.out.println("Request type is invalid.");
         }

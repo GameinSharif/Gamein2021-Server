@@ -52,6 +52,7 @@ public class MainController
             case GET_GAME_DATA:
                 gameDataController.getGameData(processedRequest);
                 gameDataController.getCurrentWeekDemands(processedRequest);
+                gameDataController.getCurrentWeekSupplies(processedRequest);
                 gameDataController.getAllAuctions(processedRequest);
                 break;
             case GET_CONTRACTS:

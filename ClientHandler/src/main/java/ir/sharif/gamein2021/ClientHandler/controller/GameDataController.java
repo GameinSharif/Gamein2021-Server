@@ -2,11 +2,14 @@ package ir.sharif.gamein2021.ClientHandler.controller;
 
 import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.GetCurrentWeekSuppliesResponse;
+import ir.sharif.gamein2021.core.domain.dto.WeekSupplyDto;
 import ir.sharif.gamein2021.core.response.GetAllAuctionsResponse;
 import ir.sharif.gamein2021.ClientHandler.domain.GetCurrentWeekDemandsResponse;
 import ir.sharif.gamein2021.ClientHandler.domain.GetGameDataResponse;
 import ir.sharif.gamein2021.ClientHandler.manager.LocalPushMessageManager;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
+import ir.sharif.gamein2021.core.service.WeekSupplyService;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import ir.sharif.gamein2021.core.domain.dto.AuctionDto;
 import ir.sharif.gamein2021.core.service.AuctionService;
@@ -28,14 +31,16 @@ public class GameDataController
     private final LocalPushMessageManager pushMessageManager;
     private final GameinCustomerService gameinCustomerService;
     private final WeekDemandService weekDemandService;
+    private final WeekSupplyService weekSupplyService;
     private final AuctionService auctionService;
     private final Gson gson = new Gson();
 
-    public GameDataController(LocalPushMessageManager pushMessageManager, GameinCustomerService gameinCustomerService, WeekDemandService weekDemandService, AuctionService auctionService)
+    public GameDataController(LocalPushMessageManager pushMessageManager, GameinCustomerService gameinCustomerService, WeekDemandService weekDemandService, WeekSupplyService weekSupplyService, AuctionService auctionService)
     {
         this.pushMessageManager = pushMessageManager;
         this.gameinCustomerService = gameinCustomerService;
         this.weekDemandService = weekDemandService;
+        this.weekSupplyService = weekSupplyService;
         this.auctionService = auctionService;
     }
 
@@ -63,6 +68,18 @@ public class GameDataController
         pushMessageManager.sendMessageBySession(request.session, gson.toJson(getCurrentWeekDemandsResponse));
     }
 
+    public void getCurrentWeekSupplies(ProcessedRequest request)
+    {
+        int week = 1; //TODO read week from another place and update it after every week
+        List<WeekSupplyDto> currentWeekSupplies = weekSupplyService.findByWeek(week);
+
+        GetCurrentWeekSuppliesResponse getCurrentWeekSuppliesResponse = new GetCurrentWeekSuppliesResponse(
+                ResponseTypeConstant.GET_CURRENT_WEEK_SUPPLIES,
+                currentWeekSupplies
+        );
+
+        pushMessageManager.sendMessageBySession(request.session, gson.toJson(getCurrentWeekSuppliesResponse));
+    }
     public void getAllAuctions(ProcessedRequest request)
     {
         List<AuctionDto> auctions = auctionService.readAllAuctionsWithStatus();

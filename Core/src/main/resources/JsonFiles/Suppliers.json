@@ -1,0 +1,101 @@
+[
+  {
+    "id": 1,
+    "country": "france",
+    "materials": [],
+    "latitude": 45.39844998,
+    "longtitude": 6.657714844
+  },
+  {
+    "id": 2,
+    "country": "germany",
+    "materials": [],
+    "latitude": 47.63578359,
+    "longtitude": 10.28320313
+  },
+  {
+    "id": 3,
+    "country": "germany",
+    "materials": [],
+    "latitude": 53.80065083,
+    "longtitude":13.09570313
+
+  },
+  {
+    "id": 4,
+    "country": "germany",
+    "materials": [],
+    "latitude": 50.45750402,
+    "longtitude":12.96386719
+  },
+  {
+    "id": 5,
+    "country": "germany",
+    "materials": [],
+    "latitude": 53.40953185,
+    "longtitude":7.646484375
+  },
+  {
+    "id": 6,
+    "country": "france",
+    "materials": [],
+    "latitude": 44.49650533,
+    "longtitude":1.23046875
+  },
+  {
+    "id": 7,
+    "country": "netherland",
+    "materials": [],
+    "latitude": 51.80861475,
+    "longtitude":4.240722656
+  },
+  {
+    "id": 8,
+    "country": "germany",
+    "materials": [],
+    "latitude": 51.56341233,
+    "longtitude":9.448242188
+  },
+  {
+    "id": 9,
+    "country": "france",
+    "materials": [],
+    "latitude": 46.98025236,
+    "longtitude":1.0546875
+  },
+  {
+    "id": 10,
+    "country": "france",
+    "materials": [],
+    "latitude": 48.42920056,
+    "longtitude":-2.8125
+  },
+  {
+    "id": 11,
+    "country": "france",
+    "materials": [],
+    "latitude": 49.86631673,
+    "longtitude":1.142578125
+  },
+  {
+    "id": 12,
+    "country": "united kingdom",
+    "materials": [],
+    "latitude": 52.66972038,
+    "longtitude":-2.900390625
+  },
+  {
+    "id": 13,
+    "country": "united kingdom",
+    "materials": [],
+    "latitude": 52.10650519,
+    "longtitude":0.483398438
+  },
+  {
+    "id": 14,
+    "country": "france",
+    "materials": [],
+    "latitude": 48.95136647,
+    "longtitude":5.537109375
+  }
+]

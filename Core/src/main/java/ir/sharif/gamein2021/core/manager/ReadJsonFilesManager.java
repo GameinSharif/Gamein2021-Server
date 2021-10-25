@@ -5,6 +5,7 @@ import ir.sharif.gamein2021.core.service.AuctionService;
 import ir.sharif.gamein2021.core.util.models.Factory;
 import ir.sharif.gamein2021.core.util.models.Product;
 import ir.sharif.gamein2021.core.util.models.ProductionLineTemplate;
+import ir.sharif.gamein2021.core.util.models.Supplier;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
 
@@ -18,6 +19,7 @@ public class ReadJsonFilesManager
 {
     public static Product[] Products;
     public static Factory[] Factories;
+    public static Supplier[] Suppliers;
     public static ProductionLineTemplate[] ProductionLineTemplates;
 
     public static void ReadJsonFiles()
@@ -35,6 +37,9 @@ public class ReadJsonFilesManager
 
             File productionLineTemplateJsonFile = ResourceUtils.getFile("classpath:JsonFiles/ProductionLineTemplates.json");
             ProductionLineTemplates = objectMapper.readValue(productionLineTemplateJsonFile, ProductionLineTemplate[].class);
+
+            File suppliersJsonFile = ResourceUtils.getFile("classpath:JsonFiles/Suppliers.json");
+            Suppliers = objectMapper.readValue(suppliersJsonFile, Supplier[].class);
         }
         catch (IOException ignored)
         {

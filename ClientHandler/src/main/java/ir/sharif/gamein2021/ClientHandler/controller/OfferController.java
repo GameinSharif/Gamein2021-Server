@@ -6,6 +6,7 @@ import ir.sharif.gamein2021.ClientHandler.domain.RFQ.*;
 import ir.sharif.gamein2021.ClientHandler.manager.LocalPushMessageManager;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
 import ir.sharif.gamein2021.core.service.OfferService;
+import ir.sharif.gamein2021.core.service.TeamService;
 import ir.sharif.gamein2021.core.service.UserService;
 import ir.sharif.gamein2021.core.domain.dto.OfferDto;
 import ir.sharif.gamein2021.core.exception.CheatingException;
@@ -17,7 +18,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@AllArgsConstructor
 @Component
 public class OfferController
 {
@@ -27,14 +27,22 @@ public class OfferController
     private final LocalPushMessageManager pushMessageManager;
     private final OfferService offerService;
     private final UserService userService;
+    private final TeamService teamService;
     private final Gson gson = new Gson();
+
+    public OfferController(LocalPushMessageManager pushMessageManager, OfferService offerService, UserService userService, TeamService teamService) {
+        this.pushMessageManager = pushMessageManager;
+        this.offerService = offerService;
+        this.userService = userService;
+        this.teamService = teamService;
+    }
 
     public void handleGetOffers(ProcessedRequest request, GetOffersRequest getOffersRequest)
     {
         GetOffersResponse getOffersResponse;
         try {
-            List<OfferDto> myTeamOffers = offerService.findByTeam(userService.loadById(getOffersRequest.playerId).getTeam());
-            List<OfferDto> otherTeamsOffers = offerService.findOffersExceptTeam(userService.loadById(getOffersRequest.playerId).getTeam());
+            List<OfferDto> myTeamOffers = offerService.findByTeam(teamService.findTeamById(userService.loadById(getOffersRequest.playerId).getTeamId()));
+            List<OfferDto> otherTeamsOffers = offerService.findOffersExceptTeam(teamService.findTeamById(userService.loadById(getOffersRequest.playerId).getTeamId()));
 
             getOffersResponse = new GetOffersResponse(ResponseTypeConstant.GET_OFFERS, myTeamOffers, otherTeamsOffers);
         } catch (Exception e) {
@@ -50,7 +58,7 @@ public class OfferController
         try {
             OfferDto offerDto = newOfferRequest.getOffer();
             offerDto.setOfferStatus(OfferStatus.ACTIVE);
-            offerDto.setTeamId(userService.loadById(newOfferRequest.playerId).getTeam().getId());
+            offerDto.setTeamId(userService.loadById(newOfferRequest.playerId).getTeamId());
             OfferDto savedOfferDto = offerService.addOffer(offerDto);
 
             newOfferResponse = new NewOfferResponse(ResponseTypeConstant.NEW_OFFER, savedOfferDto);
@@ -65,7 +73,7 @@ public class OfferController
     {
         TerminateOfferResponse terminateOfferResponse;
         try {
-            int teamId = userService.loadById(terminateOfferRequest.playerId).getTeam().getId();
+            int teamId = userService.loadById(terminateOfferRequest.playerId).getTeamId();
             int offerTeamId = offerService.findById(terminateOfferRequest.getOfferId()).getTeamId();
             if (teamId != offerTeamId) {
                 throw new CheatingException();

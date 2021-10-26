@@ -63,7 +63,7 @@ public class ChatService extends AbstractCrudService<ChatDto, Chat, Integer>
     }
 
     @Transactional(readOnly = true)
-    public List<ChatDto> getChatsByTeamId(Team team) {
+    public List<ChatDto> getChatsByTeam(Team team) {
         List<Chat> chats = new ArrayList<>();
         chats.addAll(chatRepository.findByTeam1(team));
         chats.addAll(chatRepository.findByTeam2(team));

@@ -45,8 +45,7 @@ public class GameDataController
 
         GetGameDataResponse getGameDataResponse = new GetGameDataResponse(
                 ResponseTypeConstant.GET_GAME_DATA,
-                gameinCustomers,
-                ReadJsonFilesManager.Products);
+                gameinCustomers);
 
         pushMessageManager.sendMessageBySession(request.session, gson.toJson(getGameDataResponse));
     }

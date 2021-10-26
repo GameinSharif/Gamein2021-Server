@@ -24,6 +24,9 @@ public class Team implements BaseEntity {
 
     @Enumerated(value = EnumType.STRING)
     private Country country;
+    //TODO this field should be initialize
+    private int credit;
+
 
     @Override
     public Integer getId() {

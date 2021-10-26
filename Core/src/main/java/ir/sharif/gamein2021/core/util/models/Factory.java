@@ -8,11 +8,13 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Factory
-{
+public class Factory {
     private int id;
     private String name;
     private Country country;
     private double latitude;
     private double longitude;
+    private int rawMaterialCapacity;
+    private int secondaryMaterialCapacity;
+    private int finalMaterialCapacity;
 }

@@ -14,4 +14,5 @@ public class TeamDto
     private String teamName;
     private Country country;
     private Integer factoryId;
+    private int credit;
 }

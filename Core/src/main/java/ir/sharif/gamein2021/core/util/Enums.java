@@ -12,6 +12,13 @@ public class Enums
         Switzerland
     }
 
+    public enum ProductType
+    {
+        RawMaterial,
+        SemiFinished,
+        Finished
+    }
+
     public enum AuctionBidStatus
     {
         Active,

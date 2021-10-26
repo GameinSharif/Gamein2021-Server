@@ -42,7 +42,7 @@ public class Enums
 
     public enum TransportNodeType
     {
-        SUPPLIER, GAMEIN_CUSTOMER, DC, COMPANY
+        SUPPLIER, GAMEIN_CUSTOMER, DC, FACTORY
     }
 
     public enum TransportState

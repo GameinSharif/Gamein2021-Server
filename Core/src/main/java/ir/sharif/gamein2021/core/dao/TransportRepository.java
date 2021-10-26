@@ -12,5 +12,8 @@ public interface TransportRepository extends JpaRepository<Transport, Integer> {
     List<Transport> findAllByTransportState(Enums.TransportState transportState);
     List<Transport> findAllByStart_date(LocalDate start_date);
     List<Transport> findAllByEnd_dateAndTransportState(LocalDate end_date, Enums.TransportState state);
-//    List<Transport> findAllBy
+    List<Transport> findAllBySourceTypeAndSourceId(Enums.TransportNodeType sourceType, Integer sourceId);
+    List<Transport> findAllByDestinationTypeAndDestinationId(Enums.TransportNodeType destinationType, Integer destinationId);
+    List<Transport> findAllBySourceTypeAndSourceIdIn(Enums.TransportNodeType sourceType, List<Integer> sourceId);
+    List<Transport> findAllByDestinationTypeAndDestinationIdIn(Enums.TransportNodeType destinationType, List<Integer> destinationId);
 }

@@ -9,4 +9,5 @@ import java.util.List;
 
 public interface DcRepository extends JpaRepository<Dc , Integer> {
     public List<Dc> findAllByOwner(Team owner);
+    public List<Dc> findAllByStartingWeakIsGreaterThanEqual(int startingWeak);
 }

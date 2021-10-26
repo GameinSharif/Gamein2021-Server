@@ -20,7 +20,8 @@ public enum ResponseTypeConstant
     BID_FOR_AUCTION(15),
     BUY_DC(16),
     SELL_DC(17),
-    GET_TEAM_TRANSPORTS(18);
+    GET_TEAM_TRANSPORTS(18),
+    TRANSPORT_FINISHED(19);
 
     private int value;
 

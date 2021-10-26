@@ -1,25 +1,30 @@
 package ir.sharif.gamein2021.core.manager;
 
+import com.google.gson.Gson;
 import ir.sharif.gamein2021.core.domain.dto.TransportDto;
+import ir.sharif.gamein2021.core.response.TransportStateChangedResponse;
+import ir.sharif.gamein2021.core.service.DcService;
+import ir.sharif.gamein2021.core.service.TeamService;
 import ir.sharif.gamein2021.core.service.TransportService;
 import ir.sharif.gamein2021.core.util.Enums;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Random;
 
+@AllArgsConstructor
 @Component
 public class TransportManager {
 
     private final TransportService transportService;
+    private final DcService dcService;
+    private final TeamService teamService;
+    private final PushMessageManagerInterface pushMessageManager;
+    private final Gson gson = new Gson();
     private final static float CrushProbability = 0.1f;
-
-    @Autowired
-    public TransportManager(TransportService transportService) {
-        this.transportService = transportService;
-    }
 
     public void updateTransports() {
         handleTransportCrush();
@@ -53,8 +58,48 @@ public class TransportManager {
     private void endTransports(LocalDate today) {
         ArrayList<TransportDto> arrivedTransports = transportService.getEndingTransports(today);
         transportService.changeTransportsStates(arrivedTransports, Enums.TransportState.SUCCESSFUL);
+        for (TransportDto arrivedTransport : arrivedTransports) {
+            sendResponseToTransportOwners(arrivedTransport);
+
+        }
         // TODO : send response
         // TODO : do transport actions
+    }
+
+    private void sendResponseToTransportOwners(TransportDto transportDto) {
+        Integer sourceTeamId = getTransportSourceOwnerId(transportDto);
+        Integer destinationId = getTransportDestinationOwnerId(transportDto);
+        TransportStateChangedResponse response = new TransportStateChangedResponse(transportDto);
+        if (sourceTeamId != null) {
+            pushMessageManager.sendMessageByTeamId(sourceTeamId.toString(), gson.toJson(response));
+        }
+        if (destinationId != null) {
+            pushMessageManager.sendMessageByTeamId(destinationId.toString(), gson.toJson(response));
+        }
+    }
+
+    private Integer getTransportDestinationOwnerId(TransportDto transportDto) {
+        Assert.notNull(transportDto, "transport should have destination type");
+        switch (transportDto.getDestinationType()) {
+            case DC:
+                return dcService.loadById(transportDto.getSourceId()).getOwnerId();
+            case FACTORY:
+                return teamService.findTeamIdByFactoryId(transportDto.getSourceId());
+            default:
+                return null;
+        }
+    }
+
+    private Integer getTransportSourceOwnerId(TransportDto transportDto) {
+        Assert.notNull(transportDto, "transport should have source type");
+        switch (transportDto.getSourceType()) {
+            case DC:
+                return dcService.loadById(transportDto.getSourceId()).getOwnerId();
+            case FACTORY:
+                return teamService.findTeamIdByFactoryId(transportDto.getSourceId());
+            default:
+                return null;
+        }
     }
 
     public TransportDto createTransport(Enums.VehicleType vehicleType, Enums.TransportNodeType sourceType, Integer sourceId
@@ -64,7 +109,7 @@ public class TransportManager {
 
         int transportDuration = calculateTransportDuration(vehicleType, sourceId, sourceType, destinationId, destinationType);
         Enums.TransportState transportState = Enums.TransportState.IN_WAY;
-        if(LocalDate.now().isBefore(start_date)){
+        if (LocalDate.now().isBefore(start_date)) {
             transportState = Enums.TransportState.PENDING;
         }
         TransportDto transport = TransportDto.builder()

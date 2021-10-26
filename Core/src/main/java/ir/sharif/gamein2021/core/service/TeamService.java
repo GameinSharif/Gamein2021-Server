@@ -39,4 +39,9 @@ public class TeamService extends AbstractCrudService<TeamDto, Team, Integer>
         return repository.findAllByFactoryIdIsNullAndCountry(country).stream().
                 map(e -> modelMapper.map(e, TeamDto.class)).collect(Collectors.toList());
     }
+
+
+    public Integer findTeamIdByFactoryId(Integer factoryId) {
+        return repository.findTeamByFactoryId(factoryId).getId();
+    }
 }

@@ -13,7 +13,7 @@ import javax.persistence.Column;
 public class ProviderDto implements BaseDto<Integer>
 {
     private Integer id;
-    private Team team;
+    private Integer teamId;
     private Integer productId;
     private Integer capacity;
     private Float price;

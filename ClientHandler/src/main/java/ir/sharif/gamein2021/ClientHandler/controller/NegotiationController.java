@@ -46,7 +46,7 @@ public class NegotiationController
     {
         int playerId = getNegotiationsRequest.playerId;
         UserDto user = userService.loadById(playerId);
-        Team userTeam = user.getTeam();
+        Team userTeam = teamService.findTeamById(user.getTeamId());
         if (userTeam == null)
         {
             GetNegotiationsResponse getNegotiationsResponse = new GetNegotiationsResponse(ResponseTypeConstant.GET_NEGOTIATIONS, new ArrayList<>());
@@ -69,8 +69,8 @@ public class NegotiationController
             if (supplier != null)
             {
                 NegotiationDto newNegotiation = new NegotiationDto();
-                newNegotiation.setDemander(user.getTeam());
-                newNegotiation.setSupplier(supplier);
+                newNegotiation.setDemanderId(user.getTeamId());
+                newNegotiation.setSupplierId(supplier.getId());
                 newNegotiation.setProductId(newNegotiationRequest.getProductId());
                 newNegotiation.setCostPerUnitDemander(newNegotiationRequest.getCostPerUnitDemander());
                 newNegotiation.setCostPerUnitSupplier(newNegotiationRequest.getCostPerUnitDemander());
@@ -100,8 +100,8 @@ public class NegotiationController
             if (provider != null)
             {
                 NegotiationDto newNegotiation = new NegotiationDto();
-                newNegotiation.setDemander(user.getTeam());
-                newNegotiation.setSupplier(provider.getTeam());
+                newNegotiation.setDemanderId(user.getTeamId());
+                newNegotiation.setSupplierId(provider.getTeamId());
                 newNegotiation.setCostPerUnitDemander(newProviderNegotiationRequest.getCostPerUnitDemander());
                 newNegotiation.setCostPerUnitSupplier(newProviderNegotiationRequest.getCostPerUnitDemander());
                 newNegotiation.setProductId(provider.getProductId());
@@ -128,8 +128,8 @@ public class NegotiationController
         if (user != null)
         {
             NegotiationDto negotiationDto = negotiationService.findById(editRequest.getNegotiationId());
-            Team userTeam = user.getTeam();
-            if (userTeam.getId().equals(negotiationDto.getDemander().getId()))
+            Team userTeam = teamService.findTeamById(user.getTeamId());
+            if (userTeam.getId().equals(negotiationDto.getDemanderId()))
             {
                 negotiationDto.setCostPerUnitDemander(editRequest.getNewCostPerUnit());
                 negotiationService.saveOrUpdate(negotiationDto);
@@ -137,7 +137,7 @@ public class NegotiationController
                 pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(editResponse));
                 return;
             }
-            else if (userTeam.getId().equals(negotiationDto.getSupplier().getId()))
+            else if (userTeam.getId().equals(negotiationDto.getSupplierId()))
             {
                 negotiationDto.setCostPerUnitSupplier(editRequest.getNewCostPerUnit());
                 negotiationService.saveOrUpdate(negotiationDto);

@@ -20,6 +20,7 @@ public class MainController {
     private final NegotiationController negotiationController;
     private final ProviderController providerController;
     private final AuctionController auctionController;
+    private final TransportController transportController;
     private final Gson gson;
 
     public void HandleMessage(ProcessedRequest processedRequest) {
@@ -77,6 +78,10 @@ public class MainController {
             case BID_FOR_AUCTION:
                 BidForAuctionRequest bidForAuctionRequest = gson.fromJson(requestData, BidForAuctionRequest.class);
                 auctionController.addBidForAuction(processedRequest, bidForAuctionRequest);
+                break;
+            case GET_TEAM_TRANSPORTS:
+                GetTeamTransportsRequest getTeamTransportsRequest = gson.fromJson(requestData, GetTeamTransportsRequest.class);
+                transportController.getTeamTransports(processedRequest, getTeamTransportsRequest);
                 break;
             default:
                 System.out.println("Request type is invalid.");

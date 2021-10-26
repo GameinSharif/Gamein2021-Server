@@ -14,8 +14,8 @@ public enum RequestTypeConstant
     GET_PROVIDERS(9),
     REMOVE_PROVIDER(10),
     NEW_PROVIDER_NEGOTIATION(11),
-    BID_FOR_AUCTION(12);
-
+    BID_FOR_AUCTION(12),
+    GET_TEAM_TRANSPORTS(13) ;
     private int value;
 
     RequestTypeConstant(int value)

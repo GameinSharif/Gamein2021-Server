@@ -2,6 +2,7 @@ package ir.sharif.gamein2021.core.service;
 
 import ir.sharif.gamein2021.core.dao.TransportRepository;
 import ir.sharif.gamein2021.core.domain.dto.TransportDto;
+import ir.sharif.gamein2021.core.domain.entity.Team;
 import ir.sharif.gamein2021.core.domain.entity.Transport;
 import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
 import ir.sharif.gamein2021.core.util.Enums;
@@ -60,5 +61,10 @@ public class TransportService extends AbstractCrudService<TransportDto, Transpor
             save(transportDto);
 
         }
+    }
+
+    public ArrayList<TransportDto> getTransportsByTeam(Team userTeam) {
+//        List<Transport> transports = transportRepository.
+        return null;
     }
 }

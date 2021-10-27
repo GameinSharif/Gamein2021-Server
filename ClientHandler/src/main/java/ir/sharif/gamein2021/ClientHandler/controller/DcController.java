@@ -5,6 +5,7 @@ import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Dc.BuyingDcRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Dc.BuyingDcResponse;
 import ir.sharif.gamein2021.ClientHandler.domain.Dc.SellingDcRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.Dc.SellingDcResponse;
 import ir.sharif.gamein2021.ClientHandler.manager.LocalPushMessageManager;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
 import ir.sharif.gamein2021.core.domain.dto.DcDto;
@@ -49,7 +50,7 @@ public class DcController {
     }
     public void sellDc(ProcessedRequest processedRequest, SellingDcRequest sellingDcRequest) {
         Integer id = sellingDcRequest.playerId;
-        BuyingDcResponse response;
+        SellingDcResponse response;
         try {
             UserDto userDto = userService.loadById(id);
             Integer teamId = userDto.getTeam().getId();
@@ -57,11 +58,11 @@ public class DcController {
             DcDto dc = dcService.loadById(sellingDcRequest.getDcId());
 
             dc = dcService.sellDc(dc, teamDto);
-            response = new BuyingDcResponse(ResponseTypeConstant.SELL_DC, dc, "success");
+            response = new SellingDcResponse(ResponseTypeConstant.SELL_DC, dc, "success");
         } catch (Exception e) {
             System.out.println(e.getMessage());
             logger.debug(e.getMessage());
-            response = new BuyingDcResponse(ResponseTypeConstant.SELL_DC, null, e.getMessage());
+            response = new SellingDcResponse(ResponseTypeConstant.SELL_DC, null, e.getMessage());
         }
         pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(response));
     }

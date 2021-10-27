@@ -19,7 +19,9 @@ public enum ResponseTypeConstant
     GET_ALL_AUCTIONS(14),
     BID_FOR_AUCTION(15),
     BUY_DC(16),
-    SELL_DC(17);
+    SELL_DC(17),
+    GET_ALL_ACTIVE_DC(18);
+
 
     private int value;
 

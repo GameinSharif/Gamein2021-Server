@@ -42,9 +42,14 @@ public class MainController {
                 //TODO
                 break;
             case GET_GAME_DATA:
-                gameDataController.getGameData(processedRequest);
-                gameDataController.getCurrentWeekDemands(processedRequest);
-                gameDataController.getAllAuctions(processedRequest);
+                try {
+                    gameDataController.getGameData(processedRequest);
+                    gameDataController.getCurrentWeekDemands(processedRequest);
+                    gameDataController.getAllActiveDc(processedRequest);
+                    gameDataController.getAllAuctions(processedRequest);
+                }catch (Exception e ){
+                    System.out.println(e);
+                }
                 break;
             case GET_CONTRACTS:
                 GetContractsRequest getContractsRequest = gson.fromJson(requestData, GetContractsRequest.class);
@@ -82,11 +87,17 @@ public class MainController {
                 auctionController.addBidForAuction(processedRequest, bidForAuctionRequest);
                 break;
             case BUY_DC:
-                BuyingDcRequest buyingDcRequest = gson.fromJson(requestData, BuyingDcRequest.class);
-                dcController.buyDc(processedRequest , buyingDcRequest);
+                try {
+                    BuyingDcRequest buyingDcRequest = gson.fromJson(requestData, BuyingDcRequest.class);
+                    dcController.buyDc(processedRequest, buyingDcRequest);
+                }catch (Exception e ){
+                    System.out.println(e.getMessage());
+                }
+                break;
             case SELL_DC:
                 SellingDcRequest sellingDcRequest = gson.fromJson(requestData, SellingDcRequest.class);
                 dcController.sellDc(processedRequest , sellingDcRequest);
+                break;
             default:
                 System.out.println("Request type is invalid.");
         }

@@ -39,8 +39,10 @@ public class DcService extends AbstractCrudService<DcDto, Dc, Integer> {
         Assert.notNull(id, "The id must not be null!");
 
         return repository.findById(id)
-                .map(e -> {DcDto dcDto = modelMapper.map(e, getDtoClass());
-                    dcDto.setOwnerId(e.getOwner().getId());
+                .map(e -> {
+                    DcDto dcDto = modelMapper.map(e, getDtoClass());
+                    if (e.getOwner() != null)
+                        dcDto.setOwnerId(e.getOwner().getId());
                     return dcDto;
                 })
                 .orElseThrow(() -> new EntityNotFoundException("can not find entity " + getEntityClass().getSimpleName() + "by id: " + id + " "));
@@ -50,8 +52,10 @@ public class DcService extends AbstractCrudService<DcDto, Dc, Integer> {
     public List<DcDto> list() {
         return repository.findAll()
                 .stream()
-                .map(e -> {DcDto dcDto = modelMapper.map(e, getDtoClass());
-                    dcDto.setOwnerId(e.getOwner().getId());
+                .map(e -> {
+                    DcDto dcDto = modelMapper.map(e, getDtoClass());
+                    if (e.getOwner() != null)
+                        dcDto.setOwnerId(e.getOwner().getId());
                     return dcDto;
                 })
                 .collect(Collectors.toList());
@@ -61,7 +65,7 @@ public class DcService extends AbstractCrudService<DcDto, Dc, Integer> {
     public DcDto buyDc(DcDto dc, TeamDto teamDto) {
         teamDto = teamService.loadById(teamDto.getId());
         dc = loadById(dc.getId());
-        if(!isActive(dc))
+        if (!isActive(dc))
             throw new InactiveDcException("Dc with id " + dc.getId() + " is not active yet");
         //TODO check if dc need to be in the same country
         //TODO check if we need any more additional if
@@ -86,7 +90,7 @@ public class DcService extends AbstractCrudService<DcDto, Dc, Integer> {
         if (!dc.getOwnerId().equals(teamDto.getId())) {
             throw new DcHasOwnerException("Dc with id " + dc.getId() + " is not yours to sell ");
         }
-        if(!isActive(dc))
+        if (!isActive(dc))
             throw new InactiveDcException("Dc with id " + dc.getId() + " is not active yet");
         int credit = teamDto.getCredit() + dc.getSellingPrice();
         teamDto.setCredit(credit);
@@ -99,44 +103,49 @@ public class DcService extends AbstractCrudService<DcDto, Dc, Integer> {
     @Override
     public DcDto saveOrUpdate(DcDto dcDto) {
         Assert.notNull(dcDto, "The dc must not be null!");
-        if(!isActive(dcDto))
+        if (!isActive(dcDto))
             throw new InactiveDcException("Dc with id " + dcDto.getId() + " is not active yet");
         Dc dc = modelMapper.map(dcDto, getEntityClass());
-        if (dcDto.getOwnerId() != null)
+        if (dcDto.getOwnerId() != null) {
             dc.setOwner(teamService.findTeamById(dcDto.getOwnerId()));
+        }
         else
             dc.setOwner(null);
         Dc result = repository.save(dc);
         log.debug("save/update entity {}", result);
-        DcDto resultDto = modelMapper.map(result , getDtoClass());
+        DcDto resultDto = modelMapper.map(result, getDtoClass());
         resultDto.setOwnerId(dcDto.getOwnerId());
         return resultDto;
     }
 
     @Transactional(readOnly = true)
-    public boolean isActive(DcDto dc){
-        Assert.notNull(dc , "This dc must not be null!");
+    public boolean isActive(DcDto dc) {
+        Assert.notNull(dc, "This dc must not be null!");
         dc = loadById(dc.getId());
-        if(dc.getStartingWeak() <= GameConstants.getWeakNumber())
+        if (dc.getStartingWeak() <= GameConstants.getWeakNumber())
             return true;
         return false;
     }
+
     @Transactional(readOnly = true)
-    public List<DcDto> getAllActiveDc(){
-        return repository.findAllByStartingWeakIsGreaterThanEqual(GameConstants.getWeakNumber())
-                .stream().map(e ->{
+    public List<DcDto> getAllActiveDc() {
+        return repository.findAllByStartingWeakIsLessThanEqual(GameConstants.getWeakNumber())
+                .stream().map(e -> {
                     DcDto dcDto = modelMapper.map(e, DcDto.class);
-                    dcDto.setOwnerId(e.getOwner().getId());
+                    if (e.getOwner() != null)
+                        dcDto.setOwnerId(e.getOwner().getId());
                     return dcDto;
                 }).collect(Collectors.toList());
+
     }
 
     @Transactional(readOnly = true)
-    public List<DcDto> getAllDcForTeam(TeamDto teamDto){
+    public List<DcDto> getAllDcForTeam(TeamDto teamDto) {
         Team team = teamService.findTeamById(teamDto.getId());
-        return repository.findAllByOwner(team).stream().map(e->{
-            DcDto dcDto = modelMapper.map(e,DcDto.class);
-            dcDto.setOwnerId(e.getOwner().getId());
+        return repository.findAllByOwner(team).stream().map(e -> {
+            DcDto dcDto = modelMapper.map(e, DcDto.class);
+            if (e.getOwner() != null)
+                dcDto.setOwnerId(e.getOwner().getId());
             return dcDto;
         }).collect(Collectors.toList());
     }

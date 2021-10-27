@@ -1,5 +1,6 @@
 package ir.sharif.gamein2021.core.util;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class GameConstants
@@ -8,6 +9,8 @@ public class GameConstants
 
     public static final int ChatMaxMessagesCount = 20;
 
+    public static final LocalDate startDate = LocalDate.of(2000,1, 1);
+
     public final int AuctionStartValue = 1000;
     public final int AuctionStepValue = 100;
     public final LocalDateTime[] AuctionRoundsStartTime = new LocalDateTime[]{
@@ -15,5 +18,6 @@ public class GameConstants
             LocalDateTime.of(2021, 11, 25, 9, 5, 0),
             LocalDateTime.of(2021, 11, 25, 9, 10, 0)
     };
+
     public static final int AuctionRoundLengthInSeconds = 300;
 }

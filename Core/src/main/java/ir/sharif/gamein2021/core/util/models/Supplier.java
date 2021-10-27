@@ -15,6 +15,7 @@ public class Supplier
     private int id;
     private Country country;
     private ArrayList<Integer> materials;
+    private ArrayList<Integer> pricePerUnit;
     private double latitude;
     private double longitude;
 }

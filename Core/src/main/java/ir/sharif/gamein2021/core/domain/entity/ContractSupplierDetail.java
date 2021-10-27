@@ -20,7 +20,6 @@ public class ContractSupplierDetail implements BaseEntity
     @Column(name = "contract_date", nullable = false)
     private LocalDate contractDate;
 
-
     @Column(name = "bought_amount", nullable = false)
     private Integer boughtAmount;
 

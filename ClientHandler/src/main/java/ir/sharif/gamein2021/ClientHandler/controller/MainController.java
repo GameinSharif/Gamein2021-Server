@@ -6,6 +6,7 @@ import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginRequest;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Messenger.GetAllChatsRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Messenger.NewMessageRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.NewContractSupplierRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.RFQ.*;
 import ir.sharif.gamein2021.ClientHandler.domain.Auction.BidForAuctionRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.productionLine.*;
@@ -27,6 +28,7 @@ public class MainController
     private final AuctionController auctionController;
     private final ProductionLineController productionLineController;
     private final MessageController messageController;
+    private final ContractSupplierController contractSupplierController;
     private final Gson gson;
 
     public void HandleMessage(ProcessedRequest processedRequest)
@@ -127,6 +129,9 @@ public class MainController
                 UpgradeProductionLineEfficiencyRequest upgradeEfficiencyRequest = gson.fromJson(requestData, UpgradeProductionLineEfficiencyRequest.class);
                 productionLineController.UpgradeProductionLineEfficiency(processedRequest, upgradeEfficiencyRequest);
                 break;
+            case NEW_CONTRACT_WITH_SUPPLIER:
+                NewContractSupplierRequest newContractSupplierRequest = gson.fromJson(requestData, NewContractSupplierRequest.class);
+                contractSupplierController.newContractSupplier(processedRequest, newContractSupplierRequest);
             default:
                 System.out.println("Request type is invalid.");
         }

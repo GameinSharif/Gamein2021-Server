@@ -3,6 +3,7 @@ package ir.sharif.gamein2021.core.service;
 import ir.sharif.gamein2021.core.dao.ProductionLineProductRepository;
 import ir.sharif.gamein2021.core.dao.ProductionLineRepository;
 import ir.sharif.gamein2021.core.domain.dto.ProductionLineDto;
+import ir.sharif.gamein2021.core.domain.dto.ProductionLineProductDto;
 import ir.sharif.gamein2021.core.domain.entity.ProductionLine;
 import ir.sharif.gamein2021.core.domain.entity.ProductionLineProduct;
 import ir.sharif.gamein2021.core.domain.entity.Team;
@@ -109,9 +110,11 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
         newProduct.setProductId(productId);
         newProduct.setStartDate(gameCalendar.getCurrentDate().plusDays(1));
         newProduct.setAmount(amount);
-        newProduct.setEndDate(gameCalendar.getCurrentDate().plusDays());
+//        newProduct.setEndDate();
+
+        ProductionLineProduct savedProduct = productRepository.saveAndFlush(newProduct);
+        return modelMapper.map(productionLineRepository.findById(productionLineId).orElse(null), ProductionLineDto.class);
         //TODO what to do?
-        return null;
     }
 
     @Transactional

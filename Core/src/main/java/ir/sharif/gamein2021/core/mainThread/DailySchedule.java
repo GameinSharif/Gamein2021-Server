@@ -12,8 +12,9 @@ public class DailySchedule {
     private final GameCalendar gameCalendar;
     private ProductionLineProductService productService;
 
-    public DailySchedule(GameCalendar gameCalendar) {
+    public DailySchedule(GameCalendar gameCalendar, ProductionLineProductService productService) {
         this.gameCalendar = gameCalendar;
+        this.productService = productService;
     }
 
     @Scheduled(fixedRateString = "${dayLengthMilliSecond}")
@@ -44,7 +45,7 @@ public class DailySchedule {
     }
 
     private void doDailyTasks() {
-        productService.finishProductCreation()
+        productService.finishProductCreation();
     }
 
     private void doWeeklyTasks() {

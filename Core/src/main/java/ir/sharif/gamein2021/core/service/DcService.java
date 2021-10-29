@@ -26,11 +26,13 @@ public class DcService extends AbstractCrudService<DcDto, Dc, Integer> {
     private final DcRepository repository;
     private final ModelMapper modelMapper;
     private final TeamService teamService;
+    private final StorageService storageService;
 
-    public DcService(DcRepository repository, ModelMapper modelMapper, TeamService teamService) {
+    public DcService(DcRepository repository, ModelMapper modelMapper, TeamService teamService, StorageService storageService) {
         this.repository = repository;
         this.teamService = teamService;
         this.modelMapper = modelMapper;
+        this.storageService = storageService;
         setRepository(repository);
     }
 
@@ -43,10 +45,14 @@ public class DcService extends AbstractCrudService<DcDto, Dc, Integer> {
                     DcDto dcDto = modelMapper.map(e, getDtoClass());
                     if (e.getOwner() != null)
                         dcDto.setOwnerId(e.getOwner().getId());
+                    if (e.getStorage() != null)
+                        dcDto.setStorageId(e.getStorage().getId());
                     return dcDto;
                 })
                 .orElseThrow(() -> new EntityNotFoundException("can not find entity " + getEntityClass().getSimpleName() + "by id: " + id + " "));
     }
+
+
 
     @Override
     public List<DcDto> list() {
@@ -56,6 +62,8 @@ public class DcService extends AbstractCrudService<DcDto, Dc, Integer> {
                     DcDto dcDto = modelMapper.map(e, getDtoClass());
                     if (e.getOwner() != null)
                         dcDto.setOwnerId(e.getOwner().getId());
+                    if (e.getStorage() != null)
+                        dcDto.setStorageId(e.getStorage().getId());
                     return dcDto;
                 })
                 .collect(Collectors.toList());
@@ -109,8 +117,8 @@ public class DcService extends AbstractCrudService<DcDto, Dc, Integer> {
         if (dcDto.getOwnerId() != null) {
             dc.setOwner(teamService.findTeamById(dcDto.getOwnerId()));
         }
-        else
-            dc.setOwner(null);
+        if (dcDto.getStorageId() != null)
+            dc.setStorage(storageService.findStorageById(dcDto.getStorageId()));
         Dc result = repository.save(dc);
         log.debug("save/update entity {}", result);
         DcDto resultDto = modelMapper.map(result, getDtoClass());
@@ -131,10 +139,7 @@ public class DcService extends AbstractCrudService<DcDto, Dc, Integer> {
     public List<DcDto> getAllActiveDc() {
         return repository.findAllByStartingWeakIsLessThanEqual(GameConstants.getWeakNumber())
                 .stream().map(e -> {
-                    DcDto dcDto = modelMapper.map(e, DcDto.class);
-                    if (e.getOwner() != null)
-                        dcDto.setOwnerId(e.getOwner().getId());
-                    return dcDto;
+                    return loadById(e.getId());
                 }).collect(Collectors.toList());
 
     }
@@ -144,9 +149,7 @@ public class DcService extends AbstractCrudService<DcDto, Dc, Integer> {
         Team team = teamService.findTeamById(teamDto.getId());
         return repository.findAllByOwner(team).stream().map(e -> {
             DcDto dcDto = modelMapper.map(e, DcDto.class);
-            if (e.getOwner() != null)
-                dcDto.setOwnerId(e.getOwner().getId());
-            return dcDto;
+            return loadById(e.getId());
         }).collect(Collectors.toList());
     }
 }

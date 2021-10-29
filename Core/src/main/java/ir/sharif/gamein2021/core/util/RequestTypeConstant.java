@@ -16,7 +16,9 @@ public enum RequestTypeConstant
     NEW_PROVIDER_NEGOTIATION(11),
     BID_FOR_AUCTION(12),
     BUY_DC(13),
-    SELL_DC(14);
+    SELL_DC(14),
+    ADD_PRODUCT(15),
+    REMOVE_PRODUCT(16);
 
     private int value;
 

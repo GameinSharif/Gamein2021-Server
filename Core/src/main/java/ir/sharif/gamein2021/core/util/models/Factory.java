@@ -1,5 +1,6 @@
 package ir.sharif.gamein2021.core.util.models;
 
+import ir.sharif.gamein2021.core.exception.FactoryNotFoundException;
 import ir.sharif.gamein2021.core.util.Enums.Country;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,4 +22,16 @@ public class Factory {
     private int rawMaterialCapacity;
     private int secondaryMaterialCapacity;
     private int finalMaterialCapacity;
+
+    public static List<Factory> getAllFactories() {
+        return allFactories;
+    }
+
+    public static Factory findFactoryById(Integer id){
+        for(Factory factory : allFactories){
+            if(factory.getId() == id)
+                return factory;
+        }
+        throw new FactoryNotFoundException("Factory with id : " +  id + " does not exist");
+    }
 }

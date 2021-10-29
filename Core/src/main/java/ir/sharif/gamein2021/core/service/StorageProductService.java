@@ -2,6 +2,7 @@ package ir.sharif.gamein2021.core.service;
 
 import ir.sharif.gamein2021.core.dao.StorageProductRepository;
 import ir.sharif.gamein2021.core.domain.dto.StorageProductDto;
+import ir.sharif.gamein2021.core.domain.entity.Storage;
 import ir.sharif.gamein2021.core.domain.entity.StorageProduct;
 import ir.sharif.gamein2021.core.exception.EntityNotFoundException;
 import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
@@ -30,6 +31,11 @@ public class StorageProductService extends AbstractCrudService<StorageProductDto
         return repository.findById(id)
                 .map(e -> modelMapper.map(e, getDtoClass()))
                 .orElseThrow(() -> new EntityNotFoundException("can not find entity " + getEntityClass().getSimpleName() + "by id: " + id + " "));
+    }
+
+    @Transactional(readOnly = true)
+    public StorageProduct findStorageProductById(Integer id) {
+        return getRepository().findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     @Override

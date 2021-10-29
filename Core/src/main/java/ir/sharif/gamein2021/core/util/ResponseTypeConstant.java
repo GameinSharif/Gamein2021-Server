@@ -20,7 +20,9 @@ public enum ResponseTypeConstant
     BID_FOR_AUCTION(15),
     BUY_DC(16),
     SELL_DC(17),
-    GET_ALL_ACTIVE_DC(18);
+    GET_ALL_ACTIVE_DC(18),
+    ADD_PRODUCT(19),
+    REMOVE_PRODUCT(20);
 
 
     private int value;

@@ -12,7 +12,7 @@ public class Product
 {
     private int id;
     private String categoryIds; //for SemiFinishedProducts only
-    private int productionLineId; //for SemiFinishedProducts & Finished only
+    private int productionLineTemplateId; //for SemiFinishedProducts & Finished only
     private Enums.ProductType productType;
     private String name;
     private int volumetricUnit;

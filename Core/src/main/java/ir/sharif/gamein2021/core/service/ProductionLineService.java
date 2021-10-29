@@ -1,16 +1,21 @@
 package ir.sharif.gamein2021.core.service;
 
+import ir.sharif.gamein2021.core.dao.ProductionLineProductRepository;
 import ir.sharif.gamein2021.core.dao.ProductionLineRepository;
 import ir.sharif.gamein2021.core.domain.dto.ProductionLineDto;
+import ir.sharif.gamein2021.core.domain.dto.ProductionLineProductDto;
 import ir.sharif.gamein2021.core.domain.entity.ProductionLine;
+import ir.sharif.gamein2021.core.domain.entity.ProductionLineProduct;
 import ir.sharif.gamein2021.core.domain.entity.Team;
 import ir.sharif.gamein2021.core.exception.InvalidProductionLineIdException;
 import ir.sharif.gamein2021.core.exception.InvalidProductionLineTemplateIdException;
 import ir.sharif.gamein2021.core.exception.ProductionLineMaximumEfficiencyLevelReachedException;
 import ir.sharif.gamein2021.core.exception.ProductionLineMaximumQualityLevelReachedException;
+import ir.sharif.gamein2021.core.manager.GameCalendar;
 import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
 import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
 import ir.sharif.gamein2021.core.util.Enums;
+import ir.sharif.gamein2021.core.util.models.Product;
 import ir.sharif.gamein2021.core.util.models.ProductionLineTemplate;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -24,10 +29,16 @@ import java.util.stream.Collectors;
 @Service
 public class ProductionLineService extends AbstractCrudService<ProductionLineDto, ProductionLine, Integer> {
     private final ProductionLineRepository productionLineRepository;
+    private final ProductionLineProductRepository productRepository;
     private final ModelMapper modelMapper;
+    private final GameCalendar gameCalendar;
 
-    public ProductionLineService(ProductionLineRepository productionLineRepository, ModelMapper modelMapper) {
+    public ProductionLineService(ProductionLineRepository productionLineRepository,
+                                 ProductionLineProductRepository productRepository,
+                                 ModelMapper modelMapper, GameCalendar gameCalendar) {
+        this.gameCalendar = gameCalendar;
         setRepository(productionLineRepository);
+        this.productRepository = productRepository;
         this.productionLineRepository = productionLineRepository;
         this.modelMapper = modelMapper;
     }
@@ -77,8 +88,33 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
         if (productionLine.getStatus() != Enums.ProductionLineStatus.ACTIVE) {
             throw new InvalidProductionLineIdException("Invalid Operation. Tried to start a production on a scrapped production line.");
         }
+
+        Product productTemplate = Arrays.stream(ReadJsonFilesManager.Products)
+                .filter(x -> x.getId() == productId &&
+                        x.getProductionLineTemplateId() == productionLine.getProductionLineTemplateId())
+                .findFirst().orElse(null);
+
+        if (productTemplate == null) {
+            throw new InvalidProductionLineIdException("Selected productLine is not able to create selected product");
+        }
+
+        ProductionLineProduct inProductionProduct = productionLine.getProducts().stream()
+                .filter(x -> gameCalendar.getCurrentDate().isAfter(x.getEndDate()))
+                .findFirst().orElse(null);
+
+        if (inProductionProduct != null) {
+            throw new InvalidProductionLineIdException("ProductionLine is busy now.");
+        }
+
+        ProductionLineProduct newProduct = new ProductionLineProduct();
+        newProduct.setProductId(productId);
+        newProduct.setStartDate(gameCalendar.getCurrentDate().plusDays(1));
+        newProduct.setAmount(amount);
+//        newProduct.setEndDate();
+
+        ProductionLineProduct savedProduct = productRepository.saveAndFlush(newProduct);
+        return modelMapper.map(productionLineRepository.findById(productionLineId).orElse(null), ProductionLineDto.class);
         //TODO what to do?
-        return null;
     }
 
     @Transactional
@@ -97,7 +133,7 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
         }
 
         productionLine.setQualityLevel(currentQualityLevel + 1);
-        ProductionLine savedProductionLine =  productionLineRepository.saveAndFlush(productionLine);
+        ProductionLine savedProductionLine = productionLineRepository.saveAndFlush(productionLine);
         return modelMapper.map(savedProductionLine, ProductionLineDto.class);
     }
 
@@ -117,7 +153,7 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
         }
 
         productionLine.setEfficiencyLevel(currentEfficiencyLevel + 1);
-        ProductionLine savedProductionLine =  productionLineRepository.saveAndFlush(productionLine);
+        ProductionLine savedProductionLine = productionLineRepository.saveAndFlush(productionLine);
         return modelMapper.map(savedProductionLine, ProductionLineDto.class);
     }
 

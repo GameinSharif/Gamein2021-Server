@@ -11,6 +11,7 @@ import ir.sharif.gamein2021.core.domain.entity.Team;
 import ir.sharif.gamein2021.core.exception.InvalidProductionLineIdException;
 import ir.sharif.gamein2021.core.exception.InvalidProductionLineTemplateIdException;
 import ir.sharif.gamein2021.core.service.ProductionLineService;
+import ir.sharif.gamein2021.core.service.TeamService;
 import ir.sharif.gamein2021.core.service.UserService;
 import ir.sharif.gamein2021.core.util.Enums;
 import org.apache.log4j.Logger;
@@ -24,20 +25,22 @@ public class ProductionLineController {
 
     private final LocalPushMessageManager pushMessageManager;
     private final UserService userService;
+    private final TeamService teamService;
     private final ProductionLineService productionLineService;
 
     private final Gson gson = new Gson();
 
-    public ProductionLineController(LocalPushMessageManager pushMessageManager, UserService userService, ProductionLineService productionLineService) {
+    public ProductionLineController(LocalPushMessageManager pushMessageManager, TeamService teamService, UserService userService, ProductionLineService productionLineService) {
         this.pushMessageManager = pushMessageManager;
         this.userService = userService;
+        this.teamService = teamService;
         this.productionLineService = productionLineService;
     }
 
     public void GetProductionLines(ProcessedRequest processedRequest, GetProductionLinesRequest request) {
         int playerId = request.playerId;
         UserDto user = userService.loadById(playerId);
-        Team userTeam = user.getTeam();
+        Team userTeam = teamService.findTeamById(user.getTeamId());
 
         List<ProductionLineDto> productionLines = productionLineService.findProductionLinesByTeam(userTeam);
 
@@ -53,7 +56,7 @@ public class ProductionLineController {
 
         productionLine.setStatus(Enums.ProductionLineStatus.ACTIVE);
         productionLine.setProductionLineTemplateId(request.getProductionLineTemplateId());
-        productionLine.setTeamId(user.getTeam().getId());
+        productionLine.setTeamId(user.getTeamId());
         productionLine.setEfficiencyLevel(0);
         productionLine.setQualityLevel(0);
 
@@ -72,7 +75,7 @@ public class ProductionLineController {
         UserDto user = userService.loadById(playerId);
 
         try {
-            ProductionLineDto savedProductionLine = productionLineService.scrapProductionLine(user.getTeam(), request.getProductionLineId());
+            ProductionLineDto savedProductionLine = productionLineService.scrapProductionLine(teamService.findTeamById(user.getTeamId()), request.getProductionLineId());
             ScrapProductionLineResponse response = new ScrapProductionLineResponse(savedProductionLine);
             pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(response));
         } catch (InvalidProductionLineIdException e) {
@@ -86,7 +89,7 @@ public class ProductionLineController {
         UserDto user = userService.loadById(playerId);
 
         try {
-            ProductionLineDto savedProductionLine = productionLineService.startProduction(user.getTeam(),
+            ProductionLineDto savedProductionLine = productionLineService.startProduction(teamService.findTeamById(user.getTeamId()),
                     request.getProductionLineId(),
                     request.getProductId(),
                     request.getAmount());
@@ -103,7 +106,7 @@ public class ProductionLineController {
         UserDto user = userService.loadById(playerId);
 
         try {
-            ProductionLineDto savedProductionLine = productionLineService.upgradeProductionLineQuality(user.getTeam(),
+            ProductionLineDto savedProductionLine = productionLineService.upgradeProductionLineQuality(teamService.findTeamById(user.getTeamId()),
                     request.getProductionLineId());
             UpgradeProductionLineQualityResponse response = new UpgradeProductionLineQualityResponse(savedProductionLine);
             pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(response));
@@ -118,7 +121,7 @@ public class ProductionLineController {
         UserDto user = userService.loadById(playerId);
 
         try {
-            ProductionLineDto savedProductionLine = productionLineService.upgradeProductionLineEfficiency(user.getTeam(),
+            ProductionLineDto savedProductionLine = productionLineService.upgradeProductionLineEfficiency(teamService.findTeamById(user.getTeamId()),
                     request.getProductionLineId());
             UpgradeProductionLineEfficiencyResponse response = new UpgradeProductionLineEfficiencyResponse(savedProductionLine);
             pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(response));

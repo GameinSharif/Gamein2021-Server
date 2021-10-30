@@ -4,6 +4,7 @@ import ir.sharif.gamein2021.core.dao.StorageRepository;
 import ir.sharif.gamein2021.core.domain.dto.DcDto;
 import ir.sharif.gamein2021.core.domain.dto.StorageDto;
 import ir.sharif.gamein2021.core.domain.dto.StorageProductDto;
+import ir.sharif.gamein2021.core.domain.dto.TeamDto;
 import ir.sharif.gamein2021.core.domain.entity.Storage;
 import ir.sharif.gamein2021.core.domain.entity.StorageProduct;
 import ir.sharif.gamein2021.core.exception.EntityNotFoundException;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -58,6 +60,16 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
     @Override
     public List<StorageDto> list() {
         return super.list();
+    }
+    @Transactional(readOnly = true)
+    public List<StorageDto> findAllStorageForTeam(TeamDto teamDto){
+        List<DcDto> dcs = dcService.getAllDcForTeam(teamDto);
+        List<StorageDto> storages = new ArrayList<>();
+        for(DcDto dcDto : dcs){
+            storages.add(findStorageWithBuildingIdAndDc(dcDto.getId() , true));
+        }
+        storages.add(findStorageWithBuildingIdAndDc(teamDto.getFactoryId() , false));
+        return storages;
     }
 
     @Transactional

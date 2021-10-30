@@ -6,6 +6,9 @@ import ir.sharif.gamein2021.ClientHandler.domain.Dc.SellingDcRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.GetContractsRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginRequest;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.Product.AddProductRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.Product.GetStorageProductsRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.Product.RemoveProductRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.RFQ.*;
 import ir.sharif.gamein2021.ClientHandler.domain.Auction.BidForAuctionRequest;
 import ir.sharif.gamein2021.core.util.RequestTypeConstant;
@@ -23,6 +26,7 @@ public class MainController {
     private final ProviderController providerController;
     private final AuctionController auctionController;
     private final DcController dcController;
+    private final ProductController productController;
     private final Gson gson;
 
     public void HandleMessage(ProcessedRequest processedRequest) {
@@ -97,6 +101,30 @@ public class MainController {
             case SELL_DC:
                 SellingDcRequest sellingDcRequest = gson.fromJson(requestData, SellingDcRequest.class);
                 dcController.sellDc(processedRequest , sellingDcRequest);
+                break;
+            case ADD_PRODUCT:
+                AddProductRequest addProductRequest = gson.fromJson(requestData , AddProductRequest.class);
+                try {
+                    productController.addProduct(processedRequest , addProductRequest);
+                }catch (Exception e){
+                    System.out.println(e.getMessage());
+                }
+                break;
+            case REMOVE_PRODUCT:
+                RemoveProductRequest removeProductRequest = gson.fromJson(requestData , RemoveProductRequest.class);
+                try {
+                    productController.removeProduct(processedRequest , removeProductRequest);
+                }catch (Exception e){
+                    System.out.println(e.getMessage());
+                }
+                break;
+            case GET_STORAGES:
+                GetStorageProductsRequest getStorageProductsRequest = gson.fromJson(requestData , GetStorageProductsRequest.class);
+                try {
+                    productController.getStorages(processedRequest , getStorageProductsRequest);
+                }catch (Exception e){
+                    System.out.println(e.getMessage());
+                }
                 break;
             default:
                 System.out.println("Request type is invalid.");

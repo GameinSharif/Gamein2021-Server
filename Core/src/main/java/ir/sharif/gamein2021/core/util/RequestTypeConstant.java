@@ -18,7 +18,8 @@ public enum RequestTypeConstant
     BUY_DC(13),
     SELL_DC(14),
     ADD_PRODUCT(15),
-    REMOVE_PRODUCT(16);
+    REMOVE_PRODUCT(16),
+    GET_STORAGES(17);
 
     private int value;
 

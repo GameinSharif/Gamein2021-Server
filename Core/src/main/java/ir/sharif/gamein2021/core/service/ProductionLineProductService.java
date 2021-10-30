@@ -13,4 +13,8 @@ public class ProductionLineProductService extends AbstractCrudService<Production
     public ProductionLineProductService(ProductionLineProductRepository productionLineProductRepository) {
         this.productionLineProductRepository = productionLineProductRepository;
     }
+
+    public void finishProductCreation() {
+
+    }
 }

@@ -3,8 +3,10 @@ package ir.sharif.gamein2021.core.service;
 import ir.sharif.gamein2021.core.dao.ContractSupplierRepository;
 import ir.sharif.gamein2021.core.domain.dto.ContractSupplierDetailDto;
 import ir.sharif.gamein2021.core.domain.dto.ContractSupplierDto;
+import ir.sharif.gamein2021.core.domain.dto.NegotiationDto;
 import ir.sharif.gamein2021.core.domain.entity.ContractSupplier;
 import ir.sharif.gamein2021.core.domain.entity.ContractSupplierDetail;
+import ir.sharif.gamein2021.core.exception.EntityNotFoundException;
 import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
 import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
 import ir.sharif.gamein2021.core.util.models.Supplier;
@@ -39,5 +41,10 @@ public class ContractSupplierService extends AbstractCrudService<ContractSupplie
             contractSupplierDto.getContractSupplierDetails().add(contractSupplierDetail);
         }
         return saveOrUpdate(contractSupplierDto);
+    }
+
+    @Transactional(readOnly = true)
+    public ContractSupplierDto findById(Integer id) {
+        return modelMapper.map(getRepository().findById(id).orElseThrow(EntityNotFoundException::new), ContractSupplierDto.class);
     }
 }

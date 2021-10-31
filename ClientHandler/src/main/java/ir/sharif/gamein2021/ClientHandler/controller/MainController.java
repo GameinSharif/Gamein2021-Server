@@ -9,6 +9,8 @@ import ir.sharif.gamein2021.ClientHandler.domain.Messenger.NewMessageRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.NewContractSupplierRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.RFQ.*;
 import ir.sharif.gamein2021.ClientHandler.domain.Auction.BidForAuctionRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.TerminateLongtermContractSupplierRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.TerminateLongtermContractSupplierResponse;
 import ir.sharif.gamein2021.ClientHandler.domain.productionLine.*;
 import ir.sharif.gamein2021.core.util.RequestTypeConstant;
 import lombok.AllArgsConstructor;
@@ -132,6 +134,9 @@ public class MainController
             case NEW_CONTRACT_WITH_SUPPLIER:
                 NewContractSupplierRequest newContractSupplierRequest = gson.fromJson(requestData, NewContractSupplierRequest.class);
                 contractSupplierController.newContractSupplier(processedRequest, newContractSupplierRequest);
+            case TERMINATE_LONGTERM_CONTRACT_WITH_SUPPLIER:
+                TerminateLongtermContractSupplierRequest terminateLongtermContractSupplierRequest = gson.fromJson(requestData, TerminateLongtermContractSupplierRequest.class);
+                contractSupplierController.terminateLongtermContractSupplier(processedRequest, terminateLongtermContractSupplierRequest);
             default:
                 System.out.println("Request type is invalid.");
         }

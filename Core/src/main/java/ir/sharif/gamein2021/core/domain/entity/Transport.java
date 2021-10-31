@@ -38,10 +38,10 @@ public class Transport implements BaseEntity {
     private Integer destinationId;
 
     @Column(name = "start_date", nullable = false)
-    private LocalDate start_date;
+    private LocalDate startDate;
 
     @Column(name = "end_date", nullable = false)
-    private LocalDate end_date;
+    private LocalDate endDate;
 
     @Column(name = "has_insurance", nullable = false)
     private Boolean hasInsurance;

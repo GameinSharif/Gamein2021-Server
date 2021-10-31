@@ -16,8 +16,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 
-@Component
+
 @AllArgsConstructor
+@Component
 public class TransportController {
 
     private final LocalPushMessageManager pushMessageManager;

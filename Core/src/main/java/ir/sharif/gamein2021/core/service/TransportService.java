@@ -44,12 +44,12 @@ public class TransportService extends AbstractCrudService<TransportDto, Transpor
     }
 
     public ArrayList<TransportDto> getStartingTransports(LocalDate today) {
-        List<Transport> transports = transportRepository.findAllByStart_date(today);
+        List<Transport> transports = transportRepository.findAllByStartDate(today);
         return mapEntityListToDto(transports);
     }
 
     public ArrayList<TransportDto> getEndingTransports(LocalDate today) {
-        List<Transport> transports = transportRepository.findAllByEnd_dateAndTransportState(today, Enums.TransportState.IN_WAY);
+        List<Transport> transports = transportRepository.findAllByEndDateAndTransportState(today, Enums.TransportState.IN_WAY);
         return mapEntityListToDto(transports);
     }
 

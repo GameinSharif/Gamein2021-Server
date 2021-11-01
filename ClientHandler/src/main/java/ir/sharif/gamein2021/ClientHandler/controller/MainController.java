@@ -38,7 +38,7 @@ public class MainController
         String requestData = processedRequest.requestData;
         JSONObject obj = new JSONObject(requestData);
         RequestTypeConstant requestType = RequestTypeConstant.values()[obj.getInt("requestTypeConstant")];
-
+        System.out.println(requestData);
         switch (requestType)
         {
             case LOGIN:
@@ -55,9 +55,13 @@ public class MainController
                 break;
             case GET_GAME_DATA:
                 gameDataController.getGameData(processedRequest);
+                System.out.println("done1");
                 gameDataController.getCurrentWeekDemands(processedRequest);
+                System.out.println("done2");
                 gameDataController.getCurrentWeekSupplies(processedRequest);
+                System.out.println("done3");
                 gameDataController.getAllAuctions(processedRequest);
+                System.out.println("done4");
                 break;
             case GET_CONTRACTS:
                 GetContractsRequest getContractsRequest = gson.fromJson(requestData, GetContractsRequest.class);

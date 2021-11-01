@@ -19,10 +19,10 @@ public class ContractSupplier implements BaseEntity
     @Column(name = "contract_supplier_id")
     private Integer id;
 
-    @ManyToOne
+    @Column(name = "supplier_id", nullable = false)
     private Integer supplierId;
 
-    @ManyToOne
+    @Column(name = "team_id", nullable = false)
     private Integer teamId;
 
     @Column(name = "material_id", nullable = false)

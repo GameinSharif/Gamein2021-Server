@@ -19,8 +19,8 @@ public class WeekSupply implements BaseEntity{
     @Column(name = "week", nullable = false)
     private Integer week;
 
-    @ManyToOne
-    private Supplier supplier;
+    @Column(name = "supplier_id", nullable = false)
+    private Integer supplierId;
 
     @Column(name = "product_id", nullable = false)
     private Integer productId;

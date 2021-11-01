@@ -17,11 +17,13 @@ import ir.sharif.gamein2021.core.util.Enums;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import ir.sharif.gamein2021.core.util.models.Supplier;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class ContractSupplierController
 {
     static Logger logger = Logger.getLogger(ExecutorThread.class.getName());

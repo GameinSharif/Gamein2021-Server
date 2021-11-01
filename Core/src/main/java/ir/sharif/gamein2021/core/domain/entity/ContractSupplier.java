@@ -22,8 +22,8 @@ public class ContractSupplier implements BaseEntity
     @Column(name = "supplier_id", nullable = false)
     private Integer supplierId;
 
-    @Column(name = "team_id", nullable = false)
-    private Integer teamId;
+    @ManyToOne
+    private Team team;
 
     @Column(name = "material_id", nullable = false)
     private Integer materialId;
@@ -33,14 +33,14 @@ public class ContractSupplier implements BaseEntity
     private Enums.ContractType contractType;
 
     @OneToMany
-    @JoinColumn(name = "contract_detail")
+    @JoinColumn(name = "contract_supplier_id")
     private List<ContractSupplierDetail> contractSupplierDetails;
 
     @Column(name = "terminate_penalty", nullable = false)
     private Integer terminatePenalty;
 
-    @Column(name = "terminated", nullable = false)
-    private boolean terminated;
+    @Column(name = "is_terminated", nullable = false)
+    private boolean isTerminated;
 
     @Override
     public Integer getId() {

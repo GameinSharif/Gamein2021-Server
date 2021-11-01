@@ -7,6 +7,8 @@ import ir.sharif.gamein2021.core.service.DcService;
 import ir.sharif.gamein2021.core.service.TeamService;
 import ir.sharif.gamein2021.core.service.TransportService;
 import ir.sharif.gamein2021.core.util.Enums;
+import ir.sharif.gamein2021.core.util.GameConstants;
+import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -23,14 +25,13 @@ public class TransportManager {
     private final DcService dcService;
     private final TeamService teamService;
     private final PushMessageManagerInterface pushMessageManager;
+    private final GameCalendar gameCalendar;
     private final Gson gson = new Gson();
-    private final static float CrushProbability = 0.1f;
 
     public void updateTransports() {
         handleTransportCrush();
         // TODO : handle transport crashing when day starts or ends?
-        // TODO : how to get game's today?
-        LocalDate today = LocalDate.now();
+        LocalDate today = gameCalendar.getCurrentDate();
         startTransports(today);
         endTransports(today);
     }
@@ -41,35 +42,36 @@ public class TransportManager {
         Random random = new Random();
         ArrayList<TransportDto> crushingTransports = new ArrayList<>();
         for (TransportDto inWayTransport : inWayTransports) {
-            if (random.nextFloat() < CrushProbability) {
+            if (random.nextFloat() < GameConstants.CrushProbability) {
                 crushingTransports.add(inWayTransport);
             }
         }
-        transportService.changeTransportsStates(crushingTransports, Enums.TransportState.CRUSHED);
-        // TODO : send response
+        changeTransportsStateAndSendToClients(crushingTransports, Enums.TransportState.CRUSHED);
     }
 
     private void startTransports(LocalDate today) {
         ArrayList<TransportDto> startingTransports = transportService.getStartingTransports(today);
-        transportService.changeTransportsStates(startingTransports, Enums.TransportState.IN_WAY);
-        // TODO : send response
+        changeTransportsStateAndSendToClients(startingTransports, Enums.TransportState.IN_WAY);
     }
 
     private void endTransports(LocalDate today) {
         ArrayList<TransportDto> arrivedTransports = transportService.getEndingTransports(today);
-        transportService.changeTransportsStates(arrivedTransports, Enums.TransportState.SUCCESSFUL);
-        for (TransportDto arrivedTransport : arrivedTransports) {
-            sendResponseToTransportOwners(arrivedTransport);
+        changeTransportsStateAndSendToClients(arrivedTransports, Enums.TransportState.SUCCESSFUL);
+    }
 
+    private void changeTransportsStateAndSendToClients(ArrayList<TransportDto> transportDtos, Enums.TransportState newState)
+    {
+        for (TransportDto transportDto : transportDtos)
+        {
+            TransportDto savedTransportDto = transportService.changeTransportState(transportDto, newState);
+            sendResponseToTransportOwners(savedTransportDto);
         }
-        // TODO : send response
-        // TODO : do transport actions
     }
 
     private void sendResponseToTransportOwners(TransportDto transportDto) {
         Integer sourceTeamId = getTransportSourceOwnerId(transportDto);
         Integer destinationId = getTransportDestinationOwnerId(transportDto);
-        TransportStateChangedResponse response = new TransportStateChangedResponse(transportDto);
+        TransportStateChangedResponse response = new TransportStateChangedResponse(ResponseTypeConstant.TRANSPORT_STATE_CHANGED, transportDto);
         if (sourceTeamId != null) {
             pushMessageManager.sendMessageByTeamId(sourceTeamId.toString(), gson.toJson(response));
         }
@@ -126,7 +128,7 @@ public class TransportManager {
                 .end_date(start_date.plusDays(transportDuration))
                 .build();
 
-        transportService.save(transport);
+        transportService.saveOrUpdate(transport);
         return null;
     }
 

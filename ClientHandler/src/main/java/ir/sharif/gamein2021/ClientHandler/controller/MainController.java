@@ -1,8 +1,6 @@
 package ir.sharif.gamein2021.ClientHandler.controller;
 
 import com.google.gson.Gson;
-import ir.sharif.gamein2021.ClientHandler.domain.Dc.BuyingDcRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.Dc.SellingDcRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.GetContractsRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginRequest;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
@@ -10,6 +8,7 @@ import ir.sharif.gamein2021.ClientHandler.domain.Messenger.GetAllChatsRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Messenger.NewMessageRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.RFQ.*;
 import ir.sharif.gamein2021.ClientHandler.domain.Auction.BidForAuctionRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.Transport.GetTeamTransportsRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.productionLine.*;
 import ir.sharif.gamein2021.core.util.RequestTypeConstant;
 import lombok.AllArgsConstructor;

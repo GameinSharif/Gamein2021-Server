@@ -1,6 +1,7 @@
 package ir.sharif.gamein2021.core.mainThread;
 
 import ir.sharif.gamein2021.core.manager.GameCalendar;
+import ir.sharif.gamein2021.core.manager.TransportManager;
 import ir.sharif.gamein2021.core.service.ProductionLineProductService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -11,10 +12,12 @@ import org.springframework.stereotype.Component;
 public class DailySchedule {
     private final GameCalendar gameCalendar;
     private ProductionLineProductService productService;
+    private final TransportManager transportManager;
 
-    public DailySchedule(GameCalendar gameCalendar, ProductionLineProductService productService) {
+    public DailySchedule(GameCalendar gameCalendar, ProductionLineProductService productService, TransportManager transportManager) {
         this.gameCalendar = gameCalendar;
         this.productService = productService;
+        this.transportManager = transportManager;
     }
 
     @Scheduled(fixedRateString = "${dayLengthMilliSecond}")
@@ -46,10 +49,10 @@ public class DailySchedule {
 
     private void doDailyTasks() {
         productService.finishProductCreation();
+        transportManager.updateTransports();
     }
 
     private void doWeeklyTasks() {
 
-        transportManager.updateTransports();
     }
 }

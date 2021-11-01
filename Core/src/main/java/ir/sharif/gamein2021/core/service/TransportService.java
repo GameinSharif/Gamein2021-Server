@@ -34,12 +34,6 @@ public class TransportService extends AbstractCrudService<TransportDto, Transpor
         setRepository(transportRepository);
     }
 
-    @Transactional
-    public TransportDto save(TransportDto transportDto) {
-        // TODO : Exception
-        return saveOrUpdate(transportDto);
-    }
-
     @Transactional(readOnly = true)
     public ArrayList<TransportDto> getTransportsByState(Enums.TransportState state) {
         List<Transport> transports = transportRepository.findAllByTransportState(state);
@@ -67,13 +61,10 @@ public class TransportService extends AbstractCrudService<TransportDto, Transpor
     }
 
     @Transactional
-    public void changeTransportsStates(ArrayList<TransportDto> transportDtos, Enums.TransportState newState) {
-        for (TransportDto transportDto : transportDtos) {
-            transportDto.setTransportState(newState);
-            // TODO : one Query? save all?
-            save(transportDto);
-
-        }
+    public TransportDto changeTransportState(TransportDto transportDto, Enums.TransportState newState)
+    {
+        transportDto.setTransportState(newState);
+        return saveOrUpdate(transportDto);
     }
 
     public ArrayList<TransportDto> getTransportsByTeam(Integer teamId) {

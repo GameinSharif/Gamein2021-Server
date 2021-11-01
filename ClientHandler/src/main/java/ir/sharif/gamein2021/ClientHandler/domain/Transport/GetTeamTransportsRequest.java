@@ -1,4 +1,4 @@
-package ir.sharif.gamein2021.ClientHandler.domain.RFQ;
+package ir.sharif.gamein2021.ClientHandler.domain.Transport;
 
 import ir.sharif.gamein2021.core.view.RequestObject;
 import lombok.AllArgsConstructor;

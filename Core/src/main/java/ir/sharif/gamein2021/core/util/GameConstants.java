@@ -19,6 +19,8 @@ public class GameConstants {
             LocalDateTime.of(2021, 11, 25, 9, 10, 0)
     };
 
+    public static final float CrushProbability = 0.01f;
+
     public static final int AuctionRoundLengthInSeconds = 300;
 
     public static GameConstants getInstance() {

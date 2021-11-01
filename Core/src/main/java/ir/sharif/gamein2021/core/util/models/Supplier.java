@@ -13,9 +13,9 @@ import java.util.ArrayList;
 public class Supplier
 {
     private int id;
+    private String name;
     private Country country;
     private ArrayList<Integer> materials;
-    private ArrayList<Integer> pricePerUnit;
     private double latitude;
     private double longitude;
 }

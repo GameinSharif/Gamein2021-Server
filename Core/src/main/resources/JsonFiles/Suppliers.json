@@ -1,114 +1,114 @@
 [
   {
     "id": 1,
+    "name": "supplier-1",
     "country": "France",
-    "materials": [1],
-    "pricePerUnit": [20],
+    "materials": [1, 2, 3],
     "latitude": 45.39844998,
     "longitude": 6.657714844
   },
   {
     "id": 2,
+    "name": "supplier-2",
     "country": "Germany",
-    "materials": [1],
-    "pricePerUnit": [20],
+    "materials": [11, 12, 13, 14, 15, 16, 17, 19, 20],
     "latitude": 47.63578359,
     "longitude": 10.28320313
   },
   {
     "id": 3,
+    "name": "supplier-3",
     "country": "Germany",
-    "materials": [1],
-    "pricePerUnit": [20],
+    "materials": [11, 12, 13, 14, 15, 16, 17, 19, 20],
     "latitude": 53.80065083,
     "longitude":13.09570313
 
   },
   {
     "id": 4,
+    "name": "supplier-4",
     "country": "Germany",
-    "materials": [1],
-    "pricePerUnit": [20],
+    "materials": [7, 8, 9, 10],
     "latitude": 50.45750402,
     "longitude":12.96386719
   },
   {
     "id": 5,
+    "name": "supplier-5",
     "country": "Germany",
-    "materials": [1],
-    "pricePerUnit": [20],
+    "materials": [5, 6, 18],
     "latitude": 53.40953185,
     "longitude":7.646484375
   },
   {
     "id": 6,
+    "name": "supplier-6",
     "country": "France",
-    "materials": [1],
-    "pricePerUnit": [20],
+    "materials": [5, 6, 18],
     "latitude": 44.49650533,
     "longitude":1.23046875
   },
   {
     "id": 7,
+    "name": "supplier-7",
     "country": "Netherlands",
-    "materials": [1],
-    "pricePerUnit": [20],
+    "materials": [7, 8, 9, 10],
     "latitude": 51.80861475,
     "longitude":4.240722656
   },
   {
     "id": 8,
+    "name": "supplier-8",
     "country": "Germany",
-    "materials": [1],
-    "pricePerUnit": [20],
+    "materials": [1, 2, 3],
     "latitude": 51.56341233,
     "longitude":9.448242188
   },
   {
     "id": 9,
+    "name": "supplier-9",
     "country": "France",
-    "materials": [1],
-    "pricePerUnit": [20],
+    "materials": [11, 12, 13, 14, 15, 16, 17, 19, 20],
     "latitude": 46.98025236,
     "longitude":1.0546875
   },
   {
     "id": 10,
+    "name": "supplier-10",
     "country": "France",
-    "materials": [1],
-    "pricePerUnit": [20],
+    "materials": [7, 8, 9, 10],
     "latitude": 48.42920056,
     "longitude":-2.8125
   },
   {
     "id": 11,
+    "name": "supplier-11",
     "country": "France",
-    "materials": [1],
-    "pricePerUnit": [20],
+    "materials": [1, 2, 3],
     "latitude": 49.86631673,
     "longitude":1.142578125
   },
   {
     "id": 12,
+    "name": "supplier-12",
     "country": "UnitedKingdom",
-    "materials": [1],
-    "pricePerUnit": [20],
+    "materials": [1, 2, 3],
     "latitude": 52.66972038,
     "longitude":-2.900390625
   },
   {
     "id": 13,
+    "name": "supplier-13",
     "country": "UnitedKingdom",
-    "materials": [1],
-    "pricePerUnit": [20],
+    "materials": [11, 12, 13, 14, 15, 16, 17, 19, 20],
     "latitude": 52.10650519,
     "longitude":0.483398438
   },
   {
     "id": 14,
+    "name": "supplier-14",
     "country": "France",
-    "materials": [1],
-    "pricePerUnit": [20],
+    "materials": [5, 6, 18],
     "latitude": 48.95136647,
     "longitude":5.537109375
   }

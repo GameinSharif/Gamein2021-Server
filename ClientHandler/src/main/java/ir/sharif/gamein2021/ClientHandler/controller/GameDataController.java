@@ -4,12 +4,14 @@ import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.GetCurrentWeekSuppliesResponse;
 import ir.sharif.gamein2021.core.domain.dto.WeekSupplyDto;
+import ir.sharif.gamein2021.core.domain.dto.TeamDto;
 import ir.sharif.gamein2021.core.response.GetAllAuctionsResponse;
 import ir.sharif.gamein2021.ClientHandler.domain.GetCurrentWeekDemandsResponse;
 import ir.sharif.gamein2021.ClientHandler.domain.GetGameDataResponse;
 import ir.sharif.gamein2021.ClientHandler.manager.LocalPushMessageManager;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
 import ir.sharif.gamein2021.core.service.WeekSupplyService;
+import ir.sharif.gamein2021.core.service.TeamService;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import ir.sharif.gamein2021.core.domain.dto.AuctionDto;
 import ir.sharif.gamein2021.core.service.AuctionService;
@@ -17,7 +19,6 @@ import ir.sharif.gamein2021.core.service.GameinCustomerService;
 import ir.sharif.gamein2021.core.service.WeekDemandService;
 import ir.sharif.gamein2021.core.domain.dto.GameinCustomerDto;
 import ir.sharif.gamein2021.core.domain.dto.WeekDemandDto;
-import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
@@ -29,15 +30,17 @@ public class GameDataController
     static Logger logger = Logger.getLogger(ExecutorThread.class.getName());
 
     private final LocalPushMessageManager pushMessageManager;
+    private final TeamService teamService;
     private final GameinCustomerService gameinCustomerService;
     private final WeekDemandService weekDemandService;
     private final WeekSupplyService weekSupplyService;
     private final AuctionService auctionService;
     private final Gson gson = new Gson();
 
-    public GameDataController(LocalPushMessageManager pushMessageManager, GameinCustomerService gameinCustomerService, WeekDemandService weekDemandService, WeekSupplyService weekSupplyService, AuctionService auctionService)
+    public GameDataController(LocalPushMessageManager pushMessageManager, TeamService teamService, GameinCustomerService gameinCustomerService, WeekDemandService weekDemandService,WeekSupplyService weekSupplyService, AuctionService auctionService)
     {
         this.pushMessageManager = pushMessageManager;
+        this.teamService = teamService;
         this.gameinCustomerService = gameinCustomerService;
         this.weekDemandService = weekDemandService;
         this.weekSupplyService = weekSupplyService;
@@ -46,11 +49,12 @@ public class GameDataController
 
     public void getGameData(ProcessedRequest request)
     {
+        List<TeamDto> teams = teamService.list();
         List<GameinCustomerDto> gameinCustomers = gameinCustomerService.list();
 
         GetGameDataResponse getGameDataResponse = new GetGameDataResponse(
                 ResponseTypeConstant.GET_GAME_DATA,
-                gameinCustomers);
+                teams, gameinCustomers);
 
         pushMessageManager.sendMessageBySession(request.session, gson.toJson(getGameDataResponse));
     }

@@ -48,7 +48,7 @@ public class UserController {
         try {
             UserDto userDto = userService.read(username, password);
 
-            int teamId = userDto.getTeam().getId();
+            int teamId = userDto.getTeamId();
             TeamDto teamDto = teamService.loadById(teamId); //TODO not send everything maybe?
 
             socketSessionManager.addSession(String.valueOf(teamId), String.valueOf(userDto.getId()), request.session);

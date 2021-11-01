@@ -50,7 +50,7 @@ public class MessageController
     {
         Integer id = newMessageRequest.playerId;
         UserDto userDto = userService.loadById(id);
-        Integer senderTeamId = userDto.getTeam().getId();
+        Integer senderTeamId = userDto.getTeamId();
 
         MessageDto messageDto = MessageDto.builder()
                 .insertedAt(newMessageRequest.getInsertedAt())
@@ -118,7 +118,7 @@ public class MessageController
         GetAllChatsResponse getAllChatsResponse;
         try
         {
-            List<ChatDto> chatDtos = chatService.getChatsByTeamId(userService.loadById(getAllChatsRequest.playerId).getTeam());
+            List<ChatDto> chatDtos = chatService.getChatsByTeam(teamService.findTeamById(userService.loadById(getAllChatsRequest.playerId).getTeamId()));
             for (ChatDto chatDto: chatDtos) {
                 for (MessageDto messageDto : chatDto.getMessages()) {
                     messageDto.setId(null);

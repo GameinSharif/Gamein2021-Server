@@ -11,6 +11,7 @@ import ir.sharif.gamein2021.ClientHandler.domain.RFQ.*;
 import ir.sharif.gamein2021.ClientHandler.domain.Auction.BidForAuctionRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.TerminateLongtermContractSupplierRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.TerminateLongtermContractSupplierResponse;
+import ir.sharif.gamein2021.ClientHandler.domain.Transport.GetTeamTransportsRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.productionLine.*;
 import ir.sharif.gamein2021.core.util.RequestTypeConstant;
 import lombok.AllArgsConstructor;
@@ -31,6 +32,8 @@ public class MainController
     private final ProductionLineController productionLineController;
     private final MessageController messageController;
     private final ContractSupplierController contractSupplierController;
+    private final TransportController transportController;
+    private final DcController dcController;
     private final Gson gson;
 
     public void HandleMessage(ProcessedRequest processedRequest)
@@ -141,6 +144,10 @@ public class MainController
             case TERMINATE_LONGTERM_CONTRACT_WITH_SUPPLIER:
                 TerminateLongtermContractSupplierRequest terminateLongtermContractSupplierRequest = gson.fromJson(requestData, TerminateLongtermContractSupplierRequest.class);
                 contractSupplierController.terminateLongtermContractSupplier(processedRequest, terminateLongtermContractSupplierRequest);
+            case GET_TEAM_TRANSPORTS:
+                GetTeamTransportsRequest getTeamTransportsRequest = gson.fromJson(requestData, GetTeamTransportsRequest.class);
+                transportController.getTeamTransports(processedRequest, getTeamTransportsRequest);
+                break;
             default:
                 System.out.println("Request type is invalid.");
         }

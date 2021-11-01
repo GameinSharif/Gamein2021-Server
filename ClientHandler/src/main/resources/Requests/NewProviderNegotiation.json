@@ -3,15 +3,5 @@
   "playerId": 1,
   "providerId": 2,
   "amount": 100,
-  "costPerUnitDemander": 5,
-  "earliestExpectedArrival": {
-    "year": 2020,
-    "month": 11,
-    "day": 10
-  },
-  "latestExpectedArrival": {
-    "year": 2021,
-    "month": 10,
-    "day": 10
-  }
+  "costPerUnitDemander": 5
 }

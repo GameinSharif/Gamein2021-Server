@@ -34,7 +34,7 @@ public class AuctionController
     {
         Integer id = bidForAuctionRequest.playerId;
         UserDto userDto = userService.loadById(id);
-        Integer teamId = userDto.getTeam().getId();
+        Integer teamId = userDto.getTeamId();
         TeamDto teamDto = teamService.loadById(teamId);
         Integer factoryId = bidForAuctionRequest.getFactoryId();
 

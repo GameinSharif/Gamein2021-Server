@@ -12,6 +12,13 @@ public class Enums
         Switzerland
     }
 
+    public enum OfferStatus {
+        ACTIVE,
+        ACCEPTED,
+        TERMINATED,
+        PASSED_DEADLINE
+    }
+
     public enum ProductType
     {
         RawMaterial,
@@ -35,6 +42,16 @@ public class Enums
         CLOSED, DEAL, IN_PROGRESS, PENDING
     }
 
+    public enum QualityLevel {
+        LOW, MEDIUM, HIGH
+    }
+
+    public enum EfficiencyLevel {
+        LOW, MEDIUM, HIGH
+    }
+
+    public enum ProductionLineStatus {
+        ACTIVE, SCRAPPED
     public enum VehicleType
     {
         AIRPLANE, TRUCK, TRAIN, VANET

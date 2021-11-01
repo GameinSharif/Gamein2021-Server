@@ -50,8 +50,11 @@ public class Enums
         LOW, MEDIUM, HIGH
     }
 
-    public enum ProductionLineStatus {
+    public enum ProductionLineStatus
+    {
         ACTIVE, SCRAPPED
+    }
+
     public enum VehicleType
     {
         AIRPLANE, TRUCK, TRAIN, VANET

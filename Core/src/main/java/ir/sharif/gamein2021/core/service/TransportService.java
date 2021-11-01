@@ -10,6 +10,7 @@ import ir.sharif.gamein2021.core.util.Enums;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -33,21 +34,25 @@ public class TransportService extends AbstractCrudService<TransportDto, Transpor
         setRepository(transportRepository);
     }
 
+    @Transactional
     public TransportDto save(TransportDto transportDto) {
         // TODO : Exception
         return saveOrUpdate(transportDto);
     }
 
+    @Transactional(readOnly = true)
     public ArrayList<TransportDto> getTransportsByState(Enums.TransportState state) {
         List<Transport> transports = transportRepository.findAllByTransportState(state);
         return mapEntityListToDto(transports);
     }
 
+    @Transactional(readOnly = true)
     public ArrayList<TransportDto> getStartingTransports(LocalDate today) {
         List<Transport> transports = transportRepository.findAllByStartDate(today);
         return mapEntityListToDto(transports);
     }
 
+    @Transactional(readOnly = true)
     public ArrayList<TransportDto> getEndingTransports(LocalDate today) {
         List<Transport> transports = transportRepository.findAllByEndDateAndTransportState(today, Enums.TransportState.IN_WAY);
         return mapEntityListToDto(transports);
@@ -61,6 +66,7 @@ public class TransportService extends AbstractCrudService<TransportDto, Transpor
         return transportsDtos;
     }
 
+    @Transactional
     public void changeTransportsStates(ArrayList<TransportDto> transportDtos, Enums.TransportState newState) {
         for (TransportDto transportDto : transportDtos) {
             transportDto.setTransportState(newState);

@@ -55,10 +55,4 @@ public class Transport implements BaseEntity {
 
     @Column(name = "content_product_amount", nullable = false)
     private Integer contentProductAmount;
-
-    @Override
-    public Integer getId() {
-        return null;
-    }
-
 }

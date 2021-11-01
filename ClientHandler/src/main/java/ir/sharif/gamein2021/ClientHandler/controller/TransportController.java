@@ -30,8 +30,8 @@ public class TransportController {
     public void getTeamTransports(ProcessedRequest processedRequest, GetTeamTransportsRequest getTeamTransportsRequest) {
         int playerId = getTeamTransportsRequest.playerId;
         UserDto user = userService.loadById(playerId);
-        Team userTeam = user.getTeam();
-        ArrayList<TransportDto> transportDtos = transportService.getTransportsByTeam(userTeam.getId());
+        Integer teamId = user.getTeamId();
+        ArrayList<TransportDto> transportDtos = transportService.getTransportsByTeam(teamId);
         GetTeamTransportsResponse response = new GetTeamTransportsResponse(transportDtos);
         pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(response));
     }

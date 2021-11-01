@@ -129,6 +129,7 @@ public class MainController
             case UPGRADE_PRODUCTION_LINE_EFFICIENCY:
                 UpgradeProductionLineEfficiencyRequest upgradeEfficiencyRequest = gson.fromJson(requestData, UpgradeProductionLineEfficiencyRequest.class);
                 productionLineController.UpgradeProductionLineEfficiency(processedRequest, upgradeEfficiencyRequest);
+                break;
             case GET_TEAM_TRANSPORTS:
                 GetTeamTransportsRequest getTeamTransportsRequest = gson.fromJson(requestData, GetTeamTransportsRequest.class);
                 transportController.getTeamTransports(processedRequest, getTeamTransportsRequest);

@@ -2,7 +2,7 @@ package ir.sharif.gamein2021.core.manager;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ir.sharif.gamein2021.core.service.AuctionService;
-import ir.sharif.gamein2021.core.util.Vehicle;
+import ir.sharif.gamein2021.core.util.models.Vehicle;
 import ir.sharif.gamein2021.core.util.models.Factory;
 import ir.sharif.gamein2021.core.util.models.Product;
 import ir.sharif.gamein2021.core.util.models.ProductionLineTemplate;
@@ -31,8 +31,10 @@ public class ReadJsonFilesManager
 
             File productsJsonFile = ResourceUtils.getFile("classpath:JsonFiles/Products.json");
             Products = objectMapper.readValue(productsJsonFile, Product[].class);
-            File vehiclesJsonFile = ResourceUtils.getFile("classpath:JsonFiles/vehicles.json");
-            Vehicles = objectMapper.readValue(productsJsonFile, Vehicle[].class);
+
+            File vehiclesJsonFile = ResourceUtils.getFile("classpath:JsonFiles/Vehicles.json");
+            Vehicles = objectMapper.readValue(vehiclesJsonFile, Vehicle[].class);
+
             File factoriesJsonFile = ResourceUtils.getFile("classpath:JsonFiles/Factories.json");
             Factories = objectMapper.readValue(factoriesJsonFile, Factory[].class);
             AuctionService.RemainedFactories = new ArrayList<>(Arrays.asList(Arrays.copyOf(Factories, Factories.length)));

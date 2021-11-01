@@ -1,4 +1,4 @@
-package ir.sharif.gamein2021.core.util;
+package ir.sharif.gamein2021.core.util.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

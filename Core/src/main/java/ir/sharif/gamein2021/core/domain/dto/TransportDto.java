@@ -20,8 +20,8 @@ public class TransportDto implements BaseDto<Integer> {
     private Integer sourceId;
     private Enums.TransportNodeType destinationType;
     private Integer destinationId;
-    private LocalDate start_date;
-    private LocalDate end_date;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private Boolean hasInsurance;
     private Enums.TransportState transportState;
     private Integer contentProductId;

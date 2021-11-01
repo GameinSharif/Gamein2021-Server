@@ -42,7 +42,7 @@ public class TransportManager {
         Random random = new Random();
         ArrayList<TransportDto> crushingTransports = new ArrayList<>();
         for (TransportDto inWayTransport : inWayTransports) {
-            if (random.nextFloat() < GameConstants.CrushProbability) {
+            if (!inWayTransport.getHasInsurance() && random.nextFloat() < GameConstants.CrushProbability) {
                 crushingTransports.add(inWayTransport);
             }
         }
@@ -86,7 +86,7 @@ public class TransportManager {
             case DC:
                 return dcService.loadById(transportDto.getSourceId()).getOwnerId();
             case FACTORY:
-                return teamService.findTeamIdByFactoryId(transportDto.getSourceId());
+                return teamService.findTeamIdByFactoryId(transportDto.getDestinationId());
             default:
                 return null;
         }
@@ -105,13 +105,13 @@ public class TransportManager {
     }
 
     public TransportDto createTransport(Enums.VehicleType vehicleType, Enums.TransportNodeType sourceType, Integer sourceId
-            , Enums.TransportNodeType destinationType, Integer destinationId, LocalDate start_date
+            , Enums.TransportNodeType destinationType, Integer destinationId, LocalDate startDate
             , Boolean hasInsurance, Integer contentProductId, Integer contentProductAmount) {
         // TODO : check inputs. validate source and dest? check start date has'nt passed
 
         int transportDuration = calculateTransportDuration(vehicleType, sourceId, sourceType, destinationId, destinationType);
         Enums.TransportState transportState = Enums.TransportState.IN_WAY;
-        if (LocalDate.now().isBefore(start_date)) {
+        if (LocalDate.now().isBefore(startDate)) {
             transportState = Enums.TransportState.PENDING;
         }
         TransportDto transport = TransportDto.builder()
@@ -120,12 +120,12 @@ public class TransportManager {
                 .sourceId(sourceId)
                 .destinationType(destinationType)
                 .destinationId(destinationId)
-                .start_date(start_date)
+                .startDate(startDate)
                 .hasInsurance(hasInsurance)
                 .contentProductId(contentProductId)
                 .contentProductAmount(contentProductAmount)
                 .transportState(transportState)
-                .end_date(start_date.plusDays(transportDuration))
+                .endDate(startDate.plusDays(transportDuration))
                 .build();
 
         transportService.saveOrUpdate(transport);

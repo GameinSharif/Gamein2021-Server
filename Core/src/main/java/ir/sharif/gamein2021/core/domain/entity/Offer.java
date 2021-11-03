@@ -32,7 +32,7 @@ public class Offer implements BaseEntity{
     private Integer volume;
 
     @Column(name = "cost_per_unit", nullable = false)
-    private Integer costPerUnit;
+    private Float costPerUnit;
 
     @Column(name = "offer_deadline", nullable = false)
     private LocalDate offerDeadline;

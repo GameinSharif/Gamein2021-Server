@@ -8,6 +8,7 @@ import ir.sharif.gamein2021.ClientHandler.domain.RFQ.NewProviderResponse;
 import ir.sharif.gamein2021.ClientHandler.manager.LocalPushMessageManager;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
 import ir.sharif.gamein2021.core.service.TeamService;
+import ir.sharif.gamein2021.core.util.Enums;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import ir.sharif.gamein2021.core.service.ProviderService;
 import ir.sharif.gamein2021.core.service.UserService;
@@ -54,6 +55,7 @@ public class ProviderController
         providerDto.setProductId(newProviderRequest.getProductId());
         providerDto.setCapacity(newProviderRequest.getCapacity());
         providerDto.setPrice(newProviderRequest.getPrice());
+        providerDto.setState(Enums.ProviderState.AVAILABLE);
         providerService.save(providerDto);
         // TODO : what if couldn't save
 
@@ -85,13 +87,13 @@ public class ProviderController
         Team requestedProviderTeam = teamService.findTeamById(requestedProvider.getTeamId());
         if (userTeam.getId().equals(requestedProviderTeam.getId()))
         {
-            providerService.deleteProvider(providerId);
+            providerService.terminateProvider(providerId);
             RemoveProviderResponse removeProviderResponse = new RemoveProviderResponse(ResponseTypeConstant.REMOVE_PROVIDER, providerId, "Success");
             pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(removeProviderResponse));
         }
         else
         {
-            // TODO : Exception -> provider team does not match
+            // TODO : Exception -> provider team does not match, provider is terminated
         }
     }
 }

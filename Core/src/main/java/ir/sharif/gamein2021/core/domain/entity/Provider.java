@@ -29,6 +29,7 @@ public class Provider implements BaseEntity {
     @Column(name = "price", nullable = false)
     private Float price;
 
+    @Enumerated(value = EnumType.STRING)
     @Column(name = "state", nullable = false)
     private Enums.ProviderState state;
 

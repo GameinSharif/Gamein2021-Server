@@ -1,0 +1,10 @@
+{
+  "requestTypeConstant": 22,
+  "playerId": 1,
+  "supplierId": 1,
+  "materialId": 1,
+  "vehicleType": "AIRPLANE",
+  "hasInsurance": "true",
+  "amount": 20,
+  "weeks": 5
+}

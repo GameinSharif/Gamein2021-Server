@@ -32,10 +32,10 @@ public class Negotiation implements BaseEntity{
     private Integer amount;
 
     @Column(name = "cost_per_unit_demander", nullable = false)
-    private Integer costPerUnitDemander;
+    private Float costPerUnitDemander;
 
     @Column(name = "cost_per_unit_supplier", nullable = false)
-    private Integer costPerUnitSupplier;
+    private Float costPerUnitSupplier;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "state", nullable = false)

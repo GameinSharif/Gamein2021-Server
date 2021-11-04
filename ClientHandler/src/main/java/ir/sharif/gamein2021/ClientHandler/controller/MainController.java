@@ -65,10 +65,6 @@ public class MainController
                 GetNegotiationsRequest getNegotiationsRequest = gson.fromJson(requestData, GetNegotiationsRequest.class);
                 negotiationController.getNegotiations(processedRequest, getNegotiationsRequest);
                 break;
-            case NEW_NEGOTIATION:
-                NewNegotiationRequest newNegotiationRequest = gson.fromJson(requestData, NewNegotiationRequest.class);
-                negotiationController.newNegotiation(processedRequest, newNegotiationRequest);
-                break;
             case EDIT_NEGOTIATION_COST_PER_UNIT:
                 EditNegotiationCostPerUnitRequest editRequest = gson.fromJson(requestData, EditNegotiationCostPerUnitRequest.class);
                 negotiationController.editNegotiationCostPerUnit(processedRequest, editRequest);

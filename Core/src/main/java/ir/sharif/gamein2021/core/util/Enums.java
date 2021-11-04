@@ -39,7 +39,7 @@ public class Enums
 
     public enum NegotiationState
     {
-        CLOSED, DEAL, IN_PROGRESS, PENDING
+        CLOSED, DEAL, IN_PROGRESS
     }
 
     public enum QualityLevel {

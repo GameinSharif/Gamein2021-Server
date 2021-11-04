@@ -13,5 +13,5 @@ public class NewProviderNegotiationRequest extends RequestObject implements Seri
 {
     private Integer providerId;
     private Integer amount;
-    private Integer costPerUnitDemander;
+    private Float costPerUnitDemander;
 }

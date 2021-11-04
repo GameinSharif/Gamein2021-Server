@@ -59,37 +59,6 @@ public class NegotiationController
         pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(getNegotiationsResponse));
     }
 
-    public void newNegotiation(ProcessedRequest processedRequest, NewNegotiationRequest newNegotiationRequest)
-    {
-        UserDto user = userService.loadById(newNegotiationRequest.playerId);
-        NewNegotiationResponse newNegotiationResponse;
-        if (user != null)
-        {
-            Team supplier = teamService.findTeamById(newNegotiationRequest.getSupplierId());
-            if (supplier != null)
-            {
-                NegotiationDto newNegotiation = new NegotiationDto();
-                newNegotiation.setDemanderId(user.getTeamId());
-                newNegotiation.setSupplierId(supplier.getId());
-                newNegotiation.setProductId(newNegotiationRequest.getProductId());
-                newNegotiation.setCostPerUnitDemander(newNegotiationRequest.getCostPerUnitDemander());
-                newNegotiation.setCostPerUnitSupplier(newNegotiationRequest.getCostPerUnitDemander());
-                newNegotiation.setAmount(newNegotiationRequest.getAmount());
-                newNegotiation.setState(NegotiationState.PENDING);
-
-                NegotiationDto savedNegotiation = negotiationService.save(newNegotiation);
-                if (savedNegotiation != null)
-                {
-                    newNegotiationResponse = new NewNegotiationResponse(ResponseTypeConstant.NEW_NEGOTIATION, savedNegotiation);
-                    pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(newNegotiationResponse));
-                    return;
-                }
-            }
-        }
-        newNegotiationResponse = new NewNegotiationResponse(ResponseTypeConstant.NEW_NEGOTIATION, null);
-        pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(newNegotiationResponse));
-    }
-
     public void newProviderNegotiation(ProcessedRequest processedRequest, NewProviderNegotiationRequest newProviderNegotiationRequest)
     {
         UserDto user = userService.loadById(newProviderNegotiationRequest.playerId);
@@ -103,11 +72,13 @@ public class NegotiationController
                 newNegotiation.setDemanderId(user.getTeamId());
                 newNegotiation.setSupplierId(provider.getTeamId());
                 newNegotiation.setCostPerUnitDemander(newProviderNegotiationRequest.getCostPerUnitDemander());
-                newNegotiation.setCostPerUnitSupplier(newProviderNegotiationRequest.getCostPerUnitDemander());
+                newNegotiation.setCostPerUnitSupplier(provider.getPrice());
                 newNegotiation.setProductId(provider.getProductId());
                 newNegotiation.setAmount(newProviderNegotiationRequest.getAmount());
-                newNegotiation.setState(NegotiationState.PENDING);
+                newNegotiation.setState(NegotiationState.IN_PROGRESS);
                 NegotiationDto savedNegotiation = negotiationService.save(newNegotiation);
+                //TODO check if both prices are equal
+
                 if (savedNegotiation != null)
                 {
                     newProviderNegotiationResponse = new NewProviderNegotiationResponse(ResponseTypeConstant.NEW_PROVIDER_NEGOTIATION, savedNegotiation);

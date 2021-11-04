@@ -3,6 +3,7 @@ package ir.sharif.gamein2021.core.mainThread;
 import ir.sharif.gamein2021.core.manager.GameCalendar;
 import ir.sharif.gamein2021.core.manager.TransportManager;
 import ir.sharif.gamein2021.core.service.ProductionLineProductService;
+import ir.sharif.gamein2021.core.util.GameConstants;
 import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -53,6 +54,6 @@ public class DailySchedule {
     }
 
     private void doWeeklyTasks() {
-
+        GameConstants.addWeakNumber();
     }
 }

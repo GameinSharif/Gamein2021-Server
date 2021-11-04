@@ -33,4 +33,11 @@ public class WeekSupplyService extends AbstractCrudService<WeekSupplyDto, WeekSu
                 .map(e -> modelMapper.map(e, WeekSupplyDto.class))
                 .collect(Collectors.toList());
     }
+
+    public WeekSupplyDto findSpecificWeekSupply(Integer supplierId, Integer materialId, Integer week)
+    {
+        WeekSupply weekSupply = weekSupplyRepository.findWeekSupplyBySupplierIdAndMaterialIdAndWeek(supplierId, materialId, week);
+        System.out.println("found specific week supply");
+        return modelMapper.map(weekSupply, WeekSupplyDto.class);
+    }
 }

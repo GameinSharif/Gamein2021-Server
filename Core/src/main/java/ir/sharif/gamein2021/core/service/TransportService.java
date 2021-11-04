@@ -1,9 +1,7 @@
 package ir.sharif.gamein2021.core.service;
 
 import ir.sharif.gamein2021.core.dao.TransportRepository;
-import ir.sharif.gamein2021.core.domain.dto.DcDto;
-import ir.sharif.gamein2021.core.domain.dto.TeamDto;
-import ir.sharif.gamein2021.core.domain.dto.TransportDto;
+import ir.sharif.gamein2021.core.domain.dto.*;
 import ir.sharif.gamein2021.core.domain.entity.Transport;
 import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
 import ir.sharif.gamein2021.core.util.Enums;
@@ -76,5 +74,10 @@ public class TransportService extends AbstractCrudService<TransportDto, Transpor
         teamTransports.addAll(transportRepository.findAllBySourceTypeAndSourceIdIn(Enums.TransportNodeType.DC, teamDcIds));
         // TODO : separate by source or destination?
         return mapEntityListToDto(teamTransports);
+    }
+
+    @Transactional
+    public TransportDto save(TransportDto transportDto) {
+        return saveOrUpdate(transportDto);
     }
 }

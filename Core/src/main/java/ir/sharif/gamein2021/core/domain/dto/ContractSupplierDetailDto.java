@@ -1,5 +1,6 @@
 package ir.sharif.gamein2021.core.domain.dto;
 
+import ir.sharif.gamein2021.core.util.Enums;
 import lombok.*;
 
 import javax.persistence.Column;
@@ -19,4 +20,5 @@ public class ContractSupplierDetailDto
     private LocalDate contractDate;
     private Integer boughtAmount;
     private Integer pricePerUnit;
+    private Enums.TransportNodeType
 }

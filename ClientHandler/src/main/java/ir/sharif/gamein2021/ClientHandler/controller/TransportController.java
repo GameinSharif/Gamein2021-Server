@@ -34,4 +34,5 @@ public class TransportController
         GetTeamTransportsResponse response = new GetTeamTransportsResponse(ResponseTypeConstant.GET_TEAM_TRANSPORTS, transportDtos);
         pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(response));
     }
+    
 }

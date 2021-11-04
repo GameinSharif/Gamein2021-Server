@@ -26,7 +26,7 @@ public class WeekSupply implements BaseEntity{
     private Integer productId;
 
     @Column(name = "price", nullable = false)
-    private Integer price;
+    private Float price;
 
     @Column(name = "sales", nullable = false)
     private Integer sales;

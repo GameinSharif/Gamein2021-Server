@@ -28,7 +28,7 @@ public class WeekSupplyService extends AbstractCrudService<WeekSupplyDto, WeekSu
     @Transactional(readOnly = true)
     public List<WeekSupplyDto> findByWeek(Integer week)
     {
-        List<WeekSupply> weekSupplies = weekSupplyRepository.findWeekSuppliesByWeek(week);
+        List<WeekSupply> weekSupplies = weekSupplyRepository.findAllByWeek(week);
         return weekSupplies.stream()
                 .map(e -> modelMapper.map(e, WeekSupplyDto.class))
                 .collect(Collectors.toList());
@@ -36,7 +36,7 @@ public class WeekSupplyService extends AbstractCrudService<WeekSupplyDto, WeekSu
 
     public WeekSupplyDto findSpecificWeekSupply(Integer supplierId, Integer materialId, Integer week)
     {
-        WeekSupply weekSupply = weekSupplyRepository.findWeekSupplyBySupplierIdAndMaterialIdAndWeek(supplierId, materialId, week);
+        WeekSupply weekSupply = weekSupplyRepository.findAllBySupplierIdAndMaterialIdAndWeek(supplierId, materialId, week);
         System.out.println("found specific week supply");
         return modelMapper.map(weekSupply, WeekSupplyDto.class);
     }

@@ -11,6 +11,7 @@ import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
 import ir.sharif.gamein2021.core.domain.dto.ContractSupplierDetailDto;
 import ir.sharif.gamein2021.core.domain.dto.ContractSupplierDto;
 import ir.sharif.gamein2021.core.domain.dto.TransportDto;
+import ir.sharif.gamein2021.core.manager.GameCalendar;
 import ir.sharif.gamein2021.core.service.*;
 import ir.sharif.gamein2021.core.util.Enums;
 import ir.sharif.gamein2021.core.util.GameConstants;
@@ -34,11 +35,12 @@ public class ContractSupplierController
     private final WeekSupplyService weekSupplyService;
     private final TeamService teamService;
     private final TransportService transportService;
+    private final GameCalendar gameCalendar;
     private final Gson gson = new Gson();
 
     public ContractSupplierController(LocalPushMessageManager pushMessageManager, ContractSupplierService contractSupplierService,
                                       UserService userService, WeekSupplyService weekSupplyService, TeamService teamService,
-                                      TransportService transportService)
+                                      TransportService transportService, GameCalendar gameCalendar)
     {
         this.pushMessageManager = pushMessageManager;
         this.contractSupplierService = contractSupplierService;
@@ -46,6 +48,7 @@ public class ContractSupplierController
         this.weekSupplyService = weekSupplyService;
         this.teamService = teamService;
         this.transportService = transportService;
+        this.gameCalendar = gameCalendar;
     }
 
     public void newContractSupplier(ProcessedRequest request, NewContractSupplierRequest newContractSupplierRequest)
@@ -66,13 +69,13 @@ public class ContractSupplierController
         }else
         {
             if (supplier.getMaterials().contains(newContractSupplierRequest.getMaterialId())){
-                Integer materialPrice = weekSupplyService.findSpecificWeekSupply(supplierId, materialId, currentWeek).getPrice();
+                //Float materialPrice = weekSupplyService.findSpecificWeekSupply(supplierId, materialId, currentWeek).getPrice();
                 List<ContractSupplierDetailDto> contractSupplierDetailDtos = new ArrayList<>();
                 for(int i = 0; i < weeks+1; i++){
                     ContractSupplierDetailDto contractSupplierDetailDto = new ContractSupplierDetailDto();
-                    contractSupplierDetailDto.setContractDate(LocalDate.now().plusDays(i* 7L));
+                    contractSupplierDetailDto.setContractDate(gameCalendar.getCurrentDate().plusDays(i* 7L));
                     contractSupplierDetailDto.setBoughtAmount(newContractSupplierRequest.getAmount());
-                    contractSupplierDetailDto.setPricePerUnit(materialPrice);
+                    //contractSupplierDetailDto.setPricePerUnit(materialPrice);
                     contractSupplierDetailDtos.add(contractSupplierDetailDto);
                     TransportDto transportDto = new TransportDto();
                     transportDto.setVehicleType(vehicleType);

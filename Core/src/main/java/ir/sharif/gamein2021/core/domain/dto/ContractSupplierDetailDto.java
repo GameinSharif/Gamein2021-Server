@@ -19,6 +19,5 @@ public class ContractSupplierDetailDto
     private Integer id;
     private LocalDate contractDate;
     private Integer boughtAmount;
-    private Integer pricePerUnit;
-    private Enums.TransportNodeType
+    private Float pricePerUnit;
 }

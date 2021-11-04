@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface WeekSupplyRepository extends JpaRepository<WeekSupply, Integer>
 {
-    List<WeekSupply> findWeekSuppliesByWeek(Integer week);
-    WeekSupply findWeekSupplyBySupplierIdAndMaterialIdAndWeek(Integer supplierId, Integer materialId, Integer week);
+    List<WeekSupply> findAllByWeek(Integer week);
+    WeekSupply findAllBySupplierIdAndMaterialIdAndWeek(Integer supplierId, Integer materialId, Integer week);
 }

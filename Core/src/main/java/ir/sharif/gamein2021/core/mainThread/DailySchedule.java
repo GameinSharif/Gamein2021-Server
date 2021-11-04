@@ -1,5 +1,6 @@
 package ir.sharif.gamein2021.core.mainThread;
 
+import ir.sharif.gamein2021.core.manager.ContractManager;
 import ir.sharif.gamein2021.core.manager.GameCalendar;
 import ir.sharif.gamein2021.core.manager.TransportManager;
 import ir.sharif.gamein2021.core.service.ProductionLineProductService;
@@ -14,11 +15,14 @@ public class DailySchedule {
     private final GameCalendar gameCalendar;
     private ProductionLineProductService productService;
     private final TransportManager transportManager;
+    private final ContractManager contractManager;
 
-    public DailySchedule(GameCalendar gameCalendar, ProductionLineProductService productService, TransportManager transportManager) {
+    public DailySchedule(GameCalendar gameCalendar, ProductionLineProductService productService, TransportManager transportManager,
+                         ContractManager contractManager) {
         this.gameCalendar = gameCalendar;
         this.productService = productService;
         this.transportManager = transportManager;
+        this.contractManager = contractManager;
     }
 
     @Scheduled(fixedRateString = "${dayLengthMilliSecond}")
@@ -51,6 +55,8 @@ public class DailySchedule {
     private void doDailyTasks() {
         productService.finishProductCreation();
         transportManager.updateTransports();
+        contractManager.updateContracts();
+
     }
 
     private void doWeeklyTasks() {

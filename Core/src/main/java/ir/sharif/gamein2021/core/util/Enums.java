@@ -69,4 +69,9 @@ public class Enums
     {
         SUCCESSFUL, IN_WAY, CRUSHED, PENDING
     }
+
+    public enum ProviderState
+    {
+        ACTIVE, TERMINATED
+    }
 }

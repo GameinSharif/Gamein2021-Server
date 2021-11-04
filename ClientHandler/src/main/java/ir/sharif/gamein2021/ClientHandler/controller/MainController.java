@@ -1,18 +1,16 @@
 package ir.sharif.gamein2021.ClientHandler.controller;
 
 import com.google.gson.Gson;
-import ir.sharif.gamein2021.ClientHandler.domain.GetContractsRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.*;
 import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginRequest;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Messenger.GetAllChatsRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Messenger.NewMessageRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.NewContractSupplierRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.RFQ.*;
 import ir.sharif.gamein2021.ClientHandler.domain.Auction.BidForAuctionRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.TerminateLongtermContractSupplierRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.TerminateLongtermContractSupplierResponse;
 import ir.sharif.gamein2021.ClientHandler.domain.Transport.GetTeamTransportsRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.productionLine.*;
+import ir.sharif.gamein2021.core.domain.entity.ContractSupplier;
 import ir.sharif.gamein2021.core.util.RequestTypeConstant;
 import lombok.AllArgsConstructor;
 import org.json.JSONObject;
@@ -147,6 +145,9 @@ public class MainController
             case GET_TEAM_TRANSPORTS:
                 GetTeamTransportsRequest getTeamTransportsRequest = gson.fromJson(requestData, GetTeamTransportsRequest.class);
                 transportController.getTeamTransports(processedRequest, getTeamTransportsRequest);
+            case GET_CONTRACTS_WITH_SUPPLIER:
+                GetContractsSupplierRequest getContractsSupplierRequest = gson.fromJson(requestData, GetContractsSupplierRequest.class);
+                contractSupplierController.getContractsSupplier(processedRequest, getContractsSupplierRequest);
                 break;
             default:
                 System.out.println("Request type is invalid.");

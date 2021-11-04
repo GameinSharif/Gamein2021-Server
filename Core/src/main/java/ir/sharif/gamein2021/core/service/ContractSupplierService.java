@@ -62,6 +62,13 @@ public class ContractSupplierService extends AbstractCrudService<ContractSupplie
     }
 
     @Transactional(readOnly = true)
+    public List<ContractSupplierDto> findByTeamId(Integer teamId){
+        List<ContractSupplier> contractSuppliers = contractSupplierRepository.findByTeamId(teamId);
+        return contractSuppliers.stream().map(e -> modelMapper.map(e, ContractSupplierDto.class))
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
     public List<ContractSupplierDto> findTodaysContractSupplier(LocalDate today){
         List<ContractSupplierDto> contractSupplierDtos = new ArrayList<>();
         List<ContractSupplierDetail> contractSupplierDetails = contractSupplierDetailRepository.findAllByContractDate(today);

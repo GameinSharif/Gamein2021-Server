@@ -32,7 +32,8 @@ public enum ResponseTypeConstant {
     BUY_DC(28),
     SELL_DC(29),
     GET_TEAM_TRANSPORTS(30),
-    TRANSPORT_STATE_CHANGED(31);
+    TRANSPORT_STATE_CHANGED(31),
+    GET_CONTRACTS_WITH_SUPPLIER(32);
 
     private int value;
 

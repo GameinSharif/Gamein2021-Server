@@ -2,15 +2,12 @@ package ir.sharif.gamein2021.ClientHandler.controller;
 
 import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.NewContractSupplierRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.NewContractSupplierResponse;
-import ir.sharif.gamein2021.ClientHandler.domain.TerminateLongtermContractSupplierRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.TerminateLongtermContractSupplierResponse;
+import ir.sharif.gamein2021.ClientHandler.domain.*;
+import ir.sharif.gamein2021.ClientHandler.domain.RFQ.GetNegotiationsResponse;
 import ir.sharif.gamein2021.ClientHandler.manager.LocalPushMessageManager;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
-import ir.sharif.gamein2021.core.domain.dto.ContractSupplierDetailDto;
-import ir.sharif.gamein2021.core.domain.dto.ContractSupplierDto;
-import ir.sharif.gamein2021.core.domain.dto.TransportDto;
+import ir.sharif.gamein2021.core.domain.dto.*;
+import ir.sharif.gamein2021.core.domain.entity.Team;
 import ir.sharif.gamein2021.core.manager.GameCalendar;
 import ir.sharif.gamein2021.core.service.*;
 import ir.sharif.gamein2021.core.util.Enums;
@@ -130,5 +127,23 @@ public class ContractSupplierController
                     "not_terminated", 0);
         }
         pushMessageManager.sendMessageBySession(request.session, gson.toJson(terminateLongtermContractSupplierResponse));
+    }
+
+    public void getContractsSupplier(ProcessedRequest request, GetContractsSupplierRequest getContractsSupplierRequest)
+    {
+        int playerId = getContractsSupplierRequest.playerId;
+        UserDto user = userService.loadById(playerId);
+        Team userTeam = teamService.findTeamById(user.getTeamId());
+        GetContractsSupplierResponse getContractsSupplierResponse;
+        if (userTeam == null)
+        {
+            getContractsSupplierResponse = new GetContractsSupplierResponse(ResponseTypeConstant.GET_CONTRACTS_WITH_SUPPLIER, new ArrayList<>());
+        }else
+        {
+            List<ContractSupplierDto> contractSupplierDtos = contractSupplierService.findByTeamId(user.getTeamId());
+            getContractsSupplierResponse = new GetContractsSupplierResponse(ResponseTypeConstant.GET_CONTRACTS_WITH_SUPPLIER, contractSupplierDtos);
+        }
+
+        pushMessageManager.sendMessageBySession(request.session, gson.toJson(getContractsSupplierResponse));
     }
 }

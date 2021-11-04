@@ -28,7 +28,8 @@ public enum RequestTypeConstant
     TERMINATE_LONGTERM_CONTRACT_WITH_SUPPLIER(23),
     BUY_DC(24),
     SELL_DC(25),
-    GET_TEAM_TRANSPORTS(26);
+    GET_TEAM_TRANSPORTS(26),
+    GET_CONTRACTS_WITH_SUPPLIER(27);
 
     private int value;
 

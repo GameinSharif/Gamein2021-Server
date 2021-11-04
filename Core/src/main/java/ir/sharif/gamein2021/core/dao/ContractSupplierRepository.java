@@ -8,4 +8,5 @@ import java.util.List;
 public interface ContractSupplierRepository extends JpaRepository<ContractSupplier, Integer>
 {
     ContractSupplier findByContractSupplierDetail(ContractSupplierDetail contractSupplierDetail);
+    List<ContractSupplier> findByTeamId(Integer teamId);
 }

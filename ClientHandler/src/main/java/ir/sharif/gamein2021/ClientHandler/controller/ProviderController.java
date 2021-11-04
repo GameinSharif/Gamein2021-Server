@@ -55,7 +55,7 @@ public class ProviderController
         providerDto.setProductId(newProviderRequest.getProductId());
         providerDto.setCapacity(newProviderRequest.getCapacity());
         providerDto.setPrice(newProviderRequest.getPrice());
-        providerDto.setState(Enums.ProviderState.AVAILABLE);
+        providerDto.setState(Enums.ProviderState.ACTIVE);
         providerService.save(providerDto);
         // TODO : what if couldn't save
 

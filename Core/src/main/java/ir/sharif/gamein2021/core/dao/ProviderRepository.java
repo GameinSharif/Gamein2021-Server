@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ProviderRepository extends JpaRepository<Provider, Integer> {
 
-    List<Provider> findAllByTeamAndState(Team team, Enums.ProviderState state);
+    List<Provider> findAllByTeam(Team team);
     List<Provider> findAllByTeamIsNotAndState(Team team, Enums.ProviderState state);
 
     @Override

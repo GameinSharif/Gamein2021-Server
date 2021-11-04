@@ -72,6 +72,6 @@ public class Enums
 
     public enum ProviderState
     {
-        AVAILABLE, TERMINATED
+        ACTIVE, TERMINATED
     }
 }

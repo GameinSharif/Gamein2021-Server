@@ -36,7 +36,7 @@ public class ProviderService extends AbstractCrudService<ProviderDto, Provider, 
     @Transactional(readOnly = true)
     public ArrayList<ProviderDto> findProvidersByTeam(Team userTeam) {
         ArrayList<ProviderDto> providerDtos = new ArrayList<>();
-        List<Provider> providers = providerRepository.findAllByTeamAndState(userTeam, Enums.ProviderState.AVAILABLE);
+        List<Provider> providers = providerRepository.findAllByTeam(userTeam);
         for (Provider provider : providers) {
             providerDtos.add(modelMapper.map(provider, ProviderDto.class));
         }
@@ -46,7 +46,7 @@ public class ProviderService extends AbstractCrudService<ProviderDto, Provider, 
     @Transactional(readOnly = true)
     public ArrayList<ProviderDto> findProvidersExceptTeam(Team userTeam) {
         ArrayList<ProviderDto> providerDtos = new ArrayList<>();
-        List<Provider> providers = providerRepository.findAllByTeamIsNotAndState(userTeam, Enums.ProviderState.AVAILABLE);
+        List<Provider> providers = providerRepository.findAllByTeamIsNotAndState(userTeam, Enums.ProviderState.ACTIVE);
         for (Provider provider : providers) {
             providerDtos.add(modelMapper.map(provider, ProviderDto.class));
         }
@@ -56,7 +56,7 @@ public class ProviderService extends AbstractCrudService<ProviderDto, Provider, 
     @Transactional
     public void terminateProvider(Integer providerId) {
         Provider provider = providerRepository.getById(providerId);
-        if(provider.getState() == Enums.ProviderState.AVAILABLE) {
+        if(provider.getState() == Enums.ProviderState.ACTIVE) {
             provider.setState(Enums.ProviderState.TERMINATED);
             providerRepository.save(provider);
         }

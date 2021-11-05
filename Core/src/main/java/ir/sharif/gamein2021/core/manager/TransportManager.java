@@ -111,7 +111,7 @@ public class TransportManager {
 
         int transportDuration = calculateTransportDuration(vehicleType, sourceId, sourceType, destinationId, destinationType);
         Enums.TransportState transportState = Enums.TransportState.IN_WAY;
-        if (LocalDate.now().isBefore(startDate)) {
+        if (gameCalendar.getCurrentDate().isEqual(startDate)) {
             transportState = Enums.TransportState.PENDING;
         }
         TransportDto transport = TransportDto.builder()
@@ -129,12 +129,30 @@ public class TransportManager {
                 .build();
 
         transportService.saveOrUpdate(transport);
-        return null;
+        return transport;
     }
 
     private int calculateTransportDuration(Enums.VehicleType vehicleType, Integer sourceId, Enums.TransportNodeType sourceType, Integer destinationId, Enums.TransportNodeType destinationType) {
         // TODO
         // TODO : change inputs : source position? transport?
+        return 7;
+    }
+
+    private double[] getLocation(Enums.TransportNodeType type, Integer id)
+    {
+        switch (type)
+        {
+            case FACTORY:
+                return new double[] {ReadJsonFilesManager.Factories[id].getLatitude(), ReadJsonFilesManager.Factories[id].getLatitude()};
+                //TODO
+        }
+
+        return null;
+    }
+
+    public float calculateTransportCost(Enums.VehicleType vehicleType, Integer sourceId, Enums.TransportNodeType sourceType, Integer destinationId, Enums.TransportNodeType destinationType)
+    {
+        // TODO
         return 0;
     }
 

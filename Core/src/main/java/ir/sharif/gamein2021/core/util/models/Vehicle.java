@@ -1,5 +1,6 @@
 package ir.sharif.gamein2021.core.util.models;
 
+import ir.sharif.gamein2021.core.util.Enums;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,9 +12,9 @@ import java.util.ArrayList;
 @NoArgsConstructor
 public class Vehicle {
     private int id;
-    private String name;
+    private Enums.VehicleType vehicleType;
     private int speed;
     private int capacity;
     private int costPerKilometer;
-    private int coefficient;
+    private float coefficient;
 }

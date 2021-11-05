@@ -9,13 +9,11 @@ import java.io.Serializable;
 
 public class EditNegotiationCostPerUnitResponse extends ResponseObject implements Serializable
 {
-    private NegotiationDto negotiationDto;
-    private String result;
+    private NegotiationDto negotiation;
 
-    public EditNegotiationCostPerUnitResponse(ResponseTypeConstant responseTypeConstant, NegotiationDto negotiationDto, String result)
+    public EditNegotiationCostPerUnitResponse(ResponseTypeConstant responseTypeConstant, NegotiationDto negotiation)
     {
         this.responseTypeConstant = responseTypeConstant.ordinal();
-        this.negotiationDto = negotiationDto;
-        this.result = result;
+        this.negotiation = negotiation;
     }
 }

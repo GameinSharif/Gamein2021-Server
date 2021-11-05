@@ -81,36 +81,28 @@ public class ContractSupplierController
                             amount);
                 }
 
-                try
-                {
-                    contractSupplierDto.setSupplierId(supplierId);
-                    contractSupplierDto.setMaterialId(materialId);
-                    contractSupplierDto.setTeamId(userService.loadById(newContractSupplierRequest.playerId).getTeamId());
-                    contractSupplierDto.setContractType(Enums.ContractType.LONGTERM);
-                    contractSupplierDto.setTerminated(false);
-                    contractSupplierDto.setTerminatePenalty(100); //TODO
-                    contractSupplierDto.setContractSupplierDetails(contractSupplierDetailDtos);
-                    ContractSupplierDto saveContractSupplierDto = contractSupplierService.saveOrUpdate(contractSupplierDto);
-                    newContractSupplierResponse = new NewContractSupplierResponse(ResponseTypeConstant.NEW_CONTRACT_WITH_SUPPLIER,
-                            saveContractSupplierDto, "success");
-                    // TODO overall cost of this contract
-                    pushMessageManager.sendMessageBySession(request.session, gson.toJson(newContractSupplierResponse));
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
+                contractSupplierDto.setSupplierId(supplierId);
+                contractSupplierDto.setMaterialId(materialId);
+                contractSupplierDto.setTeamId(userService.loadById(newContractSupplierRequest.playerId).getTeamId());
+                contractSupplierDto.setContractType(Enums.ContractType.LONGTERM);
+                contractSupplierDto.setTerminated(false);
+                contractSupplierDto.setTerminatePenalty(100); //TODO
+                contractSupplierDto.setContractSupplierDetails(contractSupplierDetailDtos);
+                ContractSupplierDto saveContractSupplierDto = contractSupplierService.saveOrUpdate(contractSupplierDto);
+                newContractSupplierResponse = new NewContractSupplierResponse(ResponseTypeConstant.NEW_CONTRACT_WITH_SUPPLIER,
+                        saveContractSupplierDto, "success");
+                // TODO overall cost of this contract
+
             }
             else
             {
                 newContractSupplierResponse = new NewContractSupplierResponse(ResponseTypeConstant.NEW_CONTRACT_WITH_SUPPLIER, null, "supplier_material_not_matching");
             }
         }
-        //pushMessageManager.sendMessageBySession(request.session, gson.toJson(newContractSupplierResponse));
+        pushMessageManager.sendMessageBySession(request.session, gson.toJson(newContractSupplierResponse));
     }
 
-    public void terminateLongtermContractSupplier(ProcessedRequest request,
-                                                  TerminateLongtermContractSupplierRequest terminateLongtermContractSupplierRequest)
+    public void terminateLongtermContractSupplier(ProcessedRequest request, TerminateLongtermContractSupplierRequest terminateLongtermContractSupplierRequest)
     {
         ContractSupplierDto contractSupplierDto = contractSupplierService.findById(terminateLongtermContractSupplierRequest.getContractId());
         TerminateLongtermContractSupplierResponse terminateLongtermContractSupplierResponse;
@@ -119,14 +111,14 @@ public class ContractSupplierController
         {
             contractSupplierDto.setTerminated(true);
             Integer penalty = contractSupplierDto.getTerminatePenalty();
-            terminateLongtermContractSupplierResponse = new TerminateLongtermContractSupplierResponse(ResponseTypeConstant.TERMINATE_LONGTERM_CONTRACT_WITH_SUPPLIER,
-                    "terminated", penalty);
+            terminateLongtermContractSupplierResponse = new TerminateLongtermContractSupplierResponse(ResponseTypeConstant.TERMINATE_LONGTERM_CONTRACT_WITH_SUPPLIER, "terminated", penalty);
             // TODO reduce penalty from client's money
+
+            contractSupplierService.saveOrUpdate(contractSupplierDto);
         }
         else
         {
-            terminateLongtermContractSupplierResponse = new TerminateLongtermContractSupplierResponse(ResponseTypeConstant.TERMINATE_LONGTERM_CONTRACT_WITH_SUPPLIER,
-                    "not_terminated", 0);
+            terminateLongtermContractSupplierResponse = new TerminateLongtermContractSupplierResponse(ResponseTypeConstant.TERMINATE_LONGTERM_CONTRACT_WITH_SUPPLIER, "not_terminated", 0);
         }
         pushMessageManager.sendMessageBySession(request.session, gson.toJson(terminateLongtermContractSupplierResponse));
     }

@@ -39,20 +39,27 @@ public class ContractManager
         {
             if (!contractSupplierDto.isTerminated())
             {
-                WeekSupplyDto weekSupplyDto = weekSupplyService.findSpecificWeekSupply(contractSupplierDto.getSupplierId(),
-                        contractSupplierDto.getMaterialId(), GameConstants.getWeakNumber());
-                Float price = weekSupplyDto.getPrice();
-                for (ContractSupplierDetailDto contractSupplierDetailDto : contractSupplierService.getContractSupplierDetailDtos(contractSupplierDto))
-                {
-                    if (contractSupplierDetailDto.getContractDate().equals(today))
+                try {
+                    WeekSupplyDto weekSupplyDto = weekSupplyService.findSpecificWeekSupply(contractSupplierDto.getSupplierId(), contractSupplierDto.getMaterialId(), GameConstants.getWeakNumber());
+                    Float price = weekSupplyDto.getPrice();
+                    for (ContractSupplierDetailDto contractSupplierDetailDto : contractSupplierService.getContractSupplierDetailDtos(contractSupplierDto))
                     {
-                        // update price with this week's price
-                        contractSupplierDetailDto.setPricePerUnit(price);
-                        // Add to Supplier's weekly sale
-                        weekSupplyDto.setSales(weekSupplyDto.getSales() + contractSupplierDetailDto.getBoughtAmount());
-                        weekSupplyService.saveOrUpdate(weekSupplyDto);
-                        contractSupplierDetailService.saveOrUpdate(contractSupplierDetailDto);
+                        if (contractSupplierDetailDto.getContractDate().equals(today))
+                        {
+                            // update price with this week's price
+                            contractSupplierDetailDto.setPricePerUnit(price);
+                            // Add to Supplier's weekly sale
+                            weekSupplyDto.setSales(weekSupplyDto.getSales() + contractSupplierDetailDto.getBoughtAmount());
+                            weekSupplyService.saveOrUpdate(weekSupplyDto);
+                            contractSupplierDetailService.saveOrUpdate(contractSupplierDetailDto);
+
+                            //TODO start transport
+                        }
                     }
+                }
+                catch (Exception e)
+                {
+                    System.out.println("no week supply");
                 }
             }
         }

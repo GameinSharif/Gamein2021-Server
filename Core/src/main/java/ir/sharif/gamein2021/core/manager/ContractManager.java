@@ -19,30 +19,37 @@ import java.time.LocalDate;
 
 @AllArgsConstructor
 @Component
-public class ContractManager {
+public class ContractManager
+{
     private final ContractSupplierService contractSupplierService;
     private final ContractSupplierDetailService contractSupplierDetailService;
     private final WeekSupplyService weekSupplyService;
     private final GameCalendar gameCalendar;
 
-    public void updateContracts(){
+    public void updateContracts()
+    {
         LocalDate today = gameCalendar.getCurrentDate();
         updateTodayContractCosts(today);
     }
 
-    public void updateTodayContractCosts(LocalDate today){
+    public void updateTodayContractCosts(LocalDate today)
+    {
         List<ContractSupplierDto> contractSupplierDtos = contractSupplierService.findTodaysContractSupplier(today);
-        for(ContractSupplierDto contractSupplierDto: contractSupplierDtos){
-            if(!contractSupplierDto.isTerminated()){
+        for (ContractSupplierDto contractSupplierDto : contractSupplierDtos)
+        {
+            if (!contractSupplierDto.isTerminated())
+            {
                 WeekSupplyDto weekSupplyDto = weekSupplyService.findSpecificWeekSupply(contractSupplierDto.getSupplierId(),
                         contractSupplierDto.getMaterialId(), GameConstants.getWeakNumber());
                 Float price = weekSupplyDto.getPrice();
-                for (ContractSupplierDetailDto contractSupplierDetailDto: contractSupplierService.getContractSupplierDetailDtos(contractSupplierDto)){
-                    if (contractSupplierDetailDto.getContractDate().equals(today)){
+                for (ContractSupplierDetailDto contractSupplierDetailDto : contractSupplierService.getContractSupplierDetailDtos(contractSupplierDto))
+                {
+                    if (contractSupplierDetailDto.getContractDate().equals(today))
+                    {
                         // update price with this week's price
                         contractSupplierDetailDto.setPricePerUnit(price);
                         // Add to Supplier's weekly sale
-                        weekSupplyDto.setSales(weekSupplyDto.getSales()+contractSupplierDetailDto.getBoughtAmount());
+                        weekSupplyDto.setSales(weekSupplyDto.getSales() + contractSupplierDetailDto.getBoughtAmount());
                         weekSupplyService.saveOrUpdate(weekSupplyDto);
                         contractSupplierDetailService.saveOrUpdate(contractSupplierDetailDto);
                     }

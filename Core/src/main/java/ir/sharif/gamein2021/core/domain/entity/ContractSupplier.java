@@ -32,7 +32,7 @@ public class ContractSupplier implements BaseEntity
     @Column(name = "contract_type", nullable = false)
     private Enums.ContractType contractType;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "contract_supplier_id")
     private List<ContractSupplierDetail> contractSupplierDetails;
 

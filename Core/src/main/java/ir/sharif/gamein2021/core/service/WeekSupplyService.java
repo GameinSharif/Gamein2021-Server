@@ -36,7 +36,7 @@ public class WeekSupplyService extends AbstractCrudService<WeekSupplyDto, WeekSu
 
     public WeekSupplyDto findSpecificWeekSupply(Integer supplierId, Integer materialId, Integer week)
     {
-        WeekSupply weekSupply = weekSupplyRepository.findAllBySupplierIdAndMaterialIdAndWeek(supplierId, materialId, week);
+        WeekSupply weekSupply = weekSupplyRepository.findAllBySupplierIdAndProductIdAndWeek(supplierId, materialId, week);
         System.out.println("found specific week supply");
         return modelMapper.map(weekSupply, WeekSupplyDto.class);
     }

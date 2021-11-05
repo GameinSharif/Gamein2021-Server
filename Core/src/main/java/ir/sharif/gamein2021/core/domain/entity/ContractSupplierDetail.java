@@ -26,6 +26,9 @@ public class ContractSupplierDetail implements BaseEntity
     @Column(name = "price_per_unit", nullable = false)
     private Integer pricePerUnit;
 
+    @ManyToOne
+    @JoinColumn(name = "contract_supplier_id", nullable = false)
+    private ContractSupplier contractSupplier;
 
     @Override
     public Integer getId() {

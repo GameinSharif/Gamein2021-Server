@@ -20,4 +20,5 @@ public class ContractSupplierDetailDto
     private LocalDate contractDate;
     private Integer boughtAmount;
     private Float pricePerUnit;
+    private Integer contractSupplierId;
 }

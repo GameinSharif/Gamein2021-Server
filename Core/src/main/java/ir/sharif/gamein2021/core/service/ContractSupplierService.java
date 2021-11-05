@@ -43,42 +43,49 @@ public class ContractSupplierService extends AbstractCrudService<ContractSupplie
     }
 
     @Transactional
-    public ContractSupplierDto save(ContractSupplierDto contractSupplierDto, List<ContractSupplierDetailDto> contractSupplierDetailDtos) {
-        for(ContractSupplierDetailDto contractDetailDto: contractSupplierDetailDtos){
-            ContractSupplierDetail contractSupplierDetail = modelMapper.map(contractDetailDto, ContractSupplierDetail.class);
-            contractSupplierDto.getContractSupplierDetails().add(contractSupplierDetail);
+    public ContractSupplierDto save(ContractSupplierDto contractSupplierDto, List<ContractSupplierDetailDto> contractSupplierDetailDtos)
+    {
+        for (ContractSupplierDetailDto contractDetailDto : contractSupplierDetailDtos)
+        {
+            contractSupplierDto.getContractSupplierDetails().add(contractDetailDto);
         }
         return saveOrUpdate(contractSupplierDto);
     }
 
     @Transactional
-    public ContractSupplierDto update(ContractSupplierDto contractSupplierDto){
+    public ContractSupplierDto update(ContractSupplierDto contractSupplierDto)
+    {
         return saveOrUpdate(contractSupplierDto);
     }
 
     @Transactional(readOnly = true)
-    public ContractSupplierDto findById(Integer id) {
+    public ContractSupplierDto findById(Integer id)
+    {
         return modelMapper.map(getRepository().findById(id).orElseThrow(EntityNotFoundException::new), ContractSupplierDto.class);
     }
 
     @Transactional(readOnly = true)
-    public List<ContractSupplierDto> findByTeamId(Integer teamId){
+    public List<ContractSupplierDto> findByTeamId(Integer teamId)
+    {
         List<ContractSupplier> contractSuppliers = contractSupplierRepository.findByTeamId(teamId);
         return contractSuppliers.stream().map(e -> modelMapper.map(e, ContractSupplierDto.class))
                 .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
-    public List<ContractSupplierDto> findTodaysContractSupplier(LocalDate today){
+    public List<ContractSupplierDto> findTodaysContractSupplier(LocalDate today)
+    {
         List<ContractSupplierDto> contractSupplierDtos = new ArrayList<>();
         List<ContractSupplierDetail> contractSupplierDetails = contractSupplierDetailRepository.findAllByContractDate(today);
-        for(ContractSupplierDetail contractDetail: contractSupplierDetails){
-            contractSupplierDtos.add(modelMapper.map(contractSupplierRepository.findByContractSupplierDetail(contractDetail), ContractSupplierDto.class));
+        for (ContractSupplierDetail contractDetail : contractSupplierDetails)
+        {
+            contractSupplierDtos.add(modelMapper.map(contractSupplierRepository.findContractSupplierById(contractDetail.getContractSupplier().getId()), ContractSupplierDto.class));
         }
         return contractSupplierDtos;
     }
 
-    public List<ContractSupplierDetailDto> getContractSupplierDetailDtos(ContractSupplierDto contractSupplierDto){
+    public List<ContractSupplierDetailDto> getContractSupplierDetailDtos(ContractSupplierDto contractSupplierDto)
+    {
         return contractSupplierDto.getContractSupplierDetails().stream().map(e -> modelMapper.map(e, ContractSupplierDetailDto.class))
                 .collect(Collectors.toList());
     }

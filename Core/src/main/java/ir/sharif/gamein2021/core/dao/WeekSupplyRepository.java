@@ -9,5 +9,5 @@ import java.util.List;
 public interface WeekSupplyRepository extends JpaRepository<WeekSupply, Integer>
 {
     List<WeekSupply> findAllByWeek(Integer week);
-    WeekSupply findAllBySupplierIdAndMaterialIdAndWeek(Integer supplierId, Integer materialId, Integer week);
+    WeekSupply findAllBySupplierIdAndProductIdAndWeek(Integer supplierId, Integer productId, Integer week);
 }

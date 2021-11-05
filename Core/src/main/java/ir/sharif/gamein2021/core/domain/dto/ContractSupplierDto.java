@@ -19,7 +19,7 @@ public class ContractSupplierDto
     private Integer teamId;
     private Integer materialId;
     private Enums.ContractType contractType;
-    private List<ContractSupplierDetail> contractSupplierDetails;
+    private List<ContractSupplierDetailDto> contractSupplierDetails;
     private Integer terminatePenalty;
     private boolean isTerminated;
 

@@ -10,6 +10,7 @@ import ir.sharif.gamein2021.ClientHandler.domain.GetCurrentWeekDemandsResponse;
 import ir.sharif.gamein2021.ClientHandler.domain.GetGameDataResponse;
 import ir.sharif.gamein2021.ClientHandler.manager.LocalPushMessageManager;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
+import ir.sharif.gamein2021.core.response.GetAllTeamsResponse;
 import ir.sharif.gamein2021.core.service.WeekSupplyService;
 import ir.sharif.gamein2021.core.service.TeamService;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
@@ -49,12 +50,11 @@ public class GameDataController
 
     public void getGameData(ProcessedRequest request)
     {
-        List<TeamDto> teams = teamService.list();
         List<GameinCustomerDto> gameinCustomers = gameinCustomerService.list();
 
         GetGameDataResponse getGameDataResponse = new GetGameDataResponse(
                 ResponseTypeConstant.GET_GAME_DATA,
-                teams, gameinCustomers);
+                gameinCustomers);
 
         pushMessageManager.sendMessageBySession(request.session, gson.toJson(getGameDataResponse));
     }
@@ -84,6 +84,7 @@ public class GameDataController
 
         pushMessageManager.sendMessageBySession(request.session, gson.toJson(getCurrentWeekSuppliesResponse));
     }
+
     public void getAllAuctions(ProcessedRequest request)
     {
         List<AuctionDto> auctions = auctionService.readAllAuctionsWithStatus();
@@ -94,5 +95,17 @@ public class GameDataController
         );
 
         pushMessageManager.sendMessageBySession(request.session, gson.toJson(getAllAuctionsResponse));
+    }
+
+    public void getAllTeams(ProcessedRequest request)
+    {
+        List<TeamDto> teams = teamService.list();
+
+        GetAllTeamsResponse getAllTeamsResponse = new GetAllTeamsResponse(
+                ResponseTypeConstant.GET_ALL_TEAMS,
+                teams
+        );
+
+        pushMessageManager.sendMessageBySession(request.session, gson.toJson(getAllTeamsResponse));
     }
 }

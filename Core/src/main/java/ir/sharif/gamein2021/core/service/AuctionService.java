@@ -68,6 +68,7 @@ public class AuctionService extends AbstractCrudService<AuctionDto, Auction, Int
                     .factoryId(auctionDto.getFactoryId())
                     .highestBidTeamId(auctionDto.getHighestBidTeamId())
                     .auctionBidStatus(auctionDto.getAuctionBidStatus())
+                    .lastRaiseAmount(auctionDto.getLastRaiseAmount())
                     .build());
         }
         return  responseAuctions;
@@ -108,7 +109,7 @@ public class AuctionService extends AbstractCrudService<AuctionDto, Auction, Int
     }
 
     @Transactional
-    public AuctionDto bidForFirstTimeForThisFactory(TeamDto teamDto, Integer factoryId)
+    public AuctionDto bidForFirstTimeForThisFactory(TeamDto teamDto, Integer factoryId, Integer raiseAmount)
     {
         AuctionDto auctionDto = new AuctionDto();
 
@@ -116,13 +117,17 @@ public class AuctionService extends AbstractCrudService<AuctionDto, Auction, Int
         {
             throw new InvalidRequestException("Not allowed to bid for this auction because you already have one factory");
         }
+        if (raiseAmount > teamDto.getCredit())
+        {
+            throw new InvalidRequestException("Not enough money for this");
+        }
         if (ReadJsonFilesManager.Factories[factoryId - 1].getCountry() == teamDto.getCountry())
         {
             RemainedFactories.removeIf(f -> f.getId() == factoryId);
 
             auctionDto.setFactoryId(factoryId);
             auctionDto.setHighestBidTeamId(teamDto.getId());
-            auctionDto.setHighestBid(GameConstants.Instance.AuctionStartValue);
+            auctionDto.setHighestBid(raiseAmount);
             auctionDto.setBidsCount(1);
             auctionDto.setAuctionBidStatus(Enums.AuctionBidStatus.Active);
             auctionDto.setLastRaiseAmount(GameConstants.Instance.AuctionInitialStepValue);
@@ -193,7 +198,7 @@ public class AuctionService extends AbstractCrudService<AuctionDto, Auction, Int
             {
                 TeamDto emptyTeam = emptyTeams.get(i);
                 emptyTeam.setFactoryId(thisCountryFactories.get(i).getId());
-                //TODO decrease bidPrice from team's money
+                emptyTeam.setCredit(emptyTeam.getCredit() - GameConstants.Instance.AuctionStartValue);
                 teamService.saveOrUpdate(emptyTeam);
             }
         }
@@ -206,7 +211,7 @@ public class AuctionService extends AbstractCrudService<AuctionDto, Auction, Int
         auctions.forEach(auction ->
         {
             TeamDto winnerTeam = teamService.loadById(auction.getHighestBidTeamId());
-            //TODO decrease bidPrice from team's money
+            winnerTeam.setCredit(winnerTeam.getCredit() - auction.getHighestBid());
             winnerTeam.setFactoryId(auction.getFactoryId());
             teamService.saveOrUpdate(winnerTeam);
 

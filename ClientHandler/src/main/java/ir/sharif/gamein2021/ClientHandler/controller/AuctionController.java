@@ -50,6 +50,7 @@ public class AuctionController
                     .highestBid(auctionDto.getHighestBid())
                     .factoryId(auctionDto.getFactoryId())
                     .highestBidTeamId(auctionDto.getHighestBidTeamId())
+                    .lastRaiseAmount(auctionDto.getLastRaiseAmount())
                     .build();
             response = new BidForAuctionResponse(ResponseTypeConstant.BID_FOR_AUCTION, responseAuction, "success");
         }
@@ -58,7 +59,7 @@ public class AuctionController
             //This is the first bid for this factory
             try
             {
-                AuctionDto auctionDto = auctionService.bidForFirstTimeForThisFactory(teamDto, factoryId);
+                AuctionDto auctionDto = auctionService.bidForFirstTimeForThisFactory(teamDto, factoryId, bidForAuctionRequest.getRaiseAmount());
                 AuctionDto responseAuction = AuctionDto.builder()
                         .highestBid(auctionDto.getHighestBid())
                         .factoryId(auctionDto.getFactoryId())

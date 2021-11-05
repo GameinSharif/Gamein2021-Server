@@ -57,14 +57,17 @@ public class ContractSupplierController
         {
             if (supplier.getMaterials().contains(newContractSupplierRequest.getMaterialId()))
             {
-                //Float materialPrice = weekSupplyService.findSpecificWeekSupply(supplierId, materialId, currentWeek).getPrice();
+                Float materialPrice = weekSupplyService.findSpecificWeekSupply(supplierId, materialId, currentWeek).getPrice();
                 List<ContractSupplierDetailDto> contractSupplierDetailDtos = new ArrayList<>();
                 for (int i = 0; i < weeks + 1; i++)
                 {
                     ContractSupplierDetailDto contractSupplierDetailDto = new ContractSupplierDetailDto();
                     contractSupplierDetailDto.setContractDate(gameCalendar.getCurrentDate().plusDays(i * 7L));
                     contractSupplierDetailDto.setBoughtAmount(newContractSupplierRequest.getAmount());
-                    //contractSupplierDetailDto.setPricePerUnit(materialPrice);
+                    if (i == 0)
+                    {
+                        contractSupplierDetailDto.setPricePerUnit(materialPrice);
+                    }
                     contractSupplierDetailDtos.add(contractSupplierDetailDto);
 
                     // TODO compute cost for transportation

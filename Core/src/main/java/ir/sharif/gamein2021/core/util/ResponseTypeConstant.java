@@ -34,7 +34,7 @@ public enum ResponseTypeConstant {
     GET_TEAM_TRANSPORTS(30),
     TRANSPORT_STATE_CHANGED(31),
     GET_CONTRACTS_WITH_SUPPLIER(32),
-    GET_ALL_TEAMS(33);
+    AUCTION_FINISHED(33);
 
     private int value;
 

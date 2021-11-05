@@ -5,7 +5,7 @@ import ir.sharif.gamein2021.core.domain.dto.AuctionDto;
 import ir.sharif.gamein2021.core.domain.dto.TeamDto;
 import ir.sharif.gamein2021.core.manager.PushMessageManagerInterface;
 import ir.sharif.gamein2021.core.response.GetAllAuctionsResponse;
-import ir.sharif.gamein2021.core.response.GetAllTeamsResponse;
+import ir.sharif.gamein2021.core.response.AuctionFinishedResponse;
 import ir.sharif.gamein2021.core.service.AuctionService;
 import ir.sharif.gamein2021.core.service.TeamService;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
@@ -62,11 +62,11 @@ public class AuctionSchedule
     {
         List<TeamDto> teams = teamService.list();
 
-        GetAllTeamsResponse getAllTeamsResponse = new GetAllTeamsResponse(
-                ResponseTypeConstant.GET_ALL_TEAMS,
+        AuctionFinishedResponse auctionFinishedResponse = new AuctionFinishedResponse(
+                ResponseTypeConstant.AUCTION_FINISHED,
                 teams
         );
 
-        pushMessageManager.sendMessageToAll(gson.toJson(getAllTeamsResponse));
+        pushMessageManager.sendMessageToAll(gson.toJson(auctionFinishedResponse));
     }
 }

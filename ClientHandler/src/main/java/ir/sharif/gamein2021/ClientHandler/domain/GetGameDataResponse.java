@@ -16,6 +16,7 @@ import java.util.List;
 
 public class GetGameDataResponse extends ResponseObject implements Serializable
 {
+    private List<TeamDto> teams;
     private List<GameinCustomerDto> gameinCustomers;
 
     private Product[] products;
@@ -25,8 +26,9 @@ public class GetGameDataResponse extends ResponseObject implements Serializable
 
     public GameConstants gameConstants;
 
-    public GetGameDataResponse(ResponseTypeConstant responseTypeConstant, List<GameinCustomerDto> gameinCustomers)
+    public GetGameDataResponse(ResponseTypeConstant responseTypeConstant, List<TeamDto> teams, List<GameinCustomerDto> gameinCustomers)
     {
+        this.teams = teams;
         this.responseTypeConstant = responseTypeConstant.ordinal();
         this.gameinCustomers = gameinCustomers;
 

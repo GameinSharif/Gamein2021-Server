@@ -13,12 +13,12 @@ public class GameConstants {
 
     public final int AuctionStartValue = 1000;
     public final int AuctionInitialStepValue = 100;
+    public final int AuctionRoundDurationSeconds = 180;
     public final LocalDateTime[] AuctionRoundsStartTime = new LocalDateTime[]{
             LocalDateTime.of(2021, 11, 25, 9, 0, 0),
             LocalDateTime.of(2021, 11, 25, 9, 5, 0),
             LocalDateTime.of(2021, 11, 25, 9, 10, 0)
     };
-
     public static final float CrushProbability = 0.01f;
 
     public static final int AuctionRoundLengthInSeconds = 300;

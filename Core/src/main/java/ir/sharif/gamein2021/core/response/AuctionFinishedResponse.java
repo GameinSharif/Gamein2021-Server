@@ -8,11 +8,11 @@ import ir.sharif.gamein2021.core.view.ResponseObject;
 import java.io.Serializable;
 import java.util.List;
 
-public class GetAllTeamsResponse extends ResponseObject implements Serializable
+public class AuctionFinishedResponse extends ResponseObject implements Serializable
 {
     private List<TeamDto> teams;
 
-    public GetAllTeamsResponse(ResponseTypeConstant responseTypeConstant, List<TeamDto> teams)
+    public AuctionFinishedResponse(ResponseTypeConstant responseTypeConstant, List<TeamDto> teams)
     {
         this.responseTypeConstant = responseTypeConstant.ordinal();
         this.teams = teams;

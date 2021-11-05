@@ -23,15 +23,4 @@ public class Factory {
     private int secondaryMaterialCapacity;
     private int finalMaterialCapacity;
 
-    public static List<Factory> getAllFactories() {
-        return allFactories;
-    }
-
-    public static Factory findFactoryById(Integer id){
-        for(Factory factory : allFactories){
-            if(factory.getId() == id)
-                return factory;
-        }
-        throw new FactoryNotFoundException("Factory with id : " +  id + " does not exist");
-    }
 }

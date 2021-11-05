@@ -10,6 +10,7 @@ import ir.sharif.gamein2021.core.domain.entity.StorageProduct;
 import ir.sharif.gamein2021.core.exception.EntityNotFoundException;
 import ir.sharif.gamein2021.core.exception.InvalidRequestException;
 import ir.sharif.gamein2021.core.exception.ProductNotFoundException;
+import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
 import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
 import ir.sharif.gamein2021.core.util.Enums;
 import ir.sharif.gamein2021.core.util.models.Factory;
@@ -77,7 +78,7 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
     @Transactional
     public StorageDto deleteProducts(Integer buildingId, boolean isDc, Integer productId, int amount) {
         StorageDto storage = findStorageWithBuildingIdAndDc(buildingId, isDc);
-        Product product = Product.findProductById(productId);
+        Product product = ReadJsonFilesManager.findProductById(productId);
 
         StorageProductDto storageProductDto = findProductStorageById(storage.getId(), product.getId());
         if (storageProductDto.getAmount() < amount)
@@ -115,7 +116,7 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
 
     @Transactional
     public StorageDto addProduct(Integer buildingId, boolean isDc, Integer productId, int amount) {
-        Product product = Product.findProductById(productId);
+        Product product = ReadJsonFilesManager.findProductById(productId);
         StorageProductDto storageProductDto = null;
         StorageDto storage = findStorageWithBuildingIdAndDc(buildingId, isDc);
         int availableCapacity = calculateAvailableCapacity(buildingId, isDc, product.getProductType());
@@ -139,7 +140,7 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
     @Transactional(readOnly = true)
     public StorageProductDto findProductStorageById(Integer storageId, Integer productId) {
         StorageDto storage = loadById(storageId);
-        Product product = Product.findProductById(productId);
+        Product product = ReadJsonFilesManager.findProductById(productId);
 
         List<StorageProductDto> storageProductDtos = storage.getProducts();
         for (StorageProductDto storageProduct : storageProductDtos) {
@@ -152,7 +153,7 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
     @Transactional(readOnly = true)
     public StorageProductDto findProductStorageByIdNull(Integer storageId, Integer productId) {
         StorageDto storage = loadById(storageId);
-        Product product = Product.findProductById(productId);
+        Product product = ReadJsonFilesManager.findProductById(productId);
 
         List<StorageProductDto> storageProductDtos = storage.getProducts();
         for (StorageProductDto storageProduct : storageProductDtos) {
@@ -180,7 +181,7 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
         StorageDto storage = findStorageWithBuildingIdAndDc(buildingId, isDc);
         int availableCapacity = 0;
         if (!isDc) {
-            Factory factory = Factory.findFactoryById(buildingId);
+            Factory factory = ReadJsonFilesManager.findFactoryById(buildingId);
             if (productType.equals(Enums.ProductType.RawMaterial))
                 availableCapacity = factory.getRawMaterialCapacity();
             else if (productType.equals(Enums.ProductType.SemiFinished))
@@ -188,7 +189,7 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
             else if (productType.equals(Enums.ProductType.Finished))
                 availableCapacity = factory.getFinalMaterialCapacity();
             for (StorageProductDto storageProductDto : storage.getProducts()) {
-                Product storeProduct = Product.findProductById(storageProductDto.getProductId());
+                Product storeProduct = ReadJsonFilesManager.findProductById(storageProductDto.getProductId());
                 if (storeProduct.getProductType().equals(productType)) {
                     availableCapacity -= storageProductDto.getAmount() * storeProduct.getVolumetricUnit();
                 }
@@ -199,7 +200,7 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
             if ((dcDto.isRawMaterial() && productType.equals(Enums.ProductType.RawMaterial)
                     || (!dcDto.isRawMaterial() && productType.equals(Enums.ProductType.SemiFinished)))) {
                 for (StorageProductDto storageProductDto : storage.getProducts()) {
-                    Product storeProduct = Product.findProductById(storageProductDto.getProductId());
+                    Product storeProduct = ReadJsonFilesManager.findProductById(storageProductDto.getProductId());
                     if (storeProduct.getProductType().equals(productType)) {
                         availableCapacity -= storageProductDto.getAmount() * storeProduct.getVolumetricUnit();
                     }

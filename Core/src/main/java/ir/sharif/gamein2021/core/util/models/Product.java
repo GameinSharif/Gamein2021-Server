@@ -22,15 +22,5 @@ public class Product {
     private int volumetricUnit;
     private ArrayList<ProductIngredient> ingredientsPerUnit; //for SemiFinishedProducts & Finished only except CarbonDioxide
 
-    public static Product findProductById(Integer id) {
-        for (Product product : allProducts) {
-            if (product.getId() == id)
-                return product;
-        }
-        throw new ProductNotFoundException("Product with id: " + id + " does not exist");
-    }
 
-    public static List<Product> getAllProducts() {
-        return allProducts;
-    }
 }

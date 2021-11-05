@@ -1,7 +1,7 @@
 package ir.sharif.gamein2021.ClientHandler.controller;
 
 import com.google.gson.Gson;
-import ir.sharif.gamein2021.ClientHandler.domain.GetContractsRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.*;
 import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginRequest;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Messenger.GetAllChatsRequest;
@@ -10,6 +10,7 @@ import ir.sharif.gamein2021.ClientHandler.domain.RFQ.*;
 import ir.sharif.gamein2021.ClientHandler.domain.Auction.BidForAuctionRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Transport.GetTeamTransportsRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.productionLine.*;
+import ir.sharif.gamein2021.core.domain.entity.ContractSupplier;
 import ir.sharif.gamein2021.core.util.RequestTypeConstant;
 import lombok.AllArgsConstructor;
 import org.json.JSONObject;
@@ -28,6 +29,7 @@ public class MainController
     private final AuctionController auctionController;
     private final ProductionLineController productionLineController;
     private final MessageController messageController;
+    private final ContractSupplierController contractSupplierController;
     private final TransportController transportController;
     private final DcController dcController;
     private final Gson gson;
@@ -37,7 +39,7 @@ public class MainController
         String requestData = processedRequest.requestData;
         JSONObject obj = new JSONObject(requestData);
         RequestTypeConstant requestType = RequestTypeConstant.values()[obj.getInt("requestTypeConstant")];
-
+        System.out.println(requestData);
         switch (requestType)
         {
             case LOGIN:
@@ -54,8 +56,13 @@ public class MainController
                 break;
             case GET_GAME_DATA:
                 gameDataController.getGameData(processedRequest);
+                System.out.println("done1");
                 gameDataController.getCurrentWeekDemands(processedRequest);
+                System.out.println("done2");
+                gameDataController.getCurrentWeekSupplies(processedRequest);
+                System.out.println("done3");
                 gameDataController.getAllAuctions(processedRequest);
+                System.out.println("done4");
                 break;
             case GET_CONTRACTS:
                 GetContractsRequest getContractsRequest = gson.fromJson(requestData, GetContractsRequest.class);
@@ -125,9 +132,21 @@ public class MainController
                 UpgradeProductionLineEfficiencyRequest upgradeEfficiencyRequest = gson.fromJson(requestData, UpgradeProductionLineEfficiencyRequest.class);
                 productionLineController.UpgradeProductionLineEfficiency(processedRequest, upgradeEfficiencyRequest);
                 break;
+            case NEW_CONTRACT_WITH_SUPPLIER:
+                NewContractSupplierRequest newContractSupplierRequest = gson.fromJson(requestData, NewContractSupplierRequest.class);
+                contractSupplierController.newContractSupplier(processedRequest, newContractSupplierRequest);
+                break;
+            case TERMINATE_LONGTERM_CONTRACT_WITH_SUPPLIER:
+                TerminateLongtermContractSupplierRequest terminateLongtermContractSupplierRequest = gson.fromJson(requestData, TerminateLongtermContractSupplierRequest.class);
+                contractSupplierController.terminateLongtermContractSupplier(processedRequest, terminateLongtermContractSupplierRequest);
+                break;
             case GET_TEAM_TRANSPORTS:
                 GetTeamTransportsRequest getTeamTransportsRequest = gson.fromJson(requestData, GetTeamTransportsRequest.class);
                 transportController.getTeamTransports(processedRequest, getTeamTransportsRequest);
+                break;
+            case GET_CONTRACTS_WITH_SUPPLIER:
+                GetContractsSupplierRequest getContractsSupplierRequest = gson.fromJson(requestData, GetContractsSupplierRequest.class);
+                contractSupplierController.getContractsSupplier(processedRequest, getContractsSupplierRequest);
                 break;
             default:
                 System.out.println("Request type is invalid.");

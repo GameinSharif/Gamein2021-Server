@@ -12,8 +12,9 @@ public class AuctionDto
 {
     private Integer id;
     private Integer factoryId;
-    private int highestBid;
+    private Integer highestBid;
     private Integer highestBidTeamId;
-    private int bidsCount;
+    private Integer bidsCount;
+    private Integer lastRaiseAmount;
     private AuctionBidStatus auctionBidStatus;
 }

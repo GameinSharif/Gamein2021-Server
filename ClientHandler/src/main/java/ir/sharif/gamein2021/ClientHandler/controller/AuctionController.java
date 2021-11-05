@@ -44,7 +44,7 @@ public class AuctionController
             auctionService.checkAuctionByTeam(teamId);
 
             AuctionDto auctionDto = auctionService.findAuctionByFactory(factoryId);
-            auctionDto = auctionService.changeHighestBid(auctionDto, teamDto);
+            auctionDto = auctionService.changeHighestBid(auctionDto, teamDto, bidForAuctionRequest.getRaiseAmount());
 
             AuctionDto responseAuction = AuctionDto.builder()
                     .highestBid(auctionDto.getHighestBid())
@@ -63,6 +63,7 @@ public class AuctionController
                         .highestBid(auctionDto.getHighestBid())
                         .factoryId(auctionDto.getFactoryId())
                         .highestBidTeamId(auctionDto.getHighestBidTeamId())
+                        .lastRaiseAmount(auctionDto.getLastRaiseAmount())
                         .build();
                 response = new BidForAuctionResponse(ResponseTypeConstant.BID_FOR_AUCTION, responseAuction, "success");
             }

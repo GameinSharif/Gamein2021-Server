@@ -12,7 +12,7 @@ public class GameConstants {
     public static final LocalDate startDate = LocalDate.of(2000,1, 1);
 
     public final int AuctionStartValue = 1000;
-    public final int AuctionStepValue = 100;
+    public final int AuctionInitialStepValue = 100;
     public final LocalDateTime[] AuctionRoundsStartTime = new LocalDateTime[]{
             LocalDateTime.of(2021, 11, 25, 9, 0, 0),
             LocalDateTime.of(2021, 11, 25, 9, 5, 0),

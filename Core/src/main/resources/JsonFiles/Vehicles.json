@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "name": "AIRPLANE",
+    "vehicleType": "AIRPLANE",
     "speed": 800,
     "capacity": 120,
     "costPerKilometer": 6000,
@@ -9,7 +9,7 @@
   },
   {
     "id": 2,
-    "name": "TRUCK",
+    "vehicleType": "TRUCK",
     "speed": 40,
     "capacity": 50,
     "costPerKilometer": 500,
@@ -17,7 +17,7 @@
   },
   {
     "id": 3,
-    "name": "TRAIN",
+    "vehicleType": "TRAIN",
     "speed": 80,
     "capacity": 1400,
     "costPerKilometer": 7000,
@@ -25,7 +25,7 @@
   },
   {
     "id": 4,
-    "name": "VANET",
+    "vehicleType": "VANET",
     "speed": 100,
     "capacity": 4,
     "costPerKilometer": 100,

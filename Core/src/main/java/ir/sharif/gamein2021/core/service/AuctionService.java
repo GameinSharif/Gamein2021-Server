@@ -74,19 +74,23 @@ public class AuctionService extends AbstractCrudService<AuctionDto, Auction, Int
     }
 
     @Transactional
-    public AuctionDto changeHighestBid(AuctionDto auctionDto, TeamDto teamDto)
+    public AuctionDto changeHighestBid(AuctionDto auctionDto, TeamDto teamDto, Integer raiseAmount)
     {
         teamDto = teamService.loadById(teamDto.getId());
         auctionDto = loadById(auctionDto.getId());
-        int bidPrice = auctionDto.getHighestBid() + GameConstants.Instance.AuctionStepValue;
+        int bidPrice = auctionDto.getHighestBid() + raiseAmount;
 
         if (teamDto.getFactoryId() != null)
         {
             throw new InvalidRequestException("Not allowed to bid for this auction because you already have one factory");
         }
-        if (auctionDto.getHighestBid() >= bidPrice)
+        if (raiseAmount < auctionDto.getLastRaiseAmount())
         {
-            throw new InvalidOfferForAuction("" + bidPrice + " is not enough!");
+            throw new InvalidOfferForAuction("" + raiseAmount + " is not enough!");
+        }
+        if (bidPrice > teamDto.getCredit())
+        {
+            throw new InvalidRequestException("Not enough money for this");
         }
         if (ReadJsonFilesManager.Factories[auctionDto.getFactoryId()].getCountry() == teamDto.getCountry())
         {
@@ -94,6 +98,7 @@ public class AuctionService extends AbstractCrudService<AuctionDto, Auction, Int
             auctionDto.setHighestBidTeamId(oldTeamDto.getId());
             auctionDto.setHighestBid(bidPrice);
             auctionDto.setBidsCount(auctionDto.getBidsCount() + 1);
+            auctionDto.setLastRaiseAmount(raiseAmount);
             return saveOrUpdate(auctionDto);
         }
         else
@@ -111,7 +116,7 @@ public class AuctionService extends AbstractCrudService<AuctionDto, Auction, Int
         {
             throw new InvalidRequestException("Not allowed to bid for this auction because you already have one factory");
         }
-        if (ReadJsonFilesManager.Factories[factoryId].getCountry() == teamDto.getCountry())
+        if (ReadJsonFilesManager.Factories[factoryId - 1].getCountry() == teamDto.getCountry())
         {
             RemainedFactories.removeIf(f -> f.getId() == factoryId);
 
@@ -120,6 +125,7 @@ public class AuctionService extends AbstractCrudService<AuctionDto, Auction, Int
             auctionDto.setHighestBid(GameConstants.Instance.AuctionStartValue);
             auctionDto.setBidsCount(1);
             auctionDto.setAuctionBidStatus(Enums.AuctionBidStatus.Active);
+            auctionDto.setLastRaiseAmount(GameConstants.Instance.AuctionInitialStepValue);
             return saveOrUpdate(auctionDto);
         }
         else

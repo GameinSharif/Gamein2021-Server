@@ -11,4 +11,5 @@ import java.io.Serializable;
 public class BidForAuctionRequest extends RequestObject implements Serializable
 {
     private final Integer factoryId;
+    private final Integer raiseAmount;
 }

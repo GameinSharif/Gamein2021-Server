@@ -24,7 +24,6 @@ public class ReadJsonFilesManager
     public static Supplier[] Suppliers;
     public static ProductionLineTemplate[] ProductionLineTemplates;
 
-
     public static void ReadJsonFiles()
     {
         try
@@ -44,15 +43,12 @@ public class ReadJsonFilesManager
             File productionLineTemplateJsonFile = ResourceUtils.getFile("classpath:JsonFiles/ProductionLineTemplates.json");
             ProductionLineTemplates = objectMapper.readValue(productionLineTemplateJsonFile, ProductionLineTemplate[].class);
 
-            try {
-                File suppliersJsonFile = ResourceUtils.getFile("classpath:JsonFiles/Suppliers.json");
-                Suppliers = objectMapper.readValue(suppliersJsonFile, Supplier[].class);
-            }catch (Exception e){
-                e.printStackTrace();
-            }
+            File suppliersJsonFile = ResourceUtils.getFile("classpath:JsonFiles/Suppliers.json");
+            Suppliers = objectMapper.readValue(suppliersJsonFile, Supplier[].class);
         }
-        catch (IOException ignored)
+        catch (IOException e)
         {
+            e.printStackTrace();
         }
     }
 }

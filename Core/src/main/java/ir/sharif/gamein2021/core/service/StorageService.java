@@ -16,6 +16,7 @@ import ir.sharif.gamein2021.core.util.models.Factory;
 import ir.sharif.gamein2021.core.util.models.Product;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -34,7 +35,7 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
     private final DcService dcService;
 
     public StorageService(ModelMapper modelMapper, StorageRepository repository,
-                          StorageProductService storageProductService, DcService dcService) {
+                          StorageProductService storageProductService, @Lazy DcService dcService) {
         this.modelMapper = modelMapper;
         this.repository = repository;
         this.storageProductService = storageProductService;

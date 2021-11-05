@@ -139,12 +139,15 @@ public class MainController
             case NEW_CONTRACT_WITH_SUPPLIER:
                 NewContractSupplierRequest newContractSupplierRequest = gson.fromJson(requestData, NewContractSupplierRequest.class);
                 contractSupplierController.newContractSupplier(processedRequest, newContractSupplierRequest);
+                break;
             case TERMINATE_LONGTERM_CONTRACT_WITH_SUPPLIER:
                 TerminateLongtermContractSupplierRequest terminateLongtermContractSupplierRequest = gson.fromJson(requestData, TerminateLongtermContractSupplierRequest.class);
                 contractSupplierController.terminateLongtermContractSupplier(processedRequest, terminateLongtermContractSupplierRequest);
+                break;
             case GET_TEAM_TRANSPORTS:
                 GetTeamTransportsRequest getTeamTransportsRequest = gson.fromJson(requestData, GetTeamTransportsRequest.class);
                 transportController.getTeamTransports(processedRequest, getTeamTransportsRequest);
+                break;
             case GET_CONTRACTS_WITH_SUPPLIER:
                 GetContractsSupplierRequest getContractsSupplierRequest = gson.fromJson(requestData, GetContractsSupplierRequest.class);
                 contractSupplierController.getContractsSupplier(processedRequest, getContractsSupplierRequest);

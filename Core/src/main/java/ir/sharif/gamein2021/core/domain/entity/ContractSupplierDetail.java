@@ -23,11 +23,11 @@ public class ContractSupplierDetail implements BaseEntity
     @Column(name = "bought_amount", nullable = false)
     private Integer boughtAmount;
 
-    @Column(name = "price_per_unit", nullable = false)
+    @Column(name = "price_per_unit")
     private Integer pricePerUnit;
 
     @ManyToOne
-    @JoinColumn(name = "contract_supplier_id", nullable = false)
+    @JoinColumn(name = "contract_supplier_id")
     private ContractSupplier contractSupplier;
 
     @Override

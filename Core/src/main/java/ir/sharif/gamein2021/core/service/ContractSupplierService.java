@@ -39,16 +39,19 @@ public class ContractSupplierService extends AbstractCrudService<ContractSupplie
 
     public Supplier SupplierIdValidation(Integer supplierId)
     {
-        return ReadJsonFilesManager.Suppliers[supplierId];
+        for(Supplier s : ReadJsonFilesManager.Suppliers)
+        {
+            if (s.getId() == supplierId)
+            {
+                return s;
+            }
+        }
+        return null;
     }
 
     @Transactional
-    public ContractSupplierDto save(ContractSupplierDto contractSupplierDto, List<ContractSupplierDetailDto> contractSupplierDetailDtos)
+    public ContractSupplierDto save(ContractSupplierDto contractSupplierDto)
     {
-        for (ContractSupplierDetailDto contractDetailDto : contractSupplierDetailDtos)
-        {
-            contractSupplierDto.getContractSupplierDetails().add(contractDetailDto);
-        }
         return saveOrUpdate(contractSupplierDto);
     }
 

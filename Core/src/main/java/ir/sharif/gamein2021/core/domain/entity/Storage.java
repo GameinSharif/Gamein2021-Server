@@ -16,8 +16,8 @@ public class Storage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(nullable = false)
-    private boolean isDc;
-    @Column(nullable = false , unique = true)
+    private boolean dc;
+    @Column(nullable = false)
     private Integer buildingId;
     @OneToMany
     private List<StorageProduct> products;

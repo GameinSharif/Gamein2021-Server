@@ -62,14 +62,15 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
     public List<StorageDto> list() {
         return super.list();
     }
+
     @Transactional(readOnly = true)
-    public List<StorageDto> findAllStorageForTeam(TeamDto teamDto){
+    public List<StorageDto> findAllStorageForTeam(TeamDto teamDto) {
         List<DcDto> dcs = dcService.getAllDcForTeam(teamDto);
         List<StorageDto> storages = new ArrayList<>();
-        for(DcDto dcDto : dcs){
-            storages.add(findStorageWithBuildingIdAndDc(dcDto.getId() , true));
+        for (DcDto dcDto : dcs) {
+            storages.add(findStorageWithBuildingIdAndDc(dcDto.getId(), true));
         }
-        storages.add(findStorageWithBuildingIdAndDc(teamDto.getFactoryId() , false));
+        storages.add(findStorageWithBuildingIdAndDc(teamDto.getFactoryId(), false));
         return storages;
     }
 
@@ -82,7 +83,9 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
         if (storageProductDto.getAmount() < amount)
             throw new InvalidRequestException("You storage doesn't have this much products");
         else {
+            int index = storage.getProducts().indexOf(storageProductDto);
             storageProductDto.setAmount(storageProductDto.getAmount() - amount);
+            storage.getProducts().set(index , storageProductDto);
             storageProductService.saveOrUpdate(storageProductDto);
             return loadById(storage.getId());
         }
@@ -92,12 +95,13 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
     public StorageDto saveOrUpdate(StorageDto domainObject) {
         Assert.notNull(domainObject, "The domainObject must not be null!");
         Storage entity = modelMapper.map(domainObject, getEntityClass());
-        if(domainObject.getProducts() != null){
-           for(StorageProductDto s : domainObject.getProducts()){
-               StorageProductDto product = storageProductService.saveOrUpdate(s);
-               StorageProduct productEntity = storageProductService.findStorageProductById(product.getId());
-               entity.getProducts().add(productEntity);
-           }
+        entity.getProducts().clear();
+        if (domainObject.getProducts() != null) {
+            for (StorageProductDto s : domainObject.getProducts()) {
+                StorageProductDto product = storageProductService.saveOrUpdate(s);
+                StorageProduct productEntity = storageProductService.findStorageProductById(product.getId());
+                entity.getProducts().add(productEntity);
+            }
         }
         Storage result = repository.save(entity);
         log.debug("save/update entity {}", result);
@@ -114,13 +118,17 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
         Product product = Product.findProductById(productId);
         StorageProductDto storageProductDto = null;
         StorageDto storage = findStorageWithBuildingIdAndDc(buildingId, isDc);
-        int availableCapacity = calculateAvailableCapacity(buildingId , isDc , product.getProductType());
-        if(availableCapacity < amount * product.getVolumetricUnit())
+        int availableCapacity = calculateAvailableCapacity(buildingId, isDc, product.getProductType());
+        if (availableCapacity < amount * product.getVolumetricUnit())
             throw new InvalidRequestException("Product out of boundary exception, You only have " + availableCapacity + " to add to this building!");
-        try {
-            storageProductDto = findProductStorageById(storage.getId(), product.getId());
+        storageProductDto = findProductStorageByIdNull(storage.getId(), product.getId());
+        if(storageProductDto != null) {
+            int index = storage.getProducts().indexOf(storageProductDto);
             storageProductDto.setAmount(storageProductDto.getAmount() + amount);
-        } catch (Exception e) {
+            storage.getProducts().set(index , storageProductDto);
+            storageProductService.saveOrUpdate(storageProductDto);
+        }
+        else {
             storageProductDto = StorageProductDto.builder().productId(product.getId()).amount(amount).build();
             storage.getProducts().add(storageProductDto);
         }
@@ -139,6 +147,19 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
                 return storageProduct;
         }
         throw new ProductNotFoundException("Product with id : " + productId + " does not exist in this dc!");
+    }
+
+    @Transactional(readOnly = true)
+    public StorageProductDto findProductStorageByIdNull(Integer storageId, Integer productId) {
+        StorageDto storage = loadById(storageId);
+        Product product = Product.findProductById(productId);
+
+        List<StorageProductDto> storageProductDtos = storage.getProducts();
+        for (StorageProductDto storageProduct : storageProductDtos) {
+            if (product.getId() == storageProduct.getProductId())
+                return storageProduct;
+        }
+        return null;
     }
 
     @Transactional(readOnly = true)
@@ -174,15 +195,16 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
             }
         } else {
             DcDto dcDto = dcService.loadById(buildingId);
+            availableCapacity = dcDto.getCapacity();
             if ((dcDto.isRawMaterial() && productType.equals(Enums.ProductType.RawMaterial)
-            || (!dcDto.isRawMaterial() && productType.equals(Enums.ProductType.SemiFinished)))) {
+                    || (!dcDto.isRawMaterial() && productType.equals(Enums.ProductType.SemiFinished)))) {
                 for (StorageProductDto storageProductDto : storage.getProducts()) {
                     Product storeProduct = Product.findProductById(storageProductDto.getProductId());
                     if (storeProduct.getProductType().equals(productType)) {
                         availableCapacity -= storageProductDto.getAmount() * storeProduct.getVolumetricUnit();
                     }
                 }
-            }else{
+            } else {
                 throw new InvalidRequestException("This products can't be add to this dc");
             }
             //TODO checking cheating exception

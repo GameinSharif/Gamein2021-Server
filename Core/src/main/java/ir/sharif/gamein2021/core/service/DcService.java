@@ -71,7 +71,7 @@ public class DcService extends AbstractCrudService<DcDto, Dc, Integer> {
         if (teamDto.getCredit() < dc.getBuyingPrice()) {
             throw new InvalidRequestException("Not enough money for buying dc with id " + dc.getId());
         }
-        int credit = teamDto.getCredit() - dc.getBuyingPrice();
+        float credit = teamDto.getCredit() - dc.getBuyingPrice();
         teamDto.setCredit(credit);
         dc.setOwnerId(teamDto.getId());
         saveOrUpdate(dc);
@@ -88,7 +88,7 @@ public class DcService extends AbstractCrudService<DcDto, Dc, Integer> {
         }
         if(!isActive(dc))
             throw new InactiveDcException("Dc with id " + dc.getId() + " is not active yet");
-        int credit = teamDto.getCredit() + dc.getSellingPrice();
+        float credit = teamDto.getCredit() + dc.getSellingPrice();
         teamDto.setCredit(credit);
         dc.setOwnerId(null);
         saveOrUpdate(dc);

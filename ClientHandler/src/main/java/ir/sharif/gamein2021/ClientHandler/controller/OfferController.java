@@ -35,7 +35,7 @@ public class OfferController
     static Logger logger = Logger.getLogger(ExecutorThread.class.getName());
 
     private final ModelMapper modelMapper;
-    private final PushMessageManagerInterface pushMessageManager;
+    private PushMessageManagerInterface pushMessageManager;
     private final GameCalendar gameCalendar;
     private final OfferService offerService;
     private final UserService userService;
@@ -43,9 +43,8 @@ public class OfferController
     private final TransportManager transportManager;
     private final Gson gson = new Gson();
 
-    public OfferController(ModelMapper modelMapper, PushMessageManagerInterface pushMessageManager, GlobalPushMessageManager globalPushMessageManager, GameCalendar gameCalendar, TransportManager transportManager, OfferService offerService, UserService userService, TeamService teamService) {
+    public OfferController(ModelMapper modelMapper, GameCalendar gameCalendar, TransportManager transportManager, OfferService offerService, UserService userService, TeamService teamService) {
         this.modelMapper = modelMapper;
-        this.pushMessageManager = pushMessageManager;
         this.offerService = offerService;
         this.transportManager = transportManager;
         this.gameCalendar = gameCalendar;

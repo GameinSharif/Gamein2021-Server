@@ -10,6 +10,7 @@ import ir.sharif.gamein2021.core.domain.dto.TransportDto;
 import ir.sharif.gamein2021.core.domain.entity.Team;
 import ir.sharif.gamein2021.core.manager.GameCalendar;
 import ir.sharif.gamein2021.core.manager.GlobalPushMessageManager;
+import ir.sharif.gamein2021.core.manager.PushMessageManagerInterface;
 import ir.sharif.gamein2021.core.manager.TransportManager;
 import ir.sharif.gamein2021.core.service.OfferService;
 import ir.sharif.gamein2021.core.service.TeamService;
@@ -34,8 +35,7 @@ public class OfferController
     static Logger logger = Logger.getLogger(ExecutorThread.class.getName());
 
     private final ModelMapper modelMapper;
-    private final LocalPushMessageManager pushMessageManager;
-    private final GlobalPushMessageManager globalPushMessageManager;
+    private final PushMessageManagerInterface pushMessageManager;
     private final GameCalendar gameCalendar;
     private final OfferService offerService;
     private final UserService userService;
@@ -43,10 +43,9 @@ public class OfferController
     private final TransportManager transportManager;
     private final Gson gson = new Gson();
 
-    public OfferController(ModelMapper modelMapper, LocalPushMessageManager pushMessageManager, GlobalPushMessageManager globalPushMessageManager, GameCalendar gameCalendar, TransportManager transportManager, OfferService offerService, UserService userService, TeamService teamService) {
+    public OfferController(ModelMapper modelMapper, PushMessageManagerInterface pushMessageManager, GlobalPushMessageManager globalPushMessageManager, GameCalendar gameCalendar, TransportManager transportManager, OfferService offerService, UserService userService, TeamService teamService) {
         this.modelMapper = modelMapper;
         this.pushMessageManager = pushMessageManager;
-        this.globalPushMessageManager = globalPushMessageManager;
         this.offerService = offerService;
         this.transportManager = transportManager;
         this.gameCalendar = gameCalendar;
@@ -66,7 +65,7 @@ public class OfferController
             logger.debug(e);
             getOffersResponse = new GetOffersResponse(ResponseTypeConstant.GET_OFFERS, null, null, null);
         }
-        pushMessageManager.sendMessageBySession(request.session, gson.toJson(getOffersResponse));
+        pushMessageManager.sendMessageByUserId(userService.loadById(getOffersRequest.playerId).getId().toString(), gson.toJson(getOffersResponse));
     }
 
     public void createNewOffer(ProcessedRequest request, NewOfferRequest newOfferRequest) {
@@ -82,7 +81,7 @@ public class OfferController
             logger.debug(e);
             newOfferResponse = new NewOfferResponse(ResponseTypeConstant.NEW_OFFER, null);
         }
-        pushMessageManager.sendMessageBySession(request.session, gson.toJson(newOfferResponse));
+        pushMessageManager.sendMessageByUserId(userService.loadById(newOfferRequest.playerId).getId().toString(), gson.toJson(newOfferResponse));
     }
 
     public void terminateOffer(ProcessedRequest request, TerminateOfferRequest terminateOfferRequest) {
@@ -104,7 +103,7 @@ public class OfferController
             logger.debug(e);
             terminateOfferResponse = new TerminateOfferResponse(ResponseTypeConstant.TERMINATE_OFFER, null);
         }
-        pushMessageManager.sendMessageBySession(request.session, gson.toJson(terminateOfferResponse));
+        pushMessageManager.sendMessageByUserId(userService.loadById(terminateOfferRequest.playerId).getId().toString(), gson.toJson(terminateOfferResponse));
     }
 
     public void acceptOffer(ProcessedRequest request, AcceptOfferRequest acceptOfferRequest) {
@@ -147,10 +146,10 @@ public class OfferController
         }
 
         if (acceptOfferResponse.getAcceptedOffer() == null) {
-            pushMessageManager.sendMessageBySession(request.session, gson.toJson(acceptOfferResponse));
+            pushMessageManager.sendMessageByUserId(userService.loadById(acceptOfferRequest.playerId).getId().toString(), gson.toJson(acceptOfferResponse));
         } else {
-            globalPushMessageManager.sendMessageByTeamId(offerService.findById(acceptOfferRequest.getOfferId()).getTeamId().toString(), gson.toJson(acceptOfferResponse));
-            globalPushMessageManager.sendMessageByTeamId(userService.loadById(acceptOfferRequest.playerId).getTeamId().toString(), gson.toJson(acceptOfferResponse));
+            pushMessageManager.sendMessageByTeamId(offerService.findById(acceptOfferRequest.getOfferId()).getTeamId().toString(), gson.toJson(acceptOfferResponse));
+            pushMessageManager.sendMessageByTeamId(userService.loadById(acceptOfferRequest.playerId).getTeamId().toString(), gson.toJson(acceptOfferResponse));
         }
 
     }

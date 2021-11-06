@@ -28,10 +28,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Component
 public class OfferController
 {
-
     static Logger logger = Logger.getLogger(ExecutorThread.class.getName());
 
     private final ModelMapper modelMapper;
@@ -42,15 +42,6 @@ public class OfferController
     private final TeamService teamService;
     private final TransportManager transportManager;
     private final Gson gson = new Gson();
-
-    public OfferController(ModelMapper modelMapper, GameCalendar gameCalendar, TransportManager transportManager, OfferService offerService, UserService userService, TeamService teamService) {
-        this.modelMapper = modelMapper;
-        this.offerService = offerService;
-        this.transportManager = transportManager;
-        this.gameCalendar = gameCalendar;
-        this.userService = userService;
-        this.teamService = teamService;
-    }
 
     public void handleGetOffers(ProcessedRequest request, GetOffersRequest getOffersRequest) {
         GetOffersResponse getOffersResponse;
@@ -76,17 +67,19 @@ public class OfferController
             OfferDto savedOfferDto = offerService.addOffer(offerDto);
 
             newOfferResponse = new NewOfferResponse(ResponseTypeConstant.NEW_OFFER, savedOfferDto);
-        } catch (Exception e) {
+            pushMessageManager.sendMessageByTeamId(userService.loadById(newOfferRequest.playerId).getTeamId().toString(), gson.toJson(newOfferResponse));
+        }
+        catch (Exception e) {
             logger.debug(e);
             newOfferResponse = new NewOfferResponse(ResponseTypeConstant.NEW_OFFER, null);
+            pushMessageManager.sendMessageByUserId(userService.loadById(newOfferRequest.playerId).getId().toString(), gson.toJson(newOfferResponse));
         }
-        pushMessageManager.sendMessageByUserId(userService.loadById(newOfferRequest.playerId).getId().toString(), gson.toJson(newOfferResponse));
     }
 
     public void terminateOffer(ProcessedRequest request, TerminateOfferRequest terminateOfferRequest) {
         TerminateOfferResponse terminateOfferResponse;
         try {
-            int teamId = userService.loadById(terminateOfferRequest.playerId).getTeamId();
+            Integer teamId = userService.loadById(terminateOfferRequest.playerId).getTeamId();
             int offerTeamId = offerService.findById(terminateOfferRequest.getOfferId()).getTeamId();
             if (teamId != offerTeamId) {
                 throw new CheatingException();
@@ -95,14 +88,16 @@ public class OfferController
             offerDto.setOfferStatus(OfferStatus.TERMINATED);
             offerService.saveOrUpdate(offerDto);
             terminateOfferResponse = new TerminateOfferResponse(ResponseTypeConstant.TERMINATE_OFFER, terminateOfferRequest.getOfferId());
+            pushMessageManager.sendMessageByTeamId(teamId.toString(), gson.toJson(terminateOfferResponse));
         } catch (CheatingException ch) {
             //TODO cheating response
             terminateOfferResponse = new TerminateOfferResponse(ResponseTypeConstant.TERMINATE_OFFER, null);
+            pushMessageManager.sendMessageByUserId(userService.loadById(terminateOfferRequest.playerId).getId().toString(), gson.toJson(terminateOfferResponse));
         } catch (Exception e) {
             logger.debug(e);
             terminateOfferResponse = new TerminateOfferResponse(ResponseTypeConstant.TERMINATE_OFFER, null);
+            pushMessageManager.sendMessageByUserId(userService.loadById(terminateOfferRequest.playerId).getId().toString(), gson.toJson(terminateOfferResponse));
         }
-        pushMessageManager.sendMessageByUserId(userService.loadById(terminateOfferRequest.playerId).getId().toString(), gson.toJson(terminateOfferResponse));
     }
 
     public void acceptOffer(ProcessedRequest request, AcceptOfferRequest acceptOfferRequest) {
@@ -112,8 +107,13 @@ public class OfferController
             Team accepterTeam = teamService.findTeamById(userService.loadById(acceptOfferRequest.playerId).getTeamId());
             Team acceptedTeam = teamService.findTeamById(offerService.findById(acceptOfferRequest.getOfferId()).getTeamId());
             float totalPayment = acceptedOffer.getVolume() * acceptedOffer.getCostPerUnit();
+            //TODO add transport cost
             if (acceptedTeam.getId().equals(accepterTeam.getId())) {
                 acceptOfferResponse = new AcceptOfferResponse(ResponseTypeConstant.ACCEPT_OFFER, null, "Come on!");
+            }
+            else if (acceptedOffer.getOfferStatus() != OfferStatus.ACTIVE || acceptedOffer.getOfferDeadline().isBefore(gameCalendar.getCurrentDate()))
+            {
+                acceptOfferResponse = new AcceptOfferResponse(ResponseTypeConstant.ACCEPT_OFFER, null, "The Offer is not valid");
             }
             else if (totalPayment > acceptedTeam.getCredit()) {
                 acceptOfferResponse = new AcceptOfferResponse(ResponseTypeConstant.ACCEPT_OFFER, null, "The Offer Placer Team doesn't have enough money!");

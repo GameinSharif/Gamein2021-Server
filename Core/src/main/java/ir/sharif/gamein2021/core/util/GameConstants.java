@@ -15,9 +15,9 @@ public class GameConstants {
     public final int AuctionInitialStepValue = 100;
     public final int AuctionRoundDurationSeconds = 180;
     public final LocalDateTime[] AuctionRoundsStartTime = new LocalDateTime[]{
-            LocalDateTime.of(2021, 11, 25, 9, 0, 0),
-            LocalDateTime.of(2021, 11, 25, 9, 5, 0),
-            LocalDateTime.of(2021, 11, 25, 9, 10, 0)
+            LocalDateTime.of(2021, 11, 6, 22, 10, 0),
+            LocalDateTime.of(2021, 11, 6, 22, 13, 0),
+            LocalDateTime.of(2021, 11, 6, 22, 16, 0),
     };
     public static final float CrushProbability = 0.01f;
 

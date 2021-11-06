@@ -121,6 +121,10 @@ public class AuctionService extends AbstractCrudService<AuctionDto, Auction, Int
         {
             throw new InvalidRequestException("Not enough money for this");
         }
+        if (raiseAmount < GameConstants.Instance.AuctionStartValue)
+        {
+            throw new InvalidOfferForAuction("" + raiseAmount + " is not enough!");
+        }
         if (ReadJsonFilesManager.Factories[factoryId - 1].getCountry() == teamDto.getCountry())
         {
             RemainedFactories.removeIf(f -> f.getId() == factoryId);

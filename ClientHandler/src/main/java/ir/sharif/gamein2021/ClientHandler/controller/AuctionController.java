@@ -6,6 +6,7 @@ import ir.sharif.gamein2021.ClientHandler.manager.LocalPushMessageManager;
 import ir.sharif.gamein2021.ClientHandler.domain.Auction.BidForAuctionRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Auction.BidForAuctionResponse;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
+import ir.sharif.gamein2021.core.manager.PushMessageManagerInterface;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import ir.sharif.gamein2021.core.exception.EntityNotFoundException;
 import ir.sharif.gamein2021.core.service.AuctionService;
@@ -26,7 +27,7 @@ public class AuctionController
 
     private final AuctionService auctionService;
     private final Gson gson;
-    private final LocalPushMessageManager pushMessageManager;
+    private final PushMessageManagerInterface pushMessageManager;
     private final UserService userService;
     private final TeamService teamService;
 
@@ -53,6 +54,7 @@ public class AuctionController
                     .lastRaiseAmount(auctionDto.getLastRaiseAmount())
                     .build();
             response = new BidForAuctionResponse(ResponseTypeConstant.BID_FOR_AUCTION, responseAuction, "success");
+            pushMessageManager.sendMessageToAll(gson.toJson(response));
         }
         catch (EntityNotFoundException e)
         {
@@ -67,12 +69,14 @@ public class AuctionController
                         .lastRaiseAmount(auctionDto.getLastRaiseAmount())
                         .build();
                 response = new BidForAuctionResponse(ResponseTypeConstant.BID_FOR_AUCTION, responseAuction, "success");
+                pushMessageManager.sendMessageToAll(gson.toJson(response));
             }
             catch (Exception e2)
             {
                 System.out.println(e2.getMessage());
                 logger.debug(e2.getMessage());
                 response = new BidForAuctionResponse(ResponseTypeConstant.BID_FOR_AUCTION, null, e2.getMessage());
+                pushMessageManager.sendMessageByUserId(userDto.getId().toString(), gson.toJson(response));
             }
         }
         catch (Exception e)
@@ -80,7 +84,7 @@ public class AuctionController
             System.out.println(e.getMessage());
             logger.debug(e.getMessage());
             response = new BidForAuctionResponse(ResponseTypeConstant.BID_FOR_AUCTION, null, e.getMessage());
+            pushMessageManager.sendMessageByUserId(userDto.getId().toString(), gson.toJson(response));
         }
-        pushMessageManager.sendMessageBySession(request.session, gson.toJson(response));
     }
 }

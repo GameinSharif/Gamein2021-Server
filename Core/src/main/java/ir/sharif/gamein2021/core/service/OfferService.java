@@ -62,6 +62,14 @@ public class OfferService extends AbstractCrudService<OfferDto, Offer, Integer>
         return saveOrUpdate(offerDto);
     }
 
+    @Transactional
+    public List<OfferDto> findAcceptedOffers(Integer teamId) {
+        List<Offer> offers = offerRepository.findAllByAccepterTeamIs(teamService.findTeamById(teamId));
+        return offers.stream()
+                .map(e -> modelMapper.map(e, OfferDto.class))
+                .collect(Collectors.toList());
+    }
+
     @Override
     public void delete(Integer id)
     {

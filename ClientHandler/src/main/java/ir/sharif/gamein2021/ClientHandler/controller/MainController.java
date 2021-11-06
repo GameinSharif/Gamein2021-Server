@@ -129,6 +129,10 @@ public class MainController
                 GetTeamTransportsRequest getTeamTransportsRequest = gson.fromJson(requestData, GetTeamTransportsRequest.class);
                 transportController.getTeamTransports(processedRequest, getTeamTransportsRequest);
                 break;
+            case ACCEPT_OFFER:
+                AcceptOfferRequest acceptOfferRequest = gson.fromJson(requestData, AcceptOfferRequest.class);
+                offerController.acceptOffer(processedRequest, acceptOfferRequest);
+                break;
             default:
                 System.out.println("Request type is invalid.");
         }

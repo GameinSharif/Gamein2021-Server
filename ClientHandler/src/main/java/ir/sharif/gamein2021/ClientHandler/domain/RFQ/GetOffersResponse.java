@@ -16,11 +16,13 @@ public class GetOffersResponse extends ResponseObject implements Serializable {
 
     private List<OfferDto> myTeamOffers;
     private List<OfferDto> otherTeamsOffers;
+    private List<OfferDto> acceptedOffersByMyTeam;
 
-    public GetOffersResponse(ResponseTypeConstant responseTypeConstant, List<OfferDto> myTeamOffers, List<OfferDto> otherTeamsOffers)
+    public GetOffersResponse(ResponseTypeConstant responseTypeConstant, List<OfferDto> myTeamOffers, List<OfferDto> otherTeamsOffers, List<OfferDto> acceptedOffersByMyTeam)
     {
         this.responseTypeConstant = responseTypeConstant.ordinal();
         this.myTeamOffers = myTeamOffers;
         this.otherTeamsOffers = otherTeamsOffers;
+        this.acceptedOffersByMyTeam = acceptedOffersByMyTeam;
     }
 }

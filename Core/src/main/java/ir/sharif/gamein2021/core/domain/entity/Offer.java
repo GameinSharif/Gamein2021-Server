@@ -25,6 +25,9 @@ public class Offer implements BaseEntity{
     @Enumerated(value = EnumType.STRING)
     private OfferStatus offerStatus;
 
+    @ManyToOne
+    private Team accepterTeam;
+
     @Column(name = "product_id", nullable = false)
     private Integer productId;
 
@@ -36,7 +39,6 @@ public class Offer implements BaseEntity{
 
     @Column(name = "offer_deadline", nullable = false)
     private LocalDate offerDeadline;
-
 
     @Override
     public Integer getId() {

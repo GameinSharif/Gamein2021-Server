@@ -13,4 +13,5 @@ public interface OfferRepository extends JpaRepository<Offer, Integer>
 {
     List<Offer> findOffersByTeam(Team team);
     List<Offer> findAllByTeamIsNotAndOfferStatusIs(Team team, OfferStatus offerStatus);
+    List<Offer> findAllByAccepterTeamIs(Team team);
 }

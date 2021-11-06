@@ -17,6 +17,7 @@ public class OfferDto implements BaseDto<Integer>
     private Integer productId;
     private Integer volume;
     private OfferStatus offerStatus;
+    private Integer accepterTeamId;
     private Float costPerUnit;
     private LocalDate offerDeadline;
 

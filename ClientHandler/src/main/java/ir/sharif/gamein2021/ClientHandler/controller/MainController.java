@@ -142,6 +142,9 @@ public class MainController
             case GET_CONTRACTS_WITH_SUPPLIER:
                 GetContractsSupplierRequest getContractsSupplierRequest = gson.fromJson(requestData, GetContractsSupplierRequest.class);
                 contractSupplierController.getContractsSupplier(processedRequest, getContractsSupplierRequest);
+            case ACCEPT_OFFER:
+                AcceptOfferRequest acceptOfferRequest = gson.fromJson(requestData, AcceptOfferRequest.class);
+                offerController.acceptOffer(processedRequest, acceptOfferRequest);
                 break;
             default:
                 System.out.println("Request type is invalid.");

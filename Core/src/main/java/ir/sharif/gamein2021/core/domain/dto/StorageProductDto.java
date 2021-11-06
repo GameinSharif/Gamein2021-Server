@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class StorageProductDto {
     private Integer id;
-    private int productId;
-    private int amount;
+    private Integer productId;
+    private Integer amount;
 }

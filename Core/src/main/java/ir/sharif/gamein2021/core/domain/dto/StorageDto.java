@@ -15,7 +15,7 @@ import java.util.List;
 public class StorageDto {
 
     private Integer id;
-    private boolean dc;
+    private Boolean dc;
     private Integer buildingId;
     private List<StorageProductDto> products;
 }

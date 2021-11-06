@@ -11,14 +11,20 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Storage {
+public class Storage implements BaseEntity
+{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "storage_id")
     private Integer id;
+
     @Column(nullable = false)
-    private boolean dc;
+    private Boolean dc;
+
     @Column(nullable = false)
     private Integer buildingId;
+
     @OneToMany
+    @JoinColumn(name = "storage_id")
     private List<StorageProduct> products;
 }

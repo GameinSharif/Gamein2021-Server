@@ -142,6 +142,7 @@ public class MainController
             case GET_CONTRACTS_WITH_SUPPLIER:
                 GetContractsSupplierRequest getContractsSupplierRequest = gson.fromJson(requestData, GetContractsSupplierRequest.class);
                 contractSupplierController.getContractsSupplier(processedRequest, getContractsSupplierRequest);
+                break;
             case ACCEPT_OFFER:
                 AcceptOfferRequest acceptOfferRequest = gson.fromJson(requestData, AcceptOfferRequest.class);
                 offerController.acceptOffer(processedRequest, acceptOfferRequest);

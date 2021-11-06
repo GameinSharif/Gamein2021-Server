@@ -38,7 +38,7 @@ public class ProductController {
         AddProductResponse response;
         try {
             UserDto userDto = userService.loadById(id);
-            Integer teamId = userDto.getTeam().getId();
+            Integer teamId = userDto.getTeamId();
             TeamDto teamDto = teamService.loadById(teamId);
             checkTeamAndStorage(addProductRequest.getBuildingId(), addProductRequest.isDc(), teamDto);
             StorageDto storageDto;
@@ -61,7 +61,7 @@ public class ProductController {
         RemoveProductResponse response;
         try {
             UserDto userDto = userService.loadById(id);
-            Integer teamId = userDto.getTeam().getId();
+            Integer teamId = userDto.getTeamId();
             TeamDto teamDto = teamService.loadById(teamId);
             checkTeamAndStorage(removeProductRequest.getBuildingId(), removeProductRequest.isDc(), teamDto);
             StorageDto storageDto;
@@ -84,7 +84,7 @@ public class ProductController {
         GetStorageProductsResponse response;
         try {
             UserDto userDto = userService.loadById(id);
-            Integer teamId = userDto.getTeam().getId();
+            Integer teamId = userDto.getTeamId();
             TeamDto teamDto = teamService.loadById(teamId);
             List<StorageDto> storages = storageService.findAllStorageForTeam(teamDto);
             response = new GetStorageProductsResponse(ResponseTypeConstant.GET_STORAGES, storages, "success");

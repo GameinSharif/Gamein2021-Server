@@ -29,12 +29,10 @@ public enum RequestTypeConstant
     BUY_DC(24),
     SELL_DC(25),
     GET_TEAM_TRANSPORTS(26),
-    GET_CONTRACTS_WITH_SUPPLIER(27);
-    BUY_DC(13),
-    SELL_DC(14),
-    ADD_PRODUCT(15),
-    REMOVE_PRODUCT(16),
-    GET_STORAGES(17);
+    GET_CONTRACTS_WITH_SUPPLIER(27),
+    ADD_PRODUCT(28),
+    REMOVE_PRODUCT(29),
+    GET_STORAGES(30);
 
     private int value;
 

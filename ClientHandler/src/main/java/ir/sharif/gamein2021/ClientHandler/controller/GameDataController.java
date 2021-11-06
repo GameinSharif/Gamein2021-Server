@@ -26,11 +26,13 @@ import ir.sharif.gamein2021.core.service.WeekDemandService;
 import ir.sharif.gamein2021.core.domain.dto.GameinCustomerDto;
 import ir.sharif.gamein2021.core.domain.dto.WeekDemandDto;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
+import lombok.AllArgsConstructor;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Component
 public class GameDataController {
     static Logger logger = Logger.getLogger(ExecutorThread.class.getName());
@@ -43,17 +45,6 @@ public class GameDataController {
     private final AuctionService auctionService;
     private final DcService dcService;
     private final Gson gson = new Gson();
-
-    public GameDataController(LocalPushMessageManager pushMessageManager, TeamService teamService, GameinCustomerService gameinCustomerService, WeekDemandService weekDemandService,WeekSupplyService weekSupplyService, AuctionService auctionService)
-    {
-        this.pushMessageManager = pushMessageManager;
-        this.teamService = teamService;
-        this.gameinCustomerService = gameinCustomerService;
-        this.weekDemandService = weekDemandService;
-        this.dcService = dcService;
-        this.weekSupplyService = weekSupplyService;
-        this.auctionService = auctionService;
-    }
 
     public void getGameData(ProcessedRequest request)
     {

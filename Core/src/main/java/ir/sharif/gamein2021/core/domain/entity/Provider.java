@@ -1,5 +1,6 @@
 package ir.sharif.gamein2021.core.domain.entity;
 
+import ir.sharif.gamein2021.core.util.Enums;
 import lombok.*;
 
 import javax.persistence.*;
@@ -25,14 +26,12 @@ public class Provider implements BaseEntity {
     @Column(name = "capacity", nullable = false)
     private Integer capacity;
 
-    @Column(name = "average_price", nullable = false)
-    private Integer averagePrice;
+    @Column(name = "price", nullable = false)
+    private Float price;
 
-    @Column(name = "min_price_on_record", nullable = false)
-    private Integer minPriceOnRecord;
-
-    @Column(name = "max_price_on_record", nullable = false)
-    private Integer maxPriceOnRecord;
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "state", nullable = false)
+    private Enums.ProviderState state;
 
     @Override
     public Integer getId() {

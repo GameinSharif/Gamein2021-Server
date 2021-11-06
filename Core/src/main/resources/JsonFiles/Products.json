@@ -122,7 +122,7 @@
 	{
 		"id": 21,
 		"categoryIds": "1,2,3",
-		"productionLineId": 5,
+		"productionLineTemplateId": 5,
 		"productType": "SemiFinished",
 		"name": "GlassBottle",
 		"volumetricUnit": 5,
@@ -136,7 +136,7 @@
 	{
 		"id": 22,
 		"categoryIds": "1,2,3,4",
-		"productionLineId": 6,
+		"productionLineTemplateId": 6,
 		"productType": "SemiFinished",
 		"name": "AluminiumCan",
 		"volumetricUnit": 10,
@@ -150,7 +150,7 @@
 	{
 		"id": 23,
 		"categoryIds": "1,2,3",
-		"productionLineId": 7,
+		"productionLineTemplateId": 7,
 		"productType": "SemiFinished",
 		"name": "PlasticBottle",
 		"volumetricUnit": 25,
@@ -164,7 +164,7 @@
 	{
 		"id": 24,
 		"categoryIds": "1",
-		"productionLineId": 8,
+		"productionLineTemplateId": 8,
 		"productType": "SemiFinished",
 		"name": "OrangeDrinkSyrup",
 		"volumetricUnit": 2,
@@ -190,7 +190,7 @@
 	{
 		"id": 25,
 		"categoryIds": "1",
-		"productionLineId": 8,
+		"productionLineTemplateId": 8,
 		"productType": "SemiFinished",
 		"name": "ColaDrinkSyrup",
 		"volumetricUnit": 2,
@@ -216,7 +216,7 @@
 	{
 		"id": 26,
 		"categoryIds": "2",
-		"productionLineId": 9,
+		"productionLineTemplateId": 9,
 		"productType": "SemiFinished",
 		"name": "LemonMaltSyrup",
 		"volumetricUnit": 2,
@@ -246,7 +246,7 @@
 	{
 		"id": 27,
 		"categoryIds": "2",
-		"productionLineId": 9,
+		"productionLineTemplateId": 9,
 		"productType": "SemiFinished",
 		"name": "SimpleMaltSyrup",
 		"volumetricUnit": 2,
@@ -272,7 +272,7 @@
 	{
 		"id": 28,
 		"categoryIds": "2",
-		"productionLineId": 9,
+		"productionLineTemplateId": 9,
 		"productType": "SemiFinished",
 		"name": "PeachMaltSyrup",
 		"volumetricUnit": 2,
@@ -302,7 +302,7 @@
 	{
 		"id": 29,
 		"categoryIds": "3",
-		"productionLineId": 10,
+		"productionLineTemplateId": 10,
 		"productType": "SemiFinished",
 		"name": "ApplePieSyrup",
 		"volumetricUnit": 5,
@@ -328,7 +328,7 @@
 	{
 		"id": 30,
 		"categoryIds": "3",
-		"productionLineId": 10,
+		"productionLineTemplateId": 10,
 		"productType": "SemiFinished",
 		"name": "OrangePieSyrup",
 		"volumetricUnit": 5,
@@ -354,7 +354,7 @@
 	{
 		"id": 31,
 		"categoryIds": "3",
-		"productionLineId": 10,
+		"productionLineTemplateId": 10,
 		"productType": "SemiFinished",
 		"name": "PineapplePieSyrup",
 		"volumetricUnit": 5,
@@ -380,7 +380,7 @@
 	{
 		"id": 32,
 		"categoryIds": "3",
-		"productionLineId": 10,
+		"productionLineTemplateId": 10,
 		"productType": "SemiFinished",
 		"name": "MangoPieSyrup",
 		"volumetricUnit": 5,
@@ -406,7 +406,7 @@
 	{
 		"id": 33,
 		"categoryIds": "4",
-		"productionLineId": 11,
+		"productionLineTemplateId": 11,
 		"productType": "SemiFinished",
 		"name": "AloeveraEnergySyrup",
 		"volumetricUnit": 2,
@@ -436,7 +436,7 @@
 	{
 		"id": 34,
 		"categoryIds": "4",
-		"productionLineId": 11,
+		"productionLineTemplateId": 11,
 		"productType": "SemiFinished",
 		"name": "MintEnergySyrup",
 		"volumetricUnit": 2,
@@ -466,7 +466,7 @@
 	{
 		"id": 35,
 		"categoryIds": "4",
-		"productionLineId": 11,
+		"productionLineTemplateId": 11,
 		"productType": "SemiFinished",
 		"name": "EquatorialEnergySyrup",
 		"volumetricUnit": 2,
@@ -496,14 +496,14 @@
 	{
 		"id": 36,
 		"categoryIds": "1,2,4",
-		"productionLineId": 12,
+		"productionLineTemplateId": 12,
 		"productType": "SemiFinished",
 		"name": "CarbonDioxide",
 		"volumetricUnit": 1
 	},
 	{
 		"id": 37,
-		"productionLineId": 1,
+		"productionLineTemplateId": 1,
 		"productType": "Finished",
 		"name": "OrangeDrinkGlassBottle",
 		"volumetricUnit": 1,
@@ -524,7 +524,7 @@
 	},
 	{
 		"id": 38,
-		"productionLineId": 1,
+		"productionLineTemplateId": 1,
 		"productType": "Finished",
 		"name": "OrangeDrinkAluminiumCan",
 		"volumetricUnit": 2,
@@ -545,7 +545,7 @@
 	},
 	{
 		"id": 39,
-		"productionLineId": 1,
+		"productionLineTemplateId": 1,
 		"productType": "Finished",
 		"name": "OrangeDrinkPlasticBottle",
 		"volumetricUnit": 5,
@@ -566,7 +566,7 @@
 	},
 	{
 		"id": 40,
-		"productionLineId": 1,
+		"productionLineTemplateId": 1,
 		"productType": "Finished",
 		"name": "ColaDrinkGlassBottle",
 		"volumetricUnit": 1,
@@ -587,7 +587,7 @@
 	},
 	{
 		"id": 41,
-		"productionLineId": 1,
+		"productionLineTemplateId": 1,
 		"productType": "Finished",
 		"name": "ColaDrinkAluminiumCan",
 		"volumetricUnit": 2,
@@ -608,7 +608,7 @@
 	},
 	{
 		"id": 42,
-		"productionLineId": 1,
+		"productionLineTemplateId": 1,
 		"productType": "Finished",
 		"name": "ColaDrinkPlasticBottle",
 		"volumetricUnit": 5,
@@ -629,7 +629,7 @@
 	},
 	{
 		"id": 43,
-		"productionLineId": 2,
+		"productionLineTemplateId": 2,
 		"productType": "Finished",
 		"name": "LemonNonAlcoholicBeerGlassBottle",
 		"volumetricUnit": 1,
@@ -650,7 +650,7 @@
 	},
 	{
 		"id": 44,
-		"productionLineId": 2,
+		"productionLineTemplateId": 2,
 		"productType": "Finished",
 		"name": "LemonNonAlcoholicBeerAluminiumCan",
 		"volumetricUnit": 2,
@@ -671,7 +671,7 @@
 	},
 	{
 		"id": 45,
-		"productionLineId": 2,
+		"productionLineTemplateId": 2,
 		"productType": "Finished",
 		"name": "LemonNonAlcoholicBeerPlasticBottle",
 		"volumetricUnit": 5,
@@ -692,7 +692,7 @@
 	},
 	{
 		"id": 46,
-		"productionLineId": 2,
+		"productionLineTemplateId": 2,
 		"productType": "Finished",
 		"name": "SimpleNonAlcoholicBeerGlassBottle",
 		"volumetricUnit": 1,
@@ -713,7 +713,7 @@
 	},
 	{
 		"id": 47,
-		"productionLineId": 2,
+		"productionLineTemplateId": 2,
 		"productType": "Finished",
 		"name": "SimpleNonAlcoholicBeerAluminiumCan",
 		"volumetricUnit": 2,
@@ -734,7 +734,7 @@
 	},
 	{
 		"id": 48,
-		"productionLineId": 2,
+		"productionLineTemplateId": 2,
 		"productType": "Finished",
 		"name": "SimpleNonAlcoholicBeerPlasticBottle",
 		"volumetricUnit": 5,
@@ -755,7 +755,7 @@
 	},
 	{
 		"id": 49,
-		"productionLineId": 2,
+		"productionLineTemplateId": 2,
 		"productType": "Finished",
 		"name": "PeachNonAlcoholicBeerGlassBottle",
 		"volumetricUnit": 1,
@@ -776,7 +776,7 @@
 	},
 	{
 		"id": 50,
-		"productionLineId": 2,
+		"productionLineTemplateId": 2,
 		"productType": "Finished",
 		"name": "PeachNonAlcoholicBeerAluminiumCan",
 		"volumetricUnit": 2,
@@ -797,7 +797,7 @@
 	},
 	{
 		"id": 51,
-		"productionLineId": 2,
+		"productionLineTemplateId": 2,
 		"productType": "Finished",
 		"name": "PeachNonAlcoholicBeerPlasticBottle",
 		"volumetricUnit": 5,
@@ -818,7 +818,7 @@
 	},
 	{
 		"id": 52,
-		"productionLineId": 3,
+		"productionLineTemplateId": 3,
 		"productType": "Finished",
 		"name": "AppleJuiceGlassBottle",
 		"volumetricUnit": 1,
@@ -835,7 +835,7 @@
 	},
 	{
 		"id": 53,
-		"productionLineId": 3,
+		"productionLineTemplateId": 3,
 		"productType": "Finished",
 		"name": "AppleJuiceAluminiumCan",
 		"volumetricUnit": 2,
@@ -852,7 +852,7 @@
 	},
 	{
 		"id": 54,
-		"productionLineId": 3,
+		"productionLineTemplateId": 3,
 		"productType": "Finished",
 		"name": "AppleJuicePlasticBottle",
 		"volumetricUnit": 5,
@@ -869,7 +869,7 @@
 	},
 	{
 		"id": 55,
-		"productionLineId": 3,
+		"productionLineTemplateId": 3,
 		"productType": "Finished",
 		"name": "OrangeJuiceGlassBottle",
 		"volumetricUnit": 1,
@@ -886,7 +886,7 @@
 	},
 	{
 		"id": 56,
-		"productionLineId": 3,
+		"productionLineTemplateId": 3,
 		"productType": "Finished",
 		"name": "OrangeJuiceAluminiumCan",
 		"volumetricUnit": 2,
@@ -903,7 +903,7 @@
 	},
 	{
 		"id": 57,
-		"productionLineId": 3,
+		"productionLineTemplateId": 3,
 		"productType": "Finished",
 		"name": "OrangeJuicePlasticBottle",
 		"volumetricUnit": 5,
@@ -920,7 +920,7 @@
 	},
 	{
 		"id": 58,
-		"productionLineId": 3,
+		"productionLineTemplateId": 3,
 		"productType": "Finished",
 		"name": "PineappleJuiceGlassBottle",
 		"volumetricUnit": 1,
@@ -937,7 +937,7 @@
 	},
 	{
 		"id": 59,
-		"productionLineId": 3,
+		"productionLineTemplateId": 3,
 		"productType": "Finished",
 		"name": "PineappleJuiceAluminiumCan",
 		"volumetricUnit": 2,
@@ -954,7 +954,7 @@
 	},
 	{
 		"id": 60,
-		"productionLineId": 3,
+		"productionLineTemplateId": 3,
 		"productType": "Finished",
 		"name": "PineappleJuicePlasticBottle",
 		"volumetricUnit": 5,
@@ -971,7 +971,7 @@
 	},
 	{
 		"id": 61,
-		"productionLineId": 3,
+		"productionLineTemplateId": 3,
 		"productType": "Finished",
 		"name": "MangoJuiceGlassBottle",
 		"volumetricUnit": 1,
@@ -988,7 +988,7 @@
 	},
 	{
 		"id": 62,
-		"productionLineId": 3,
+		"productionLineTemplateId": 3,
 		"productType": "Finished",
 		"name": "MangoJuiceAluminiumCan",
 		"volumetricUnit": 2,
@@ -1005,7 +1005,7 @@
 	},
 	{
 		"id": 63,
-		"productionLineId": 3,
+		"productionLineTemplateId": 3,
 		"productType": "Finished",
 		"name": "MangoJuicePlasticBottle",
 		"volumetricUnit": 5,
@@ -1022,7 +1022,7 @@
 	},
 	{
 		"id": 64,
-		"productionLineId": 4,
+		"productionLineTemplateId": 4,
 		"productType": "Finished",
 		"name": "AloeveraEnergyDrinkAluminiumCan",
 		"volumetricUnit": 2,
@@ -1043,7 +1043,7 @@
 	},
 	{
 		"id": 65,
-		"productionLineId": 4,
+		"productionLineTemplateId": 4,
 		"productType": "Finished",
 		"name": "MintEnergyDrinkAluminiumCan",
 		"volumetricUnit": 2,
@@ -1064,7 +1064,7 @@
 	},
 	{
 		"id": 66,
-		"productionLineId": 4,
+		"productionLineTemplateId": 4,
 		"productType": "Finished",
 		"name": "EquatorialEnergyDrinkAluminiumCan",
 		"volumetricUnit": 2,

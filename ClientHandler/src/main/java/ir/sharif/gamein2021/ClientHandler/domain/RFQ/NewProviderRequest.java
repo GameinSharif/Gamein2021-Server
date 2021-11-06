@@ -12,4 +12,5 @@ public class NewProviderRequest extends RequestObject implements Serializable
 {
     private Integer productId;
     private Integer capacity;
+    private Float price;
 }

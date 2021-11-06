@@ -8,6 +8,8 @@ import ir.sharif.gamein2021.ClientHandler.manager.EncryptDecryptManager;
 import ir.sharif.gamein2021.ClientHandler.manager.LocalPushMessageManager;
 import ir.sharif.gamein2021.ClientHandler.manager.SocketSessionManager;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
+import ir.sharif.gamein2021.core.domain.dto.TeamDto;
+import ir.sharif.gamein2021.core.service.TeamService;
 import ir.sharif.gamein2021.core.service.UserService;
 import ir.sharif.gamein2021.core.domain.dto.UserDto;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
@@ -22,13 +24,15 @@ public class UserController {
     private final LocalPushMessageManager localPushMessageManager;
     private final EncryptDecryptManager encryptDecryptManager;
     private final UserService userService;
+    private final TeamService teamService;
     private final Gson gson = new Gson();
 
-    public UserController(SocketSessionManager socketSessionManager, LocalPushMessageManager localPushMessageManager, EncryptDecryptManager encryptDecryptManager, UserService userService) {
+    public UserController(SocketSessionManager socketSessionManager, LocalPushMessageManager localPushMessageManager, EncryptDecryptManager encryptDecryptManager, UserService userService, TeamService teamService) {
         this.socketSessionManager = socketSessionManager;
         this.localPushMessageManager = localPushMessageManager;
         this.encryptDecryptManager = encryptDecryptManager;
         this.userService = userService;
+        this.teamService = teamService;
     }
 
     public void authenticate(ProcessedRequest request, LoginRequest loginRequest) {
@@ -44,12 +48,14 @@ public class UserController {
         try {
             UserDto userDto = userService.read(username, password);
 
-            int teamId = userDto.getTeam().getId();
+            int teamId = userDto.getTeamId();
+            TeamDto teamDto = teamService.loadById(teamId); //TODO not send everything maybe?
+
             socketSessionManager.addSession(String.valueOf(teamId), String.valueOf(userDto.getId()), request.session);
-            loginResponse = new LoginResponse(ResponseTypeConstant.LOGIN, userDto.getId(), "Successful");
+            loginResponse = new LoginResponse(ResponseTypeConstant.LOGIN, userDto.getId(), "Successful", teamDto);
         } catch (Exception e) {
             logger.debug(e);
-            loginResponse = new LoginResponse(ResponseTypeConstant.LOGIN, -1, "Username or Password in incorrect");
+            loginResponse = new LoginResponse(ResponseTypeConstant.LOGIN, -1, "Username or Password in incorrect", null);
         }
 
         localPushMessageManager.sendMessageBySession(request.session, gson.toJson(loginResponse));

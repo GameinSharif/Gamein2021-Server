@@ -1,7 +1,6 @@
 package ir.sharif.gamein2021.core.util;
 
-public enum ResponseTypeConstant
-{
+public enum ResponseTypeConstant {
     CONNECTION(0),
     LOGIN(1),
     NEW_OFFER(2),
@@ -18,6 +17,24 @@ public enum ResponseTypeConstant
     NEW_PROVIDER_NEGOTIATION(13),
     GET_ALL_AUCTIONS(14),
     BID_FOR_AUCTION(15),
+    TERMINATE_OFFER(16),
+    NEW_MESSAGE(17),
+    GET_ALL_CHATS(18),
+    GET_PRODUCTION_LINES(19),
+    CONSTRUCT_PRODUCTION_LINE(20),
+    SCRAP_PRODUCTION_LINE(21),
+    START_PRODUCTION(22),
+    UPGRADE_PRODUCTION_LINE_QUALITY(23),
+    UPGRADE_PRODUCTION_LINE_EFFICIENCY(24),
+    GET_CURRENT_WEEK_SUPPLIES(25),
+    NEW_CONTRACT_WITH_SUPPLIER(26),
+    TERMINATE_LONGTERM_CONTRACT_WITH_SUPPLIER(27),
+    BUY_DC(28),
+    SELL_DC(29),
+    GET_TEAM_TRANSPORTS(30),
+    TRANSPORT_STATE_CHANGED(31),
+    GET_CONTRACTS_WITH_SUPPLIER(32),
+    AUCTION_FINISHED(33);
     BUY_DC(16),
     SELL_DC(17),
     GET_ALL_ACTIVE_DC(18),
@@ -28,8 +45,7 @@ public enum ResponseTypeConstant
 
     private int value;
 
-    ResponseTypeConstant(int value)
-    {
+    ResponseTypeConstant(int value) {
         this.value = value;
     }
 }

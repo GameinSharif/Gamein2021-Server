@@ -11,5 +11,5 @@ import java.io.Serializable;
 public class EditNegotiationCostPerUnitRequest extends RequestObject implements Serializable
 {
     private Integer negotiationId;
-    private Integer newCostPerUnit;
+    private Float newCostPerUnit;
 }

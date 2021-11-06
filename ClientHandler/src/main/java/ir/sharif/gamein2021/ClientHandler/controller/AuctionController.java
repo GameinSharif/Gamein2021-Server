@@ -34,7 +34,7 @@ public class AuctionController
     {
         Integer id = bidForAuctionRequest.playerId;
         UserDto userDto = userService.loadById(id);
-        Integer teamId = userDto.getTeam().getId();
+        Integer teamId = userDto.getTeamId();
         TeamDto teamDto = teamService.loadById(teamId);
         Integer factoryId = bidForAuctionRequest.getFactoryId();
 
@@ -44,12 +44,13 @@ public class AuctionController
             auctionService.checkAuctionByTeam(teamId);
 
             AuctionDto auctionDto = auctionService.findAuctionByFactory(factoryId);
-            auctionDto = auctionService.changeHighestBid(auctionDto, teamDto);
+            auctionDto = auctionService.changeHighestBid(auctionDto, teamDto, bidForAuctionRequest.getRaiseAmount());
 
             AuctionDto responseAuction = AuctionDto.builder()
                     .highestBid(auctionDto.getHighestBid())
                     .factoryId(auctionDto.getFactoryId())
                     .highestBidTeamId(auctionDto.getHighestBidTeamId())
+                    .lastRaiseAmount(auctionDto.getLastRaiseAmount())
                     .build();
             response = new BidForAuctionResponse(ResponseTypeConstant.BID_FOR_AUCTION, responseAuction, "success");
         }
@@ -58,11 +59,12 @@ public class AuctionController
             //This is the first bid for this factory
             try
             {
-                AuctionDto auctionDto = auctionService.bidForFirstTimeForThisFactory(teamDto, factoryId);
+                AuctionDto auctionDto = auctionService.bidForFirstTimeForThisFactory(teamDto, factoryId, bidForAuctionRequest.getRaiseAmount());
                 AuctionDto responseAuction = AuctionDto.builder()
                         .highestBid(auctionDto.getHighestBid())
                         .factoryId(auctionDto.getFactoryId())
                         .highestBidTeamId(auctionDto.getHighestBidTeamId())
+                        .lastRaiseAmount(auctionDto.getLastRaiseAmount())
                         .build();
                 response = new BidForAuctionResponse(ResponseTypeConstant.BID_FOR_AUCTION, responseAuction, "success");
             }

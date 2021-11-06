@@ -10,4 +10,5 @@ import java.util.List;
 public interface TeamRepository extends JpaRepository<Team, Integer>
 {
     List<Team> findAllByFactoryIdIsNullAndCountry(Country country);
+    Team findTeamByFactoryId(Integer factoryId);
 }

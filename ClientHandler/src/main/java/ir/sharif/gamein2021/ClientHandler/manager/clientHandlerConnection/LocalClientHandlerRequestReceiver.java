@@ -19,7 +19,8 @@ public class LocalClientHandlerRequestReceiver implements ClientHandlerRequestRe
 
     @Override
     public void receive(BaseClientHandlerRequest request) throws InterruptedException {
-        System.out.println("message received in client : " + request.getMessage());
+//        System.out.println("message received in client : " + request.getMessage());
+
         if (request instanceof ClientsSendMessageToAllRequest) {
             pushMessageManager.sendMessageToAll(request.getMessage());
         } else if (request instanceof ClientsSendMessageByTeamIdRequest) {
@@ -28,8 +29,6 @@ public class LocalClientHandlerRequestReceiver implements ClientHandlerRequestRe
         } else if (request instanceof ClientsSendMessageByUserIdRequest) {
             String userId = ((ClientsSendMessageByUserIdRequest) request).getUserId();
             pushMessageManager.sendMessageByUserId(userId, request.getMessage());
-        } else {
-            throw new RuntimeException();
         }
     }
 }

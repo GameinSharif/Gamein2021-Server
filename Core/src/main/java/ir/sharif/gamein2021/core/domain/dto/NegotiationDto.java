@@ -14,14 +14,12 @@ import java.time.LocalDate;
 public class NegotiationDto implements BaseDto<Integer> {
 
     private Integer id;
-    private Team demander;
-    private Team supplier;
+    private Integer demanderId;
+    private Integer supplierId;
     private Integer productId;
     private Integer amount;
-    private Integer costPerUnitDemander;
-    private Integer costPerUnitSupplier;
-    private LocalDate earliestExpectedArrival;
-    private LocalDate latestExpectedArrival;
+    private Float costPerUnitDemander;
+    private Float costPerUnitSupplier;
     private NegotiationState state;
 
 }

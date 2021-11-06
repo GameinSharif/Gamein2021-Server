@@ -2,5 +2,6 @@
   "requestTypeConstant":8,
   "playerId": 1,
   "productId": 1,
-  "capacity": 100
+  "capacity": 100,
+  "price": 2.25
 }

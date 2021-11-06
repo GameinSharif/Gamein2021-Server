@@ -20,8 +20,18 @@ public class ReceiverClientHandlerConnectionConfig {
         return new Queue("engineQueue");
     }
 
+    @Bean(value = "calendarQueue")
+    public Queue calendarQueue() {
+        return new AnonymousQueue();
+    }
+
     @Bean
     public Binding receiverBinding(FanoutExchange fanoutExchange, @Qualifier(value = "receiverQueue") Queue queue) {
+        return BindingBuilder.bind(queue).to(fanoutExchange);
+    }
+
+    @Bean
+    public Binding calendarBinding(FanoutExchange fanoutExchange, @Qualifier(value = "calendarQueue") Queue queue){
         return BindingBuilder.bind(queue).to(fanoutExchange);
     }
 }

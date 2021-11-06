@@ -1,5 +1,6 @@
 {
   "requestTypeConstant": 12,
   "playerId": 1,
-  "factoryId": 1
+  "factoryId": 1,
+  "raiseAmount": 50
 }

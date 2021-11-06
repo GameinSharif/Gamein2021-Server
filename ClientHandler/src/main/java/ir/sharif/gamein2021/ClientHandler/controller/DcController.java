@@ -35,7 +35,7 @@ public class DcController {
         BuyingDcResponse response;
         try {
             UserDto userDto = userService.loadById(id);
-            Integer teamId = userDto.getTeam().getId();
+            Integer teamId = userDto.getTeamId();
             TeamDto teamDto = teamService.loadById(teamId);
             DcDto dc = dcService.loadById(buyingDcRequest.getDcId());
 
@@ -53,7 +53,7 @@ public class DcController {
         SellingDcResponse response;
         try {
             UserDto userDto = userService.loadById(id);
-            Integer teamId = userDto.getTeam().getId();
+            Integer teamId = userDto.getTeamId();
             TeamDto teamDto = teamService.loadById(teamId);
             DcDto dc = dcService.loadById(sellingDcRequest.getDcId());
 

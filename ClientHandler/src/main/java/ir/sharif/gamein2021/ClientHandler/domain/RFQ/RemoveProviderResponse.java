@@ -8,13 +8,13 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class RemoveProviderResponse extends ResponseObject
 {
-    private ProviderDto removedProvider;
+    private Integer removedProviderId;
     private String result;
 
-    public RemoveProviderResponse(ResponseTypeConstant responseTypeConstant, ProviderDto removedProvider, String result)
+    public RemoveProviderResponse(ResponseTypeConstant responseTypeConstant, Integer removedProviderId, String result)
     {
         this.responseTypeConstant = responseTypeConstant.ordinal();
-        this.removedProvider = removedProvider;
+        this.removedProviderId = removedProviderId;
         this.result = result;
     }
 }

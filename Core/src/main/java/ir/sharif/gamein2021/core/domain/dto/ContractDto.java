@@ -16,7 +16,7 @@ import java.util.List;
 public class ContractDto implements BaseDto<Integer>
 {
     private Integer id;
-    private Team team;
+    private Integer teamId;
     private GameinCustomer gameinCustomer;
     private Integer productId;
     private Enums.ContractType contractType;

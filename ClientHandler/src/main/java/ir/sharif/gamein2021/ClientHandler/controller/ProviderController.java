@@ -7,6 +7,8 @@ import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.domain.RFQ.NewProviderResponse;
 import ir.sharif.gamein2021.ClientHandler.manager.LocalPushMessageManager;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
+import ir.sharif.gamein2021.core.service.TeamService;
+import ir.sharif.gamein2021.core.util.Enums;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import ir.sharif.gamein2021.core.service.ProviderService;
 import ir.sharif.gamein2021.core.service.UserService;
@@ -25,13 +27,15 @@ public class ProviderController
 
     private final LocalPushMessageManager pushMessageManager;
     private final UserService userService;
+    private final TeamService teamService;
     private final ProviderService providerService;
     private final Gson gson = new Gson();
 
-    public ProviderController(LocalPushMessageManager pushMessageManager, UserService userService, ProviderService providerService)
+    public ProviderController(LocalPushMessageManager pushMessageManager, UserService userService, TeamService teamService, ProviderService providerService)
     {
         this.pushMessageManager = pushMessageManager;
         this.userService = userService;
+        this.teamService = teamService;
         this.providerService = providerService;
     }
 
@@ -39,16 +43,19 @@ public class ProviderController
     {
         int playerId = newProviderRequest.playerId;
         UserDto user = userService.loadById(playerId);
-        Team userTeam = user.getTeam();
+        Team userTeam = teamService.findTeamById(user.getTeamId());
 
         //TODO check team is not null, product id is valid, ...
+
+        //TODO this product is semi-Finished
+        //TODO have productionLineTemplate of this product
+        //TODO every provider should have one provider for every product
         ProviderDto providerDto = new ProviderDto();
-        providerDto.setTeam(userTeam);
+        providerDto.setTeamId(userTeam.getId());
         providerDto.setProductId(newProviderRequest.getProductId());
         providerDto.setCapacity(newProviderRequest.getCapacity());
-        //TODO set prices
-        //TODO every provider should have one provider for every product
-        providerDto.setupToZero();
+        providerDto.setPrice(newProviderRequest.getPrice());
+        providerDto.setState(Enums.ProviderState.ACTIVE);
         providerService.save(providerDto);
         // TODO : what if couldn't save
 
@@ -60,7 +67,7 @@ public class ProviderController
     {
         int playerId = getProvidersRequest.playerId;
         UserDto user = userService.loadById(playerId);
-        Team userTeam = user.getTeam();
+        Team userTeam = teamService.findTeamById(user.getTeamId());
 
         ArrayList<ProviderDto> teamProviders = providerService.findProvidersByTeam(userTeam);
         ArrayList<ProviderDto> otherProviders = providerService.findProvidersExceptTeam(userTeam);
@@ -72,21 +79,21 @@ public class ProviderController
     {
         int playerId = removeProviderRequest.playerId;
         UserDto user = userService.loadById(playerId);
-        Team userTeam = user.getTeam();
+        Team userTeam = teamService.findTeamById(user.getTeamId());
 
         Integer providerId = removeProviderRequest.getProviderId();
         // TODO : Exception -> if provider does not exist
         ProviderDto requestedProvider = providerService.loadById(providerId);
-        Team requestedProviderTeam = requestedProvider.getTeam();
+        Team requestedProviderTeam = teamService.findTeamById(requestedProvider.getTeamId());
         if (userTeam.getId().equals(requestedProviderTeam.getId()))
         {
-            ProviderDto removedProvider = providerService.removeProvider(providerId);
-            RemoveProviderResponse removeProviderResponse = new RemoveProviderResponse(ResponseTypeConstant.REMOVE_PROVIDER, removedProvider, "Success");
+            providerService.terminateProvider(providerId);
+            RemoveProviderResponse removeProviderResponse = new RemoveProviderResponse(ResponseTypeConstant.REMOVE_PROVIDER, providerId, "Success");
             pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(removeProviderResponse));
         }
         else
         {
-            // TODO : Exception -> provider team does not match
+            // TODO : Exception -> provider team does not match, provider is terminated
         }
     }
 }

@@ -20,15 +20,19 @@ public class Auction implements BaseEntity
     @Column(name = "factory_id", nullable = false, unique = true)
     private Integer factoryId;
 
-    @Column(name = "highest_bid")
-    private int highestBid;
+    @Column(name = "highest_bid", nullable = false)
+    private Integer highestBid;
 
     @OneToOne
     private Team highestBidTeam;
 
-    @Column(name = "bids_count")
-    private int bidsCount;
+    @Column(name = "bids_count", nullable = false)
+    private Integer bidsCount;
+
+    @Column(name = "last_raise_amount", nullable = false)
+    private Integer lastRaiseAmount;
 
     @Enumerated(value = EnumType.STRING)
+    @Column(nullable = false)
     private AuctionBidStatus auctionBidStatus;
 }

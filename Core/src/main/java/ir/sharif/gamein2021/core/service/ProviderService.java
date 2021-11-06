@@ -6,6 +6,7 @@ import ir.sharif.gamein2021.core.dao.ProviderRepository;
 import ir.sharif.gamein2021.core.domain.dto.ProviderDto;
 import ir.sharif.gamein2021.core.domain.entity.Provider;
 import ir.sharif.gamein2021.core.domain.entity.Team;
+import ir.sharif.gamein2021.core.util.Enums;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,7 @@ public class ProviderService extends AbstractCrudService<ProviderDto, Provider, 
         return modelMapper.map(getRepository().findById(id).orElseThrow(EntityNotFoundException::new), ProviderDto.class);
     }
 
+    @Transactional(readOnly = true)
     public ArrayList<ProviderDto> findProvidersByTeam(Team userTeam) {
         ArrayList<ProviderDto> providerDtos = new ArrayList<>();
         List<Provider> providers = providerRepository.findAllByTeam(userTeam);
@@ -39,23 +41,31 @@ public class ProviderService extends AbstractCrudService<ProviderDto, Provider, 
             providerDtos.add(modelMapper.map(provider, ProviderDto.class));
         }
         return providerDtos;
-
     }
 
+    @Transactional(readOnly = true)
     public ArrayList<ProviderDto> findProvidersExceptTeam(Team userTeam) {
         ArrayList<ProviderDto> providerDtos = new ArrayList<>();
-        List<Provider> providers = providerRepository.findAllByTeamIsNot(userTeam);
+        List<Provider> providers = providerRepository.findAllByTeamIsNotAndState(userTeam, Enums.ProviderState.ACTIVE);
         for (Provider provider : providers) {
             providerDtos.add(modelMapper.map(provider, ProviderDto.class));
         }
         return providerDtos;
     }
 
-    public ProviderDto removeProvider(Integer providerId) {
-        Provider removedProvider = providerRepository.removeProviderById(providerId);
-        return modelMapper.map(removedProvider, ProviderDto.class);
+    @Transactional
+    public void terminateProvider(Integer providerId) {
+        Provider provider = providerRepository.getById(providerId);
+        if(provider.getState() == Enums.ProviderState.ACTIVE) {
+            provider.setState(Enums.ProviderState.TERMINATED);
+            providerRepository.save(provider);
+        }
+        else {
+            // TODO : raise Exception
+        }
     }
 
+    @Transactional
     public ProviderDto save(ProviderDto providerDto) {
         // TODO : Exception
         return saveOrUpdate(providerDto);

@@ -2,10 +2,15 @@ package ir.sharif.gamein2021.ClientHandler.controller;
 
 import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.domain.*;
+import ir.sharif.gamein2021.ClientHandler.domain.Dc.BuyingDcRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.Dc.SellingDcRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginRequest;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Messenger.GetAllChatsRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Messenger.NewMessageRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.Product.AddProductRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.Product.GetStorageProductsRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.Product.RemoveProductRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.RFQ.*;
 import ir.sharif.gamein2021.ClientHandler.domain.Auction.BidForAuctionRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Transport.GetTeamTransportsRequest;
@@ -32,6 +37,7 @@ public class MainController
     private final ContractSupplierController contractSupplierController;
     private final TransportController transportController;
     private final DcController dcController;
+    private final ProductController productController;
     private final Gson gson;
 
     public void HandleMessage(ProcessedRequest processedRequest)
@@ -58,6 +64,7 @@ public class MainController
                 gameDataController.getCurrentWeekDemands(processedRequest);
                 gameDataController.getCurrentWeekSupplies(processedRequest);
                 gameDataController.getAllAuctions(processedRequest);
+                    gameDataController.getAllActiveDc(processedRequest);
                 break;
             case GET_CONTRACTS:
                 GetContractsRequest getContractsRequest = gson.fromJson(requestData, GetContractsRequest.class);
@@ -142,6 +149,41 @@ public class MainController
             case GET_CONTRACTS_WITH_SUPPLIER:
                 GetContractsSupplierRequest getContractsSupplierRequest = gson.fromJson(requestData, GetContractsSupplierRequest.class);
                 contractSupplierController.getContractsSupplier(processedRequest, getContractsSupplierRequest);
+            case BUY_DC:
+                try {
+                    BuyingDcRequest buyingDcRequest = gson.fromJson(requestData, BuyingDcRequest.class);
+                    dcController.buyDc(processedRequest, buyingDcRequest);
+                }catch (Exception e ){
+                    System.out.println(e.getMessage());
+                }
+                break;
+            case SELL_DC:
+                SellingDcRequest sellingDcRequest = gson.fromJson(requestData, SellingDcRequest.class);
+                dcController.sellDc(processedRequest , sellingDcRequest);
+                break;
+            case ADD_PRODUCT:
+                AddProductRequest addProductRequest = gson.fromJson(requestData , AddProductRequest.class);
+                try {
+                    productController.addProduct(processedRequest , addProductRequest);
+                }catch (Exception e){
+                    System.out.println(e.getMessage());
+                }
+                break;
+            case REMOVE_PRODUCT:
+                RemoveProductRequest removeProductRequest = gson.fromJson(requestData , RemoveProductRequest.class);
+                try {
+                    productController.removeProduct(processedRequest , removeProductRequest);
+                }catch (Exception e){
+                    System.out.println(e.getMessage());
+                }
+                break;
+            case GET_STORAGES:
+                GetStorageProductsRequest getStorageProductsRequest = gson.fromJson(requestData , GetStorageProductsRequest.class);
+                try {
+                    productController.getStorages(processedRequest , getStorageProductsRequest);
+                }catch (Exception e){
+                    System.out.println(e.getMessage());
+                }
                 break;
             case ACCEPT_OFFER:
                 AcceptOfferRequest acceptOfferRequest = gson.fromJson(requestData, AcceptOfferRequest.class);

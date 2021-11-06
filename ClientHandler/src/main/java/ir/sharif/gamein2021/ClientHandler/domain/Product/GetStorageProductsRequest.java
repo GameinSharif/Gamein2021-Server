@@ -1,4 +1,4 @@
-package ir.sharif.gamein2021.ClientHandler.domain.Dc;
+package ir.sharif.gamein2021.ClientHandler.domain.Product;
 
 import ir.sharif.gamein2021.core.view.RequestObject;
 import lombok.AllArgsConstructor;
@@ -8,6 +8,6 @@ import java.io.Serializable;
 
 @Getter
 @AllArgsConstructor
-public class BuyingDcRequest extends RequestObject implements Serializable {
-    private final Integer dcId;
+public class GetStorageProductsRequest extends RequestObject implements Serializable {
+
 }

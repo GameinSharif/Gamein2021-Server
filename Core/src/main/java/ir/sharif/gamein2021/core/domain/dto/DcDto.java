@@ -16,5 +16,6 @@ public class DcDto {
     private double latitude;
     private double longitude;
     private int capacity;
+    private Integer storageId;
     private boolean isRawMaterial;
 }

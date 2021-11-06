@@ -1,0 +1,8 @@
+{
+  "requestTypeConstant": 16,
+  "playerId": 1,
+  "isDc":true,
+  "buildingId": 1,
+  "productId" : 1,
+  "amount": 10
+}

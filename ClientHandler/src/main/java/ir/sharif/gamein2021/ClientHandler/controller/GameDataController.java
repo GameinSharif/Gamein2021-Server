@@ -14,19 +14,27 @@ import ir.sharif.gamein2021.core.service.WeekSupplyService;
 import ir.sharif.gamein2021.core.service.TeamService;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import ir.sharif.gamein2021.core.domain.dto.AuctionDto;
+import ir.sharif.gamein2021.core.domain.dto.DcDto;
+import ir.sharif.gamein2021.core.domain.dto.GameinCustomerDto;
+import ir.sharif.gamein2021.core.domain.dto.WeekDemandDto;
+import ir.sharif.gamein2021.core.response.GetAllActiveDcResponse;
+import ir.sharif.gamein2021.core.response.GetAllAuctionsResponse;
 import ir.sharif.gamein2021.core.service.AuctionService;
+import ir.sharif.gamein2021.core.service.DcService;
 import ir.sharif.gamein2021.core.service.GameinCustomerService;
 import ir.sharif.gamein2021.core.service.WeekDemandService;
 import ir.sharif.gamein2021.core.domain.dto.GameinCustomerDto;
 import ir.sharif.gamein2021.core.domain.dto.WeekDemandDto;
+import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
+import lombok.AllArgsConstructor;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Component
-public class GameDataController
-{
+public class GameDataController {
     static Logger logger = Logger.getLogger(ExecutorThread.class.getName());
 
     private final LocalPushMessageManager pushMessageManager;
@@ -35,17 +43,8 @@ public class GameDataController
     private final WeekDemandService weekDemandService;
     private final WeekSupplyService weekSupplyService;
     private final AuctionService auctionService;
+    private final DcService dcService;
     private final Gson gson = new Gson();
-
-    public GameDataController(LocalPushMessageManager pushMessageManager, TeamService teamService, GameinCustomerService gameinCustomerService, WeekDemandService weekDemandService,WeekSupplyService weekSupplyService, AuctionService auctionService)
-    {
-        this.pushMessageManager = pushMessageManager;
-        this.teamService = teamService;
-        this.gameinCustomerService = gameinCustomerService;
-        this.weekDemandService = weekDemandService;
-        this.weekSupplyService = weekSupplyService;
-        this.auctionService = auctionService;
-    }
 
     public void getGameData(ProcessedRequest request)
     {
@@ -59,8 +58,7 @@ public class GameDataController
         pushMessageManager.sendMessageBySession(request.session, gson.toJson(getGameDataResponse));
     }
 
-    public void getCurrentWeekDemands(ProcessedRequest request)
-    {
+    public void getCurrentWeekDemands(ProcessedRequest request) {
         int week = 1; //TODO read week from another place and update it after every week
         List<WeekDemandDto> currentWeekDemands = weekDemandService.findByWeek(week);
 
@@ -94,5 +92,14 @@ public class GameDataController
         );
 
         pushMessageManager.sendMessageBySession(request.session, gson.toJson(getAllAuctionsResponse));
+    }
+    public void getAllActiveDc(ProcessedRequest request){
+        List<DcDto> dcs = dcService.getAllActiveDc();
+
+        GetAllActiveDcResponse getAllActiveDcResponse = new GetAllActiveDcResponse(
+                ResponseTypeConstant.GET_ALL_ACTIVE_DC , dcs);
+
+        pushMessageManager.sendMessageBySession(request.session , gson.toJson(getAllActiveDcResponse));
+
     }
 }

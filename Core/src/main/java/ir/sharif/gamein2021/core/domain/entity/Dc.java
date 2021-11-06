@@ -23,5 +23,7 @@ public class Dc {
     private double latitude;
     private double longitude;
     private int capacity;
+    @OneToOne
+    private Storage storage;
     private boolean isRawMaterial;
 }

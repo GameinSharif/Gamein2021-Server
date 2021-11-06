@@ -1,6 +1,8 @@
 package ir.sharif.gamein2021.core.manager;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import ir.sharif.gamein2021.core.exception.FactoryNotFoundException;
+import ir.sharif.gamein2021.core.exception.ProductNotFoundException;
 import ir.sharif.gamein2021.core.service.AuctionService;
 import ir.sharif.gamein2021.core.util.models.Vehicle;
 import ir.sharif.gamein2021.core.util.models.Factory;
@@ -14,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @Component
 public class ReadJsonFilesManager
@@ -50,5 +53,32 @@ public class ReadJsonFilesManager
         {
             e.printStackTrace();
         }
+    }
+
+    public static Product findProductById(Integer id) {
+        for (Product product : Products) {
+            if (product.getId() == id)
+                return product;
+        }
+        throw new ProductNotFoundException("Product with id: " + id + " does not exist");
+    }
+
+
+
+    public static Product[] getAllProducts() {
+        return Products;
+    }
+
+    public static Factory[] getAllFactories() {
+        return Factories;
+    }
+
+
+    public static Factory findFactoryById(Integer id){
+        for(Factory factory : Factories){
+            if(factory.getId() == id)
+                return factory;
+        }
+        throw new FactoryNotFoundException("Factory with id : " +  id + " does not exist");
     }
 }

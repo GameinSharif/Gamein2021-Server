@@ -1,6 +1,5 @@
 package ir.sharif.gamein2021.core.service;
 
-import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
 import ir.sharif.gamein2021.core.dao.AuctionRepository;
 import ir.sharif.gamein2021.core.domain.dto.AuctionDto;
 import ir.sharif.gamein2021.core.domain.dto.TeamDto;
@@ -10,6 +9,7 @@ import ir.sharif.gamein2021.core.exception.InvalidCountryException;
 import ir.sharif.gamein2021.core.exception.InvalidOfferForAuction;
 import ir.sharif.gamein2021.core.exception.InvalidRequestException;
 import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
+import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
 import ir.sharif.gamein2021.core.util.Enums;
 import ir.sharif.gamein2021.core.util.GameConstants;
 import ir.sharif.gamein2021.core.util.models.Factory;
@@ -24,16 +24,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class AuctionService extends AbstractCrudService<AuctionDto, Auction, Integer>
-{
+public class AuctionService extends AbstractCrudService<AuctionDto, Auction, Integer> {
     private final AuctionRepository repository;
     private final TeamService teamService;
     private final ModelMapper modelMapper;
 
     public static List<Factory> RemainedFactories;
 
-    public AuctionService(AuctionRepository repository, ModelMapper modelMapper, TeamService teamService)
-    {
+    public AuctionService(AuctionRepository repository, ModelMapper modelMapper, TeamService teamService) {
         this.repository = repository;
         this.teamService = teamService;
         this.modelMapper = modelMapper;
@@ -41,8 +39,7 @@ public class AuctionService extends AbstractCrudService<AuctionDto, Auction, Int
     }
 
     @Transactional(readOnly = true)
-    public AuctionDto loadById(Integer id)
-    {
+    public AuctionDto loadById(Integer id) {
         Assert.notNull(id, "The id must not be null!");
 
         return repository.findById(id)
@@ -51,18 +48,15 @@ public class AuctionService extends AbstractCrudService<AuctionDto, Auction, Int
     }
 
     @Override
-    public List<AuctionDto> list()
-    {
+    public List<AuctionDto> list() {
         return super.list();
     }
 
-    public List<AuctionDto> readAllAuctionsWithStatus()
-    {
+    public List<AuctionDto> readAllAuctionsWithStatus() {
         List<AuctionDto> auctions = list();
         List<AuctionDto> responseAuctions = new ArrayList<>();
 
-        for (AuctionDto auctionDto : auctions)
-        {
+        for (AuctionDto auctionDto : auctions) {
             responseAuctions.add(AuctionDto.builder()
                     .highestBid(auctionDto.getHighestBid())
                     .factoryId(auctionDto.getFactoryId())
@@ -71,7 +65,7 @@ public class AuctionService extends AbstractCrudService<AuctionDto, Auction, Int
                     .lastRaiseAmount(auctionDto.getLastRaiseAmount())
                     .build());
         }
-        return  responseAuctions;
+        return responseAuctions;
     }
 
     @Transactional
@@ -81,8 +75,7 @@ public class AuctionService extends AbstractCrudService<AuctionDto, Auction, Int
         auctionDto = loadById(auctionDto.getId());
         int bidPrice = auctionDto.getHighestBid() + raiseAmount;
 
-        if (teamDto.getFactoryId() != null)
-        {
+        if (teamDto.getFactoryId() != null) {
             throw new InvalidRequestException("Not allowed to bid for this auction because you already have one factory");
         }
         if (raiseAmount < auctionDto.getLastRaiseAmount())
@@ -93,17 +86,14 @@ public class AuctionService extends AbstractCrudService<AuctionDto, Auction, Int
         {
             throw new InvalidRequestException("Not enough money for this");
         }
-        if (ReadJsonFilesManager.Factories[auctionDto.getFactoryId()].getCountry() == teamDto.getCountry())
-        {
+        if (ReadJsonFilesManager.Factories[auctionDto.getFactoryId()].getCountry() == teamDto.getCountry()) {
             TeamDto oldTeamDto = teamService.loadById(teamDto.getId());
             auctionDto.setHighestBidTeamId(oldTeamDto.getId());
             auctionDto.setHighestBid(bidPrice);
             auctionDto.setBidsCount(auctionDto.getBidsCount() + 1);
             auctionDto.setLastRaiseAmount(raiseAmount);
             return saveOrUpdate(auctionDto);
-        }
-        else
-        {
+        } else {
             throw new InvalidCountryException("This factory is not in your country");
         }
     }
@@ -113,8 +103,7 @@ public class AuctionService extends AbstractCrudService<AuctionDto, Auction, Int
     {
         AuctionDto auctionDto = new AuctionDto();
 
-        if (teamDto.getFactoryId() != null)
-        {
+        if (teamDto.getFactoryId() != null) {
             throw new InvalidRequestException("Not allowed to bid for this auction because you already have one factory");
         }
         if (raiseAmount > teamDto.getCredit())
@@ -136,61 +125,47 @@ public class AuctionService extends AbstractCrudService<AuctionDto, Auction, Int
             auctionDto.setAuctionBidStatus(Enums.AuctionBidStatus.Active);
             auctionDto.setLastRaiseAmount(GameConstants.Instance.AuctionInitialStepValue);
             return saveOrUpdate(auctionDto);
-        }
-        else
-        {
+        } else {
             throw new InvalidCountryException("This factory is not in your country");
         }
     }
 
     @Transactional(readOnly = true)
-    public List<AuctionDto> getActiveAuctions()
-    {
+    public List<AuctionDto> getActiveAuctions() {
         return repository.findAllByAuctionBidStatus(Enums.AuctionBidStatus.Active)
                 .stream().map(e -> modelMapper.map(e, AuctionDto.class))
                 .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
-    public AuctionDto findAuctionByFactory(Integer factoryId)
-    {
+    public AuctionDto findAuctionByFactory(Integer factoryId) {
         Assert.notNull(factoryId, "The factoryId must not be null!");
         Auction auction = repository.findByFactoryId(factoryId);
-        if (auction == null)
-        {
+        if (auction == null) {
             throw new EntityNotFoundException("can not find entity " + getEntityClass().getSimpleName() + " by factoryId: " + factoryId + " ");
         }
-        if (auction.getAuctionBidStatus() == Enums.AuctionBidStatus.Over)
-        {
+        if (auction.getAuctionBidStatus() == Enums.AuctionBidStatus.Over) {
             throw new InvalidRequestException("Auction for this factory is over.");
-        }
-        else
-        {
+        } else {
             return modelMapper.map(auction, AuctionDto.class);
         }
     }
 
     @Transactional(readOnly = true)
-    public void checkAuctionByTeam(Integer teamId)
-    {
+    public void checkAuctionByTeam(Integer teamId) {
         Assert.notNull(teamId, "The teamId must not be null!");
         Auction auction = repository.findAuctionByHighestBidTeamId(teamId);
-        if (auction != null)
-        {
+        if (auction != null) {
             throw new InvalidRequestException("Not allowed to bid for this auction because you already have one highest bid");
         }
     }
 
     @Transactional
-    public void assignRemainedFactoriesRandomly()
-    {
-        for (Enums.Country country : Enums.Country.values())
-        {
+    public void assignRemainedFactoriesRandomly() {
+        for (Enums.Country country : Enums.Country.values()) {
             List<Factory> thisCountryFactories = new ArrayList<>();
-            for (Factory factory : RemainedFactories)
-            {
-                if (factory.getCountry() == country)
-                {
+            for (Factory factory : RemainedFactories) {
+                if (factory.getCountry() == country) {
                     thisCountryFactories.add(factory);
                 }
             }
@@ -198,8 +173,7 @@ public class AuctionService extends AbstractCrudService<AuctionDto, Auction, Int
             List<TeamDto> emptyTeams = teamService.findAllEmptyTeamWithCountry(country);
             Collections.shuffle(emptyTeams);
 
-            for (int i = 0; i < emptyTeams.size(); i++)
-            {
+            for (int i = 0; i < emptyTeams.size(); i++) {
                 TeamDto emptyTeam = emptyTeams.get(i);
                 emptyTeam.setFactoryId(thisCountryFactories.get(i).getId());
                 emptyTeam.setCredit(emptyTeam.getCredit() - GameConstants.Instance.AuctionStartValue);
@@ -209,8 +183,7 @@ public class AuctionService extends AbstractCrudService<AuctionDto, Auction, Int
     }
 
     @Transactional
-    public void completeActiveAuctions()
-    {
+    public void completeActiveAuctions() {
         List<AuctionDto> auctions = getActiveAuctions();
         auctions.forEach(auction ->
         {

@@ -2,1010 +2,1010 @@
     {
       "id": "1",
       "name": "factory-1",
-      "country": "France",
-      "latitude": "43.5283",
-      "longitude": "5.44973"
+      "country": "Germany",
+      "latitude": "50.77664",
+      "longitude": "6.08342"
     },
     {
       "id": "2",
       "name": "factory-2",
       "country": "France",
-      "latitude": "44.22158377",
-      "longitude": "0.692138672"
+      "latitude": "43.5283",
+      "longitude": "5.44973"
     },
     {
       "id": "3",
       "name": "factory-3",
       "country": "France",
-      "latitude": "49.9",
-      "longitude": "2.3"
+      "latitude": "44.22158377",
+      "longitude": "0.692138672"
     },
     {
       "id": "4",
       "name": "factory-4",
-      "country": "France",
-      "latitude": "47.47381",
-      "longitude": "-0.54774"
+      "country": "Netherlands",
+      "latitude": "52.37025",
+      "longitude": "5.21413"
     },
     {
       "id": "5",
       "name": "factory-5",
-      "country": "France",
-      "latitude": "43.56241",
-      "longitude": "7.12777"
+      "country": "Netherlands",
+      "latitude": "52.155",
+      "longitude": "5.3875"
     },
     {
       "id": "6",
       "name": "factory-6",
       "country": "France",
-      "latitude": "48.75",
+      "latitude": "49.9",
       "longitude": "2.3"
     },
     {
       "id": "7",
       "name": "factory-7",
-      "country": "France",
-      "latitude": "48.95",
-      "longitude": "2.25"
+      "country": "Netherlands",
+      "latitude": "52.37403",
+      "longitude": "4.88969"
     },
     {
       "id": "8",
       "name": "factory-8",
       "country": "France",
-      "latitude": "43.67681",
-      "longitude": "4.63031"
+      "latitude": "47.47381",
+      "longitude": "-0.54774"
     },
     {
       "id": "9",
       "name": "factory-9",
       "country": "France",
-      "latitude": "48.91667",
-      "longitude": "2.28333"
+      "latitude": "43.56241",
+      "longitude": "7.12777"
     },
     {
       "id": "10",
       "name": "factory-10",
       "country": "France",
-      "latitude": "48.91667",
-      "longitude": "2.38333"
+      "latitude": "48.75",
+      "longitude": "2.3"
     },
     {
       "id": "11",
       "name": "factory-11",
-      "country": "France",
-      "latitude": "48.93814",
-      "longitude": "2.49402"
+      "country": "Netherlands",
+      "latitude": "52.21",
+      "longitude": "5.96944"
     },
     {
       "id": "12",
       "name": "factory-12",
-      "country": "France",
-      "latitude": "43.94834",
-      "longitude": "4.80892"
-    },
-    {
-      "id": "13",
-      "name": "factory-13",
-      "country": "France",
-      "latitude": "47.63883",
-      "longitude": "6.85419"
-    },
-    {
-      "id": "14",
-      "name": "factory-14",
-      "country": "France",
-      "latitude": "47.24878",
-      "longitude": "6.01815"
-    },
-    {
-      "id": "15",
-      "name": "factory-15",
-      "country": "France",
-      "latitude": "47.59432",
-      "longitude": "1.32912"
-    },
-    {
-      "id": "16",
-      "name": "factory-16",
-      "country": "France",
-      "latitude": "44.84044",
-      "longitude": "-0.5805"
-    },
-    {
-      "id": "17",
-      "name": "factory-17",
-      "country": "France",
-      "latitude": "48.83333",
-      "longitude": "2.25"
-    },
-    {
-      "id": "18",
-      "name": "factory-18",
-      "country": "France",
-      "latitude": "47.08333",
-      "longitude": "2.4"
-    },
-    {
-      "id": "19",
-      "name": "factory-19",
-      "country": "France",
-      "latitude": "48.39029",
-      "longitude": "-4.48628"
-    },
-    {
-      "id": "20",
-      "name": "factory-20",
-      "country": "France",
-      "latitude": "45.15",
-      "longitude": "1.53333"
-    },
-    {
-      "id": "21",
-      "name": "factory-21",
-      "country": "France",
-      "latitude": "43.34122",
-      "longitude": "3.21402"
-    },
-    {
-      "id": "22",
-      "name": "factory-22",
-      "country": "France",
-      "latitude": "49.18585",
-      "longitude": "-0.35912"
-    },
-    {
-      "id": "23",
-      "name": "factory-23",
-      "country": "France",
-      "latitude": "50.95194",
-      "longitude": "1.85635"
-    },
-    {
-      "id": "24",
-      "name": "factory-24",
-      "country": "France",
-      "latitude": "43.55135",
-      "longitude": "7.01275"
-    },
-    {
-      "id": "25",
-      "name": "factory-25",
-      "country": "France",
-      "latitude": "49.03645",
-      "longitude": "2.07613"
-    },
-    {
-      "id": "26",
-      "name": "factory-26",
-      "country": "France",
-      "latitude": "49.03894",
-      "longitude": "2.07805"
-    },
-    {
-      "id": "27",
-      "name": "factory-27",
-      "country": "France",
-      "latitude": "45.56465",
-      "longitude": "5.92645"
-    },
-    {
-      "id": "28",
-      "name": "factory-28",
-      "country": "France",
-      "latitude": "48.81642",
-      "longitude": "2.49366"
-    },
-    {
-      "id": "29",
-      "name": "factory-29",
-      "country": "France",
-      "latitude": "45.77966",
-      "longitude": "3.08628"
-    },
-    {
-      "id": "30",
-      "name": "factory-30",
-      "country": "France",
-      "latitude": "48.90018",
-      "longitude": "2.30952"
-    },
-    {
-      "id": "31",
-      "name": "factory-31",
-      "country": "France",
-      "latitude": "48.07871",
-      "longitude": "7.3554"
-    },
-    {
-      "id": "32",
-      "name": "factory-32",
-      "country": "France",
-      "latitude": "48.91882",
-      "longitude": "2.25404"
-    },
-    {
-      "id": "33",
-      "name": "factory-33",
-      "country": "France",
-      "latitude": "48.89672",
-      "longitude": "2.25666"
-    },
-    {
-      "id": "34",
-      "name": "factory-34",
-      "country": "France",
-      "latitude": "48.79266",
-      "longitude": "2.46569"
-    },
-    {
-      "id": "35",
-      "name": "factory-35",
-      "country": "France",
-      "latitude": "47.31667",
-      "longitude": "5.01667"
-    },
-    {
-      "id": "36",
-      "name": "factory-36",
-      "country": "France",
-      "latitude": "48.92578",
-      "longitude": "2.44533"
-    },
-    {
-      "id": "37",
-      "name": "factory-37",
-      "country": "France",
-      "latitude": "51.03297",
-      "longitude": "2.377"
-    },
-    {
-      "id": "38",
-      "name": "factory-38",
-      "country": "France",
-      "latitude": "45.17155",
-      "longitude": "5.72239"
-    },
-    {
-      "id": "39",
-      "name": "factory-39",
-      "country": "France",
-      "latitude": "48.82104",
-      "longitude": "2.27718"
-    },
-    {
-      "id": "40",
-      "name": "factory-40",
-      "country": "France",
-      "latitude": "48.81568",
-      "longitude": "2.38487"
-    },
-    {
-      "id": "41",
-      "name": "factory-41",
-      "country": "France",
-      "latitude": "46.66667",
-      "longitude": "-1.43333"
-    },
-    {
-      "id": "42",
-      "name": "factory-42",
-      "country": "France",
-      "latitude": "46.16667",
-      "longitude": "-1.15"
-    },
-    {
-      "id": "43",
-      "name": "factory-43",
-      "country": "France",
-      "latitude": "43.09818",
-      "longitude": "5.88471"
-    },
-    {
-      "id": "44",
-      "name": "factory-44",
-      "country": "France",
-      "latitude": "49.4938",
-      "longitude": "0.10767"
-    },
-    {
-      "id": "45",
-      "name": "factory-45",
-      "country": "France",
-      "latitude": "48.00039",
-      "longitude": "0.20471"
-    },
-    {
-      "id": "46",
-      "name": "factory-46",
-      "country": "France",
-      "latitude": "48.89389",
-      "longitude": "2.28864"
-    },
-    {
-      "id": "47",
-      "name": "factory-47",
-      "country": "France",
-      "latitude": "50.63297",
-      "longitude": "3.05858"
-    },
-    {
-      "id": "48",
-      "name": "factory-48",
-      "country": "France",
-      "latitude": "45.83153",
-      "longitude": "1.25781"
-    },
-    {
-      "id": "49",
-      "name": "factory-49",
-      "country": "France",
-      "latitude": "47.75",
-      "longitude": "-3.36667"
-    },
-    {
-      "id": "50",
-      "name": "factory-50",
-      "country": "France",
-      "latitude": "48.81171",
-      "longitude": "2.43945"
-    },
-    {
-      "id": "51",
-      "name": "factory-51",
-      "country": "France",
-      "latitude": "43.29695",
-      "longitude": "5.38107"
-    },
-    {
-      "id": "52",
-      "name": "factory-52",
-      "country": "France",
-      "latitude": "48.96014",
-      "longitude": "2.87885"
-    },
-    {
-      "id": "53",
-      "name": "factory-53",
-      "country": "France",
-      "latitude": "49.11911",
-      "longitude": "6.17269"
-    },
-    {
-      "id": "54",
-      "name": "factory-54",
-      "country": "France",
-      "latitude": "43.61092",
-      "longitude": "3.87723"
-    },
-    {
-      "id": "55",
-      "name": "factory-55",
-      "country": "France",
-      "latitude": "48.86415",
-      "longitude": "2.44322"
-    },
-    {
-      "id": "56",
-      "name": "factory-56",
-      "country": "France",
-      "latitude": "47.75",
-      "longitude": "7.33333"
-    },
-    {
-      "id": "57",
-      "name": "factory-57",
-      "country": "France",
-      "latitude": "44.83248",
-      "longitude": "-0.63381"
-    },
-    {
-      "id": "58",
-      "name": "factory-58",
-      "country": "France",
-      "latitude": "48.68439",
-      "longitude": "6.18496"
-    },
-    {
-      "id": "59",
-      "name": "factory-59",
-      "country": "France",
-      "latitude": "48.89198",
-      "longitude": "2.20675"
-    },
-    {
-      "id": "60",
-      "name": "factory-60",
-      "country": "France",
-      "latitude": "47.21725",
-      "longitude": "-1.55336"
-    },
-    {
-      "id": "61",
-      "name": "factory-61",
-      "country": "France",
-      "latitude": "48.8846",
-      "longitude": "2.26965"
-    },
-    {
-      "id": "62",
-      "name": "factory-62",
-      "country": "France",
-      "latitude": "43.70313",
-      "longitude": "7.26608"
-    },
-    {
-      "id": "63",
-      "name": "factory-63",
-      "country": "France",
-      "latitude": "46.32313",
-      "longitude": "-0.45877"
-    },
-    {
-      "id": "64",
-      "name": "factory-64",
-      "country": "France",
-      "latitude": "48.84979",
-      "longitude": "2.56266"
-    },
-    {
-      "id": "65",
-      "name": "factory-65",
-      "country": "France",
-      "latitude": "43.83378",
-      "longitude": "4.35962"
-    },
-    {
-      "id": "66",
-      "name": "factory-66",
-      "country": "France",
-      "latitude": "47.90289",
-      "longitude": "1.90389"
-    },
-    {
-      "id": "67",
-      "name": "factory-67",
-      "country": "France",
-      "latitude": "48.85341",
-      "longitude": "2.3488"
-    },
-    {
-      "id": "68",
-      "name": "factory-68",
-      "country": "France",
-      "latitude": "43.3",
-      "longitude": "-0.36667"
-    },
-    {
-      "id": "69",
-      "name": "factory-69",
-      "country": "France",
-      "latitude": "42.69764",
-      "longitude": "2.89541"
-    },
-    {
-      "id": "70",
-      "name": "factory-70",
-      "country": "France",
-      "latitude": "44.81011",
-      "longitude": "-0.64129"
-    },
-    {
-      "id": "71",
-      "name": "factory-71",
-      "country": "France",
-      "latitude": "46.58333",
-      "longitude": "0.33333"
-    },
-    {
-      "id": "72",
-      "name": "factory-72",
-      "country": "France",
-      "latitude": "48",
-      "longitude": "-4.1"
-    },
-    {
-      "id": "73",
-      "name": "factory-73",
-      "country": "France",
-      "latitude": "49.25",
-      "longitude": "4.03333"
-    },
-    {
-      "id": "74",
-      "name": "factory-74",
-      "country": "France",
-      "latitude": "48.11198",
-      "longitude": "-1.67429"
-    },
-    {
-      "id": "75",
-      "name": "factory-75",
-      "country": "France",
-      "latitude": "49.44313",
-      "longitude": "1.09932"
-    },
-    {
-      "id": "76",
-      "name": "factory-76",
-      "country": "France",
-      "latitude": "48.8765",
-      "longitude": "2.18967"
-    },
-    {
-      "id": "77",
-      "name": "factory-77",
-      "country": "France",
-      "latitude": "48.93333",
-      "longitude": "2.36667"
-    },
-    {
-      "id": "78",
-      "name": "factory-78",
-      "country": "France",
-      "latitude": "48.79395",
-      "longitude": "2.49323"
-    },
-    {
-      "id": "79",
-      "name": "factory-79",
-      "country": "France",
-      "latitude": "47.28333",
-      "longitude": "-2.2"
-    },
-    {
-      "id": "80",
-      "name": "factory-80",
-      "country": "France",
-      "latitude": "49.84889",
-      "longitude": "3.28757"
-    },
-    {
-      "id": "81",
-      "name": "factory-81",
-      "country": "France",
-      "latitude": "48.77186",
-      "longitude": "2.01891"
-    },
-    {
-      "id": "82",
-      "name": "factory-82",
-      "country": "France",
-      "latitude": "45.43389",
-      "longitude": "4.39"
-    },
-    {
-      "id": "83",
-      "name": "factory-83",
-      "country": "France",
-      "latitude": "49",
-      "longitude": "2.38333"
-    },
-    {
-      "id": "84",
-      "name": "factory-84",
-      "country": "France",
-      "latitude": "48.9482",
-      "longitude": "2.19169"
-    },
-    {
-      "id": "85",
-      "name": "factory-85",
-      "country": "France",
-      "latitude": "48.58392",
-      "longitude": "7.74553"
-    },
-    {
-      "id": "86",
-      "name": "factory-86",
-      "country": "France",
-      "latitude": "43.12442",
-      "longitude": "5.92836"
-    },
-    {
-      "id": "87",
-      "name": "factory-87",
-      "country": "France",
-      "latitude": "43.60426",
-      "longitude": "1.44367"
-    },
-    {
-      "id": "88",
-      "name": "factory-88",
-      "country": "France",
-      "latitude": "50.72391",
-      "longitude": "3.16117"
-    },
-    {
-      "id": "89",
-      "name": "factory-89",
-      "country": "France",
-      "latitude": "47.39484",
-      "longitude": "0.70398"
-    },
-    {
-      "id": "90",
-      "name": "factory-90",
-      "country": "France",
-      "latitude": "48.30073",
-      "longitude": "4.08524"
-    },
-    {
-      "id": "91",
-      "name": "factory-91",
-      "country": "France",
-      "latitude": "44.92801",
-      "longitude": "4.8951"
-    },
-    {
-      "id": "92",
-      "name": "factory-92",
-      "country": "France",
-      "latitude": "47.6579",
-      "longitude": "-2.75574"
-    },
-    {
-      "id": "93",
-      "name": "factory-93",
-      "country": "France",
-      "latitude": "48.80359",
-      "longitude": "2.13424"
-    },
-    {
-      "id": "94",
-      "name": "factory-94",
-      "country": "France",
-      "latitude": "45.76667",
-      "longitude": "4.88333"
-    },
-    {
-      "id": "95",
-      "name": "factory-95",
-      "country": "France",
-      "latitude": "48.78716",
-      "longitude": "2.40332"
-    },
-    {
-      "id": "96",
-      "name": "factory-96",
-      "country": "France",
-      "latitude": "45.70254",
-      "longitude": "4.87147"
-    },
-    {
-      "id": "97",
-      "name": "factory-97",
-      "country": "France",
-      "latitude": "49.02414",
-      "longitude": "1.15082"
-    },
-    {
-      "id": "98",
-      "name": "factory-98",
       "country": "UnitedKingdom",
       "latitude": "51.56733",
       "longitude": "-0.13415"
     },
     {
-      "id": "99",
-      "name": "factory-99",
-      "country": "UnitedKingdom",
-      "latitude": "51.44162",
-      "longitude": "0.14866"
+      "id": "13",
+      "name": "factory-13",
+      "country": "France",
+      "latitude": "48.95",
+      "longitude": "2.25"
     },
     {
-      "id": "100",
-      "name": "factory-100",
-      "country": "UnitedKingdom",
-      "latitude": "52.48142",
-      "longitude": "-1.89983"
+      "id": "14",
+      "name": "factory-14",
+      "country": "France",
+      "latitude": "43.67681",
+      "longitude": "4.63031"
     },
     {
-      "id": "101",
-      "name": "factory-101",
-      "country": "UnitedKingdom",
-      "latitude": "53.81667",
-      "longitude": "-3.05"
+      "id": "15",
+      "name": "factory-15",
+      "country": "Netherlands",
+      "latitude": "51.98",
+      "longitude": "5.91111"
     },
     {
-      "id": "102",
-      "name": "factory-102",
-      "country": "UnitedKingdom",
-      "latitude": "53.79391",
-      "longitude": "-1.75206"
+      "id": "16",
+      "name": "factory-16",
+      "country": "France",
+      "latitude": "48.91667",
+      "longitude": "2.28333"
     },
     {
-      "id": "103",
-      "name": "factory-103",
-      "country": "UnitedKingdom",
-      "latitude": "51.45523",
-      "longitude": "-2.59665"
+      "id": "17",
+      "name": "factory-17",
+      "country": "France",
+      "latitude": "48.91667",
+      "longitude": "2.38333"
     },
     {
-      "id": "104",
-      "name": "factory-104",
-      "country": "UnitedKingdom",
-      "latitude": "51.48",
-      "longitude": "-3.18"
+      "id": "18",
+      "name": "factory-18",
+      "country": "Germany",
+      "latitude": "48.37154",
+      "longitude": "10.89851"
     },
     {
-      "id": "105",
-      "name": "factory-105",
-      "country": "UnitedKingdom",
-      "latitude": "51.5",
-      "longitude": "-0.11667"
+      "id": "19",
+      "name": "factory-19",
+      "country": "France",
+      "latitude": "48.93814",
+      "longitude": "2.49402"
     },
     {
-      "id": "106",
-      "name": "factory-106",
-      "country": "UnitedKingdom",
-      "latitude": "52.40656",
-      "longitude": "-1.51217"
+      "id": "20",
+      "name": "factory-20",
+      "country": "France",
+      "latitude": "43.94834",
+      "longitude": "4.80892"
     },
     {
-      "id": "107",
-      "name": "factory-107",
-      "country": "UnitedKingdom",
-      "latitude": "51.11303",
-      "longitude": "-0.18312"
+      "id": "21",
+      "name": "factory-21",
+      "country": "France",
+      "latitude": "47.63883",
+      "longitude": "6.85419"
     },
     {
-      "id": "108",
-      "name": "factory-108",
-      "country": "UnitedKingdom",
-      "latitude": "51.38333",
-      "longitude": "-0.1"
+      "id": "22",
+      "name": "factory-22",
+      "country": "Germany",
+      "latitude": "50.9856",
+      "longitude": "7.13298"
     },
     {
-      "id": "109",
-      "name": "factory-109",
-      "country": "UnitedKingdom",
-      "latitude": "52.92277",
-      "longitude": "-1.47663"
+      "id": "23",
+      "name": "factory-23",
+      "country": "Germany",
+      "latitude": "52.52437",
+      "longitude": "13.41053"
     },
     {
-      "id": "110",
-      "name": "factory-110",
-      "country": "UnitedKingdom",
-      "latitude": "52.5",
-      "longitude": "-2.08333"
-    },
-    {
-      "id": "111",
-      "name": "factory-111",
-      "country": "UnitedKingdom",
-      "latitude": "52.05917",
-      "longitude": "1.15545"
-    },
-    {
-      "id": "112",
-      "name": "factory-112",
-      "country": "UnitedKingdom",
-      "latitude": "53.7446",
-      "longitude": "-0.33525"
-    },
-    {
-      "id": "113",
-      "name": "factory-113",
-      "country": "UnitedKingdom",
-      "latitude": "53.79648",
-      "longitude": "-1.54785"
-    },
-    {
-      "id": "114",
-      "name": "factory-114",
-      "country": "UnitedKingdom",
-      "latitude": "52.6386",
-      "longitude": "-1.13169"
-    },
-    {
-      "id": "115",
-      "name": "factory-115",
-      "country": "UnitedKingdom",
-      "latitude": "53.41058",
-      "longitude": "-2.97794"
-    },
-    {
-      "id": "116",
-      "name": "factory-116",
-      "country": "UnitedKingdom",
-      "latitude": "51.87967",
-      "longitude": "-0.41748"
-    },
-    {
-      "id": "117",
-      "name": "factory-117",
-      "country": "UnitedKingdom",
-      "latitude": "53.48095",
-      "longitude": "-2.23743"
-    },
-    {
-      "id": "118",
-      "name": "factory-118",
-      "country": "UnitedKingdom",
-      "latitude": "53.13333",
-      "longitude": "-1.2"
-    },
-    {
-      "id": "119",
-      "name": "factory-119",
-      "country": "UnitedKingdom",
-      "latitude": "52.04172",
-      "longitude": "-0.75583"
-    },
-    {
-      "id": "120",
-      "name": "factory-120",
-      "country": "UnitedKingdom",
-      "latitude": "51.58774",
-      "longitude": "-2.99835"
-    },
-    {
-      "id": "121",
-      "name": "factory-121",
-      "country": "UnitedKingdom",
-      "latitude": "52.25",
-      "longitude": "-0.88333"
-    },
-    {
-      "id": "122",
-      "name": "factory-122",
-      "country": "UnitedKingdom",
-      "latitude": "52.62783",
-      "longitude": "1.29834"
-    },
-    {
-      "id": "123",
-      "name": "factory-123",
-      "country": "UnitedKingdom",
-      "latitude": "52.9536",
-      "longitude": "-1.15047"
-    },
-    {
-      "id": "124",
-      "name": "factory-124",
-      "country": "UnitedKingdom",
-      "latitude": "51.75222",
-      "longitude": "-1.25596"
-    },
-    {
-      "id": "125",
-      "name": "factory-125",
-      "country": "UnitedKingdom",
-      "latitude": "50.79899",
-      "longitude": "-1.09125"
-    },
-    {
-      "id": "126",
-      "name": "factory-126",
-      "country": "UnitedKingdom",
-      "latitude": "53.76282",
-      "longitude": "-2.70452"
-    },
-    {
-      "id": "127",
-      "name": "factory-127",
-      "country": "UnitedKingdom",
-      "latitude": "51.45625",
-      "longitude": "-0.97113"
-    },
-    {
-      "id": "128",
-      "name": "factory-128",
-      "country": "UnitedKingdom",
-      "latitude": "53.38297",
-      "longitude": "-1.4659"
-    },
-    {
-      "id": "129",
-      "name": "factory-129",
-      "country": "UnitedKingdom",
-      "latitude": "50.90395",
-      "longitude": "-1.40428"
-    },
-    {
-      "id": "130",
-      "name": "factory-130",
-      "country": "UnitedKingdom",
-      "latitude": "51.53782",
-      "longitude": "0.71433"
-    },
-    {
-      "id": "131",
-      "name": "factory-131",
-      "country": "UnitedKingdom",
-      "latitude": "53.00415",
-      "longitude": "-2.18538"
-    },
-    {
-      "id": "132",
-      "name": "factory-132",
-      "country": "UnitedKingdom",
-      "latitude": "51.35",
-      "longitude": "-0.2"
-    },
-    {
-      "id": "133",
-      "name": "factory-133",
-      "country": "UnitedKingdom",
-      "latitude": "51.62079",
-      "longitude": "-3.94323"
-    },
-    {
-      "id": "134",
-      "name": "factory-134",
-      "country": "UnitedKingdom",
-      "latitude": "51.55797",
-      "longitude": "-1.78116"
-    },
-    {
-      "id": "135",
-      "name": "factory-135",
-      "country": "UnitedKingdom",
-      "latitude": "52.58528",
-      "longitude": "-1.98396"
-    },
-    {
-      "id": "136",
-      "name": "factory-136",
-      "country": "UnitedKingdom",
-      "latitude": "53.54296",
-      "longitude": "-2.63706"
-    },
-    {
-      "id": "137",
-      "name": "factory-137",
-      "country": "UnitedKingdom",
-      "latitude": "52.58547",
-      "longitude": "-2.12296"
-    },
-    {
-      "id": "138",
-      "name": "factory-138",
-      "country": "Switzerland",
-      "latitude": "47.55839",
-      "longitude": "7.57327"
-    },
-    {
-      "id": "139",
-      "name": "factory-139",
+      "id": "24",
+      "name": "factory-24",
       "country": "Switzerland",
       "latitude": "46.94809",
       "longitude": "7.44744"
     },
     {
-      "id": "140",
-      "name": "factory-140",
+      "id": "25",
+      "name": "factory-25",
+      "country": "France",
+      "latitude": "47.24878",
+      "longitude": "6.01815"
+    },
+    {
+      "id": "26",
+      "name": "factory-26",
+      "country": "UnitedKingdom",
+      "latitude": "51.44162",
+      "longitude": "0.14866"
+    },
+    {
+      "id": "27",
+      "name": "factory-27",
+      "country": "France",
+      "latitude": "43.34122",
+      "longitude": "3.21402"
+    },
+    {
+      "id": "28",
+      "name": "factory-28",
       "country": "Switzerland",
       "latitude": "47.13713",
       "longitude": "7.24608"
     },
     {
-      "id": "141",
-      "name": "factory-141",
+      "id": "29",
+      "name": "factory-29",
+      "country": "Germany",
+      "latitude": "52.03333",
+      "longitude": "8.53333"
+    },
+    {
+      "id": "30",
+      "name": "factory-30",
+      "country": "UnitedKingdom",
+      "latitude": "52.48142",
+      "longitude": "-1.89983"
+    },
+    {
+      "id": "31",
+      "name": "factory-31",
+      "country": "UnitedKingdom",
+      "latitude": "53.81667",
+      "longitude": "-3.05"
+    },
+    {
+      "id": "32",
+      "name": "factory-32",
+      "country": "France",
+      "latitude": "47.59432",
+      "longitude": "1.32912"
+    },
+    {
+      "id": "33",
+      "name": "factory-33",
+      "country": "Germany",
+      "latitude": "50.73438",
+      "longitude": "7.09549"
+    },
+    {
+      "id": "34",
+      "name": "factory-34",
+      "country": "France",
+      "latitude": "44.84044",
+      "longitude": "-0.5805"
+    },
+    {
+      "id": "35",
+      "name": "factory-35",
+      "country": "Germany",
+      "latitude": "51.52392",
+      "longitude": "6.9285"
+    },
+    {
+      "id": "36",
+      "name": "factory-36",
+      "country": "France",
+      "latitude": "48.83333",
+      "longitude": "2.25"
+    },
+    {
+      "id": "37",
+      "name": "factory-37",
+      "country": "France",
+      "latitude": "47.08333",
+      "longitude": "2.4"
+    },
+    {
+      "id": "38",
+      "name": "factory-38",
+      "country": "UnitedKingdom",
+      "latitude": "53.79391",
+      "longitude": "-1.75206"
+    },
+    {
+      "id": "39",
+      "name": "factory-39",
+      "country": "Germany",
+      "latitude": "52.26594",
+      "longitude": "10.52673"
+    },
+    {
+      "id": "40",
+      "name": "factory-40",
+      "country": "Netherlands",
+      "latitude": "51.58656",
+      "longitude": "4.77596"
+    },
+    {
+      "id": "41",
+      "name": "factory-41",
+      "country": "Germany",
+      "latitude": "53.07516",
+      "longitude": "8.80777"
+    },
+    {
+      "id": "42",
+      "name": "factory-42",
+      "country": "Germany",
+      "latitude": "53.55021",
+      "longitude": "8.57673"
+    },
+    {
+      "id": "43",
+      "name": "factory-43",
+      "country": "France",
+      "latitude": "48.39029",
+      "longitude": "-4.48628"
+    },
+    {
+      "id": "44",
+      "name": "factory-44",
+      "country": "UnitedKingdom",
+      "latitude": "51.45523",
+      "longitude": "-2.59665"
+    },
+    {
+      "id": "45",
+      "name": "factory-45",
+      "country": "France",
+      "latitude": "45.15",
+      "longitude": "1.53333"
+    },
+    {
+      "id": "46",
+      "name": "factory-46",
+      "country": "Belgium",
+      "latitude": "51.20892",
+      "longitude": "3.22424"
+    },
+    {
+      "id": "47",
+      "name": "factory-47",
+      "country": "Belgium",
+      "latitude": "50.85045",
+      "longitude": "4.34878"
+    },
+    {
+      "id": "48",
+      "name": "factory-48",
+      "country": "France",
+      "latitude": "49.18585",
+      "longitude": "-0.35912"
+    },
+    {
+      "id": "49",
+      "name": "factory-49",
+      "country": "France",
+      "latitude": "50.95194",
+      "longitude": "1.85635"
+    },
+    {
+      "id": "50",
+      "name": "factory-50",
+      "country": "France",
+      "latitude": "43.55135",
+      "longitude": "7.01275"
+    },
+    {
+      "id": "51",
+      "name": "factory-51",
+      "country": "UnitedKingdom",
+      "latitude": "51.48",
+      "longitude": "-3.18"
+    },
+    {
+      "id": "52",
+      "name": "factory-52",
+      "country": "France",
+      "latitude": "49.03645",
+      "longitude": "2.07613"
+    },
+    {
+      "id": "53",
+      "name": "factory-53",
+      "country": "France",
+      "latitude": "49.03894",
+      "longitude": "2.07805"
+    },
+    {
+      "id": "54",
+      "name": "factory-54",
+      "country": "France",
+      "latitude": "45.56465",
+      "longitude": "5.92645"
+    },
+    {
+      "id": "55",
+      "name": "factory-55",
+      "country": "France",
+      "latitude": "48.81642",
+      "longitude": "2.49366"
+    },
+    {
+      "id": "56",
+      "name": "factory-56",
+      "country": "Belgium",
+      "latitude": "50.41136",
+      "longitude": "4.44448"
+    },
+    {
+      "id": "57",
+      "name": "factory-57",
+      "country": "Germany",
+      "latitude": "50.8357",
+      "longitude": "12.92922"
+    },
+    {
+      "id": "58",
+      "name": "factory-58",
       "country": "Switzerland",
       "latitude": "46.84986",
       "longitude": "9.53287"
     },
     {
-      "id": "142",
-      "name": "factory-142",
+      "id": "59",
+      "name": "factory-59",
+      "country": "UnitedKingdom",
+      "latitude": "51.5",
+      "longitude": "-0.11667"
+    },
+    {
+      "id": "60",
+      "name": "factory-60",
+      "country": "France",
+      "latitude": "45.77966",
+      "longitude": "3.08628"
+    },
+    {
+      "id": "61",
+      "name": "factory-61",
+      "country": "France",
+      "latitude": "48.90018",
+      "longitude": "2.30952"
+    },
+    {
+      "id": "62",
+      "name": "factory-62",
+      "country": "France",
+      "latitude": "48.07871",
+      "longitude": "7.3554"
+    },
+    {
+      "id": "63",
+      "name": "factory-63",
+      "country": "France",
+      "latitude": "48.91882",
+      "longitude": "2.25404"
+    },
+    {
+      "id": "64",
+      "name": "factory-64",
+      "country": "France",
+      "latitude": "48.89672",
+      "longitude": "2.25666"
+    },
+    {
+      "id": "65",
+      "name": "factory-65",
+      "country": "UnitedKingdom",
+      "latitude": "52.40656",
+      "longitude": "-1.51217"
+    },
+    {
+      "id": "66",
+      "name": "factory-66",
+      "country": "UnitedKingdom",
+      "latitude": "51.11303",
+      "longitude": "-0.18312"
+    },
+    {
+      "id": "67",
+      "name": "factory-67",
+      "country": "France",
+      "latitude": "48.79266",
+      "longitude": "2.46569"
+    },
+    {
+      "id": "68",
+      "name": "factory-68",
+      "country": "UnitedKingdom",
+      "latitude": "51.38333",
+      "longitude": "-0.1"
+    },
+    {
+      "id": "69",
+      "name": "factory-69",
+      "country": "France",
+      "latitude": "47.49493651",
+      "longitude": "3.911132813"
+    },
+    {
+      "id": "70",
+      "name": "factory-70",
+      "country": "France",
+      "latitude": "48.45288728",
+      "longitude": "5.127868652"
+    },
+    {
+      "id": "71",
+      "name": "factory-71",
+      "country": "France",
+      "latitude": "48.76705193",
+      "longitude": "5.180053711"
+    },
+    {
+      "id": "72",
+      "name": "factory-72",
+      "country": "France",
+      "latitude": "48.10926515",
+      "longitude": "5.136108398"
+    },
+    {
+      "id": "73",
+      "name": "factory-73",
+      "country": "France",
+      "latitude": "44.10730981",
+      "longitude": "3.076171875"
+    },
+    {
+      "id": "74",
+      "name": "factory-74",
+      "country": "France",
+      "latitude": "44.35135037",
+      "longitude": "2.581787109"
+    },
+    {
+      "id": "75",
+      "name": "factory-75",
+      "country": "France",
+      "latitude": "44.52001001",
+      "longitude": "3.515625"
+    },
+    {
+      "id": "76",
+      "name": "factory-76",
+      "country": "France",
+      "latitude": "44.13885577",
+      "longitude": "4.097900391"
+    },
+    {
+      "id": "77",
+      "name": "factory-77",
+      "country": "France",
+      "latitude": "44.62566378",
+      "longitude": "4.405517578"
+    },
+    {
+      "id": "78",
+      "name": "factory-78",
+      "country": "France",
+      "latitude": "43.64005063",
+      "longitude": "2.241210938"
+    },
+    {
+      "id": "79",
+      "name": "factory-79",
+      "country": "France",
+      "latitude": "44.92980751",
+      "longitude": "2.444458008"
+    },
+    {
+      "id": "80",
+      "name": "factory-80",
+      "country": "France",
+      "latitude": "45.25168826",
+      "longitude": "0.346069336"
+    },
+    {
+      "id": "81",
+      "name": "factory-81",
+      "country": "France",
+      "latitude": "45.5486785",
+      "longitude": "2.318115234"
+    },
+    {
+      "id": "82",
+      "name": "factory-82",
+      "country": "France",
+      "latitude": "45.21687321",
+      "longitude": "2.323608398"
+    },
+    {
+      "id": "83",
+      "name": "factory-83",
+      "country": "France",
+      "latitude": "46.592844",
+      "longitude": "1.988525391"
+    },
+    {
+      "id": "84",
+      "name": "factory-84",
+      "country": "France",
+      "latitude": "46.95776135",
+      "longitude": "1.988525391"
+    },
+    {
+      "id": "85",
+      "name": "factory-85",
+      "country": "France",
+      "latitude": "46.64189396",
+      "longitude": "1.076660156"
+    },
+    {
+      "id": "86",
+      "name": "factory-86",
+      "country": "France",
+      "latitude": "46.98774726",
+      "longitude": "3.1640625"
+    },
+    {
+      "id": "87",
+      "name": "factory-87",
+      "country": "France",
+      "latitude": "46.5588603",
+      "longitude": "3.36730957"
+    },
+    {
+      "id": "88",
+      "name": "factory-88",
+      "country": "France",
+      "latitude": "45.26715476",
+      "longitude": "1.774291992"
+    },
+    {
+      "id": "89",
+      "name": "factory-89",
+      "country": "Germany",
+      "latitude": "49.87167",
+      "longitude": "8.65027"
+    },
+    {
+      "id": "90",
+      "name": "factory-90",
+      "country": "Belgium",
+      "latitude": "51.02869",
+      "longitude": "4.10106"
+    },
+    {
+      "id": "91",
+      "name": "factory-91",
+      "country": "UnitedKingdom",
+      "latitude": "52.92277",
+      "longitude": "-1.47663"
+    },
+    {
+      "id": "92",
+      "name": "factory-92",
+      "country": "Netherlands",
+      "latitude": "52.255",
+      "longitude": "6.16389"
+    },
+    {
+      "id": "93",
+      "name": "factory-93",
+      "country": "France",
+      "latitude": "47.31667",
+      "longitude": "5.01667"
+    },
+    {
+      "id": "94",
+      "name": "factory-94",
+      "country": "Netherlands",
+      "latitude": "51.81",
+      "longitude": "4.67361"
+    },
+    {
+      "id": "95",
+      "name": "factory-95",
+      "country": "Germany",
+      "latitude": "51.51494",
+      "longitude": "7.466"
+    },
+    {
+      "id": "96",
+      "name": "factory-96",
+      "country": "France",
+      "latitude": "48.92578",
+      "longitude": "2.44533"
+    },
+    {
+      "id": "97",
+      "name": "factory-97",
+      "country": "Germany",
+      "latitude": "51.05089",
+      "longitude": "13.73832"
+    },
+    {
+      "id": "98",
+      "name": "factory-98",
+      "country": "UnitedKingdom",
+      "latitude": "52.5",
+      "longitude": "-2.08333"
+    },
+    {
+      "id": "99",
+      "name": "factory-99",
+      "country": "Germany",
+      "latitude": "51.43247",
+      "longitude": "6.76516"
+    },
+    {
+      "id": "100",
+      "name": "factory-100",
+      "country": "France",
+      "latitude": "51.03297",
+      "longitude": "2.377"
+    },
+    {
+      "id": "101",
+      "name": "factory-101",
+      "country": "Germany",
+      "latitude": "50.80434",
+      "longitude": "6.49299"
+    },
+    {
+      "id": "102",
+      "name": "factory-102",
+      "country": "Netherlands",
+      "latitude": "51.44083",
+      "longitude": "5.47778"
+    },
+    {
+      "id": "103",
+      "name": "factory-103",
       "country": "Switzerland",
       "latitude": "47.07819",
       "longitude": "8.27331"
     },
     {
-      "id": "143",
-      "name": "factory-143",
+      "id": "104",
+      "name": "factory-104",
+      "country": "Germany",
+      "latitude": "50.9787",
+      "longitude": "11.03283"
+    },
+    {
+      "id": "105",
+      "name": "factory-105",
+      "country": "Germany",
+      "latitude": "49.59099",
+      "longitude": "11.00783"
+    },
+    {
+      "id": "106",
+      "name": "factory-106",
+      "country": "Germany",
+      "latitude": "51.45657",
+      "longitude": "7.01228"
+    },
+    {
+      "id": "107",
+      "name": "factory-107",
+      "country": "Germany",
+      "latitude": "48.73961",
+      "longitude": "9.30473"
+    },
+    {
+      "id": "108",
+      "name": "factory-108",
+      "country": "France",
+      "latitude": "49.02414",
+      "longitude": "1.15082"
+    },
+    {
+      "id": "109",
+      "name": "factory-109",
+      "country": "Germany",
+      "latitude": "50.11552",
+      "longitude": "8.68417"
+    },
+    {
+      "id": "110",
+      "name": "factory-110",
+      "country": "Germany",
+      "latitude": "47.9959",
+      "longitude": "7.85222"
+    },
+    {
+      "id": "111",
+      "name": "factory-111",
       "country": "Switzerland",
       "latitude": "46.80237",
       "longitude": "7.15128"
     },
     {
-      "id": "144",
-      "name": "factory-144",
+      "id": "112",
+      "name": "factory-112",
       "country": "Switzerland",
       "latitude": "46.20222",
       "longitude": "6.14569"
+    },
+    {
+      "id": "113",
+      "name": "factory-113",
+      "country": "Belgium",
+      "latitude": "50.965",
+      "longitude": "5.50082"
+    },
+    {
+      "id": "114",
+      "name": "factory-114",
+      "country": "Belgium",
+      "latitude": "51.05",
+      "longitude": "3.71667"
+    },
+    {
+      "id": "115",
+      "name": "factory-115",
+      "country": "Germany",
+      "latitude": "50.88029",
+      "longitude": "12.08187"
+    },
+    {
+      "id": "116",
+      "name": "factory-116",
+      "country": "Germany",
+      "latitude": "51.53443",
+      "longitude": "9.93228"
+    },
+    {
+      "id": "117",
+      "name": "factory-117",
+      "country": "France",
+      "latitude": "45.17155",
+      "longitude": "5.72239"
+    },
+    {
+      "id": "118",
+      "name": "factory-118",
+      "country": "Germany",
+      "latitude": "51.90693",
+      "longitude": "8.37853"
+    },
+    {
+      "id": "119",
+      "name": "factory-119",
+      "country": "Germany",
+      "latitude": "51.36081",
+      "longitude": "7.47168"
+    },
+    {
+      "id": "120",
+      "name": "factory-120",
+      "country": "Germany",
+      "latitude": "51.48158",
+      "longitude": "11.97947"
+    },
+    {
+      "id": "121",
+      "name": "factory-121",
+      "country": "Germany",
+      "latitude": "53.57532",
+      "longitude": "10.01534"
+    },
+    {
+      "id": "122",
+      "name": "factory-122",
+      "country": "Germany",
+      "latitude": "51.68033",
+      "longitude": "7.82089"
+    },
+    {
+      "id": "123",
+      "name": "factory-123",
+      "country": "Germany",
+      "latitude": "52.37052",
+      "longitude": "9.73322"
+    },
+    {
+      "id": "124",
+      "name": "factory-124",
+      "country": "Belgium",
+      "latitude": "50.93106",
+      "longitude": "5.33781"
+    },
+    {
+      "id": "125",
+      "name": "factory-125",
+      "country": "Germany",
+      "latitude": "49.40768",
+      "longitude": "8.69079"
+    },
+    {
+      "id": "126",
+      "name": "factory-126",
+      "country": "Germany",
+      "latitude": "49.13995",
+      "longitude": "9.22054"
+    },
+    {
+      "id": "127",
+      "name": "factory-127",
+      "country": "Germany",
+      "latitude": "51.5388",
+      "longitude": "7.22572"
+    },
+    {
+      "id": "128",
+      "name": "factory-128",
+      "country": "Germany",
+      "latitude": "52.15077",
+      "longitude": "9.95112"
+    },
+    {
+      "id": "129",
+      "name": "factory-129",
+      "country": "Netherlands",
+      "latitude": "52.3025",
+      "longitude": "4.68889"
+    },
+    {
+      "id": "130",
+      "name": "factory-130",
+      "country": "Germany",
+      "latitude": "48.76508",
+      "longitude": "11.42372"
+    },
+    {
+      "id": "131",
+      "name": "factory-131",
+      "country": "UnitedKingdom",
+      "latitude": "52.05917",
+      "longitude": "1.15545"
+    },
+    {
+      "id": "132",
+      "name": "factory-132",
+      "country": "Germany",
+      "latitude": "51.37547",
+      "longitude": "7.70281"
+    },
+    {
+      "id": "133",
+      "name": "factory-133",
+      "country": "France",
+      "latitude": "48.82104",
+      "longitude": "2.27718"
+    },
+    {
+      "id": "134",
+      "name": "factory-134",
+      "country": "France",
+      "latitude": "48.81568",
+      "longitude": "2.38487"
+    },
+    {
+      "id": "135",
+      "name": "factory-135",
+      "country": "Germany",
+      "latitude": "50.92878",
+      "longitude": "11.5899"
+    },
+    {
+      "id": "136",
+      "name": "factory-136",
+      "country": "Germany",
+      "latitude": "49.443",
+      "longitude": "7.77161"
+    },
+    {
+      "id": "137",
+      "name": "factory-137",
+      "country": "Germany",
+      "latitude": "49.00937",
+      "longitude": "8.40444"
+    },
+    {
+      "id": "138",
+      "name": "factory-138",
+      "country": "Germany",
+      "latitude": "51.31667",
+      "longitude": "9.5"
+    },
+    {
+      "id": "139",
+      "name": "factory-139",
+      "country": "Germany",
+      "latitude": "54.32133",
+      "longitude": "10.13489"
+    },
+    {
+      "id": "140",
+      "name": "factory-140",
+      "country": "UnitedKingdom",
+      "latitude": "53.7446",
+      "longitude": "-0.33525"
+    },
+    {
+      "id": "141",
+      "name": "factory-141",
+      "country": "Germany",
+      "latitude": "50.35357",
+      "longitude": "7.57883"
+    },
+    {
+      "id": "142",
+      "name": "factory-142",
+      "country": "Germany",
+      "latitude": "50.93333",
+      "longitude": "6.95"
+    },
+    {
+      "id": "143",
+      "name": "factory-143",
+      "country": "Belgium",
+      "latitude": "50.82803",
+      "longitude": "3.26487"
+    },
+    {
+      "id": "144",
+      "name": "factory-144",
+      "country": "Germany",
+      "latitude": "51.33645",
+      "longitude": "6.55381"
     },
     {
       "id": "145",
@@ -1017,1086 +1017,1086 @@
     {
       "id": "146",
       "name": "factory-146",
-      "country": "Switzerland",
-      "latitude": "46.516",
-      "longitude": "6.63282"
-    },
-    {
-      "id": "147",
-      "name": "factory-147",
-      "country": "Switzerland",
-      "latitude": "46.01008",
-      "longitude": "8.96004"
-    },
-    {
-      "id": "148",
-      "name": "factory-148",
-      "country": "Switzerland",
-      "latitude": "46.99179",
-      "longitude": "6.931"
-    },
-    {
-      "id": "149",
-      "name": "factory-149",
-      "country": "Switzerland",
-      "latitude": "47.22557",
-      "longitude": "8.82228"
-    },
-    {
-      "id": "150",
-      "name": "factory-150",
-      "country": "Switzerland",
-      "latitude": "47.42391",
-      "longitude": "9.37477"
-    },
-    {
-      "id": "151",
-      "name": "factory-151",
-      "country": "Switzerland",
-      "latitude": "47.69732",
-      "longitude": "8.63493"
-    },
-    {
-      "id": "152",
-      "name": "factory-152",
-      "country": "Switzerland",
-      "latitude": "46.22739",
-      "longitude": "7.35559"
-    },
-    {
-      "id": "153",
-      "name": "factory-153",
-      "country": "Switzerland",
-      "latitude": "46.75118",
-      "longitude": "7.62166"
-    },
-    {
-      "id": "154",
-      "name": "factory-154",
-      "country": "Switzerland",
-      "latitude": "47.34713",
-      "longitude": "8.72091"
-    },
-    {
-      "id": "155",
-      "name": "factory-155",
-      "country": "Switzerland",
-      "latitude": "47.50564",
-      "longitude": "8.72413"
-    },
-    {
-      "id": "156",
-      "name": "factory-156",
-      "country": "Switzerland",
-      "latitude": "46.77852",
-      "longitude": "6.64115"
-    },
-    {
-      "id": "157",
-      "name": "factory-157",
-      "country": "Switzerland",
-      "latitude": "47.17242",
-      "longitude": "8.51745"
-    },
-    {
-      "id": "158",
-      "name": "factory-158",
-      "country": "Switzerland",
-      "latitude": "47.36667",
-      "longitude": "8.55"
-    },
-    {
-      "id": "159",
-      "name": "factory-159",
-      "country": "Netherlands",
-      "latitude": "51.69917",
-      "longitude": "5.30417"
-    },
-    {
-      "id": "160",
-      "name": "factory-160",
-      "country": "Netherlands",
-      "latitude": "52.37025",
-      "longitude": "5.21413"
-    },
-    {
-      "id": "161",
-      "name": "factory-161",
-      "country": "Netherlands",
-      "latitude": "52.155",
-      "longitude": "5.3875"
-    },
-    {
-      "id": "162",
-      "name": "factory-162",
-      "country": "Netherlands",
-      "latitude": "52.37403",
-      "longitude": "4.88969"
-    },
-    {
-      "id": "163",
-      "name": "factory-163",
-      "country": "Netherlands",
-      "latitude": "52.21",
-      "longitude": "5.96944"
-    },
-    {
-      "id": "164",
-      "name": "factory-164",
-      "country": "Netherlands",
-      "latitude": "51.98",
-      "longitude": "5.91111"
-    },
-    {
-      "id": "165",
-      "name": "factory-165",
-      "country": "Netherlands",
-      "latitude": "51.58656",
-      "longitude": "4.77596"
-    },
-    {
-      "id": "166",
-      "name": "factory-166",
-      "country": "Netherlands",
-      "latitude": "52.255",
-      "longitude": "6.16389"
-    },
-    {
-      "id": "167",
-      "name": "factory-167",
-      "country": "Netherlands",
-      "latitude": "51.81",
-      "longitude": "4.67361"
-    },
-    {
-      "id": "168",
-      "name": "factory-168",
-      "country": "Netherlands",
-      "latitude": "51.44083",
-      "longitude": "5.47778"
-    },
-    {
-      "id": "169",
-      "name": "factory-169",
-      "country": "Netherlands",
-      "latitude": "52.3025",
-      "longitude": "4.68889"
-    },
-    {
-      "id": "170",
-      "name": "factory-170",
-      "country": "Netherlands",
-      "latitude": "52.15833",
-      "longitude": "4.49306"
-    },
-    {
-      "id": "171",
-      "name": "factory-171",
-      "country": "Netherlands",
-      "latitude": "50.84833",
-      "longitude": "5.68889"
-    },
-    {
-      "id": "172",
-      "name": "factory-172",
-      "country": "Netherlands",
-      "latitude": "51.8425",
-      "longitude": "5.85278"
-    },
-    {
-      "id": "173",
-      "name": "factory-173",
-      "country": "Netherlands",
-      "latitude": "51.9225",
-      "longitude": "4.47917"
-    },
-    {
-      "id": "174",
-      "name": "factory-174",
-      "country": "Netherlands",
-      "latitude": "52.07667",
-      "longitude": "4.29861"
-    },
-    {
-      "id": "175",
-      "name": "factory-175",
-      "country": "Netherlands",
-      "latitude": "51.55551",
-      "longitude": "5.0913"
-    },
-    {
-      "id": "176",
-      "name": "factory-176",
-      "country": "Netherlands",
-      "latitude": "52.09083",
-      "longitude": "5.12222"
-    },
-    {
-      "id": "177",
-      "name": "factory-177",
-      "country": "Netherlands",
-      "latitude": "52.45313",
-      "longitude": "4.81356"
-    },
-    {
-      "id": "178",
-      "name": "factory-178",
-      "country": "Netherlands",
-      "latitude": "52.5125",
-      "longitude": "6.09444"
-    },
-    {
-      "id": "179",
-      "name": "factory-179",
-      "country": "Belgium",
-      "latitude": "50.93604",
-      "longitude": "4.0355"
-    },
-    {
-      "id": "180",
-      "name": "factory-180",
-      "country": "Belgium",
-      "latitude": "51.21989",
-      "longitude": "4.40346"
-    },
-    {
-      "id": "181",
-      "name": "factory-181",
-      "country": "Belgium",
-      "latitude": "51.20892",
-      "longitude": "3.22424"
-    },
-    {
-      "id": "182",
-      "name": "factory-182",
-      "country": "Belgium",
-      "latitude": "50.85045",
-      "longitude": "4.34878"
-    },
-    {
-      "id": "183",
-      "name": "factory-183",
-      "country": "Belgium",
-      "latitude": "50.41136",
-      "longitude": "4.44448"
-    },
-    {
-      "id": "184",
-      "name": "factory-184",
-      "country": "Belgium",
-      "latitude": "51.02869",
-      "longitude": "4.10106"
-    },
-    {
-      "id": "185",
-      "name": "factory-185",
-      "country": "Belgium",
-      "latitude": "50.965",
-      "longitude": "5.50082"
-    },
-    {
-      "id": "186",
-      "name": "factory-186",
-      "country": "Belgium",
-      "latitude": "51.05",
-      "longitude": "3.71667"
-    },
-    {
-      "id": "187",
-      "name": "factory-187",
-      "country": "Belgium",
-      "latitude": "50.93106",
-      "longitude": "5.33781"
-    },
-    {
-      "id": "188",
-      "name": "factory-188",
-      "country": "Belgium",
-      "latitude": "50.82803",
-      "longitude": "3.26487"
-    },
-    {
-      "id": "189",
-      "name": "factory-189",
       "country": "Belgium",
       "latitude": "50.48657",
       "longitude": "4.18785"
     },
     {
-      "id": "190",
-      "name": "factory-190",
-      "country": "Belgium",
-      "latitude": "50.87959",
-      "longitude": "4.70093"
+      "id": "147",
+      "name": "factory-147",
+      "country": "France",
+      "latitude": "46.16667",
+      "longitude": "-1.15"
     },
     {
-      "id": "191",
-      "name": "factory-191",
-      "country": "Belgium",
-      "latitude": "50.63373",
-      "longitude": "5.56749"
+      "id": "148",
+      "name": "factory-148",
+      "country": "France",
+      "latitude": "46.66667",
+      "longitude": "-1.43333"
     },
     {
-      "id": "192",
-      "name": "factory-192",
-      "country": "Belgium",
-      "latitude": "51.02574",
-      "longitude": "4.47762"
+      "id": "149",
+      "name": "factory-149",
+      "country": "France",
+      "latitude": "43.09818",
+      "longitude": "5.88471"
     },
     {
-      "id": "193",
-      "name": "factory-193",
-      "country": "Belgium",
-      "latitude": "50.45413",
-      "longitude": "3.95229"
+      "id": "150",
+      "name": "factory-150",
+      "country": "Switzerland",
+      "latitude": "46.516",
+      "longitude": "6.63282"
     },
     {
-      "id": "194",
-      "name": "factory-194",
-      "country": "Belgium",
-      "latitude": "50.4669",
-      "longitude": "4.86746"
+      "id": "151",
+      "name": "factory-151",
+      "country": "France",
+      "latitude": "49.4938",
+      "longitude": "0.10767"
     },
     {
-      "id": "195",
-      "name": "factory-195",
-      "country": "Belgium",
-      "latitude": "51.21551",
-      "longitude": "2.927"
+      "id": "152",
+      "name": "factory-152",
+      "country": "France",
+      "latitude": "48.00039",
+      "longitude": "0.20471"
     },
     {
-      "id": "196",
-      "name": "factory-196",
-      "country": "Belgium",
-      "latitude": "50.94653",
-      "longitude": "3.12269"
+      "id": "153",
+      "name": "factory-153",
+      "country": "UnitedKingdom",
+      "latitude": "53.79648",
+      "longitude": "-1.54785"
     },
     {
-      "id": "197",
-      "name": "factory-197",
-      "country": "Belgium",
-      "latitude": "50.58362",
-      "longitude": "5.50115"
+      "id": "154",
+      "name": "factory-154",
+      "country": "UnitedKingdom",
+      "latitude": "52.6386",
+      "longitude": "-1.13169"
     },
     {
-      "id": "198",
-      "name": "factory-198",
-      "country": "Belgium",
-      "latitude": "51.16509",
-      "longitude": "4.1437"
+      "id": "155",
+      "name": "factory-155",
+      "country": "Netherlands",
+      "latitude": "52.15833",
+      "longitude": "4.49306"
     },
     {
-      "id": "199",
-      "name": "factory-199",
-      "country": "Belgium",
-      "latitude": "50.60715",
-      "longitude": "3.38932"
-    },
-    {
-      "id": "200",
-      "name": "factory-200",
-      "country": "Belgium",
-      "latitude": "50.58907",
-      "longitude": "5.86241"
-    },
-    {
-      "id": "201",
-      "name": "factory-201",
-      "country": "Germany",
-      "latitude": "50.77664",
-      "longitude": "6.08342"
-    },
-    {
-      "id": "202",
-      "name": "factory-202",
-      "country": "Germany",
-      "latitude": "48.37154",
-      "longitude": "10.89851"
-    },
-    {
-      "id": "203",
-      "name": "factory-203",
-      "country": "Germany",
-      "latitude": "50.9856",
-      "longitude": "7.13298"
-    },
-    {
-      "id": "204",
-      "name": "factory-204",
-      "country": "Germany",
-      "latitude": "52.52437",
-      "longitude": "13.41053"
-    },
-    {
-      "id": "205",
-      "name": "factory-205",
-      "country": "Germany",
-      "latitude": "52.03333",
-      "longitude": "8.53333"
-    },
-    {
-      "id": "206",
-      "name": "factory-206",
-      "country": "Germany",
-      "latitude": "50.73438",
-      "longitude": "7.09549"
-    },
-    {
-      "id": "207",
-      "name": "factory-207",
-      "country": "Germany",
-      "latitude": "51.52392",
-      "longitude": "6.9285"
-    },
-    {
-      "id": "208",
-      "name": "factory-208",
-      "country": "Germany",
-      "latitude": "52.26594",
-      "longitude": "10.52673"
-    },
-    {
-      "id": "209",
-      "name": "factory-209",
-      "country": "Germany",
-      "latitude": "53.07516",
-      "longitude": "8.80777"
-    },
-    {
-      "id": "210",
-      "name": "factory-210",
-      "country": "Germany",
-      "latitude": "53.55021",
-      "longitude": "8.57673"
-    },
-    {
-      "id": "211",
-      "name": "factory-211",
-      "country": "Germany",
-      "latitude": "50.8357",
-      "longitude": "12.92922"
-    },
-    {
-      "id": "212",
-      "name": "factory-212",
-      "country": "Germany",
-      "latitude": "49.87167",
-      "longitude": "8.65027"
-    },
-    {
-      "id": "213",
-      "name": "factory-213",
-      "country": "Germany",
-      "latitude": "51.51494",
-      "longitude": "7.466"
-    },
-    {
-      "id": "214",
-      "name": "factory-214",
-      "country": "Germany",
-      "latitude": "51.05089",
-      "longitude": "13.73832"
-    },
-    {
-      "id": "215",
-      "name": "factory-215",
-      "country": "Germany",
-      "latitude": "51.43247",
-      "longitude": "6.76516"
-    },
-    {
-      "id": "216",
-      "name": "factory-216",
-      "country": "Germany",
-      "latitude": "50.80434",
-      "longitude": "6.49299"
-    },
-    {
-      "id": "217",
-      "name": "factory-217",
-      "country": "Germany",
-      "latitude": "50.9787",
-      "longitude": "11.03283"
-    },
-    {
-      "id": "218",
-      "name": "factory-218",
-      "country": "Germany",
-      "latitude": "49.59099",
-      "longitude": "11.00783"
-    },
-    {
-      "id": "219",
-      "name": "factory-219",
-      "country": "Germany",
-      "latitude": "51.45657",
-      "longitude": "7.01228"
-    },
-    {
-      "id": "220",
-      "name": "factory-220",
-      "country": "Germany",
-      "latitude": "48.73961",
-      "longitude": "9.30473"
-    },
-    {
-      "id": "221",
-      "name": "factory-221",
-      "country": "Germany",
-      "latitude": "50.11552",
-      "longitude": "8.68417"
-    },
-    {
-      "id": "222",
-      "name": "factory-222",
-      "country": "Germany",
-      "latitude": "47.9959",
-      "longitude": "7.85222"
-    },
-    {
-      "id": "223",
-      "name": "factory-223",
-      "country": "Germany",
-      "latitude": "50.88029",
-      "longitude": "12.08187"
-    },
-    {
-      "id": "224",
-      "name": "factory-224",
-      "country": "Germany",
-      "latitude": "51.53443",
-      "longitude": "9.93228"
-    },
-    {
-      "id": "225",
-      "name": "factory-225",
-      "country": "Germany",
-      "latitude": "51.90693",
-      "longitude": "8.37853"
-    },
-    {
-      "id": "226",
-      "name": "factory-226",
-      "country": "Germany",
-      "latitude": "51.36081",
-      "longitude": "7.47168"
-    },
-    {
-      "id": "227",
-      "name": "factory-227",
-      "country": "Germany",
-      "latitude": "51.48158",
-      "longitude": "11.97947"
-    },
-    {
-      "id": "228",
-      "name": "factory-228",
-      "country": "Germany",
-      "latitude": "53.57532",
-      "longitude": "10.01534"
-    },
-    {
-      "id": "229",
-      "name": "factory-229",
-      "country": "Germany",
-      "latitude": "51.68033",
-      "longitude": "7.82089"
-    },
-    {
-      "id": "230",
-      "name": "factory-230",
-      "country": "Germany",
-      "latitude": "52.37052",
-      "longitude": "9.73322"
-    },
-    {
-      "id": "231",
-      "name": "factory-231",
-      "country": "Germany",
-      "latitude": "49.40768",
-      "longitude": "8.69079"
-    },
-    {
-      "id": "232",
-      "name": "factory-232",
-      "country": "Germany",
-      "latitude": "49.13995",
-      "longitude": "9.22054"
-    },
-    {
-      "id": "233",
-      "name": "factory-233",
-      "country": "Germany",
-      "latitude": "51.5388",
-      "longitude": "7.22572"
-    },
-    {
-      "id": "234",
-      "name": "factory-234",
-      "country": "Germany",
-      "latitude": "52.15077",
-      "longitude": "9.95112"
-    },
-    {
-      "id": "235",
-      "name": "factory-235",
-      "country": "Germany",
-      "latitude": "48.76508",
-      "longitude": "11.42372"
-    },
-    {
-      "id": "236",
-      "name": "factory-236",
-      "country": "Germany",
-      "latitude": "51.37547",
-      "longitude": "7.70281"
-    },
-    {
-      "id": "237",
-      "name": "factory-237",
-      "country": "Germany",
-      "latitude": "50.92878",
-      "longitude": "11.5899"
-    },
-    {
-      "id": "238",
-      "name": "factory-238",
-      "country": "Germany",
-      "latitude": "49.443",
-      "longitude": "7.77161"
-    },
-    {
-      "id": "239",
-      "name": "factory-239",
-      "country": "Germany",
-      "latitude": "49.00937",
-      "longitude": "8.40444"
-    },
-    {
-      "id": "240",
-      "name": "factory-240",
-      "country": "Germany",
-      "latitude": "51.31667",
-      "longitude": "9.5"
-    },
-    {
-      "id": "241",
-      "name": "factory-241",
-      "country": "Germany",
-      "latitude": "54.32133",
-      "longitude": "10.13489"
-    },
-    {
-      "id": "242",
-      "name": "factory-242",
-      "country": "Germany",
-      "latitude": "50.35357",
-      "longitude": "7.57883"
-    },
-    {
-      "id": "243",
-      "name": "factory-243",
-      "country": "Germany",
-      "latitude": "51.33645",
-      "longitude": "6.55381"
-    },
-    {
-      "id": "244",
-      "name": "factory-244",
-      "country": "Germany",
-      "latitude": "50.93333",
-      "longitude": "6.95"
-    },
-    {
-      "id": "245",
-      "name": "factory-245",
+      "id": "156",
+      "name": "factory-156",
       "country": "Germany",
       "latitude": "51.33962",
       "longitude": "12.37129"
     },
     {
-      "id": "246",
-      "name": "factory-246",
-      "country": "Germany",
-      "latitude": "49.48121",
-      "longitude": "8.44641"
+      "id": "157",
+      "name": "factory-157",
+      "country": "Belgium",
+      "latitude": "50.87959",
+      "longitude": "4.70093"
     },
     {
-      "id": "247",
-      "name": "factory-247",
+      "id": "158",
+      "name": "factory-158",
+      "country": "France",
+      "latitude": "48.89389",
+      "longitude": "2.28864"
+    },
+    {
+      "id": "159",
+      "name": "factory-159",
+      "country": "Belgium",
+      "latitude": "50.63373",
+      "longitude": "5.56749"
+    },
+    {
+      "id": "160",
+      "name": "factory-160",
+      "country": "France",
+      "latitude": "50.63297",
+      "longitude": "3.05858"
+    },
+    {
+      "id": "161",
+      "name": "factory-161",
+      "country": "France",
+      "latitude": "45.83153",
+      "longitude": "1.25781"
+    },
+    {
+      "id": "162",
+      "name": "factory-162",
+      "country": "UnitedKingdom",
+      "latitude": "53.41058",
+      "longitude": "-2.97794"
+    },
+    {
+      "id": "163",
+      "name": "factory-163",
+      "country": "France",
+      "latitude": "47.75",
+      "longitude": "-3.36667"
+    },
+    {
+      "id": "164",
+      "name": "factory-164",
       "country": "Germany",
       "latitude": "53.86893",
       "longitude": "10.68729"
     },
     {
-      "id": "248",
-      "name": "factory-248",
+      "id": "165",
+      "name": "factory-165",
+      "country": "Germany",
+      "latitude": "49.48121",
+      "longitude": "8.44641"
+    },
+    {
+      "id": "166",
+      "name": "factory-166",
+      "country": "Switzerland",
+      "latitude": "46.01008",
+      "longitude": "8.96004"
+    },
+    {
+      "id": "167",
+      "name": "factory-167",
+      "country": "UnitedKingdom",
+      "latitude": "51.87967",
+      "longitude": "-0.41748"
+    },
+    {
+      "id": "168",
+      "name": "factory-168",
+      "country": "Netherlands",
+      "latitude": "50.84833",
+      "longitude": "5.68889"
+    },
+    {
+      "id": "169",
+      "name": "factory-169",
       "country": "Germany",
       "latitude": "52.12773",
       "longitude": "11.62916"
     },
     {
-      "id": "249",
-      "name": "factory-249",
+      "id": "170",
+      "name": "factory-170",
       "country": "Germany",
       "latitude": "49.98419",
       "longitude": "8.2791"
     },
     {
-      "id": "250",
-      "name": "factory-250",
+      "id": "171",
+      "name": "factory-171",
+      "country": "France",
+      "latitude": "48.81171",
+      "longitude": "2.43945"
+    },
+    {
+      "id": "172",
+      "name": "factory-172",
+      "country": "UnitedKingdom",
+      "latitude": "53.48095",
+      "longitude": "-2.23743"
+    },
+    {
+      "id": "173",
+      "name": "factory-173",
       "country": "Germany",
       "latitude": "49.4891",
       "longitude": "8.46694"
     },
     {
-      "id": "251",
-      "name": "factory-251",
+      "id": "174",
+      "name": "factory-174",
+      "country": "UnitedKingdom",
+      "latitude": "53.13333",
+      "longitude": "-1.2"
+    },
+    {
+      "id": "175",
+      "name": "factory-175",
       "country": "Germany",
       "latitude": "51.65671",
       "longitude": "7.09038"
     },
     {
-      "id": "252",
-      "name": "factory-252",
+      "id": "176",
+      "name": "factory-176",
+      "country": "France",
+      "latitude": "43.29695",
+      "longitude": "5.38107"
+    },
+    {
+      "id": "177",
+      "name": "factory-177",
+      "country": "France",
+      "latitude": "48.96014",
+      "longitude": "2.87885"
+    },
+    {
+      "id": "178",
+      "name": "factory-178",
+      "country": "Belgium",
+      "latitude": "51.02574",
+      "longitude": "4.47762"
+    },
+    {
+      "id": "179",
+      "name": "factory-179",
+      "country": "France",
+      "latitude": "44.83248",
+      "longitude": "-0.63381"
+    },
+    {
+      "id": "180",
+      "name": "factory-180",
+      "country": "France",
+      "latitude": "49.11911",
+      "longitude": "6.17269"
+    },
+    {
+      "id": "181",
+      "name": "factory-181",
+      "country": "UnitedKingdom",
+      "latitude": "52.04172",
+      "longitude": "-0.75583"
+    },
+    {
+      "id": "182",
+      "name": "factory-182",
       "country": "Germany",
       "latitude": "51.45342",
       "longitude": "6.6326"
     },
     {
-      "id": "253",
-      "name": "factory-253",
-      "country": "Germany",
-      "latitude": "48.13743",
-      "longitude": "11.57549"
-    },
-    {
-      "id": "254",
-      "name": "factory-254",
+      "id": "183",
+      "name": "factory-183",
       "country": "Germany",
       "latitude": "51.18539",
       "longitude": "6.44172"
     },
     {
-      "id": "255",
-      "name": "factory-255",
+      "id": "184",
+      "name": "factory-184",
+      "country": "Belgium",
+      "latitude": "50.45413",
+      "longitude": "3.95229"
+    },
+    {
+      "id": "185",
+      "name": "factory-185",
+      "country": "France",
+      "latitude": "43.61092",
+      "longitude": "3.87723"
+    },
+    {
+      "id": "186",
+      "name": "factory-186",
+      "country": "France",
+      "latitude": "48.86415",
+      "longitude": "2.44322"
+    },
+    {
+      "id": "187",
+      "name": "factory-187",
+      "country": "France",
+      "latitude": "47.75",
+      "longitude": "7.33333"
+    },
+    {
+      "id": "188",
+      "name": "factory-188",
+      "country": "Germany",
+      "latitude": "48.13743",
+      "longitude": "11.57549"
+    },
+    {
+      "id": "189",
+      "name": "factory-189",
       "country": "Germany",
       "latitude": "51.96236",
       "longitude": "7.62571"
     },
     {
-      "id": "256",
-      "name": "factory-256",
+      "id": "190",
+      "name": "factory-190",
+      "country": "Belgium",
+      "latitude": "50.4669",
+      "longitude": "4.86746"
+    },
+    {
+      "id": "191",
+      "name": "factory-191",
+      "country": "France",
+      "latitude": "48.68439",
+      "longitude": "6.18496"
+    },
+    {
+      "id": "192",
+      "name": "factory-192",
+      "country": "France",
+      "latitude": "48.89198",
+      "longitude": "2.20675"
+    },
+    {
+      "id": "193",
+      "name": "factory-193",
+      "country": "France",
+      "latitude": "47.21725",
+      "longitude": "-1.55336"
+    },
+    {
+      "id": "194",
+      "name": "factory-194",
+      "country": "Switzerland",
+      "latitude": "46.99179",
+      "longitude": "6.931"
+    },
+    {
+      "id": "195",
+      "name": "factory-195",
+      "country": "France",
+      "latitude": "48.8846",
+      "longitude": "2.26965"
+    },
+    {
+      "id": "196",
+      "name": "factory-196",
       "country": "Germany",
       "latitude": "51.19807",
       "longitude": "6.68504"
     },
     {
-      "id": "257",
-      "name": "factory-257",
+      "id": "197",
+      "name": "factory-197",
+      "country": "UnitedKingdom",
+      "latitude": "51.58774",
+      "longitude": "-2.99835"
+    },
+    {
+      "id": "198",
+      "name": "factory-198",
+      "country": "France",
+      "latitude": "43.70313",
+      "longitude": "7.26608"
+    },
+    {
+      "id": "199",
+      "name": "factory-199",
+      "country": "Netherlands",
+      "latitude": "51.8425",
+      "longitude": "5.85278"
+    },
+    {
+      "id": "200",
+      "name": "factory-200",
+      "country": "France",
+      "latitude": "43.83378",
+      "longitude": "4.35962"
+    },
+    {
+      "id": "201",
+      "name": "factory-201",
+      "country": "France",
+      "latitude": "46.32313",
+      "longitude": "-0.45877"
+    },
+    {
+      "id": "202",
+      "name": "factory-202",
+      "country": "France",
+      "latitude": "48.84979",
+      "longitude": "2.56266"
+    },
+    {
+      "id": "203",
+      "name": "factory-203",
+      "country": "UnitedKingdom",
+      "latitude": "52.25",
+      "longitude": "-0.88333"
+    },
+    {
+      "id": "204",
+      "name": "factory-204",
+      "country": "UnitedKingdom",
+      "latitude": "52.62783",
+      "longitude": "1.29834"
+    },
+    {
+      "id": "205",
+      "name": "factory-205",
+      "country": "UnitedKingdom",
+      "latitude": "52.9536",
+      "longitude": "-1.15047"
+    },
+    {
+      "id": "206",
+      "name": "factory-206",
       "country": "Germany",
       "latitude": "50.10061",
       "longitude": "8.76647"
     },
     {
-      "id": "258",
-      "name": "factory-258",
+      "id": "207",
+      "name": "factory-207",
       "country": "Germany",
       "latitude": "53.14118",
       "longitude": "8.21467"
     },
     {
-      "id": "259",
-      "name": "factory-259",
+      "id": "208",
+      "name": "factory-208",
+      "country": "France",
+      "latitude": "47.90289",
+      "longitude": "1.90389"
+    },
+    {
+      "id": "209",
+      "name": "factory-209",
       "country": "Germany",
       "latitude": "52.27264",
       "longitude": "8.0498"
     },
     {
-      "id": "260",
-      "name": "factory-260",
+      "id": "210",
+      "name": "factory-210",
+      "country": "Belgium",
+      "latitude": "51.21551",
+      "longitude": "2.927"
+    },
+    {
+      "id": "211",
+      "name": "factory-211",
+      "country": "UnitedKingdom",
+      "latitude": "51.75222",
+      "longitude": "-1.25596"
+    },
+    {
+      "id": "212",
+      "name": "factory-212",
       "country": "Germany",
       "latitude": "51.71905",
       "longitude": "8.75439"
     },
     {
-      "id": "261",
-      "name": "factory-261",
+      "id": "213",
+      "name": "factory-213",
+      "country": "France",
+      "latitude": "48.85341",
+      "longitude": "2.3488"
+    },
+    {
+      "id": "214",
+      "name": "factory-214",
+      "country": "France",
+      "latitude": "43.3",
+      "longitude": "-0.36667"
+    },
+    {
+      "id": "215",
+      "name": "factory-215",
+      "country": "France",
+      "latitude": "42.69764",
+      "longitude": "2.89541"
+    },
+    {
+      "id": "216",
+      "name": "factory-216",
+      "country": "France",
+      "latitude": "44.81011",
+      "longitude": "-0.64129"
+    },
+    {
+      "id": "217",
+      "name": "factory-217",
       "country": "Germany",
       "latitude": "48.88436",
       "longitude": "8.69892"
     },
     {
-      "id": "262",
-      "name": "factory-262",
+      "id": "218",
+      "name": "factory-218",
+      "country": "France",
+      "latitude": "46.58333",
+      "longitude": "0.33333"
+    },
+    {
+      "id": "219",
+      "name": "factory-219",
+      "country": "UnitedKingdom",
+      "latitude": "50.79899",
+      "longitude": "-1.09125"
+    },
+    {
+      "id": "220",
+      "name": "factory-220",
       "country": "Germany",
       "latitude": "52.39886",
       "longitude": "13.06566"
     },
     {
-      "id": "263",
-      "name": "factory-263",
+      "id": "221",
+      "name": "factory-221",
+      "country": "UnitedKingdom",
+      "latitude": "53.76282",
+      "longitude": "-2.70452"
+    },
+    {
+      "id": "222",
+      "name": "factory-222",
+      "country": "France",
+      "latitude": "48",
+      "longitude": "-4.1"
+    },
+    {
+      "id": "223",
+      "name": "factory-223",
+      "country": "Switzerland",
+      "latitude": "47.22557",
+      "longitude": "8.82228"
+    },
+    {
+      "id": "224",
+      "name": "factory-224",
       "country": "Germany",
       "latitude": "51.29724",
       "longitude": "6.84929"
     },
     {
-      "id": "264",
-      "name": "factory-264",
+      "id": "225",
+      "name": "factory-225",
+      "country": "UnitedKingdom",
+      "latitude": "51.45625",
+      "longitude": "-0.97113"
+    },
+    {
+      "id": "226",
+      "name": "factory-226",
       "country": "Germany",
       "latitude": "51.61379",
       "longitude": "7.19738"
     },
     {
-      "id": "265",
-      "name": "factory-265",
+      "id": "227",
+      "name": "factory-227",
       "country": "Germany",
       "latitude": "49.01513",
       "longitude": "12.10161"
     },
     {
-      "id": "266",
-      "name": "factory-266",
+      "id": "228",
+      "name": "factory-228",
+      "country": "France",
+      "latitude": "49.25",
+      "longitude": "4.03333"
+    },
+    {
+      "id": "229",
+      "name": "factory-229",
+      "country": "France",
+      "latitude": "48.11198",
+      "longitude": "-1.67429"
+    },
+    {
+      "id": "230",
+      "name": "factory-230",
       "country": "Germany",
       "latitude": "48.49144",
       "longitude": "9.20427"
     },
     {
-      "id": "267",
-      "name": "factory-267",
+      "id": "231",
+      "name": "factory-231",
+      "country": "Belgium",
+      "latitude": "50.94653",
+      "longitude": "3.12269"
+    },
+    {
+      "id": "232",
+      "name": "factory-232",
       "country": "Germany",
       "latitude": "54.0887",
       "longitude": "12.14049"
     },
     {
-      "id": "268",
-      "name": "factory-268",
+      "id": "233",
+      "name": "factory-233",
+      "country": "Netherlands",
+      "latitude": "51.9225",
+      "longitude": "4.47917"
+    },
+    {
+      "id": "234",
+      "name": "factory-234",
+      "country": "France",
+      "latitude": "49.44313",
+      "longitude": "1.09932"
+    },
+    {
+      "id": "235",
+      "name": "factory-235",
+      "country": "France",
+      "latitude": "48.8765",
+      "longitude": "2.18967"
+    },
+    {
+      "id": "236",
+      "name": "factory-236",
       "country": "Germany",
       "latitude": "49.23262",
       "longitude": "7.00982"
     },
     {
-      "id": "269",
-      "name": "factory-269",
+      "id": "237",
+      "name": "factory-237",
+      "country": "France",
+      "latitude": "48.93333",
+      "longitude": "2.36667"
+    },
+    {
+      "id": "238",
+      "name": "factory-238",
+      "country": "France",
+      "latitude": "45.43389",
+      "longitude": "4.39"
+    },
+    {
+      "id": "239",
+      "name": "factory-239",
+      "country": "France",
+      "latitude": "48.79395",
+      "longitude": "2.49323"
+    },
+    {
+      "id": "240",
+      "name": "factory-240",
+      "country": "France",
+      "latitude": "47.28333",
+      "longitude": "-2.2"
+    },
+    {
+      "id": "241",
+      "name": "factory-241",
+      "country": "France",
+      "latitude": "49.84889",
+      "longitude": "3.28757"
+    },
+    {
+      "id": "242",
+      "name": "factory-242",
+      "country": "France",
+      "latitude": "48.77186",
+      "longitude": "2.01891"
+    },
+    {
+      "id": "243",
+      "name": "factory-243",
+      "country": "Switzerland",
+      "latitude": "47.42391",
+      "longitude": "9.37477"
+    },
+    {
+      "id": "244",
+      "name": "factory-244",
+      "country": "France",
+      "latitude": "49",
+      "longitude": "2.38333"
+    },
+    {
+      "id": "245",
+      "name": "factory-245",
+      "country": "France",
+      "latitude": "48.9482",
+      "longitude": "2.19169"
+    },
+    {
+      "id": "246",
+      "name": "factory-246",
+      "country": "Switzerland",
+      "latitude": "47.69732",
+      "longitude": "8.63493"
+    },
+    {
+      "id": "247",
+      "name": "factory-247",
       "country": "Germany",
       "latitude": "53.62937",
       "longitude": "11.41316"
     },
     {
-      "id": "270",
-      "name": "factory-270",
+      "id": "248",
+      "name": "factory-248",
+      "country": "Belgium",
+      "latitude": "50.58362",
+      "longitude": "5.50115"
+    },
+    {
+      "id": "249",
+      "name": "factory-249",
+      "country": "UnitedKingdom",
+      "latitude": "53.38297",
+      "longitude": "-1.4659"
+    },
+    {
+      "id": "250",
+      "name": "factory-250",
+      "country": "Netherlands",
+      "latitude": "51.69917",
+      "longitude": "5.30417"
+    },
+    {
+      "id": "251",
+      "name": "factory-251",
       "country": "Germany",
       "latitude": "50.87481",
       "longitude": "8.02431"
     },
     {
-      "id": "271",
-      "name": "factory-271",
+      "id": "252",
+      "name": "factory-252",
+      "country": "Belgium",
+      "latitude": "51.16509",
+      "longitude": "4.1437"
+    },
+    {
+      "id": "253",
+      "name": "factory-253",
+      "country": "Switzerland",
+      "latitude": "46.22739",
+      "longitude": "7.35559"
+    },
+    {
+      "id": "254",
+      "name": "factory-254",
       "country": "Germany",
       "latitude": "51.17343",
       "longitude": "7.0845"
     },
     {
-      "id": "272",
-      "name": "factory-272",
+      "id": "255",
+      "name": "factory-255",
+      "country": "UnitedKingdom",
+      "latitude": "50.90395",
+      "longitude": "-1.40428"
+    },
+    {
+      "id": "256",
+      "name": "factory-256",
+      "country": "UnitedKingdom",
+      "latitude": "51.53782",
+      "longitude": "0.71433"
+    },
+    {
+      "id": "257",
+      "name": "factory-257",
+      "country": "UnitedKingdom",
+      "latitude": "53.00415",
+      "longitude": "-2.18538"
+    },
+    {
+      "id": "258",
+      "name": "factory-258",
+      "country": "France",
+      "latitude": "48.58392",
+      "longitude": "7.74553"
+    },
+    {
+      "id": "259",
+      "name": "factory-259",
       "country": "Germany",
       "latitude": "48.78232",
       "longitude": "9.17702"
     },
     {
-      "id": "273",
-      "name": "factory-273",
+      "id": "260",
+      "name": "factory-260",
+      "country": "UnitedKingdom",
+      "latitude": "51.35",
+      "longitude": "-0.2"
+    },
+    {
+      "id": "261",
+      "name": "factory-261",
+      "country": "UnitedKingdom",
+      "latitude": "51.62079",
+      "longitude": "-3.94323"
+    },
+    {
+      "id": "262",
+      "name": "factory-262",
+      "country": "UnitedKingdom",
+      "latitude": "51.55797",
+      "longitude": "-1.78116"
+    },
+    {
+      "id": "263",
+      "name": "factory-263",
+      "country": "Netherlands",
+      "latitude": "52.07667",
+      "longitude": "4.29861"
+    },
+    {
+      "id": "264",
+      "name": "factory-264",
+      "country": "Switzerland",
+      "latitude": "46.75118",
+      "longitude": "7.62166"
+    },
+    {
+      "id": "265",
+      "name": "factory-265",
+      "country": "Netherlands",
+      "latitude": "51.55551",
+      "longitude": "5.0913"
+    },
+    {
+      "id": "266",
+      "name": "factory-266",
+      "country": "France",
+      "latitude": "43.12442",
+      "longitude": "5.92836"
+    },
+    {
+      "id": "267",
+      "name": "factory-267",
+      "country": "France",
+      "latitude": "43.60426",
+      "longitude": "1.44367"
+    },
+    {
+      "id": "268",
+      "name": "factory-268",
+      "country": "France",
+      "latitude": "50.72391",
+      "longitude": "3.16117"
+    },
+    {
+      "id": "269",
+      "name": "factory-269",
+      "country": "Belgium",
+      "latitude": "50.60715",
+      "longitude": "3.38932"
+    },
+    {
+      "id": "270",
+      "name": "factory-270",
+      "country": "France",
+      "latitude": "47.39484",
+      "longitude": "0.70398"
+    },
+    {
+      "id": "271",
+      "name": "factory-271",
       "country": "Germany",
       "latitude": "49.75565",
       "longitude": "6.63935"
     },
     {
-      "id": "274",
-      "name": "factory-274",
+      "id": "272",
+      "name": "factory-272",
+      "country": "France",
+      "latitude": "48.30073",
+      "longitude": "4.08524"
+    },
+    {
+      "id": "273",
+      "name": "factory-273",
       "country": "Germany",
       "latitude": "48.39841",
       "longitude": "9.99155"
     },
     {
+      "id": "274",
+      "name": "factory-274",
+      "country": "Switzerland",
+      "latitude": "47.34713",
+      "longitude": "8.72091"
+    },
+    {
       "id": "275",
       "name": "factory-275",
-      "country": "Germany",
-      "latitude": "50.08258",
-      "longitude": "8.24932"
+      "country": "Netherlands",
+      "latitude": "52.09083",
+      "longitude": "5.12222"
     },
     {
       "id": "276",
       "name": "factory-276",
-      "country": "Germany",
-      "latitude": "51.44362",
-      "longitude": "7.35258"
+      "country": "France",
+      "latitude": "44.92801",
+      "longitude": "4.8951"
     },
     {
       "id": "277",
       "name": "factory-277",
-      "country": "Germany",
-      "latitude": "52.42452",
-      "longitude": "10.7815"
+      "country": "France",
+      "latitude": "47.6579",
+      "longitude": "-2.75574"
     },
     {
       "id": "278",
       "name": "factory-278",
-      "country": "Germany",
-      "latitude": "51.27027",
-      "longitude": "7.16755"
+      "country": "France",
+      "latitude": "45.70254",
+      "longitude": "4.87147"
     },
     {
       "id": "279",
       "name": "factory-279",
-      "country": "Germany",
-      "latitude": "49.79391",
-      "longitude": "9.95121"
+      "country": "France",
+      "latitude": "48.80359",
+      "longitude": "2.13424"
     },
     {
       "id": "280",
       "name": "factory-280",
-      "country": "Germany",
-      "latitude": "50.72724",
-      "longitude": "12.48839"
+      "country": "Belgium",
+      "latitude": "50.58907",
+      "longitude": "5.86241"
     },
     {
       "id": "281",
       "name": "factory-281",
       "country": "France",
-      "latitude": "45.26715476",
-      "longitude": "1.774291992"
+      "latitude": "45.76667",
+      "longitude": "4.88333"
     },
     {
       "id": "282",
       "name": "factory-282",
       "country": "France",
-      "latitude": "44.92980751",
-      "longitude": "2.444458008"
+      "latitude": "48.78716",
+      "longitude": "2.40332"
     },
     {
       "id": "283",
       "name": "factory-283",
-      "country": "France",
-      "latitude": "45.5486785",
-      "longitude": "2.318115234"
+      "country": "UnitedKingdom",
+      "latitude": "52.58528",
+      "longitude": "-1.98396"
     },
     {
       "id": "284",
       "name": "factory-284",
-      "country": "France",
-      "latitude": "45.21687321",
-      "longitude": "2.323608398"
+      "country": "Germany",
+      "latitude": "50.08258",
+      "longitude": "8.24932"
     },
     {
       "id": "285",
       "name": "factory-285",
-      "country": "France",
-      "latitude": "46.592844",
-      "longitude": "1.988525391"
+      "country": "UnitedKingdom",
+      "latitude": "53.54296",
+      "longitude": "-2.63706"
     },
     {
       "id": "286",
       "name": "factory-286",
-      "country": "France",
-      "latitude": "46.95776135",
-      "longitude": "1.988525391"
+      "country": "Switzerland",
+      "latitude": "47.50564",
+      "longitude": "8.72413"
     },
     {
       "id": "287",
       "name": "factory-287",
-      "country": "France",
-      "latitude": "46.64189396",
-      "longitude": "1.076660156"
+      "country": "Germany",
+      "latitude": "51.44362",
+      "longitude": "7.35258"
     },
     {
       "id": "288",
       "name": "factory-288",
-      "country": "France",
-      "latitude": "46.98774726",
-      "longitude": "3.1640625"
+      "country": "Germany",
+      "latitude": "52.42452",
+      "longitude": "10.7815"
     },
     {
       "id": "289",
       "name": "factory-289",
-      "country": "France",
-      "latitude": "46.5588603",
-      "longitude": "3.36730957"
+      "country": "UnitedKingdom",
+      "latitude": "52.58547",
+      "longitude": "-2.12296"
     },
     {
       "id": "290",
       "name": "factory-290",
-      "country": "France",
-      "latitude": "47.49493651",
-      "longitude": "3.911132813"
+      "country": "Germany",
+      "latitude": "51.27027",
+      "longitude": "7.16755"
     },
     {
       "id": "291",
       "name": "factory-291",
-      "country": "France",
-      "latitude": "48.45288728",
-      "longitude": "5.127868652"
+      "country": "Germany",
+      "latitude": "49.79391",
+      "longitude": "9.95121"
     },
     {
       "id": "292",
       "name": "factory-292",
-      "country": "France",
-      "latitude": "48.76705193",
-      "longitude": "5.180053711"
+      "country": "Switzerland",
+      "latitude": "46.77852",
+      "longitude": "6.64115"
     },
     {
       "id": "293",
       "name": "factory-293",
-      "country": "France",
-      "latitude": "48.10926515",
-      "longitude": "5.136108398"
+      "country": "Netherlands",
+      "latitude": "52.45313",
+      "longitude": "4.81356"
     },
     {
       "id": "294",
       "name": "factory-294",
-      "country": "France",
-      "latitude": "44.10730981",
-      "longitude": "3.076171875"
+      "country": "Switzerland",
+      "latitude": "47.17242",
+      "longitude": "8.51745"
     },
     {
       "id": "295",
       "name": "factory-295",
-      "country": "France",
-      "latitude": "44.35135037",
-      "longitude": "2.581787109"
+      "country": "Switzerland",
+      "latitude": "47.36667",
+      "longitude": "8.55"
     },
     {
       "id": "296",
       "name": "factory-296",
-      "country": "France",
-      "latitude": "44.52001001",
-      "longitude": "3.515625"
+      "country": "Germany",
+      "latitude": "50.72724",
+      "longitude": "12.48839"
     },
     {
       "id": "297",
       "name": "factory-297",
-      "country": "France",
-      "latitude": "44.13885577",
-      "longitude": "4.097900391"
+      "country": "Netherlands",
+      "latitude": "52.5125",
+      "longitude": "6.09444"
     },
     {
       "id": "298",
       "name": "factory-298",
       "country": "France",
-      "latitude": "44.62566378",
-      "longitude": "4.405517578"
+      "latitude": "46.02366774",
+      "longitude": "4.125366211"
     },
     {
       "id": "299",
       "name": "factory-299",
       "country": "France",
-      "latitude": "43.64005063",
-      "longitude": "2.241210938"
+      "latitude": "43.29695",
+      "longitude": "5.38107"
     },
     {
       "id": "300",
       "name": "factory-300",
       "country": "France",
-      "latitude": "45.25168826",
-      "longitude": "0.346069336"
+      "latitude": "47.79101618",
+      "longitude": "3.581542969"
     }
 ]

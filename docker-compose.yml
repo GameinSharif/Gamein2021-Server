@@ -56,7 +56,8 @@ services:
       - db_net
       - lb_net
     volumes:
-      - ./Core/src/main/resources ./resources
+      - ./Core/src/main/resources/JsonFiles ./JsonFiles
+      - ./Core/src/main/resources/CSVFiles ./CSVFiles
 
   client-handler2:
     build: ./ClientHandler
@@ -81,7 +82,8 @@ services:
       - db_net
       - lb_net
     volumes:
-      - ./Core/src/main/resources ./resources
+      - ./Core/src/main/resources/JsonFiles ./JsonFiles
+      - ./Core/src/main/resources/CSVFiles ./CSVFiles
 
   central-engine:
     build: ./CentralEngine
@@ -104,7 +106,9 @@ services:
       RABBIT_HOSTNAME: rabbitmq
     restart: on-failure
     volumes:
-      - ./Core/src/main/resources ./resources
+      - ./Core/src/main/resources/JsonFiles ./JsonFiles
+      - ./Core/src/main/resources/CSVFiles ./CSVFiles
+
 
 networks:
   rabbitmq_net:

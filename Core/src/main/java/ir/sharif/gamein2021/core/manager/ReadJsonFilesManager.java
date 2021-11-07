@@ -9,6 +9,9 @@ import ir.sharif.gamein2021.core.util.models.Factory;
 import ir.sharif.gamein2021.core.util.models.Product;
 import ir.sharif.gamein2021.core.util.models.ProductionLineTemplate;
 import ir.sharif.gamein2021.core.util.models.Supplier;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.InputStreamSource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
 
@@ -19,38 +22,33 @@ import java.util.Arrays;
 import java.util.List;
 
 @Component
-public class ReadJsonFilesManager
-{
+public class ReadJsonFilesManager {
     public static Product[] Products;
     public static Vehicle[] Vehicles;
     public static Factory[] Factories;
     public static Supplier[] Suppliers;
     public static ProductionLineTemplate[] ProductionLineTemplates;
 
-    public static void ReadJsonFiles()
-    {
-        try
-        {
+    public static void ReadJsonFiles() {
+        try {
             ObjectMapper objectMapper = new ObjectMapper();
 
-            File productsJsonFile = ResourceUtils.getFile("classpath:JsonFiles/Products.json");
-            Products = objectMapper.readValue(productsJsonFile, Product[].class);
+            Resource productsJsonFile = new ClassPathResource("JsonFiles/Products.json");
+            Products = objectMapper.readValue(productsJsonFile.getInputStream(), Product[].class);
 
-            File vehiclesJsonFile = ResourceUtils.getFile("classpath:JsonFiles/Vehicles.json");
-            Vehicles = objectMapper.readValue(vehiclesJsonFile, Vehicle[].class);
+            Resource vehiclesJsonFile = new ClassPathResource("JsonFiles/Vehicles.json");
+            Vehicles = objectMapper.readValue(vehiclesJsonFile.getInputStream(), Vehicle[].class);
 
-            File factoriesJsonFile = ResourceUtils.getFile("classpath:JsonFiles/Factories.json");
-            Factories = objectMapper.readValue(factoriesJsonFile, Factory[].class);
+            Resource factoriesJsonFile = new ClassPathResource("JsonFiles/Factories.json");
+            Factories = objectMapper.readValue(factoriesJsonFile.getInputStream(), Factory[].class);
             AuctionService.RemainedFactories = new ArrayList<>(Arrays.asList(Arrays.copyOf(Factories, Factories.length)));
 
-            File productionLineTemplateJsonFile = ResourceUtils.getFile("classpath:JsonFiles/ProductionLineTemplates.json");
-            ProductionLineTemplates = objectMapper.readValue(productionLineTemplateJsonFile, ProductionLineTemplate[].class);
+            Resource productionLineTemplateJsonFile = new ClassPathResource("JsonFiles/ProductionLineTemplates.json");
+            ProductionLineTemplates = objectMapper.readValue(productionLineTemplateJsonFile.getInputStream(), ProductionLineTemplate[].class);
 
-            File suppliersJsonFile = ResourceUtils.getFile("classpath:JsonFiles/Suppliers.json");
-            Suppliers = objectMapper.readValue(suppliersJsonFile, Supplier[].class);
-        }
-        catch (IOException e)
-        {
+            Resource suppliersJsonFile = new ClassPathResource("JsonFiles/Suppliers.json");
+            Suppliers = objectMapper.readValue(suppliersJsonFile.getInputStream(), Supplier[].class);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -64,7 +62,6 @@ public class ReadJsonFilesManager
     }
 
 
-
     public static Product[] getAllProducts() {
         return Products;
     }
@@ -74,11 +71,11 @@ public class ReadJsonFilesManager
     }
 
 
-    public static Factory findFactoryById(Integer id){
-        for(Factory factory : Factories){
-            if(factory.getId() == id)
+    public static Factory findFactoryById(Integer id) {
+        for (Factory factory : Factories) {
+            if (factory.getId() == id)
                 return factory;
         }
-        throw new FactoryNotFoundException("Factory with id : " +  id + " does not exist");
+        throw new FactoryNotFoundException("Factory with id : " + id + " does not exist");
     }
 }

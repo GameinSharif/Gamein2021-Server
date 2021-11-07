@@ -21,9 +21,9 @@ public class ClientHandlerApplication extends SpringBootServletInitializer
 
         Environment environment = context.getEnvironment();
         String[] profiles = environment.getActiveProfiles();
-        if (Arrays.stream(profiles).noneMatch(x -> x.equals("microservice")))
-        {
+//        if (Arrays.stream(profiles).noneMatch(x -> x.equals("microservice")))
+//        {
             MainThread.main(args);
-        }
+//        }
     }
 }

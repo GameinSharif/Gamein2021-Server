@@ -55,6 +55,8 @@ services:
       - rabbitmq_net
       - db_net
       - lb_net
+    volumes:
+      - ./Core/src/main/resources ./resources
 
   client-handler2:
     build: ./ClientHandler
@@ -78,6 +80,8 @@ services:
       - rabbitmq_net
       - db_net
       - lb_net
+    volumes:
+      - ./Core/src/main/resources ./resources
 
   central-engine:
     build: ./CentralEngine
@@ -99,7 +103,8 @@ services:
       SPRING_PROFILES_ACTIVE: production,microservice,scheduled
       RABBIT_HOSTNAME: rabbitmq
     restart: on-failure
-
+    volumes:
+      - ./Core/src/main/resources ./resources
 
 networks:
   rabbitmq_net:

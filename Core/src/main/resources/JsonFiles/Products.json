@@ -3,171 +3,373 @@
 	    "id": 1,
 	    "productType": "RawMaterial",
 	    "name": "Silicon",
-	    "volumetricUnit": 1
+	    "volumetricUnit": 1,
+		"minPrice": 2,
+		"maxPrice": 10
 	},
 	{
 		"id": 2,
 		"productType": "RawMaterial",
 		"name": "Aluminium",
-		"volumetricUnit": 1
+		"volumetricUnit": 1,
+		"minPrice": 40,
+		"maxPrice": 120
 	},
 	{
 		"id": 3,
 		"productType": "RawMaterial",
 		"name": "Polymer",
-		"volumetricUnit": 1
+		"volumetricUnit": 1,
+		"minPrice": 5,
+		"maxPrice": 20
 	},
 	{
 		"id": 4,
 		"productType": "RawMaterial",
 		"name": "Water",
-		"volumetricUnit": 1
+		"volumetricUnit": 1,
+		"minPrice": 5,
+		"maxPrice": 10
 	},
 	{
 		"id": 5,
 		"productType": "RawMaterial",
 		"name": "Hop",
-		"volumetricUnit": 1
+		"volumetricUnit": 1,
+		"minPrice": 10,
+		"maxPrice": 30
 	},
 	{
 		"id": 6,
 		"productType": "RawMaterial",
 		"name": "CerealSprouts",
-		"volumetricUnit": 1
+		"volumetricUnit": 1,
+		"minPrice": 10,
+		"maxPrice": 30
 	},
 	{
 		"id": 7,
 		"productType": "RawMaterial",
-		"name": "AppleConcentrate",
-		"volumetricUnit": 1
+		"name": "CherriesConcentrate",
+		"volumetricUnit": 1,
+		"minPrice": 10,
+		"maxPrice": 40
 	},
 	{
 		"id": 8,
 		"productType": "RawMaterial",
 		"name": "OrangeConcentrate",
-		"volumetricUnit": 1
+		"volumetricUnit": 1,
+		"minPrice": 10,
+		"maxPrice": 40
 	},
 	{
 		"id": 9,
 		"productType": "RawMaterial",
 		"name": "PineappleConcentrate",
-		"volumetricUnit": 1
+		"volumetricUnit": 1,
+		"minPrice": 10,
+		"maxPrice": 40
 	},
 	{
 		"id": 10,
 		"productType": "RawMaterial",
 		"name": "MangoConcentrate",
-		"volumetricUnit": 1
+		"volumetricUnit": 1,
+		"minPrice": 10,
+		"maxPrice": 40
 	},
 	{
 		"id": 11,
 		"productType": "RawMaterial",
-		"name": "OrangeFlavoring",
-		"volumetricUnit": 1
+		"name": "CSDFlavoring",
+		"volumetricUnit": 1,
+		"minPrice": 10,
+		"maxPrice": 70
 	},
 	{
 		"id": 12,
 		"productType": "RawMaterial",
-		"name": "ColaFlavoring",
-		"volumetricUnit": 1
+		"name": "MaltFlavoring",
+		"volumetricUnit": 1,
+		"minPrice": 10,
+		"maxPrice": 70
 	},
 	{
 		"id": 13,
 		"productType": "RawMaterial",
-		"name": "LemonFlavoring",
-		"volumetricUnit": 1
+		"name": "FruitFlavoring",
+		"volumetricUnit": 1,
+		"minPrice": 10,
+		"maxPrice": 70
 	},
 	{
 		"id": 14,
 		"productType": "RawMaterial",
-		"name": "PeachFlavoring",
-		"volumetricUnit": 1
+		"name": "Sugar",
+		"volumetricUnit": 1,
+		"minPrice": 10,
+		"maxPrice": 70
 	},
 	{
 		"id": 15,
 		"productType": "RawMaterial",
-		"name": "AloeveraFlavoring",
-		"volumetricUnit": 1
+		"name": "Preservative",
+		"volumetricUnit": 1,
+		"minPrice": 10,
+		"maxPrice": 70
 	},
 	{
 		"id": 16,
 		"productType": "RawMaterial",
-		"name": "MintFlavoring",
-		"volumetricUnit": 1
+		"name": "Caffeine",
+		"volumetricUnit": 1,
+		"minPrice": 10,
+		"maxPrice": 70
 	},
 	{
 		"id": 17,
-		"productType": "RawMaterial",
-		"name": "EquatorialFlavoring",
-		"volumetricUnit": 1
-	},
-	{
-		"id": 18,
-		"productType": "RawMaterial",
-		"name": "Sugar",
-		"volumetricUnit": 1
-	},
-	{
-		"id": 19,
-		"productType": "RawMaterial",
-		"name": "Preservative",
-		"volumetricUnit": 1
-	},
-	{
-		"id": 20,
-		"productType": "RawMaterial",
-		"name": "Caffeine",
-		"volumetricUnit": 1
-	},
-	{
-		"id": 21,
 		"categoryIds": "1,2,3",
 		"productionLineTemplateId": 5,
 		"productType": "SemiFinished",
 		"name": "GlassBottle",
-		"volumetricUnit": 5,
+		"volumetricUnit": 1,
 		"ingredientsPerUnit": [
 			{
 				"productId": 1,
 				"amount": 16
 			}
-		]
+		],
+		"minPrice": 250,
+		"maxPrice": 1000
 	},
 	{
-		"id": 22,
-		"categoryIds": "1,2,3,4",
+		"id": 18,
+		"categoryIds": "1,2,4",
 		"productionLineTemplateId": 6,
 		"productType": "SemiFinished",
 		"name": "AluminiumCan",
-		"volumetricUnit": 10,
+		"volumetricUnit": 2,
 		"ingredientsPerUnit": [
 			{
 				"productId": 2,
 				"amount": 1
 			}
-		]
+		],
+		"minPrice": 750,
+		"maxPrice": 3000
 	},
 	{
-		"id": 23,
-		"categoryIds": "1,2,3",
+		"id": 19,
+		"categoryIds": "1",
 		"productionLineTemplateId": 7,
 		"productType": "SemiFinished",
 		"name": "PlasticBottle",
-		"volumetricUnit": 25,
+		"volumetricUnit": 4,
 		"ingredientsPerUnit": [
 			{
 				"productId": 3,
 				"amount": 8
 			}
-		]
+		],
+		"minPrice": 500,
+		"maxPrice": 2000
 	},
 	{
-		"id": 24,
+		"id": 20,
 		"categoryIds": "1",
 		"productionLineTemplateId": 8,
 		"productType": "SemiFinished",
-		"name": "OrangeDrinkSyrup",
-		"volumetricUnit": 2,
+		"name": "SodaSyrup",
+		"volumetricUnit": 1,
+		"ingredientsPerUnit": [
+			{
+				"productId": 4,
+				"amount": 12
+			},
+			{
+				"productId": 11,
+				"amount": 3
+			},
+			{
+				"productId": 14,
+				"amount": 4
+			},
+			{
+				"productId": 15,
+				"amount": 1
+			}
+		],
+		"minPrice": 1000,
+		"maxPrice": 4000
+	},
+	{
+		"id": 21,
+		"categoryIds": "2",
+		"productionLineTemplateId": 9,
+		"productType": "SemiFinished",
+		"name": "MaltSyrup",
+		"volumetricUnit": 1,
+		"ingredientsPerUnit": [
+			{
+				"productId": 4,
+				"amount": 12
+			},
+			{
+				"productId": 6,
+				"amount": 4
+			},
+			{
+				"productId": 5,
+				"amount": 1
+			},
+			{
+				"productId": 12,
+				"amount": 2
+			},
+			{
+				"productId": 15,
+				"amount": 1
+			}
+		],
+		"minPrice": 1000,
+		"maxPrice": 4000
+	},
+	{
+		"id": 22,
+		"categoryIds": "3",
+		"productionLineTemplateId": 10,
+		"productType": "SemiFinished",
+		"name": "CherriesPieSyrup",
+		"volumetricUnit": 1,
+		"ingredientsPerUnit": [
+			{
+				"productId": 4,
+				"amount": 8
+			},
+			{
+				"productId": 7,
+				"amount": 6
+			},
+			{
+				"productId": 13,
+				"amount": 2
+			},
+			{
+				"productId": 14,
+				"amount": 2
+			},
+			{
+				"productId": 15,
+				"amount": 2
+			}
+		],
+		"minPrice": 1000,
+		"maxPrice": 4000
+	},
+	{
+		"id": 23,
+		"categoryIds": "3",
+		"productionLineTemplateId": 10,
+		"productType": "SemiFinished",
+		"name": "OrangePieSyrup",
+		"volumetricUnit": 1,
+		"ingredientsPerUnit": [
+			{
+				"productId": 4,
+				"amount": 8
+			},
+			{
+				"productId": 8,
+				"amount": 6
+			},
+			{
+				"productId": 13,
+				"amount": 2
+			},
+			{
+				"productId": 14,
+				"amount": 2
+			},
+			{
+				"productId": 15,
+				"amount": 2
+			}
+		],
+		"minPrice": 1000,
+		"maxPrice": 4000
+	},
+	{
+		"id": 24,
+		"categoryIds": "3",
+		"productionLineTemplateId": 10,
+		"productType": "SemiFinished",
+		"name": "PineapplePieSyrup",
+		"volumetricUnit": 1,
+		"ingredientsPerUnit": [
+			{
+				"productId": 4,
+				"amount": 8
+			},
+			{
+				"productId": 9,
+				"amount": 6
+			},
+			{
+				"productId": 13,
+				"amount": 2
+			},
+			{
+				"productId": 14,
+				"amount": 2
+			},
+			{
+				"productId": 15,
+				"amount": 2
+			}
+		],
+		"minPrice": 1000,
+		"maxPrice": 4000
+	},
+	{
+		"id": 25,
+		"categoryIds": "3",
+		"productionLineTemplateId": 10,
+		"productType": "SemiFinished",
+		"name": "MangoPieSyrup",
+		"volumetricUnit": 1,
+		"ingredientsPerUnit": [
+			{
+				"productId": 4,
+				"amount": 8
+			},
+			{
+				"productId": 10,
+				"amount": 6
+			},
+			{
+				"productId": 13,
+				"amount": 2
+			},
+			{
+				"productId": 14,
+				"amount": 2
+			},
+			{
+				"productId": 15,
+				"amount": 2
+			}
+		],
+		"minPrice": 1000,
+		"maxPrice": 4000
+	},
+	{
+		"id": 26,
+		"categoryIds": "4",
+		"productionLineTemplateId": 11,
+		"productType": "SemiFinished",
+		"name": "EnergySyrup",
+		"volumetricUnit": 1,
 		"ingredientsPerUnit": [
 			{
 				"productId": 4,
@@ -178,909 +380,243 @@
 				"amount": 2
 			},
 			{
-				"productId": 18,
-				"amount": 3
-			},
-			{
-				"productId": 19,
-				"amount": 1
-			}
-		]
-	},
-	{
-		"id": 25,
-		"categoryIds": "1",
-		"productionLineTemplateId": 8,
-		"productType": "SemiFinished",
-		"name": "ColaDrinkSyrup",
-		"volumetricUnit": 2,
-		"ingredientsPerUnit": [
-			{
-				"productId": 4,
-				"amount": 10
-			},
-			{
-				"productId": 12,
-				"amount": 2
-			},
-			{
-				"productId": 18,
-				"amount": 3
-			},
-			{
-				"productId": 19,
-				"amount": 1
-			}
-		]
-	},
-	{
-		"id": 26,
-		"categoryIds": "2",
-		"productionLineTemplateId": 9,
-		"productType": "SemiFinished",
-		"name": "LemonMaltSyrup",
-		"volumetricUnit": 2,
-		"ingredientsPerUnit": [
-			{
-				"productId": 4,
-				"amount": 9
-			},
-			{
-				"productId": 6,
-				"amount": 3
-			},
-			{
-				"productId": 5,
-				"amount": 1
-			},
-			{
-				"productId": 13,
-				"amount": 2
-			},
-			{
-				"productId": 19,
-				"amount": 1
-			}
-		]
-	},
-	{
-		"id": 27,
-		"categoryIds": "2",
-		"productionLineTemplateId": 9,
-		"productType": "SemiFinished",
-		"name": "SimpleMaltSyrup",
-		"volumetricUnit": 2,
-		"ingredientsPerUnit": [
-			{
-				"productId": 4,
-				"amount": 9
-			},
-			{
-				"productId": 6,
-				"amount": 3
-			},
-			{
-				"productId": 5,
-				"amount": 1
-			},
-			{
-				"productId": 19,
-				"amount": 1
-			}
-		]
-	},
-	{
-		"id": 28,
-		"categoryIds": "2",
-		"productionLineTemplateId": 9,
-		"productType": "SemiFinished",
-		"name": "PeachMaltSyrup",
-		"volumetricUnit": 2,
-		"ingredientsPerUnit": [
-			{
-				"productId": 4,
-				"amount": 9
-			},
-			{
-				"productId": 6,
-				"amount": 3
-			},
-			{
-				"productId": 5,
-				"amount": 1
-			},
-			{
 				"productId": 14,
-				"amount": 2
-			},
-			{
-				"productId": 19,
-				"amount": 1
-			}
-		]
-	},
-	{
-		"id": 29,
-		"categoryIds": "3",
-		"productionLineTemplateId": 10,
-		"productType": "SemiFinished",
-		"name": "ApplePieSyrup",
-		"volumetricUnit": 5,
-		"ingredientsPerUnit": [
-			{
-				"productId": 4,
-				"amount": 16
-			},
-			{
-				"productId": 7,
-				"amount": 16
-			},
-			{
-				"productId": 18,
-				"amount": 6
-			},
-			{
-				"productId": 19,
-				"amount": 2
-			}
-		]
-	},
-	{
-		"id": 30,
-		"categoryIds": "3",
-		"productionLineTemplateId": 10,
-		"productType": "SemiFinished",
-		"name": "OrangePieSyrup",
-		"volumetricUnit": 5,
-		"ingredientsPerUnit": [
-			{
-				"productId": 4,
-				"amount": 16
-			},
-			{
-				"productId": 8,
-				"amount": 16
-			},
-			{
-				"productId": 18,
-				"amount": 6
-			},
-			{
-				"productId": 19,
-				"amount": 2
-			}
-		]
-	},
-	{
-		"id": 31,
-		"categoryIds": "3",
-		"productionLineTemplateId": 10,
-		"productType": "SemiFinished",
-		"name": "PineapplePieSyrup",
-		"volumetricUnit": 5,
-		"ingredientsPerUnit": [
-			{
-				"productId": 4,
-				"amount": 16
-			},
-			{
-				"productId": 9,
-				"amount": 16
-			},
-			{
-				"productId": 18,
-				"amount": 6
-			},
-			{
-				"productId": 19,
-				"amount": 2
-			}
-		]
-	},
-	{
-		"id": 32,
-		"categoryIds": "3",
-		"productionLineTemplateId": 10,
-		"productType": "SemiFinished",
-		"name": "MangoPieSyrup",
-		"volumetricUnit": 5,
-		"ingredientsPerUnit": [
-			{
-				"productId": 4,
-				"amount": 16
-			},
-			{
-				"productId": 10,
-				"amount": 16
-			},
-			{
-				"productId": 18,
-				"amount": 6
-			},
-			{
-				"productId": 19,
-				"amount": 2
-			}
-		]
-	},
-	{
-		"id": 33,
-		"categoryIds": "4",
-		"productionLineTemplateId": 11,
-		"productType": "SemiFinished",
-		"name": "AloeveraEnergySyrup",
-		"volumetricUnit": 2,
-		"ingredientsPerUnit": [
-			{
-				"productId": 4,
-				"amount": 10
-			},
-			{
-				"productId": 20,
-				"amount": 1
-			},
-			{
-				"productId": 18,
-				"amount": 2
+				"amount": 3
 			},
 			{
 				"productId": 15,
-				"amount": 2
-			},
-			{
-				"productId": 19,
 				"amount": 1
-			}
-		]
-	},
-	{
-		"id": 34,
-		"categoryIds": "4",
-		"productionLineTemplateId": 11,
-		"productType": "SemiFinished",
-		"name": "MintEnergySyrup",
-		"volumetricUnit": 2,
-		"ingredientsPerUnit": [
-			{
-				"productId": 4,
-				"amount": 10
-			},
-			{
-				"productId": 20,
-				"amount": 1
-			},
-			{
-				"productId": 18,
-				"amount": 2
 			},
 			{
 				"productId": 16,
-				"amount": 2
-			},
-			{
-				"productId": 19,
-				"amount": 1
+				"amount": 4
 			}
-		]
+		],
+		"minPrice": 1000,
+		"maxPrice": 4000
 	},
 	{
-		"id": 35,
-		"categoryIds": "4",
-		"productionLineTemplateId": 11,
-		"productType": "SemiFinished",
-		"name": "EquatorialEnergySyrup",
-		"volumetricUnit": 2,
-		"ingredientsPerUnit": [
-			{
-				"productId": 4,
-				"amount": 10
-			},
-			{
-				"productId": 20,
-				"amount": 1
-			},
-			{
-				"productId": 18,
-				"amount": 2
-			},
-			{
-				"productId": 17,
-				"amount": 2
-			},
-			{
-				"productId": 19,
-				"amount": 1
-			}
-		]
-	},
-	{
-		"id": 36,
+		"id": 27,
 		"categoryIds": "1,2,4",
 		"productionLineTemplateId": 12,
 		"productType": "SemiFinished",
 		"name": "CarbonDioxide",
-		"volumetricUnit": 1
+		"volumetricUnit": 1,
+		"minPrice": 1000,
+		"maxPrice": 4000
+	},
+	{
+		"id": 28,
+		"productionLineTemplateId": 1,
+		"productType": "Finished",
+		"name": "Soda250CC",
+		"volumetricUnit": 1,
+		"ingredientsPerUnit": [
+			{
+				"productId": 17,
+				"amount": 1
+			},
+			{
+				"productId": 27,
+				"amount": 1
+			},
+			{
+				"productId": 20,
+				"amount": 2
+			}
+		],
+		"minPrice": 2500,
+		"maxPrice": 10000
+	},
+	{
+		"id": 29,
+		"productionLineTemplateId": 1,
+		"productType": "Finished",
+		"name": "Soda500CC",
+		"volumetricUnit": 2,
+		"ingredientsPerUnit": [
+			{
+				"productId": 18,
+				"amount": 1
+			},
+			{
+				"productId": 27,
+				"amount": 2
+			},
+			{
+				"productId": 20,
+				"amount": 5
+			}
+		],
+		"minPrice": 5000,
+		"maxPrice": 20000
+	},
+	{
+		"id": 30,
+		"productionLineTemplateId": 1,
+		"productType": "Finished",
+		"name": "Soda1000CC",
+		"volumetricUnit": 4,
+		"ingredientsPerUnit": [
+			{
+				"productId": 19,
+				"amount": 1
+			},
+			{
+				"productId": 27,
+				"amount": 5
+			},
+			{
+				"productId": 20,
+				"amount": 10
+			}
+		],
+		"minPrice": 10000,
+		"maxPrice": 40000
+	},
+	{
+		"id": 31,
+		"productionLineTemplateId": 2,
+		"productType": "Finished",
+		"name": "NonAlcoholicBeer250CC",
+		"volumetricUnit": 1,
+		"ingredientsPerUnit": [
+			{
+				"productId": 17,
+				"amount": 1
+			},
+			{
+				"productId": 27,
+				"amount": 1
+			},
+			{
+				"productId": 21,
+				"amount": 2
+			}
+		],
+		"minPrice": 2500,
+		"maxPrice": 10000
+	},
+	{
+		"id": 32,
+		"productionLineTemplateId": 2,
+		"productType": "Finished",
+		"name": "NonAlcoholicBeer500CC",
+		"volumetricUnit": 2,
+		"ingredientsPerUnit": [
+			{
+				"productId": 18,
+				"amount": 1
+			},
+			{
+				"productId": 27,
+				"amount": 2
+			},
+			{
+				"productId": 21,
+				"amount": 5
+			}
+		],
+		"minPrice": 5000,
+		"maxPrice": 20000
+	},
+	{
+		"id": 33,
+		"productionLineTemplateId": 3,
+		"productType": "Finished",
+		"name": "CherriesJuice250CC",
+		"volumetricUnit": 1,
+		"ingredientsPerUnit": [
+			{
+				"productId": 17,
+				"amount": 1
+			},
+			{
+				"productId": 22,
+				"amount": 3
+			}
+		],
+		"minPrice": 2500,
+		"maxPrice": 10000
+	},
+	{
+		"id": 34,
+		"productionLineTemplateId": 3,
+		"productType": "Finished",
+		"name": "OrangeJuice250CC",
+		"volumetricUnit": 1,
+		"ingredientsPerUnit": [
+			{
+				"productId": 17,
+				"amount": 1
+			},
+			{
+				"productId": 23,
+				"amount": 3
+			}
+		],
+		"minPrice": 2500,
+		"maxPrice": 10000
+	},
+	{
+		"id": 35,
+		"productionLineTemplateId": 3,
+		"productType": "Finished",
+		"name": "PineappleJuice250CC",
+		"volumetricUnit": 1,
+		"ingredientsPerUnit": [
+			{
+				"productId": 17,
+				"amount": 1
+			},
+			{
+				"productId": 24,
+				"amount": 3
+			}
+		],
+		"minPrice": 2500,
+		"maxPrice": 10000
+	},
+	{
+		"id": 36,
+		"productionLineTemplateId": 3,
+		"productType": "Finished",
+		"name": "MangoJuice250CC",
+		"volumetricUnit": 1,
+		"ingredientsPerUnit": [
+			{
+				"productId": 17,
+				"amount": 1
+			},
+			{
+				"productId": 25,
+				"amount": 3
+			}
+		],
+		"minPrice": 2500,
+		"maxPrice": 10000
 	},
 	{
 		"id": 37,
-		"productionLineTemplateId": 1,
+		"productionLineTemplateId": 4,
 		"productType": "Finished",
-		"name": "OrangeDrinkGlassBottle",
-		"volumetricUnit": 1,
-		"ingredientsPerUnit": [
-			{
-				"productId": 21,
-				"amount": 1
-			},
-			{
-				"productId": 36,
-				"amount": 1
-			},
-			{
-				"productId": 24,
-				"amount": 2
-			}
-		]
-	},
-	{
-		"id": 38,
-		"productionLineTemplateId": 1,
-		"productType": "Finished",
-		"name": "OrangeDrinkAluminiumCan",
+		"name": "EnergyDrink500CC",
 		"volumetricUnit": 2,
 		"ingredientsPerUnit": [
 			{
-				"productId": 22,
-				"amount": 1
-			},
-			{
-				"productId": 36,
-				"amount": 2
-			},
-			{
-				"productId": 24,
-				"amount": 4
-			}
-		]
-	},
-	{
-		"id": 39,
-		"productionLineTemplateId": 1,
-		"productType": "Finished",
-		"name": "OrangeDrinkPlasticBottle",
-		"volumetricUnit": 5,
-		"ingredientsPerUnit": [
-			{
-				"productId": 23,
-				"amount": 1
-			},
-			{
-				"productId": 36,
-				"amount": 5
-			},
-			{
-				"productId": 24,
-				"amount": 10
-			}
-		]
-	},
-	{
-		"id": 40,
-		"productionLineTemplateId": 1,
-		"productType": "Finished",
-		"name": "ColaDrinkGlassBottle",
-		"volumetricUnit": 1,
-		"ingredientsPerUnit": [
-			{
-				"productId": 21,
-				"amount": 1
-			},
-			{
-				"productId": 36,
-				"amount": 1
-			},
-			{
-				"productId": 25,
-				"amount": 2
-			}
-		]
-	},
-	{
-		"id": 41,
-		"productionLineTemplateId": 1,
-		"productType": "Finished",
-		"name": "ColaDrinkAluminiumCan",
-		"volumetricUnit": 2,
-		"ingredientsPerUnit": [
-			{
-				"productId": 22,
-				"amount": 1
-			},
-			{
-				"productId": 36,
-				"amount": 2
-			},
-			{
-				"productId": 25,
-				"amount": 4
-			}
-		]
-	},
-	{
-		"id": 42,
-		"productionLineTemplateId": 1,
-		"productType": "Finished",
-		"name": "ColaDrinkPlasticBottle",
-		"volumetricUnit": 5,
-		"ingredientsPerUnit": [
-			{
-				"productId": 23,
-				"amount": 1
-			},
-			{
-				"productId": 36,
-				"amount": 5
-			},
-			{
-				"productId": 25,
-				"amount": 10
-			}
-		]
-	},
-	{
-		"id": 43,
-		"productionLineTemplateId": 2,
-		"productType": "Finished",
-		"name": "LemonNonAlcoholicBeerGlassBottle",
-		"volumetricUnit": 1,
-		"ingredientsPerUnit": [
-			{
-				"productId": 21,
-				"amount": 1
-			},
-			{
-				"productId": 36,
+				"productId": 18,
 				"amount": 1
 			},
 			{
 				"productId": 26,
-				"amount": 2
-			}
-		]
-	},
-	{
-		"id": 44,
-		"productionLineTemplateId": 2,
-		"productType": "Finished",
-		"name": "LemonNonAlcoholicBeerAluminiumCan",
-		"volumetricUnit": 2,
-		"ingredientsPerUnit": [
-			{
-				"productId": 22,
-				"amount": 1
-			},
-			{
-				"productId": 36,
-				"amount": 2
-			},
-			{
-				"productId": 26,
-				"amount": 4
-			}
-		]
-	},
-	{
-		"id": 45,
-		"productionLineTemplateId": 2,
-		"productType": "Finished",
-		"name": "LemonNonAlcoholicBeerPlasticBottle",
-		"volumetricUnit": 5,
-		"ingredientsPerUnit": [
-			{
-				"productId": 23,
-				"amount": 1
-			},
-			{
-				"productId": 36,
 				"amount": 5
-			},
-			{
-				"productId": 26,
-				"amount": 10
-			}
-		]
-	},
-	{
-		"id": 46,
-		"productionLineTemplateId": 2,
-		"productType": "Finished",
-		"name": "SimpleNonAlcoholicBeerGlassBottle",
-		"volumetricUnit": 1,
-		"ingredientsPerUnit": [
-			{
-				"productId": 21,
-				"amount": 1
-			},
-			{
-				"productId": 36,
-				"amount": 1
 			},
 			{
 				"productId": 27,
 				"amount": 2
 			}
-		]
-	},
-	{
-		"id": 47,
-		"productionLineTemplateId": 2,
-		"productType": "Finished",
-		"name": "SimpleNonAlcoholicBeerAluminiumCan",
-		"volumetricUnit": 2,
-		"ingredientsPerUnit": [
-			{
-				"productId": 22,
-				"amount": 1
-			},
-			{
-				"productId": 36,
-				"amount": 2
-			},
-			{
-				"productId": 27,
-				"amount": 4
-			}
-		]
-	},
-	{
-		"id": 48,
-		"productionLineTemplateId": 2,
-		"productType": "Finished",
-		"name": "SimpleNonAlcoholicBeerPlasticBottle",
-		"volumetricUnit": 5,
-		"ingredientsPerUnit": [
-			{
-				"productId": 23,
-				"amount": 1
-			},
-			{
-				"productId": 36,
-				"amount": 5
-			},
-			{
-				"productId": 27,
-				"amount": 10
-			}
-		]
-	},
-	{
-		"id": 49,
-		"productionLineTemplateId": 2,
-		"productType": "Finished",
-		"name": "PeachNonAlcoholicBeerGlassBottle",
-		"volumetricUnit": 1,
-		"ingredientsPerUnit": [
-			{
-				"productId": 21,
-				"amount": 1
-			},
-			{
-				"productId": 36,
-				"amount": 1
-			},
-			{
-				"productId": 28,
-				"amount": 2
-			}
-		]
-	},
-	{
-		"id": 50,
-		"productionLineTemplateId": 2,
-		"productType": "Finished",
-		"name": "PeachNonAlcoholicBeerAluminiumCan",
-		"volumetricUnit": 2,
-		"ingredientsPerUnit": [
-			{
-				"productId": 22,
-				"amount": 1
-			},
-			{
-				"productId": 36,
-				"amount": 2
-			},
-			{
-				"productId": 28,
-				"amount": 4
-			}
-		]
-	},
-	{
-		"id": 51,
-		"productionLineTemplateId": 2,
-		"productType": "Finished",
-		"name": "PeachNonAlcoholicBeerPlasticBottle",
-		"volumetricUnit": 5,
-		"ingredientsPerUnit": [
-			{
-				"productId": 23,
-				"amount": 1
-			},
-			{
-				"productId": 36,
-				"amount": 5
-			},
-			{
-				"productId": 28,
-				"amount": 10
-			}
-		]
-	},
-	{
-		"id": 52,
-		"productionLineTemplateId": 3,
-		"productType": "Finished",
-		"name": "AppleJuiceGlassBottle",
-		"volumetricUnit": 1,
-		"ingredientsPerUnit": [
-			{
-				"productId": 21,
-				"amount": 1
-			},
-			{
-				"productId": 29,
-				"amount": 1
-			}
-		]
-	},
-	{
-		"id": 53,
-		"productionLineTemplateId": 3,
-		"productType": "Finished",
-		"name": "AppleJuiceAluminiumCan",
-		"volumetricUnit": 2,
-		"ingredientsPerUnit": [
-			{
-				"productId": 22,
-				"amount": 1
-			},
-			{
-				"productId": 29,
-				"amount": 2
-			}
-		]
-	},
-	{
-		"id": 54,
-		"productionLineTemplateId": 3,
-		"productType": "Finished",
-		"name": "AppleJuicePlasticBottle",
-		"volumetricUnit": 5,
-		"ingredientsPerUnit": [
-			{
-				"productId": 23,
-				"amount": 1
-			},
-			{
-				"productId": 29,
-				"amount": 5
-			}
-		]
-	},
-	{
-		"id": 55,
-		"productionLineTemplateId": 3,
-		"productType": "Finished",
-		"name": "OrangeJuiceGlassBottle",
-		"volumetricUnit": 1,
-		"ingredientsPerUnit": [
-			{
-				"productId": 21,
-				"amount": 1
-			},
-			{
-				"productId": 30,
-				"amount": 1
-			}
-		]
-	},
-	{
-		"id": 56,
-		"productionLineTemplateId": 3,
-		"productType": "Finished",
-		"name": "OrangeJuiceAluminiumCan",
-		"volumetricUnit": 2,
-		"ingredientsPerUnit": [
-			{
-				"productId": 22,
-				"amount": 1
-			},
-			{
-				"productId": 30,
-				"amount": 2
-			}
-		]
-	},
-	{
-		"id": 57,
-		"productionLineTemplateId": 3,
-		"productType": "Finished",
-		"name": "OrangeJuicePlasticBottle",
-		"volumetricUnit": 5,
-		"ingredientsPerUnit": [
-			{
-				"productId": 23,
-				"amount": 1
-			},
-			{
-				"productId": 30,
-				"amount": 5
-			}
-		]
-	},
-	{
-		"id": 58,
-		"productionLineTemplateId": 3,
-		"productType": "Finished",
-		"name": "PineappleJuiceGlassBottle",
-		"volumetricUnit": 1,
-		"ingredientsPerUnit": [
-			{
-				"productId": 21,
-				"amount": 1
-			},
-			{
-				"productId": 31,
-				"amount": 1
-			}
-		]
-	},
-	{
-		"id": 59,
-		"productionLineTemplateId": 3,
-		"productType": "Finished",
-		"name": "PineappleJuiceAluminiumCan",
-		"volumetricUnit": 2,
-		"ingredientsPerUnit": [
-			{
-				"productId": 22,
-				"amount": 1
-			},
-			{
-				"productId": 31,
-				"amount": 2
-			}
-		]
-	},
-	{
-		"id": 60,
-		"productionLineTemplateId": 3,
-		"productType": "Finished",
-		"name": "PineappleJuicePlasticBottle",
-		"volumetricUnit": 5,
-		"ingredientsPerUnit": [
-			{
-				"productId": 23,
-				"amount": 1
-			},
-			{
-				"productId": 31,
-				"amount": 5
-			}
-		]
-	},
-	{
-		"id": 61,
-		"productionLineTemplateId": 3,
-		"productType": "Finished",
-		"name": "MangoJuiceGlassBottle",
-		"volumetricUnit": 1,
-		"ingredientsPerUnit": [
-			{
-				"productId": 21,
-				"amount": 1
-			},
-			{
-				"productId": 32,
-				"amount": 1
-			}
-		]
-	},
-	{
-		"id": 62,
-		"productionLineTemplateId": 3,
-		"productType": "Finished",
-		"name": "MangoJuiceAluminiumCan",
-		"volumetricUnit": 2,
-		"ingredientsPerUnit": [
-			{
-				"productId": 22,
-				"amount": 1
-			},
-			{
-				"productId": 32,
-				"amount": 2
-			}
-		]
-	},
-	{
-		"id": 63,
-		"productionLineTemplateId": 3,
-		"productType": "Finished",
-		"name": "MangoJuicePlasticBottle",
-		"volumetricUnit": 5,
-		"ingredientsPerUnit": [
-			{
-				"productId": 23,
-				"amount": 1
-			},
-			{
-				"productId": 32,
-				"amount": 5
-			}
-		]
-	},
-	{
-		"id": 64,
-		"productionLineTemplateId": 4,
-		"productType": "Finished",
-		"name": "AloeveraEnergyDrinkAluminiumCan",
-		"volumetricUnit": 2,
-		"ingredientsPerUnit": [
-			{
-				"productId": 22,
-				"amount": 1
-			},
-			{
-				"productId": 36,
-				"amount": 2
-			},
-			{
-				"productId": 33,
-				"amount": 4
-			}
-		]
-	},
-	{
-		"id": 65,
-		"productionLineTemplateId": 4,
-		"productType": "Finished",
-		"name": "MintEnergyDrinkAluminiumCan",
-		"volumetricUnit": 2,
-		"ingredientsPerUnit": [
-			{
-				"productId": 22,
-				"amount": 1
-			},
-			{
-				"productId": 36,
-				"amount": 2
-			},
-			{
-				"productId": 34,
-				"amount": 4
-			}
-		]
-	},
-	{
-		"id": 66,
-		"productionLineTemplateId": 4,
-		"productType": "Finished",
-		"name": "EquatorialEnergyDrinkAluminiumCan",
-		"volumetricUnit": 2,
-		"ingredientsPerUnit": [
-			{
-				"productId": 22,
-				"amount": 1
-			},
-			{
-				"productId": 36,
-				"amount": 2
-			},
-			{
-				"productId": 35,
-				"amount": 4
-			}
-		]
+		],
+		"minPrice": 5000,
+		"maxPrice": 20000
 	}
 ]

@@ -104,14 +104,14 @@ public class TransportManager {
         }
     }
 
-    public TransportDto createTransport(Enums.VehicleType vehicleType, Enums.TransportNodeType sourceType, Integer sourceId
+    public void createTransport(Enums.VehicleType vehicleType, Enums.TransportNodeType sourceType, Integer sourceId
             , Enums.TransportNodeType destinationType, Integer destinationId, LocalDate startDate
             , Boolean hasInsurance, Integer contentProductId, Integer contentProductAmount) {
         // TODO : check inputs. validate source and dest? check start date has'nt passed
 
         int transportDuration = calculateTransportDuration(vehicleType, sourceId, sourceType, destinationId, destinationType);
         Enums.TransportState transportState = Enums.TransportState.IN_WAY;
-        if (gameCalendar.getCurrentDate().isEqual(startDate)) {
+        if (gameCalendar.getCurrentDate().isBefore(startDate)) {
             transportState = Enums.TransportState.PENDING;
         }
         TransportDto transport = TransportDto.builder()
@@ -129,7 +129,11 @@ public class TransportManager {
                 .build();
 
         transportService.saveOrUpdate(transport);
-        return transport;
+
+        if (transport.getTransportState() == Enums.TransportState.IN_WAY)
+        {
+            sendResponseToTransportOwners(transport);
+        }
     }
 
     private int calculateTransportDuration(Enums.VehicleType vehicleType, Integer sourceId, Enums.TransportNodeType sourceType, Integer destinationId, Enums.TransportNodeType destinationType) {

@@ -5,7 +5,8 @@
 	    "name": "Silicon",
 	    "volumetricUnit": 1,
 		"minPrice": 2,
-		"maxPrice": 10
+		"maxPrice": 10,
+		"maintenanceCostPerDay": 0.1
 	},
 	{
 		"id": 2,
@@ -13,7 +14,8 @@
 		"name": "Aluminium",
 		"volumetricUnit": 1,
 		"minPrice": 40,
-		"maxPrice": 120
+		"maxPrice": 120,
+		"maintenanceCostPerDay": 0.1
 	},
 	{
 		"id": 3,
@@ -21,7 +23,8 @@
 		"name": "Polymer",
 		"volumetricUnit": 1,
 		"minPrice": 5,
-		"maxPrice": 20
+		"maxPrice": 20,
+		"maintenanceCostPerDay": 0.1
 	},
 	{
 		"id": 4,
@@ -29,7 +32,8 @@
 		"name": "Water",
 		"volumetricUnit": 1,
 		"minPrice": 5,
-		"maxPrice": 10
+		"maxPrice": 10,
+		"maintenanceCostPerDay": 0.1
 	},
 	{
 		"id": 5,
@@ -37,7 +41,8 @@
 		"name": "Hop",
 		"volumetricUnit": 1,
 		"minPrice": 10,
-		"maxPrice": 30
+		"maxPrice": 30,
+		"maintenanceCostPerDay": 0.1
 	},
 	{
 		"id": 6,
@@ -45,7 +50,8 @@
 		"name": "CerealSprouts",
 		"volumetricUnit": 1,
 		"minPrice": 10,
-		"maxPrice": 30
+		"maxPrice": 30,
+		"maintenanceCostPerDay": 0.1
 	},
 	{
 		"id": 7,
@@ -53,7 +59,8 @@
 		"name": "CherriesConcentrate",
 		"volumetricUnit": 1,
 		"minPrice": 10,
-		"maxPrice": 40
+		"maxPrice": 40,
+		"maintenanceCostPerDay": 0.1
 	},
 	{
 		"id": 8,
@@ -61,7 +68,8 @@
 		"name": "OrangeConcentrate",
 		"volumetricUnit": 1,
 		"minPrice": 10,
-		"maxPrice": 40
+		"maxPrice": 40,
+		"maintenanceCostPerDay": 0.1
 	},
 	{
 		"id": 9,
@@ -69,7 +77,8 @@
 		"name": "PineappleConcentrate",
 		"volumetricUnit": 1,
 		"minPrice": 10,
-		"maxPrice": 40
+		"maxPrice": 40,
+		"maintenanceCostPerDay": 0.1
 	},
 	{
 		"id": 10,
@@ -77,7 +86,8 @@
 		"name": "MangoConcentrate",
 		"volumetricUnit": 1,
 		"minPrice": 10,
-		"maxPrice": 40
+		"maxPrice": 40,
+		"maintenanceCostPerDay": 0.1
 	},
 	{
 		"id": 11,
@@ -85,7 +95,8 @@
 		"name": "CSDFlavoring",
 		"volumetricUnit": 1,
 		"minPrice": 10,
-		"maxPrice": 70
+		"maxPrice": 70,
+		"maintenanceCostPerDay": 0.1
 	},
 	{
 		"id": 12,
@@ -93,7 +104,8 @@
 		"name": "MaltFlavoring",
 		"volumetricUnit": 1,
 		"minPrice": 10,
-		"maxPrice": 70
+		"maxPrice": 70,
+		"maintenanceCostPerDay": 0.1
 	},
 	{
 		"id": 13,
@@ -101,7 +113,8 @@
 		"name": "FruitFlavoring",
 		"volumetricUnit": 1,
 		"minPrice": 10,
-		"maxPrice": 70
+		"maxPrice": 70,
+		"maintenanceCostPerDay": 0.1
 	},
 	{
 		"id": 14,
@@ -109,7 +122,8 @@
 		"name": "Sugar",
 		"volumetricUnit": 1,
 		"minPrice": 10,
-		"maxPrice": 70
+		"maxPrice": 70,
+		"maintenanceCostPerDay": 0.1
 	},
 	{
 		"id": 15,
@@ -117,7 +131,8 @@
 		"name": "Preservative",
 		"volumetricUnit": 1,
 		"minPrice": 10,
-		"maxPrice": 70
+		"maxPrice": 70,
+		"maintenanceCostPerDay": 0.1
 	},
 	{
 		"id": 16,
@@ -125,7 +140,8 @@
 		"name": "Caffeine",
 		"volumetricUnit": 1,
 		"minPrice": 10,
-		"maxPrice": 70
+		"maxPrice": 70,
+		"maintenanceCostPerDay": 0.1
 	},
 	{
 		"id": 17,
@@ -141,7 +157,8 @@
 			}
 		],
 		"minPrice": 250,
-		"maxPrice": 1000
+		"maxPrice": 1000,
+		"maintenanceCostPerDay": 0.3
 	},
 	{
 		"id": 18,
@@ -157,7 +174,8 @@
 			}
 		],
 		"minPrice": 750,
-		"maxPrice": 3000
+		"maxPrice": 3000,
+		"maintenanceCostPerDay": 0.3
 	},
 	{
 		"id": 19,
@@ -173,7 +191,8 @@
 			}
 		],
 		"minPrice": 500,
-		"maxPrice": 2000
+		"maxPrice": 2000,
+		"maintenanceCostPerDay": 0.3
 	},
 	{
 		"id": 20,
@@ -201,7 +220,8 @@
 			}
 		],
 		"minPrice": 1000,
-		"maxPrice": 4000
+		"maxPrice": 4000,
+		"maintenanceCostPerDay": 0.3
 	},
 	{
 		"id": 21,
@@ -233,7 +253,8 @@
 			}
 		],
 		"minPrice": 1000,
-		"maxPrice": 4000
+		"maxPrice": 4000,
+		"maintenanceCostPerDay": 0.3
 	},
 	{
 		"id": 22,
@@ -265,7 +286,8 @@
 			}
 		],
 		"minPrice": 1000,
-		"maxPrice": 4000
+		"maxPrice": 4000,
+		"maintenanceCostPerDay": 0.3
 	},
 	{
 		"id": 23,
@@ -297,7 +319,8 @@
 			}
 		],
 		"minPrice": 1000,
-		"maxPrice": 4000
+		"maxPrice": 4000,
+		"maintenanceCostPerDay": 0.3
 	},
 	{
 		"id": 24,
@@ -329,7 +352,8 @@
 			}
 		],
 		"minPrice": 1000,
-		"maxPrice": 4000
+		"maxPrice": 4000,
+		"maintenanceCostPerDay": 0.3
 	},
 	{
 		"id": 25,
@@ -361,7 +385,8 @@
 			}
 		],
 		"minPrice": 1000,
-		"maxPrice": 4000
+		"maxPrice": 4000,
+		"maintenanceCostPerDay": 0.3
 	},
 	{
 		"id": 26,
@@ -376,7 +401,7 @@
 				"amount": 10
 			},
 			{
-				"productId": 11,
+				"productId": 12,
 				"amount": 2
 			},
 			{
@@ -393,7 +418,8 @@
 			}
 		],
 		"minPrice": 1000,
-		"maxPrice": 4000
+		"maxPrice": 4000,
+		"maintenanceCostPerDay": 0.3
 	},
 	{
 		"id": 27,
@@ -403,7 +429,8 @@
 		"name": "CarbonDioxide",
 		"volumetricUnit": 1,
 		"minPrice": 1000,
-		"maxPrice": 4000
+		"maxPrice": 4000,
+		"maintenanceCostPerDay": 0.3
 	},
 	{
 		"id": 28,
@@ -426,7 +453,8 @@
 			}
 		],
 		"minPrice": 2500,
-		"maxPrice": 10000
+		"maxPrice": 10000,
+		"maintenanceCostPerDay": 0.2
 	},
 	{
 		"id": 29,
@@ -449,7 +477,8 @@
 			}
 		],
 		"minPrice": 5000,
-		"maxPrice": 20000
+		"maxPrice": 20000,
+		"maintenanceCostPerDay": 0.2
 	},
 	{
 		"id": 30,
@@ -472,7 +501,8 @@
 			}
 		],
 		"minPrice": 10000,
-		"maxPrice": 40000
+		"maxPrice": 40000,
+		"maintenanceCostPerDay": 0.2
 	},
 	{
 		"id": 31,
@@ -495,7 +525,8 @@
 			}
 		],
 		"minPrice": 2500,
-		"maxPrice": 10000
+		"maxPrice": 10000,
+		"maintenanceCostPerDay": 0.2
 	},
 	{
 		"id": 32,
@@ -518,7 +549,8 @@
 			}
 		],
 		"minPrice": 5000,
-		"maxPrice": 20000
+		"maxPrice": 20000,
+		"maintenanceCostPerDay": 0.2
 	},
 	{
 		"id": 33,
@@ -537,7 +569,8 @@
 			}
 		],
 		"minPrice": 2500,
-		"maxPrice": 10000
+		"maxPrice": 10000,
+		"maintenanceCostPerDay": 0.2
 	},
 	{
 		"id": 34,
@@ -556,7 +589,8 @@
 			}
 		],
 		"minPrice": 2500,
-		"maxPrice": 10000
+		"maxPrice": 10000,
+		"maintenanceCostPerDay": 0.2
 	},
 	{
 		"id": 35,
@@ -575,7 +609,8 @@
 			}
 		],
 		"minPrice": 2500,
-		"maxPrice": 10000
+		"maxPrice": 10000,
+		"maintenanceCostPerDay": 0.2
 	},
 	{
 		"id": 36,
@@ -594,7 +629,8 @@
 			}
 		],
 		"minPrice": 2500,
-		"maxPrice": 10000
+		"maxPrice": 10000,
+		"maintenanceCostPerDay": 0.2
 	},
 	{
 		"id": 37,
@@ -617,6 +653,7 @@
 			}
 		],
 		"minPrice": 5000,
-		"maxPrice": 20000
+		"maxPrice": 20000,
+		"maintenanceCostPerDay": 0.2
 	}
 ]

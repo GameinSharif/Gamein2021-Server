@@ -23,5 +23,6 @@ public class Product {
     private ArrayList<ProductIngredient> ingredientsPerUnit; //for SemiFinishedProducts & Finished only except CarbonDioxide
     private int minPrice;
     private int maxPrice;
+    private float maintenanceCostPerDay;
 
 }

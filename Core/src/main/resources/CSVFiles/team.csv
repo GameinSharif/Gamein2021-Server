@@ -26,7 +26,7 @@ id,team_name,country,credit
 25,team_25,Germany,100000
 26,team_26,France,100000
 27,team_27,Belgium,100000
-28,team_28,United Kingdom,100000
+28,team_28,UnitedKingdom,100000
 29,team_29,Netherlands,100000
 30,team_30,Netherlands,100000
 31,team_31,Switzerland,100000
@@ -53,11 +53,11 @@ id,team_name,country,credit
 52,team_52,France,100000
 53,team_53,France,100000
 54,team_54,France,100000
-55,team_55,United Kingdom,100000
+55,team_55,UnitedKingdom,100000
 56,team_56,Belgium,100000
-57,team_57,United Kingdom,100000
+57,team_57,UnitedKingdom,100000
 58,team_58,France,100000
-59,team_59,United Kingdom,100000
+59,team_59,UnitedKingdom,100000
 60,team_60,France,100000
 61,team_61,France,100000
 62,team_62,Belgium,100000
@@ -82,9 +82,9 @@ id,team_name,country,credit
 81,team_81,Germany,100000
 82,team_82,France,100000
 83,team_83,France,100000
-84,team_84,United Kingdom,100000
+84,team_84,UnitedKingdom,100000
 85,team_85,Germany,100000
-86,team_86,United Kingdom,100000
+86,team_86,UnitedKingdom,100000
 87,team_87,France,100000
 88,team_88,Germany,100000
 89,team_89,France,100000
@@ -92,25 +92,25 @@ id,team_name,country,credit
 91,team_91,France,100000
 92,team_92,France,100000
 93,team_93,Germany,100000
-94,team_94,United Kingdom,100000
+94,team_94,UnitedKingdom,100000
 95,team_95,Switzerland,100000
 96,team_96,France,100000
 97,team_97,Netherlands,100000
 98,team_98,Germany,100000
 99,team_99,Germany,100000
-100,team_100,United Kingdom,100000
+100,team_100,UnitedKingdom,100000
 101,team_101,Germany,100000
 102,team_102,Germany,100000
 103,team_103,Germany,100000
 104,team_104,Germany,100000
 105,team_105,France,100000
 106,team_106,France,100000
-107,team_107,United Kingdom,100000
+107,team_107,UnitedKingdom,100000
 108,team_108,France,100000
 109,team_109,France,100000
 110,team_110,France,100000
 111,team_111,France,100000
-112,team_112,United Kingdom,100000
+112,team_112,UnitedKingdom,100000
 113,team_113,France,100000
 114,team_114,France,100000
 115,team_115,France,100000
@@ -120,11 +120,11 @@ id,team_name,country,credit
 119,team_119,France,100000
 120,team_120,Germany,100000
 121,team_121,Belgium,100000
-122,team_122,United Kingdom,100000
+122,team_122,UnitedKingdom,100000
 123,team_123,Netherlands,100000
 124,team_124,France,100000
 125,team_125,France,100000
-126,team_126,United Kingdom,100000
+126,team_126,UnitedKingdom,100000
 127,team_127,France,100000
 128,team_128,France,100000
 129,team_129,Netherlands,100000
@@ -150,14 +150,14 @@ id,team_name,country,credit
 149,team_149,Netherlands,100000
 150,team_150,France,100000
 151,team_151,Germany,100000
-152,team_152,United Kingdom,100000
+152,team_152,UnitedKingdom,100000
 153,team_153,Germany,100000
 154,team_154,Germany,100000
-155,team_155,United Kingdom,100000
+155,team_155,UnitedKingdom,100000
 156,team_156,Germany,100000
 157,team_157,France,100000
 158,team_158,Netherlands,100000
-159,team_159,United Kingdom,100000
+159,team_159,UnitedKingdom,100000
 160,team_160,France,100000
 161,team_161,Netherlands,100000
 162,team_162,France,100000
@@ -169,12 +169,12 @@ id,team_name,country,credit
 168,team_168,Germany,100000
 169,team_169,Germany,100000
 170,team_170,France,100000
-171,team_171,United Kingdom,100000
+171,team_171,UnitedKingdom,100000
 172,team_172,Netherlands,100000
 173,team_173,France,100000
-174,team_174,United Kingdom,100000
-175,team_175,United Kingdom,100000
-176,team_176,United Kingdom,100000
+174,team_174,UnitedKingdom,100000
+175,team_175,UnitedKingdom,100000
+176,team_176,UnitedKingdom,100000
 177,team_177,France,100000
 178,team_178,France,100000
 179,team_179,France,100000
@@ -184,9 +184,9 @@ id,team_name,country,credit
 183,team_183,France,100000
 184,team_184,France,100000
 185,team_185,Belgium,100000
-186,team_186,United Kingdom,100000
+186,team_186,UnitedKingdom,100000
 187,team_187,Switzerland,100000
-188,team_188,United Kingdom,100000
+188,team_188,UnitedKingdom,100000
 189,team_189,Belgium,100000
 190,team_190,France,100000
 191,team_191,France,100000
@@ -195,10 +195,10 @@ id,team_name,country,credit
 194,team_194,France,100000
 195,team_195,France,100000
 196,team_196,Germany,100000
-197,team_197,United Kingdom,100000
+197,team_197,UnitedKingdom,100000
 198,team_198,Germany,100000
 199,team_199,Germany,100000
-200,team_200,United Kingdom,100000
+200,team_200,UnitedKingdom,100000
 201,team_201,Belgium,100000
 202,team_202,Germany,100000
 203,team_203,France,100000
@@ -209,7 +209,7 @@ id,team_name,country,credit
 208,team_208,France,100000
 209,team_209,Germany,100000
 210,team_210,Germany,100000
-211,team_211,United Kingdom,100000
+211,team_211,UnitedKingdom,100000
 212,team_212,France,100000
 213,team_213,Netherlands,100000
 214,team_214,France,100000
@@ -222,13 +222,13 @@ id,team_name,country,credit
 221,team_221,France,100000
 222,team_222,Germany,100000
 223,team_223,Switzerland,100000
-224,team_224,United Kingdom,100000
-225,team_225,United Kingdom,100000
+224,team_224,UnitedKingdom,100000
+225,team_225,UnitedKingdom,100000
 226,team_226,Germany,100000
 227,team_227,Switzerland,100000
 228,team_228,France,100000
 229,team_229,Belgium,100000
-230,team_230,United Kingdom,100000
+230,team_230,UnitedKingdom,100000
 231,team_231,France,100000
 232,team_232,Germany,100000
 233,team_233,Netherlands,100000
@@ -236,7 +236,7 @@ id,team_name,country,credit
 235,team_235,France,100000
 236,team_236,Germany,100000
 237,team_237,Switzerland,100000
-238,team_238,United Kingdom,100000
+238,team_238,UnitedKingdom,100000
 239,team_239,Germany,100000
 240,team_240,Germany,100000
 241,team_241,France,100000
@@ -244,14 +244,14 @@ id,team_name,country,credit
 243,team_243,France,100000
 244,team_244,Germany,100000
 245,team_245,Germany,100000
-246,team_246,United Kingdom,100000
+246,team_246,UnitedKingdom,100000
 247,team_247,France,100000
 248,team_248,Germany,100000
 249,team_249,Netherlands,100000
 250,team_250,France,100000
 251,team_251,France,100000
 252,team_252,Germany,100000
-253,team_253,United Kingdom,100000
+253,team_253,UnitedKingdom,100000
 254,team_254,Belgium,100000
 255,team_255,Belgium,100000
 256,team_256,France,100000
@@ -261,17 +261,17 @@ id,team_name,country,credit
 260,team_260,Switzerland,100000
 261,team_261,Germany,100000
 262,team_262,France,100000
-263,team_263,United Kingdom,100000
+263,team_263,UnitedKingdom,100000
 264,team_264,Germany,100000
 265,team_265,France,100000
-266,team_266,United Kingdom,100000
-267,team_267,United Kingdom,100000
-268,team_268,United Kingdom,100000
+266,team_266,UnitedKingdom,100000
+267,team_267,UnitedKingdom,100000
+268,team_268,UnitedKingdom,100000
 269,team_269,France,100000
-270,team_270,United Kingdom,100000
+270,team_270,UnitedKingdom,100000
 271,team_271,Germany,100000
-272,team_272,United Kingdom,100000
-273,team_273,United Kingdom,100000
+272,team_272,UnitedKingdom,100000
+273,team_273,UnitedKingdom,100000
 274,team_274,Switzerland,100000
 275,team_275,Germany,100000
 276,team_276,France,100000
@@ -279,7 +279,7 @@ id,team_name,country,credit
 278,team_278,France,100000
 279,team_279,France,100000
 280,team_280,Germany,100000
-281,team_281,United Kingdom,100000
+281,team_281,UnitedKingdom,100000
 282,team_282,Germany,100000
 283,team_283,Switzerland,100000
 284,team_284,France,100000
@@ -292,10 +292,10 @@ id,team_name,country,credit
 291,team_291,Belgium,100000
 292,team_292,France,100000
 293,team_293,France,100000
-294,team_294,United Kingdom,100000
+294,team_294,UnitedKingdom,100000
 295,team_295,Switzerland,100000
 296,team_296,France,100000
 297,team_297,Switzerland,100000
 298,team_298,Germany,100000
-299,team_299,United Kingdom,100000
+299,team_299,UnitedKingdom,100000
 300,team_300,Switzerland,100000

@@ -8,6 +8,7 @@ import ir.sharif.gamein2021.core.domain.dto.ContractSupplierDto;
 import ir.sharif.gamein2021.core.domain.dto.NegotiationDto;
 import ir.sharif.gamein2021.core.domain.entity.ContractSupplier;
 import ir.sharif.gamein2021.core.domain.entity.ContractSupplierDetail;
+import ir.sharif.gamein2021.core.domain.entity.Team;
 import ir.sharif.gamein2021.core.exception.EntityNotFoundException;
 import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
 import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
@@ -68,9 +69,9 @@ public class ContractSupplierService extends AbstractCrudService<ContractSupplie
     }
 
     @Transactional(readOnly = true)
-    public List<ContractSupplierDto> findByTeamId(Integer teamId)
+    public List<ContractSupplierDto> findByTeam(Team team)
     {
-        List<ContractSupplier> contractSuppliers = contractSupplierRepository.findByTeamId(teamId);
+        List<ContractSupplier> contractSuppliers = contractSupplierRepository.findByTeam(team);
         return contractSuppliers.stream().map(e -> modelMapper.map(e, ContractSupplierDto.class))
                 .collect(Collectors.toList());
     }

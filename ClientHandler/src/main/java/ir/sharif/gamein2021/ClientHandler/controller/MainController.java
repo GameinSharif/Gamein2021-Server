@@ -64,7 +64,7 @@ public class MainController
                 gameDataController.getCurrentWeekDemands(processedRequest);
                 gameDataController.getCurrentWeekSupplies(processedRequest);
                 gameDataController.getAllAuctions(processedRequest);
-                    gameDataController.getAllActiveDc(processedRequest);
+                gameDataController.getAllActiveDc(processedRequest);
                 break;
             case GET_CONTRACTS:
                 GetContractsRequest getContractsRequest = gson.fromJson(requestData, GetContractsRequest.class);

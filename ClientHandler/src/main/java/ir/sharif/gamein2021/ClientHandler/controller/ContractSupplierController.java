@@ -18,7 +18,6 @@ import lombok.AllArgsConstructor;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -134,11 +133,11 @@ public class ContractSupplierController
         GetContractsSupplierResponse getContractsSupplierResponse;
         if (userTeam == null)
         {
-            getContractsSupplierResponse = new GetContractsSupplierResponse(ResponseTypeConstant.GET_CONTRACTS_WITH_SUPPLIER, new ArrayList<>());
+            getContractsSupplierResponse = new GetContractsSupplierResponse(ResponseTypeConstant.GET_CONTRACTS_WITH_SUPPLIER, null);
         }
         else
         {
-            List<ContractSupplierDto> contractSupplierDtos = contractSupplierService.findByTeamId(user.getTeamId());
+            List<ContractSupplierDto> contractSupplierDtos = contractSupplierService.findByTeam(userTeam);
             getContractsSupplierResponse = new GetContractsSupplierResponse(ResponseTypeConstant.GET_CONTRACTS_WITH_SUPPLIER, contractSupplierDtos);
         }
 

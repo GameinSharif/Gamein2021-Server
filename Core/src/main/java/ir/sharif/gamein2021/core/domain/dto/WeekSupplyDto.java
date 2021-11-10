@@ -12,7 +12,7 @@ public class WeekSupplyDto
 {
     private Integer id;
     private Integer week;
-    private Supplier supplier;
+    private Integer supplierId;
     private Integer productId;
     private Float price;
     private Integer sales;

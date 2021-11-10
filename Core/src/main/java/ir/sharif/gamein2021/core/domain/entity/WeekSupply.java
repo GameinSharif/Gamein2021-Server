@@ -25,10 +25,10 @@ public class WeekSupply implements BaseEntity{
     @Column(name = "product_id", nullable = false)
     private Integer productId;
 
-    @Column(name = "price", nullable = false)
+    @Column(name = "price")
     private Float price;
 
-    @Column(name = "sales", nullable = false)
+    @Column(name = "sales", nullable = false, columnDefinition = "INT DEFAULT 0")
     private Integer sales;
 
 

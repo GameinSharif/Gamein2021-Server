@@ -130,10 +130,7 @@ public class TransportManager {
 
         transportService.saveOrUpdate(transport);
 
-        if (transport.getTransportState() == Enums.TransportState.IN_WAY)
-        {
-            sendResponseToTransportOwners(transport);
-        }
+        sendResponseToTransportOwners(transport);
     }
 
     private int calculateTransportDuration(Enums.VehicleType vehicleType, Integer sourceId, Enums.TransportNodeType sourceType, Integer destinationId, Enums.TransportNodeType destinationType) {

@@ -2,14 +2,17 @@ package ir.sharif.gamein2021.core.service;
 
 import ir.sharif.gamein2021.core.dao.DcRepository;
 import ir.sharif.gamein2021.core.domain.dto.DcDto;
+import ir.sharif.gamein2021.core.domain.dto.OfferDto;
 import ir.sharif.gamein2021.core.domain.dto.TeamDto;
 import ir.sharif.gamein2021.core.domain.entity.Dc;
+import ir.sharif.gamein2021.core.domain.entity.Offer;
 import ir.sharif.gamein2021.core.domain.entity.Team;
 import ir.sharif.gamein2021.core.exception.DcHasOwnerException;
 import ir.sharif.gamein2021.core.exception.EntityNotFoundException;
 import ir.sharif.gamein2021.core.exception.InactiveDcException;
 import ir.sharif.gamein2021.core.exception.InvalidRequestException;
 import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
+import ir.sharif.gamein2021.core.util.Enums;
 import ir.sharif.gamein2021.core.util.GameConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -132,18 +135,18 @@ public class DcService extends AbstractCrudService<DcDto, Dc, Integer> {
     @Transactional(readOnly = true)
     public List<DcDto> getAllActiveDc() {
         return repository.findAllByStartingWeekIsLessThanEqual(GameConstants.getWeakNumber())
-                .stream().map(e -> {
-                    return loadById(e.getId());
-                }).collect(Collectors.toList());
+                .stream()
+                .map(e -> modelMapper.map(e, DcDto.class))
+                .collect(Collectors.toList());
 
     }
 
     @Transactional(readOnly = true)
-    public List<DcDto> getAllDcForTeam(TeamDto teamDto) {
+    public List<DcDto> getAllDcForTeam(TeamDto teamDto)
+    {
         Team team = teamService.findTeamById(teamDto.getId());
-        return repository.findAllByOwner(team).stream().map(e -> {
-            DcDto dcDto = modelMapper.map(e, DcDto.class);
-            return loadById(e.getId());
-        }).collect(Collectors.toList());
+        return repository.findAllByOwner(team).stream()
+                .map(e -> modelMapper.map(e, DcDto.class))
+                .collect(Collectors.toList());
     }
 }

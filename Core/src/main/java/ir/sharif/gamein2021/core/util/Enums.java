@@ -79,4 +79,9 @@ public class Enums
     {
         SemiFinished, Finished
     }
+
+    public enum StorageType
+    {
+        DC, FACTORY
+    }
 }

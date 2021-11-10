@@ -21,6 +21,6 @@ public class ContractSupplierDto
     private Enums.ContractType contractType;
     private List<ContractSupplierDetailDto> contractSupplierDetails;
     private Integer terminatePenalty;
-    private boolean isTerminated;
+    private Boolean isTerminated;
 
 }

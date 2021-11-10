@@ -45,8 +45,6 @@ public class DcService extends AbstractCrudService<DcDto, Dc, Integer> {
                     DcDto dcDto = modelMapper.map(e, getDtoClass());
                     if (e.getOwner() != null)
                         dcDto.setOwnerId(e.getOwner().getId());
-                    if (e.getStorage() != null)
-                        dcDto.setStorageId(e.getStorage().getId());
                     return dcDto;
                 })
                 .orElseThrow(() -> new EntityNotFoundException("can not find entity " + getEntityClass().getSimpleName() + "by id: " + id + " "));
@@ -62,8 +60,6 @@ public class DcService extends AbstractCrudService<DcDto, Dc, Integer> {
                     DcDto dcDto = modelMapper.map(e, getDtoClass());
                     if (e.getOwner() != null)
                         dcDto.setOwnerId(e.getOwner().getId());
-                    if (e.getStorage() != null)
-                        dcDto.setStorageId(e.getStorage().getId());
                     return dcDto;
                 })
                 .collect(Collectors.toList());
@@ -117,8 +113,6 @@ public class DcService extends AbstractCrudService<DcDto, Dc, Integer> {
         if (dcDto.getOwnerId() != null) {
             dc.setOwner(teamService.findTeamById(dcDto.getOwnerId()));
         }
-        if (dcDto.getStorageId() != null)
-            dc.setStorage(storageService.findStorageById(dcDto.getStorageId()));
         Dc result = repository.save(dc);
         log.debug("save/update entity {}", result);
         DcDto resultDto = modelMapper.map(result, getDtoClass());
@@ -130,14 +124,14 @@ public class DcService extends AbstractCrudService<DcDto, Dc, Integer> {
     public boolean isActive(DcDto dc) {
         Assert.notNull(dc, "This dc must not be null!");
         dc = loadById(dc.getId());
-        if (dc.getStartingWeak() <= GameConstants.getWeakNumber())
+        if (dc.getStartingWeek() <= GameConstants.getWeakNumber())
             return true;
         return false;
     }
 
     @Transactional(readOnly = true)
     public List<DcDto> getAllActiveDc() {
-        return repository.findAllByStartingWeakIsLessThanEqual(GameConstants.getWeakNumber())
+        return repository.findAllByStartingWeekIsLessThanEqual(GameConstants.getWeakNumber())
                 .stream().map(e -> {
                     return loadById(e.getId());
                 }).collect(Collectors.toList());

@@ -74,4 +74,9 @@ public class Enums
     {
         ACTIVE, TERMINATED
     }
+
+    public enum DCType
+    {
+        SemiFinished, Finished
+    }
 }

@@ -11,14 +11,16 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Profile(value = {"scheduled"})
-public class DailySchedule {
+public class DailySchedule
+{
     private final GameCalendar gameCalendar;
     private ProductionLineProductService productService;
     private final TransportManager transportManager;
     private final ContractManager contractManager;
 
     public DailySchedule(GameCalendar gameCalendar, ProductionLineProductService productService, TransportManager transportManager,
-                         ContractManager contractManager) {
+                         ContractManager contractManager)
+    {
         this.gameCalendar = gameCalendar;
         this.productService = productService;
         this.transportManager = transportManager;
@@ -26,10 +28,12 @@ public class DailySchedule {
     }
 
     @Scheduled(fixedRateString = "${dayLengthMilliSecond}")
-    public void scheduledTask() {
+    public void scheduledTask()
+    {
         doDailyTasks();
 
-        switch (gameCalendar.getCurrentDate().getDayOfWeek()) {
+        switch (gameCalendar.getCurrentDate().getDayOfWeek())
+        {
             case MONDAY:
                 break;
             case TUESDAY:
@@ -39,11 +43,11 @@ public class DailySchedule {
             case THURSDAY:
                 break;
             case FRIDAY:
+                doWeeklyTasks();
                 break;
             case SATURDAY:
                 break;
             case SUNDAY:
-                doWeeklyTasks();
                 break;
         }
 
@@ -52,14 +56,17 @@ public class DailySchedule {
         gameCalendar.increaseOneDay();
     }
 
-    private void doDailyTasks() {
+    private void doDailyTasks()
+    {
         productService.finishProductCreation();
         transportManager.updateTransports();
         contractManager.updateContracts();
 
     }
 
-    private void doWeeklyTasks() {
+    private void doWeeklyTasks()
+    {
+        contractManager.updateGameinCustomerContracts();
         GameConstants.addWeakNumber();
     }
 }

@@ -31,6 +31,11 @@ public class ContractManager
     {
         LocalDate today = gameCalendar.getCurrentDate();
         updateTodayContractCosts(today);
+    }
+
+    public void updateGameinCustomerContracts()
+    {
+        LocalDate today = gameCalendar.getCurrentDate();
         buyFromContractsWithGameinCustomers(today);
     }
 
@@ -102,6 +107,9 @@ public class ContractManager
             ContractDto contractDto = contractService.loadById(contractDetailDto.getContractId());
 
             int boughtAmount = calculateBoughtAmount();
+
+            //TODO check player has those amount of product
+            //TODO if not calculate lost sale penalty and decrease from player money
 
             transportManager.createTransport(
                     Enums.VehicleType.TRUCK,

@@ -2,10 +2,7 @@ package ir.sharif.gamein2021.ClientHandler.controller;
 
 import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.Contract.GetContractsRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.Contract.GetContractsResponse;
-import ir.sharif.gamein2021.ClientHandler.domain.Contract.NewContractRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.Contract.NewContractResponse;
+import ir.sharif.gamein2021.ClientHandler.domain.Contract.*;
 import ir.sharif.gamein2021.ClientHandler.domain.NewContractSupplierResponse;
 import ir.sharif.gamein2021.ClientHandler.manager.LocalPushMessageManager;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
@@ -106,6 +103,38 @@ public class ContractController
             e.printStackTrace();
             newContractResponse = new NewContractResponse(ResponseTypeConstant.NEW_CONTRACT, null);
             pushMessageManager.sendMessageByUserId(user.getId().toString(), gson.toJson(newContractResponse));
+        }
+    }
+
+    public void terminateLongtermContract(TerminateLongtermContractRequest terminateLongtermContractRequest)
+    {
+        int playerId = terminateLongtermContractRequest.playerId;
+        UserDto user = userService.loadById(playerId);
+        TeamDto userTeam = teamService.loadById(user.getTeamId());
+
+        TerminateLongtermContractResponse terminateLongtermContractResponse;
+        try
+        {
+            ContractDto contractDto = contractService.loadById(terminateLongtermContractRequest.getContractId());
+            if (contractDto.isTerminated() || !contractDto.getTeamId().equals(userTeam.getId()) || contractDto.getContractType() != Enums.ContractType.LONGTERM)
+            {
+                throw new Exception();
+            }
+
+            contractDto.setTerminated(true);
+            ContractDto savedContractDto = contractService.saveOrUpdate(contractDto);
+
+            userTeam.setCredit(userTeam.getCredit() - contractDto.getTerminatePenalty());
+            teamService.saveOrUpdate(userTeam);
+
+            terminateLongtermContractResponse = new TerminateLongtermContractResponse(ResponseTypeConstant.TERMINATE_CONTRACT, savedContractDto);
+            pushMessageManager.sendMessageByTeamId(userTeam.getId().toString(), gson.toJson(terminateLongtermContractResponse));
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            terminateLongtermContractResponse = new TerminateLongtermContractResponse(ResponseTypeConstant.TERMINATE_CONTRACT, null);
+            pushMessageManager.sendMessageByUserId(user.getId().toString(), gson.toJson(terminateLongtermContractResponse));
         }
     }
 }

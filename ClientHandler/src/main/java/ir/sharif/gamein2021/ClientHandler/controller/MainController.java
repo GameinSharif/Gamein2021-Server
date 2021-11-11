@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.domain.*;
 import ir.sharif.gamein2021.ClientHandler.domain.Contract.GetContractsRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Contract.NewContractRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.Contract.TerminateLongtermContractRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Dc.BuyingDcRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Dc.SellingDcRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginRequest;
@@ -193,6 +194,10 @@ public class MainController
             case NEW_CONTRACT:
                 NewContractRequest newContractRequest = gson.fromJson(requestData, NewContractRequest.class);
                 contractController.newContract(newContractRequest);
+                break;
+            case TERMINATE_CONTRACT:
+                TerminateLongtermContractRequest terminateLongtermContractRequest = gson.fromJson(requestData, TerminateLongtermContractRequest.class);
+                contractController.terminateLongtermContract(terminateLongtermContractRequest);
                 break;
             default:
                 System.out.println("Request type is invalid.");

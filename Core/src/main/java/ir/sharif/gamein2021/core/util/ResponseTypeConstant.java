@@ -39,7 +39,8 @@ public enum ResponseTypeConstant {
     ADD_PRODUCT(35),
     REMOVE_PRODUCT(36),
     GET_STORAGES(37),
-    NEW_CONTRACT(38);
+    NEW_CONTRACT(38),
+    TERMINATE_CONTRACT(39);
 
 
     private int value;

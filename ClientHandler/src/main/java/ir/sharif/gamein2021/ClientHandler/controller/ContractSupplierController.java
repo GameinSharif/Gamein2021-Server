@@ -50,7 +50,7 @@ public class ContractSupplierController
         NewContractSupplierResponse newContractSupplierResponse;
         if (supplier == null)
         {
-            newContractSupplierResponse = new NewContractSupplierResponse(ResponseTypeConstant.NEW_CONTRACT_WITH_SUPPLIER, null, "supplier_not_found");
+            newContractSupplierResponse = new NewContractSupplierResponse(ResponseTypeConstant.NEW_CONTRACT_WITH_SUPPLIER, null, (float)0, "supplier_not_found");
         }
         else
         {
@@ -58,15 +58,16 @@ public class ContractSupplierController
             {
                 Float materialPrice = weekSupplyService.findSpecificWeekSupply(supplierId, materialId, currentWeek).getPrice();
                 List<ContractSupplierDetailDto> contractSupplierDetailDtos = new ArrayList<>();
+                Float totalMaterialPrice = (float)0;
                 for (int i = 0; i < weeks + 1; i++)
                 {
                     ContractSupplierDetailDto contractSupplierDetailDto = new ContractSupplierDetailDto();
                     contractSupplierDetailDto.setContractDate(gameCalendar.getCurrentDate().plusDays(i * 7L));
                     contractSupplierDetailDto.setBoughtAmount(newContractSupplierRequest.getAmount());
-                    if (i == 0)
-                    {
-                        contractSupplierDetailDto.setPricePerUnit(materialPrice);
-                    }
+                    contractSupplierDetailDto.setPricePerUnit(materialPrice);
+
+                    totalMaterialPrice += materialPrice * amount;
+
                     contractSupplierDetailDtos.add(contractSupplierDetailDto);
 
                     // TODO compute cost for transportation
@@ -92,13 +93,13 @@ public class ContractSupplierController
                 contractSupplierDto.setContractSupplierDetails(contractSupplierDetailDtos);
                 ContractSupplierDto saveContractSupplierDto = contractSupplierService.saveOrUpdate(contractSupplierDto);
                 newContractSupplierResponse = new NewContractSupplierResponse(ResponseTypeConstant.NEW_CONTRACT_WITH_SUPPLIER,
-                        saveContractSupplierDto, "success");
+                        saveContractSupplierDto, totalMaterialPrice, "success");
                 // TODO overall cost of this contract
 
             }
             else
             {
-                newContractSupplierResponse = new NewContractSupplierResponse(ResponseTypeConstant.NEW_CONTRACT_WITH_SUPPLIER, null, "supplier_material_not_matching");
+                newContractSupplierResponse = new NewContractSupplierResponse(ResponseTypeConstant.NEW_CONTRACT_WITH_SUPPLIER, null, (float)0, "supplier_material_not_matching");
             }
         }
         pushMessageManager.sendMessageBySession(request.session, gson.toJson(newContractSupplierResponse));

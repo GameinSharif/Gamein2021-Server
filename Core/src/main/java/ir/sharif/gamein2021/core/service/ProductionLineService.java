@@ -21,6 +21,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -98,22 +99,32 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
             throw new InvalidProductionLineIdException("Selected productLine is not able to create selected product");
         }
 
+        LocalDate currentDate = gameCalendar.getCurrentDate();
+
         ProductionLineProduct inProductionProduct = productionLine.getProducts().stream()
-                .filter(x -> gameCalendar.getCurrentDate().isAfter(x.getEndDate()))
+                .filter(x -> currentDate.isBefore(x.getEndDate()))
                 .findFirst().orElse(null);
 
         if (inProductionProduct != null) {
             throw new InvalidProductionLineIdException("ProductionLine is busy now.");
         }
 
+        ProductionLineTemplate productionLineTemplate = Arrays.stream(ReadJsonFilesManager.ProductionLineTemplates)
+                .filter(x -> x.getId() == productionLine.getProductionLineTemplateId())
+                .findFirst().orElse(null);
+
+        int productionDuration = (amount / productionLineTemplate.getDailyProductionRate()) + 1;
+
         ProductionLineProduct newProduct = new ProductionLineProduct();
         newProduct.setProductId(productId);
-        newProduct.setStartDate(gameCalendar.getCurrentDate().plusDays(1));
+        newProduct.setStartDate(currentDate.plusDays(1));
         newProduct.setAmount(amount);
-//        newProduct.setEndDate();
+        newProduct.setEndDate(currentDate.plusDays(1 + productionDuration));
+        newProduct.setProductionLineId(productionLineId);
 
         ProductionLineProduct savedProduct = productRepository.saveAndFlush(newProduct);
-        return modelMapper.map(productionLineRepository.findById(productionLineId).orElse(null), ProductionLineDto.class);
+        productionLine.getProducts().add(savedProduct);
+        return modelMapper.map(productionLine, ProductionLineDto.class);
         //TODO what to do?
     }
 

@@ -28,4 +28,7 @@ public class ProductionLineProduct {
 
     @Column(name = "end_date")
     private LocalDate endDate;
+
+    @Column(name = "production_line_id")
+    private Integer productionLineId;
 }

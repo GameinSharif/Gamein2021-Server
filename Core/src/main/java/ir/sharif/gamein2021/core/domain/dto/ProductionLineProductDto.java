@@ -12,6 +12,7 @@ import java.time.LocalDate;
 public class ProductionLineProductDto {
     private Integer id;
     private Integer productId;
+    private Integer productionLineId;
     private Integer amount;
     private LocalDate startDate;
     private LocalDate endDate;

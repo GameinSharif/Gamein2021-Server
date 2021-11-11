@@ -1,19 +1,16 @@
 package ir.sharif.gamein2021.core.manager;
 
 
-import ir.sharif.gamein2021.core.domain.dto.ContractSupplierDetailDto;
-import ir.sharif.gamein2021.core.domain.dto.ContractSupplierDto;
-import ir.sharif.gamein2021.core.domain.dto.WeekSupplyDto;
-import ir.sharif.gamein2021.core.domain.entity.ContractSupplier;
-import ir.sharif.gamein2021.core.domain.entity.ContractSupplierDetail;
-import ir.sharif.gamein2021.core.domain.entity.WeekSupply;
-import ir.sharif.gamein2021.core.service.ContractSupplierDetailService;
-import ir.sharif.gamein2021.core.service.ContractSupplierService;
-import ir.sharif.gamein2021.core.service.WeekSupplyService;
+import ir.sharif.gamein2021.core.domain.dto.*;
+import ir.sharif.gamein2021.core.domain.entity.ContractDetail;
+import ir.sharif.gamein2021.core.domain.entity.WeekDemand;
+import ir.sharif.gamein2021.core.service.*;
+import ir.sharif.gamein2021.core.util.Enums;
 import ir.sharif.gamein2021.core.util.GameConstants;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
 
@@ -23,13 +20,18 @@ public class ContractManager
 {
     private final ContractSupplierService contractSupplierService;
     private final ContractSupplierDetailService contractSupplierDetailService;
+    private final ContractService contractService;
+    private final ContractDetailService contractDetailService;
     private final WeekSupplyService weekSupplyService;
+    private final WeekDemandService weekDemandService;
+    private final TransportManager transportManager;
     private final GameCalendar gameCalendar;
 
     public void updateContracts()
     {
         LocalDate today = gameCalendar.getCurrentDate();
         updateTodayContractCosts(today);
+        buyFromContractsWithGameinCustomers(today);
     }
 
     public void updateTodayContractCosts(LocalDate today)
@@ -63,5 +65,62 @@ public class ContractManager
                 }
             }
         }
+    }
+
+    public void buyFromContractsWithGameinCustomers(LocalDate today)
+    {
+        List<WeekDemandDto> weekDemands = weekDemandService.findByWeek(GameConstants.getWeakNumber());
+        List<ContractDetailDto> contractDetailDtos = contractDetailService.findByDate(today);
+
+        for (WeekDemandDto weekDemandDto : weekDemands)
+        {
+            List<ContractDetailDto> thisDemandContractDetails = new ArrayList<>();
+            for (ContractDetailDto contractDetailDto : contractDetailDtos)
+            {
+                ContractDto contractDto = contractService.loadById(contractDetailDto.getContractId());
+                if (contractDto.isTerminated())
+                {
+                    continue;
+                }
+
+                if (contractDto.getGameinCustomerId().equals(weekDemandDto.getGameinCustomer().getId())
+                && contractDto.getProductId().equals(weekDemandDto.getProductId()))
+                {
+                    thisDemandContractDetails.add(contractDetailDto);
+                }
+            }
+
+            FinalizeTheContracts(weekDemandDto, contractDetailDtos);
+            contractDetailDtos.removeAll(thisDemandContractDetails);
+        }
+    }
+
+    private void FinalizeTheContracts(WeekDemandDto weekDemandDto, List<ContractDetailDto> contractDetailDtos)
+    {
+        for (ContractDetailDto contractDetailDto : contractDetailDtos)
+        {
+            ContractDto contractDto = contractService.loadById(contractDetailDto.getContractId());
+
+            int boughtAmount = calculateBoughtAmount();
+
+            transportManager.createTransport(
+                    Enums.VehicleType.TRUCK,
+                    Enums.TransportNodeType.FACTORY,
+                    contractDto.getTeamId(),
+                    Enums.TransportNodeType.GAMEIN_CUSTOMER,
+                    contractDto.getGameinCustomerId(),
+                    gameCalendar.getCurrentDate(),
+                    true,
+                    contractDto.getProductId(),
+                    boughtAmount);
+
+            contractDetailDto.setBoughtAmount(boughtAmount);
+            contractDetailService.saveOrUpdate(contractDetailDto);
+        }
+    }
+
+    private int calculateBoughtAmount()
+    {
+        return 1;
     }
 }

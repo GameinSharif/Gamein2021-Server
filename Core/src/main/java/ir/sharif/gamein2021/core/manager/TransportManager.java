@@ -104,7 +104,7 @@ public class TransportManager {
         }
     }
 
-    public void createTransport(Enums.VehicleType vehicleType, Enums.TransportNodeType sourceType, Integer sourceId
+    public TransportDto createTransport(Enums.VehicleType vehicleType, Enums.TransportNodeType sourceType, Integer sourceId
             , Enums.TransportNodeType destinationType, Integer destinationId, LocalDate startDate
             , Boolean hasInsurance, Integer contentProductId, Integer contentProductAmount) {
         // TODO : check inputs. validate source and dest? check start date has'nt passed
@@ -128,9 +128,10 @@ public class TransportManager {
                 .endDate(startDate.plusDays(transportDuration))
                 .build();
 
-        transportService.saveOrUpdate(transport);
+        TransportDto savedTransport = transportService.saveOrUpdate(transport);
 
-        sendResponseToTransportOwners(transport);
+        sendResponseToTransportOwners(savedTransport);
+        return savedTransport;
     }
 
     private int calculateTransportDuration(Enums.VehicleType vehicleType, Integer sourceId, Enums.TransportNodeType sourceType, Integer destinationId, Enums.TransportNodeType destinationType) {

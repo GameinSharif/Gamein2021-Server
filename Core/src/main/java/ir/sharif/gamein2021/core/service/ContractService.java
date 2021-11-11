@@ -25,6 +25,12 @@ public class ContractService extends AbstractCrudService<ContractDto, Contract, 
         setRepository(contractRepository);
     }
 
+    @Override
+    public ContractDto loadById(Integer id)
+    {
+        return super.loadById(id);
+    }
+
     @Transactional(readOnly = true)
     public List<ContractDto> findByTeam(Team team)
     {

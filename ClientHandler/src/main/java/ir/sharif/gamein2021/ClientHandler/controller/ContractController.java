@@ -12,6 +12,7 @@ import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
 import ir.sharif.gamein2021.core.domain.dto.*;
 import ir.sharif.gamein2021.core.manager.GameCalendar;
 import ir.sharif.gamein2021.core.manager.PushMessageManagerInterface;
+import ir.sharif.gamein2021.core.manager.TransportManager;
 import ir.sharif.gamein2021.core.service.GameinCustomerService;
 import ir.sharif.gamein2021.core.service.TeamService;
 import ir.sharif.gamein2021.core.util.Enums;
@@ -24,6 +25,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +42,7 @@ public class ContractController
     private final TeamService teamService;
     private final GameinCustomerService gameinCustomerService;
     private final GameCalendar gameCalendar;
+    private final TransportManager transportManager;
     private final Gson gson = new Gson();
 
     public void getContracts(GetContractsRequest getContractsRequest)
@@ -85,9 +88,11 @@ public class ContractController
             for (int i = 0; i < newContractRequest.getWeeks() + 1; i++)
             {
                 ContractDetailDto contractDetailDto = new ContractDetailDto();
-                contractDetailDto.setContractDate(gameCalendar.getCurrentDate().with(TemporalAdjusters.next(DayOfWeek.FRIDAY)).plusDays(i * 7L));
+                LocalDate startDate = gameCalendar.getCurrentDate().with(TemporalAdjusters.next(DayOfWeek.FRIDAY)).plusDays(i * 7L);
+                contractDetailDto.setContractDate(startDate);
                 contractDetailDto.setMaxAmount(newContractRequest.getAmount());
                 contractDetailDto.setPricePerUnit(newContractRequest.getPricePerUnit());
+
                 contractDetailDtos.add(contractDetailDto);
             }
             contractDto.setContractDetails(contractDetailDtos);

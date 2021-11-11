@@ -27,6 +27,9 @@ public class Team implements BaseEntity {
     //TODO this field should be initialize
     private float credit;
 
+    @Column(name = "brand", nullable = false)
+    private Float brand;
+
 
     @Override
     public Integer getId() {

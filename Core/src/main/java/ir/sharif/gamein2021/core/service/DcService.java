@@ -2,17 +2,11 @@ package ir.sharif.gamein2021.core.service;
 
 import ir.sharif.gamein2021.core.dao.DcRepository;
 import ir.sharif.gamein2021.core.domain.dto.DcDto;
-import ir.sharif.gamein2021.core.domain.dto.OfferDto;
 import ir.sharif.gamein2021.core.domain.dto.TeamDto;
 import ir.sharif.gamein2021.core.domain.entity.Dc;
-import ir.sharif.gamein2021.core.domain.entity.Offer;
 import ir.sharif.gamein2021.core.domain.entity.Team;
-import ir.sharif.gamein2021.core.exception.DcHasOwnerException;
-import ir.sharif.gamein2021.core.exception.EntityNotFoundException;
-import ir.sharif.gamein2021.core.exception.InactiveDcException;
-import ir.sharif.gamein2021.core.exception.InvalidRequestException;
+import ir.sharif.gamein2021.core.exception.*;
 import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
-import ir.sharif.gamein2021.core.util.Enums;
 import ir.sharif.gamein2021.core.util.GameConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -29,13 +23,17 @@ public class DcService extends AbstractCrudService<DcDto, Dc, Integer> {
     private final DcRepository repository;
     private final ModelMapper modelMapper;
     private final TeamService teamService;
+    private final TransportService transportService;
     private final StorageService storageService;
 
-    public DcService(DcRepository repository, ModelMapper modelMapper, TeamService teamService, StorageService storageService) {
+    public DcService(DcRepository repository, ModelMapper modelMapper,
+                     TeamService teamService, TransportService transportService,
+                     StorageService storageService) {
         this.repository = repository;
         this.teamService = teamService;
         this.modelMapper = modelMapper;
         this.storageService = storageService;
+        this.transportService = transportService;
         setRepository(repository);
     }
 
@@ -52,7 +50,6 @@ public class DcService extends AbstractCrudService<DcDto, Dc, Integer> {
                 })
                 .orElseThrow(() -> new EntityNotFoundException("can not find entity " + getEntityClass().getSimpleName() + "by id: " + id + " "));
     }
-
 
 
     @Override
@@ -99,6 +96,11 @@ public class DcService extends AbstractCrudService<DcDto, Dc, Integer> {
         }
         if (!isActive(dc))
             throw new InactiveDcException("Dc with id " + dc.getId() + " is not active yet");
+        if (transportService.getTransportsByDestinationIdForDc(dc.getId()).size() != 0)
+            throw new DcHasActiveTransportException("Can not sell dc with id " + dc.getId() + " because it has active transport.");
+        //This line will empty the dc storage
+        storageService.emptyStorage(dc.getId() , true);
+
         float credit = teamDto.getCredit() + dc.getSellingPrice();
         teamDto.setCredit(credit);
         dc.setOwnerId(null);
@@ -142,8 +144,7 @@ public class DcService extends AbstractCrudService<DcDto, Dc, Integer> {
     }
 
     @Transactional(readOnly = true)
-    public List<DcDto> getAllDcForTeam(TeamDto teamDto)
-    {
+    public List<DcDto> getAllDcForTeam(TeamDto teamDto) {
         Team team = teamService.findTeamById(teamDto.getId());
         return repository.findAllByOwner(team).stream()
                 .map(e -> modelMapper.map(e, DcDto.class))

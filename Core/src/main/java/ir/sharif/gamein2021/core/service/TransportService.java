@@ -7,6 +7,7 @@ import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
 import ir.sharif.gamein2021.core.util.Enums;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,7 +25,10 @@ public class TransportService extends AbstractCrudService<TransportDto, Transpor
     private final DcService dcService;
 
     @Autowired
-    public TransportService(TransportRepository transportRepository, ModelMapper modelMapper, TeamService teamService, DcService dcService) {
+    public TransportService(TransportRepository transportRepository,
+                            ModelMapper modelMapper,
+                            TeamService teamService,
+                            @Lazy DcService dcService) {
         this.transportRepository = transportRepository;
         this.modelMapper = modelMapper;
         this.teamService = teamService;
@@ -74,6 +78,13 @@ public class TransportService extends AbstractCrudService<TransportDto, Transpor
         teamTransports.addAll(transportRepository.findAllBySourceTypeAndSourceIdIn(Enums.TransportNodeType.DC, teamDcIds));
         // TODO : separate by source or destination?
         return mapEntityListToDto(teamTransports);
+    }
+
+    public List<TransportDto> getTransportsByDestinationIdForDc(Integer destinationId){
+        return transportRepository.findAllByDestinationTypeAndDestinationId
+                (Enums.TransportNodeType.DC , destinationId)
+                .stream().map(e -> modelMapper.map(e , TransportDto.class))
+                .collect(Collectors.toList());
     }
 
     @Transactional

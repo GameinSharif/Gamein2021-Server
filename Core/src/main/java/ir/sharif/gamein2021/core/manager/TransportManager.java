@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import ir.sharif.gamein2021.core.domain.dto.TransportDto;
 import ir.sharif.gamein2021.core.response.TransportStateChangedResponse;
 import ir.sharif.gamein2021.core.service.DcService;
+import ir.sharif.gamein2021.core.service.StorageService;
 import ir.sharif.gamein2021.core.service.TeamService;
 import ir.sharif.gamein2021.core.service.TransportService;
 import ir.sharif.gamein2021.core.util.Enums;
@@ -24,6 +25,7 @@ public class TransportManager {
     private final TransportService transportService;
     private final DcService dcService;
     private final TeamService teamService;
+    private final StorageService storageService;
     private final PushMessageManagerInterface pushMessageManager;
     private final GameCalendar gameCalendar;
     private final Gson gson = new Gson();
@@ -51,11 +53,18 @@ public class TransportManager {
 
     private void startTransports(LocalDate today) {
         ArrayList<TransportDto> startingTransports = transportService.getStartingTransports(today);
+        //This loop will reduce products from their destination when a transport start!
+        for(TransportDto transport : startingTransports){
+            removeProductWhenTransportStart(transport);
+        }
         changeTransportsStateAndSendToClients(startingTransports, Enums.TransportState.IN_WAY);
     }
 
     private void endTransports(LocalDate today) {
         ArrayList<TransportDto> arrivedTransports = transportService.getEndingTransports(today);
+        for(TransportDto transport : arrivedTransports){
+            addProductWhenTransportEnd(transport);
+        }
         changeTransportsStateAndSendToClients(arrivedTransports, Enums.TransportState.SUCCESSFUL);
     }
 
@@ -131,6 +140,26 @@ public class TransportManager {
         transportService.saveOrUpdate(transport);
 
         sendResponseToTransportOwners(transport);
+    }
+    //TODO need testing
+    private void removeProductWhenTransportStart(TransportDto transportDto){
+        if(transportDto.getSourceType().equals(Enums.TransportNodeType.DC)){
+            storageService.deleteProducts(transportDto.getSourceId() , true ,
+                    transportDto.getContentProductId() , transportDto.getContentProductAmount());
+        }else if(transportDto.getSourceType().equals(Enums.TransportNodeType.FACTORY)){
+            storageService.deleteProducts(transportDto.getSourceId() , false ,
+                    transportDto.getContentProductId() , transportDto.getContentProductAmount());
+        }
+    }
+    //TODO testing
+    private void addProductWhenTransportEnd(TransportDto transportDto){
+        if(transportDto.getSourceType().equals(Enums.TransportNodeType.DC)){
+            storageService.addProduct(transportDto.getSourceId() , true ,
+                    transportDto.getContentProductId() , transportDto.getContentProductAmount());
+        }else if(transportDto.getSourceType().equals(Enums.TransportNodeType.FACTORY)){
+            storageService.addProduct(transportDto.getSourceId() , false ,
+                    transportDto.getContentProductId() , transportDto.getContentProductAmount());
+        }
     }
 
     private int calculateTransportDuration(Enums.VehicleType vehicleType, Integer sourceId, Enums.TransportNodeType sourceType, Integer destinationId, Enums.TransportNodeType destinationType) {

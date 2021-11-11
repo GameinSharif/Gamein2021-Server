@@ -32,6 +32,7 @@ public class ContractSupplierController
     private final UserService userService;
     private final WeekSupplyService weekSupplyService;
     private final TeamService teamService;
+    private final TransportService transportService;
     private final TransportManager transportManager;
     private final GameCalendar gameCalendar;
     private final Gson gson = new Gson();
@@ -68,11 +69,9 @@ public class ContractSupplierController
 
                     totalMaterialPrice += materialPrice * amount;
 
-                    contractSupplierDetailDtos.add(contractSupplierDetailDto);
-
                     // TODO compute cost for transportation
 
-                    transportManager.createTransport(
+                    TransportDto transportDto = transportManager.createTransport(
                             vehicleType,
                             Enums.TransportNodeType.SUPPLIER,
                             supplierId,
@@ -82,20 +81,26 @@ public class ContractSupplierController
                             hasInsurance,
                             materialId,
                             amount);
+
+                    contractSupplierDetailDto.setTransportId(transportDto.getId());
+                    contractSupplierDetailDtos.add(contractSupplierDetailDto);
                 }
 
                 contractSupplierDto.setSupplierId(supplierId);
                 contractSupplierDto.setMaterialId(materialId);
                 contractSupplierDto.setTeamId(userService.loadById(newContractSupplierRequest.playerId).getTeamId());
-                contractSupplierDto.setContractType(Enums.ContractType.LONGTERM);
+                // check whether or not contract is longterm
+                if(contractSupplierDetailDtos.size() > 1)
+                    contractSupplierDto.setContractType(Enums.ContractType.LONGTERM);
+                else
+                    contractSupplierDto.setContractType(Enums.ContractType.ONCE);
+
                 contractSupplierDto.setTerminated(false);
                 contractSupplierDto.setTerminatePenalty(100); //TODO
                 contractSupplierDto.setContractSupplierDetails(contractSupplierDetailDtos);
                 ContractSupplierDto saveContractSupplierDto = contractSupplierService.saveOrUpdate(contractSupplierDto);
                 newContractSupplierResponse = new NewContractSupplierResponse(ResponseTypeConstant.NEW_CONTRACT_WITH_SUPPLIER,
                         saveContractSupplierDto, totalMaterialPrice, "success");
-                // TODO overall cost of this contract
-
             }
             else
             {
@@ -114,14 +119,36 @@ public class ContractSupplierController
         {
             contractSupplierDto.setTerminated(true);
             Integer penalty = contractSupplierDto.getTerminatePenalty();
-            terminateLongtermContractSupplierResponse = new TerminateLongtermContractSupplierResponse(ResponseTypeConstant.TERMINATE_LONGTERM_CONTRACT_WITH_SUPPLIER, "terminated", penalty);
-            // TODO reduce penalty from client's money
+            float teamCredit = teamService.findTeamById(userService.loadById(terminateLongtermContractSupplierRequest.playerId).getTeamId()).getCredit();
+            if(teamCredit < penalty)
+                terminateLongtermContractSupplierResponse = new TerminateLongtermContractSupplierResponse(ResponseTypeConstant.TERMINATE_LONGTERM_CONTRACT_WITH_SUPPLIER, "not_enough_money");
+            else{
+                // Terminating contract's transports
+                Integer terminatedCounter = 0;
+                for(ContractSupplierDetailDto contractSupplierDetailDto: contractSupplierDto.getContractSupplierDetails()){
+                    TransportDto transportDto = transportService.loadById(contractSupplierDetailDto.getTransportId());
+                    if (!transportDto.getTransportState().equals(Enums.TransportState.SUCCESSFUL)){
+                        transportDto.setTransportState(Enums.TransportState.TERMINATED);
+                        transportService.saveOrUpdate(transportDto);
+                        terminatedCounter++;
+                    }
+
+                }
+                // Maybe all transports have been sent and you're too late!!
+                if(terminatedCounter == 0){
+                    terminateLongtermContractSupplierResponse = new TerminateLongtermContractSupplierResponse(ResponseTypeConstant.TERMINATE_LONGTERM_CONTRACT_WITH_SUPPLIER, "nothing_to_terminate");
+                }else{
+                    teamService.findTeamById(terminateLongtermContractSupplierRequest.playerId).setCredit(teamCredit - penalty);
+                    terminateLongtermContractSupplierResponse = new TerminateLongtermContractSupplierResponse(ResponseTypeConstant.TERMINATE_LONGTERM_CONTRACT_WITH_SUPPLIER, "terminated");
+                }
+
+            }
 
             contractSupplierService.saveOrUpdate(contractSupplierDto);
         }
         else
         {
-            terminateLongtermContractSupplierResponse = new TerminateLongtermContractSupplierResponse(ResponseTypeConstant.TERMINATE_LONGTERM_CONTRACT_WITH_SUPPLIER, "not_terminated", 0);
+            terminateLongtermContractSupplierResponse = new TerminateLongtermContractSupplierResponse(ResponseTypeConstant.TERMINATE_LONGTERM_CONTRACT_WITH_SUPPLIER, "not_terminated");
         }
         pushMessageManager.sendMessageBySession(request.session, gson.toJson(terminateLongtermContractSupplierResponse));
     }

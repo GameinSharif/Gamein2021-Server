@@ -67,7 +67,7 @@ public class Enums
 
     public enum TransportState
     {
-        SUCCESSFUL, IN_WAY, CRUSHED, PENDING
+        SUCCESSFUL, IN_WAY, CRUSHED, PENDING, TERMINATED
     }
 
     public enum ProviderState

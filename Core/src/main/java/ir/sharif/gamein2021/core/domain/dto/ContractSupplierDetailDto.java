@@ -21,4 +21,5 @@ public class ContractSupplierDetailDto
     private Integer boughtAmount;
     private Float pricePerUnit;
     private Integer contractSupplierId;
+    private Integer transportId;
 }

@@ -30,6 +30,10 @@ public class ContractSupplierDetail implements BaseEntity
     @JoinColumn(name = "contract_supplier_id")
     private ContractSupplier contractSupplier;
 
+    @ManyToOne
+    @JoinColumn(name = "transport_id")
+    private Transport transport;
+
     @Override
     public Integer getId() {
         return id;

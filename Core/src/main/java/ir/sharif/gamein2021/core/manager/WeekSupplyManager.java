@@ -7,8 +7,6 @@ import ir.sharif.gamein2021.core.util.models.Supplier;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 
 @AllArgsConstructor
 @Component
@@ -28,8 +26,7 @@ public class WeekSupplyManager
                     Float firstPrice = weekSupplyDtoFirstWeek.getPrice();
                     Float lastWeekPrice = weekSupplyDtoLastWeek.getPrice();
                     Float lastlastWeekPrice = weekSupplyDtoLastLastWeek.getPrice();
-                    Float newPrice = (float)(firstPrice* (1 + ((lastWeekPrice/lastlastWeekPrice + GameConstants.Instance.ConstantWeekSupplyPrice) +
-                            (lastlastWeekPrice/lastWeekPrice + GameConstants.Instance.ConstantWeekSupplyPrice)*0.05)) * 1); //TODO coefficient
+                    Float newPrice = weekSupplyService.weeklyPriceFormula(firstPrice,lastWeekPrice, lastlastWeekPrice);
                     weekSupplyDtoCurrentWeek.setPrice(newPrice);
                     weekSupplyService.saveOrUpdate(weekSupplyDtoCurrentWeek);
                 }

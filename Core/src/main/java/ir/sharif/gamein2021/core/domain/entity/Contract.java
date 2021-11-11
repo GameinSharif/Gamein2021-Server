@@ -32,15 +32,13 @@ public class Contract implements BaseEntity
     @Column(name = "contract_type", nullable = false)
     private ContractType contractType;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "contract_id")
     private List<ContractDetail> contractDetails;
 
     @Column(name = "terminate_penalty", nullable = false)
     private Integer terminatePenalty;
 
-    @Override
-    public Integer getId() {
-        return id;
-    }
+    @Column(name = "is_terminated", nullable = false, columnDefinition = "TINYINT(1)")
+    private boolean isTerminated;
 }

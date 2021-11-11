@@ -17,9 +17,10 @@ public class ContractDto implements BaseDto<Integer>
 {
     private Integer id;
     private Integer teamId;
-    private GameinCustomer gameinCustomer;
+    private Integer gameinCustomerId;
     private Integer productId;
     private Enums.ContractType contractType;
-    private List<ContractDetail> contractDetails;
+    private List<ContractDetailDto> contractDetails;
     private Integer terminatePenalty;
+    private boolean isTerminated;
 }

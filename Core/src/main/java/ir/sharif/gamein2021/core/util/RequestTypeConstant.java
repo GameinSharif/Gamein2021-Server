@@ -32,7 +32,8 @@ public enum RequestTypeConstant
     GET_CONTRACTS_WITH_SUPPLIER(27),
     ADD_PRODUCT(28),
     REMOVE_PRODUCT(29),
-    GET_STORAGES(30);
+    GET_STORAGES(30),
+    NEW_CONTRACT(31);
 
     private int value;
 

@@ -23,14 +23,18 @@ public class ContractDetail implements BaseEntity
     @Column(name = "max_amount", nullable = false)
     private Integer maxAmount;
 
-    @Column(name = "bought_amount", nullable = false)
+    @Column(name = "bought_amount")
     private Integer boughtAmount;
 
     @Column(name = "price_per_unit", nullable = false)
-    private Integer pricePerUnit;
+    private Float pricePerUnit;
 
-    @Column(name = "lost_sale_penalty", nullable = false)
+    @Column(name = "lost_sale_penalty")
     private Integer lostSalePenalty;
+
+    @ManyToOne
+    @JoinColumn(name = "contract_id")
+    private Contract contract;
 
 
     @Override

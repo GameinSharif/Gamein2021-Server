@@ -1,41 +1,506 @@
 [
-	{
-	  "id": 1,
-	  "name": "SoftDrink",
-	  "constructionCost": 1000,
-	  "scrapPrice": 800,
-	  "batchSize": 6,
-	  "dailyProductionRate": 1000,
-	  "efficiencyLevels": [
-	    {
-			"efficiencyPercentage": 50,
-			"upgradeCost": 0
-	    },
-	    {
-			"efficiencyPercentage": 75,
-			"upgradeCost": 10000
-	    },
-	    {
-			"efficiencyPercentage": 95,
-			"upgradeCost": 10000
-	    }
-	  ],
-	  "weeklyMaintenanceCost": 200,
-	  "setupCost": 5000,
-	  "productionCostPerOneProduct": 1,
-	  "qualityLevels": [
-	    {
-			"upgradeCost": 0,
-			"brandIncreaseRatioPerProduct": 0
-	    },
-	    {
-			"upgradeCost": 10000,
-			"brandIncreaseRatioPerProduct": 0.001
-	    },
-	    {
-			"upgradeCost": 10000,
-			"brandIncreaseRatioPerProduct": 0.002
-	    }
-	  ]
-	}
+  {
+    "id": 1,
+    "name": "Soda",
+    "constructionCost": 1000,
+    "constructRequiredDays": 7,
+    "scrapPrice": 600,
+    "batchSize": 80,
+    "dailyProductionRate": 2000,
+    "efficiencyLevels":
+    [
+      {
+        "efficiencyPercentage": 50,
+        "upgradeCost": 0
+      },
+      {
+        "efficiencyPercentage": 75,
+        "upgradeCost": 15000
+      },
+      {
+        "efficiencyPercentage": 95,
+        "upgradeCost": 15000
+      }
+    ],
+    "weeklyMaintenanceCost": 200,
+    "setupCost": 5000,
+    "productionCostPerOneProduct": 2,
+    "qualityLevels":
+    [
+      {
+        "upgradeCost": 0,
+        "brandIncreaseRatioPerProduct": 0
+      },
+      {
+        "upgradeCost": 10000,
+        "brandIncreaseRatioPerProduct": 0.001
+      },
+      {
+        "upgradeCost": 10000,
+        "brandIncreaseRatioPerProduct": 0.002
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "NonAlcoholicBeer",
+    "constructionCost": 1000,
+    "constructRequiredDays": 7,
+    "scrapPrice": 600,
+    "batchSize": 80,
+    "dailyProductionRate": 2000,
+    "efficiencyLevels":
+    [
+      {
+        "efficiencyPercentage": 50,
+        "upgradeCost": 0
+      },
+      {
+        "efficiencyPercentage": 75,
+        "upgradeCost": 15000
+      },
+      {
+        "efficiencyPercentage": 95,
+        "upgradeCost": 15000
+      }
+    ],
+    "weeklyMaintenanceCost": 200,
+    "setupCost": 5000,
+    "productionCostPerOneProduct": 2,
+    "qualityLevels":
+    [
+      {
+        "upgradeCost": 0,
+        "brandIncreaseRatioPerProduct": 0
+      },
+      {
+        "upgradeCost": 10000,
+        "brandIncreaseRatioPerProduct": 0.001
+      },
+      {
+        "upgradeCost": 10000,
+        "brandIncreaseRatioPerProduct": 0.002
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "FruitJuice",
+    "constructionCost": 1000,
+    "constructRequiredDays": 7,
+    "scrapPrice": 600,
+    "batchSize": 80,
+    "dailyProductionRate": 2000,
+    "efficiencyLevels":
+    [
+      {
+        "efficiencyPercentage": 50,
+        "upgradeCost": 0
+      },
+      {
+        "efficiencyPercentage": 75,
+        "upgradeCost": 15000
+      },
+      {
+        "efficiencyPercentage": 95,
+        "upgradeCost": 15000
+      }
+    ],
+    "weeklyMaintenanceCost": 200,
+    "setupCost": 5000,
+    "productionCostPerOneProduct": 2,
+    "qualityLevels":
+    [
+      {
+        "upgradeCost": 0,
+        "brandIncreaseRatioPerProduct": 0
+      },
+      {
+        "upgradeCost": 10000,
+        "brandIncreaseRatioPerProduct": 0.001
+      },
+      {
+        "upgradeCost": 10000,
+        "brandIncreaseRatioPerProduct": 0.002
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "EnergyDrink",
+    "constructionCost": 1000,
+    "constructRequiredDays": 7,
+    "scrapPrice": 600,
+    "batchSize": 80,
+    "dailyProductionRate": 2000,
+    "efficiencyLevels":
+    [
+      {
+        "efficiencyPercentage": 50,
+        "upgradeCost": 0
+      },
+      {
+        "efficiencyPercentage": 75,
+        "upgradeCost": 15000
+      },
+      {
+        "efficiencyPercentage": 95,
+        "upgradeCost": 15000
+      }
+    ],
+    "weeklyMaintenanceCost": 200,
+    "setupCost": 5000,
+    "productionCostPerOneProduct": 2,
+    "qualityLevels":
+    [
+      {
+        "upgradeCost": 0,
+        "brandIncreaseRatioPerProduct": 0
+      },
+      {
+        "upgradeCost": 10000,
+        "brandIncreaseRatioPerProduct": 0.001
+      },
+      {
+        "upgradeCost": 10000,
+        "brandIncreaseRatioPerProduct": 0.002
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "GlassBottle",
+    "constructionCost": 1000,
+    "constructRequiredDays": 7,
+    "scrapPrice": 700,
+    "batchSize": 80,
+    "dailyProductionRate": 1000,
+    "efficiencyLevels":
+    [
+      {
+        "efficiencyPercentage": 50,
+        "upgradeCost": 0
+      },
+      {
+        "efficiencyPercentage": 75,
+        "upgradeCost": 15000
+      },
+      {
+        "efficiencyPercentage": 95,
+        "upgradeCost": 15000
+      }
+    ],
+    "weeklyMaintenanceCost": 200,
+    "setupCost": 5000,
+    "productionCostPerOneProduct": 1,
+    "qualityLevels":
+    [
+      {
+        "upgradeCost": 0,
+        "brandIncreaseRatioPerProduct": 0
+      },
+      {
+        "upgradeCost": 10000,
+        "brandIncreaseRatioPerProduct": 0.001
+      },
+      {
+        "upgradeCost": 10000,
+        "brandIncreaseRatioPerProduct": 0.002
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "AluminiumCan",
+    "constructionCost": 1000,
+    "constructRequiredDays": 7,
+    "scrapPrice": 700,
+    "batchSize": 80,
+    "dailyProductionRate": 1000,
+    "efficiencyLevels":
+    [
+      {
+        "efficiencyPercentage": 50,
+        "upgradeCost": 0
+      },
+      {
+        "efficiencyPercentage": 75,
+        "upgradeCost": 15000
+      },
+      {
+        "efficiencyPercentage": 95,
+        "upgradeCost": 15000
+      }
+    ],
+    "weeklyMaintenanceCost": 200,
+    "setupCost": 5000,
+    "productionCostPerOneProduct": 1,
+    "qualityLevels":
+    [
+      {
+        "upgradeCost": 0,
+        "brandIncreaseRatioPerProduct": 0
+      },
+      {
+        "upgradeCost": 10000,
+        "brandIncreaseRatioPerProduct": 0.001
+      },
+      {
+        "upgradeCost": 10000,
+        "brandIncreaseRatioPerProduct": 0.002
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "PlasticBottle",
+    "constructionCost": 1000,
+    "constructRequiredDays": 7,
+    "scrapPrice": 700,
+    "batchSize": 80,
+    "dailyProductionRate": 1000,
+    "efficiencyLevels":
+    [
+      {
+        "efficiencyPercentage": 50,
+        "upgradeCost": 0
+      },
+      {
+        "efficiencyPercentage": 75,
+        "upgradeCost": 15000
+      },
+      {
+        "efficiencyPercentage": 95,
+        "upgradeCost": 15000
+      }
+    ],
+    "weeklyMaintenanceCost": 200,
+    "setupCost": 5000,
+    "productionCostPerOneProduct": 1,
+    "qualityLevels":
+    [
+      {
+        "upgradeCost": 0,
+        "brandIncreaseRatioPerProduct": 0
+      },
+      {
+        "upgradeCost": 10000,
+        "brandIncreaseRatioPerProduct": 0.001
+      },
+      {
+        "upgradeCost": 10000,
+        "brandIncreaseRatioPerProduct": 0.002
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "name": "SodaSyrup",
+    "constructionCost": 1000,
+    "constructRequiredDays": 7,
+    "scrapPrice": 700,
+    "batchSize": 400,
+    "dailyProductionRate": 1000,
+    "efficiencyLevels":
+    [
+      {
+        "efficiencyPercentage": 50,
+        "upgradeCost": 0
+      },
+      {
+        "efficiencyPercentage": 75,
+        "upgradeCost": 15000
+      },
+      {
+        "efficiencyPercentage": 95,
+        "upgradeCost": 15000
+      }
+    ],
+    "weeklyMaintenanceCost": 200,
+    "setupCost": 5000,
+    "productionCostPerOneProduct": 1,
+    "qualityLevels":
+    [
+      {
+        "upgradeCost": 0,
+        "brandIncreaseRatioPerProduct": 0
+      },
+      {
+        "upgradeCost": 10000,
+        "brandIncreaseRatioPerProduct": 0.001
+      },
+      {
+        "upgradeCost": 10000,
+        "brandIncreaseRatioPerProduct": 0.002
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "name": "MaltSyrup",
+    "constructionCost": 1000,
+    "constructRequiredDays": 7,
+    "scrapPrice": 700,
+    "batchSize": 400,
+    "dailyProductionRate": 1000,
+    "efficiencyLevels":
+    [
+      {
+        "efficiencyPercentage": 50,
+        "upgradeCost": 0
+      },
+      {
+        "efficiencyPercentage": 75,
+        "upgradeCost": 15000
+      },
+      {
+        "efficiencyPercentage": 95,
+        "upgradeCost": 15000
+      }
+    ],
+    "weeklyMaintenanceCost": 200,
+    "setupCost": 5000,
+    "productionCostPerOneProduct": 1,
+    "qualityLevels":
+    [
+      {
+        "upgradeCost": 0,
+        "brandIncreaseRatioPerProduct": 0
+      },
+      {
+        "upgradeCost": 10000,
+        "brandIncreaseRatioPerProduct": 0.001
+      },
+      {
+        "upgradeCost": 10000,
+        "brandIncreaseRatioPerProduct": 0.002
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "name": "Nectar",
+    "constructionCost": 1000,
+    "constructRequiredDays": 7,
+    "scrapPrice": 700,
+    "batchSize": 400,
+    "dailyProductionRate": 1000,
+    "efficiencyLevels":
+    [
+      {
+        "efficiencyPercentage": 50,
+        "upgradeCost": 0
+      },
+      {
+        "efficiencyPercentage": 75,
+        "upgradeCost": 15000
+      },
+      {
+        "efficiencyPercentage": 95,
+        "upgradeCost": 15000
+      }
+    ],
+    "weeklyMaintenanceCost": 200,
+    "setupCost": 5000,
+    "productionCostPerOneProduct": 1,
+    "qualityLevels":
+    [
+      {
+        "upgradeCost": 0,
+        "brandIncreaseRatioPerProduct": 0
+      },
+      {
+        "upgradeCost": 10000,
+        "brandIncreaseRatioPerProduct": 0.001
+      },
+      {
+        "upgradeCost": 10000,
+        "brandIncreaseRatioPerProduct": 0.002
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "name": "EnergySyrup",
+    "constructionCost": 1000,
+    "constructRequiredDays": 7,
+    "scrapPrice": 700,
+    "batchSize": 400,
+    "dailyProductionRate": 1000,
+    "efficiencyLevels":
+    [
+      {
+        "efficiencyPercentage": 50,
+        "upgradeCost": 0
+      },
+      {
+        "efficiencyPercentage": 75,
+        "upgradeCost": 15000
+      },
+      {
+        "efficiencyPercentage": 95,
+        "upgradeCost": 15000
+      }
+    ],
+    "weeklyMaintenanceCost": 200,
+    "setupCost": 5000,
+    "productionCostPerOneProduct": 1,
+    "qualityLevels":
+    [
+      {
+        "upgradeCost": 0,
+        "brandIncreaseRatioPerProduct": 0
+      },
+      {
+        "upgradeCost": 10000,
+        "brandIncreaseRatioPerProduct": 0.001
+      },
+      {
+        "upgradeCost": 10000,
+        "brandIncreaseRatioPerProduct": 0.002
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "name": "CarbonDioxide",
+    "constructionCost": 1000,
+    "constructRequiredDays": 7,
+    "scrapPrice": 700,
+    "batchSize": 400,
+    "dailyProductionRate": 1000,
+    "efficiencyLevels":
+    [
+      {
+        "efficiencyPercentage": 50,
+        "upgradeCost": 0
+      },
+      {
+        "efficiencyPercentage": 75,
+        "upgradeCost": 15000
+      },
+      {
+        "efficiencyPercentage": 95,
+        "upgradeCost": 15000
+      }
+    ],
+    "weeklyMaintenanceCost": 200,
+    "setupCost": 5000,
+    "productionCostPerOneProduct": 1,
+    "qualityLevels":
+    [
+      {
+        "upgradeCost": 0,
+        "brandIncreaseRatioPerProduct": 0
+      },
+      {
+        "upgradeCost": 10000,
+        "brandIncreaseRatioPerProduct": 0.001
+      },
+      {
+        "upgradeCost": 10000,
+        "brandIncreaseRatioPerProduct": 0.002
+      }
+    ]
+  }
 ]

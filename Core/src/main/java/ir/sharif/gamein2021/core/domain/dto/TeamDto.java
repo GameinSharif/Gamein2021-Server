@@ -15,4 +15,5 @@ public class TeamDto
     private Country country;
     private Integer factoryId;
     private float credit;
+    private Float brand;
 }

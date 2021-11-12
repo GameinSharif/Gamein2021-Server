@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 
 public class GameConstants {
     public static GameConstants Instance = new GameConstants();
-    private static int weakNumber = 1;
 
     public static final int ChatMaxMessagesCount = 20;
 
@@ -30,14 +29,5 @@ public class GameConstants {
     public static GameConstants getInstance() {
         return Instance;
     }
-
-    public static int getWeakNumber() {
-        return weakNumber;
-    }
-
-    public static void addWeakNumber(){
-        weakNumber ++;
-    }
-
     public static boolean IsGameStarted = false;
 }

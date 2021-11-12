@@ -12,8 +12,7 @@ public class NewContractSupplierResponse extends ResponseObject implements Seria
     private ContractSupplierDto contractSupplier;
     private String result;
 
-    public NewContractSupplierResponse(ResponseTypeConstant responseTypeConstant, ContractSupplierDto contractSupplier,
-                                       String result)
+    public NewContractSupplierResponse(ResponseTypeConstant responseTypeConstant, ContractSupplierDto contractSupplier, String result)
     {
         this.responseTypeConstant = responseTypeConstant.ordinal();
         this.contractSupplier = contractSupplier;

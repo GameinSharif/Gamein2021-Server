@@ -129,7 +129,7 @@ public class TransportManager
         }
     }
 
-    public void createTransport(Enums.VehicleType vehicleType, Enums.TransportNodeType sourceType, Integer sourceId
+    public TransportDto createTransport(Enums.VehicleType vehicleType, Enums.TransportNodeType sourceType, Integer sourceId
             , Enums.TransportNodeType destinationType, Integer destinationId, LocalDate startDate
             , Boolean hasInsurance, Integer contentProductId, Integer contentProductAmount)
     {
@@ -155,9 +155,10 @@ public class TransportManager
                 .endDate(startDate.plusDays(transportDuration))
                 .build();
 
-        transportService.saveOrUpdate(transport);
+        TransportDto savedTransport = transportService.saveOrUpdate(transport);
 
-        sendResponseToTransportOwners(transport);
+        sendResponseToTransportOwners(savedTransport);
+        return savedTransport;
     }
 
     //TODO need testing

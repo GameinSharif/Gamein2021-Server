@@ -15,6 +15,7 @@ public class ContractDetailDto implements BaseDto<Integer>
     private LocalDate contractDate;
     private Integer maxAmount;
     private Integer boughtAmount;
-    private Integer pricePerUnit;
+    private Float pricePerUnit;
     private Integer lostSalePenalty;
+    private Integer contractId;
 }

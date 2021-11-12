@@ -2,6 +2,9 @@ package ir.sharif.gamein2021.ClientHandler.controller;
 
 import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.domain.*;
+import ir.sharif.gamein2021.ClientHandler.domain.Contract.GetContractsRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.Contract.NewContractRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.Contract.TerminateLongtermContractRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Dc.BuyingDcRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Dc.SellingDcRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginRequest;
@@ -15,7 +18,6 @@ import ir.sharif.gamein2021.ClientHandler.domain.RFQ.*;
 import ir.sharif.gamein2021.ClientHandler.domain.Auction.BidForAuctionRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Transport.GetTeamTransportsRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.productionLine.*;
-import ir.sharif.gamein2021.core.domain.entity.ContractSupplier;
 import ir.sharif.gamein2021.core.util.RequestTypeConstant;
 import lombok.AllArgsConstructor;
 import org.json.JSONObject;
@@ -60,15 +62,17 @@ public class MainController
                 offerController.handleGetOffers(processedRequest, getOffersRequest);
                 break;
             case GET_GAME_DATA:
+                GetGameDataRequest getGameDataRequest = gson.fromJson(requestData, GetGameDataRequest.class);
                 gameDataController.getGameData(processedRequest);
                 gameDataController.getCurrentWeekDemands(processedRequest);
                 gameDataController.getCurrentWeekSupplies(processedRequest);
                 gameDataController.getAllAuctions(processedRequest);
                 gameDataController.getAllActiveDc(processedRequest);
+                gameDataController.getServerTime(processedRequest);
                 break;
             case GET_CONTRACTS:
                 GetContractsRequest getContractsRequest = gson.fromJson(requestData, GetContractsRequest.class);
-                contractController.getContracts(processedRequest, getContractsRequest);
+                contractController.getContracts(getContractsRequest);
                 break;
             case GET_NEGOTIATIONS:
                 GetNegotiationsRequest getNegotiationsRequest = gson.fromJson(requestData, GetNegotiationsRequest.class);
@@ -188,6 +192,14 @@ public class MainController
             case ACCEPT_OFFER:
                 AcceptOfferRequest acceptOfferRequest = gson.fromJson(requestData, AcceptOfferRequest.class);
                 offerController.acceptOffer(processedRequest, acceptOfferRequest);
+                break;
+            case NEW_CONTRACT:
+                NewContractRequest newContractRequest = gson.fromJson(requestData, NewContractRequest.class);
+                contractController.newContract(newContractRequest);
+                break;
+            case TERMINATE_CONTRACT:
+                TerminateLongtermContractRequest terminateLongtermContractRequest = gson.fromJson(requestData, TerminateLongtermContractRequest.class);
+                contractController.terminateLongtermContract(terminateLongtermContractRequest);
                 break;
             default:
                 System.out.println("Request type is invalid.");

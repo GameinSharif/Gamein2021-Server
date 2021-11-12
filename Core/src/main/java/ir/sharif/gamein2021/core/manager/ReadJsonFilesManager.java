@@ -1,9 +1,11 @@
 package ir.sharif.gamein2021.core.manager;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import ir.sharif.gamein2021.core.domain.dto.TransportDto;
 import ir.sharif.gamein2021.core.exception.FactoryNotFoundException;
 import ir.sharif.gamein2021.core.exception.ProductNotFoundException;
 import ir.sharif.gamein2021.core.service.AuctionService;
+import ir.sharif.gamein2021.core.util.Enums;
 import ir.sharif.gamein2021.core.util.models.Vehicle;
 import ir.sharif.gamein2021.core.util.models.Factory;
 import ir.sharif.gamein2021.core.util.models.Product;
@@ -71,6 +73,11 @@ public class ReadJsonFilesManager {
         throw new ProductNotFoundException("Product with id: " + id + " does not exist");
     }
 
+    public static Vehicle findVehicleByType(Enums.VehicleType vehicleType) {
+        List<Vehicle> vehiclesList = Arrays.asList(Vehicles);
+        return vehiclesList.stream().filter(v -> v.getVehicleType() == vehicleType).findFirst().get();
+        // TODO : Exception
+    }
 
     public static Product[] getAllProducts() {
         return Products;

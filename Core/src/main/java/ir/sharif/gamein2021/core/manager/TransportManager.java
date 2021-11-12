@@ -1,21 +1,28 @@
 package ir.sharif.gamein2021.core.manager;
 
 import com.google.gson.Gson;
+import ir.sharif.gamein2021.core.domain.dto.DcDto;
+import ir.sharif.gamein2021.core.domain.dto.GameinCustomerDto;
 import ir.sharif.gamein2021.core.domain.dto.TransportDto;
 import ir.sharif.gamein2021.core.response.TransportStateChangedResponse;
 import ir.sharif.gamein2021.core.service.DcService;
+import ir.sharif.gamein2021.core.service.GameinCustomerService;
 import ir.sharif.gamein2021.core.service.StorageService;
 import ir.sharif.gamein2021.core.service.TeamService;
 import ir.sharif.gamein2021.core.service.TransportService;
 import ir.sharif.gamein2021.core.util.Enums;
 import ir.sharif.gamein2021.core.util.GameConstants;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
+import ir.sharif.gamein2021.core.util.models.Product;
+import ir.sharif.gamein2021.core.util.models.Vehicle;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 @AllArgsConstructor
@@ -24,6 +31,7 @@ public class TransportManager
 {
 
     private final TransportService transportService;
+    private final GameinCustomerService gameinCustomerService;
     private final DcService dcService;
     private final TeamService teamService;
     private final StorageService storageService;
@@ -135,13 +143,12 @@ public class TransportManager
     {
         // TODO : check inputs. validate source and dest? check start date has'nt passed
 
-        int transportDuration = calculateTransportDuration(vehicleType, sourceId, sourceType, destinationId, destinationType);
         Enums.TransportState transportState = Enums.TransportState.IN_WAY;
         if (gameCalendar.getCurrentDate().isBefore(startDate))
         {
             transportState = Enums.TransportState.PENDING;
         }
-        TransportDto transport = TransportDto.builder()
+        TransportDto transportDto = TransportDto.builder()
                 .vehicleType(vehicleType)
                 .sourceType(sourceType)
                 .sourceId(sourceId)
@@ -152,9 +159,19 @@ public class TransportManager
                 .contentProductId(contentProductId)
                 .contentProductAmount(contentProductAmount)
                 .transportState(transportState)
-                .endDate(startDate.plusDays(transportDuration))
                 .build();
 
+        int transportDuration = calculateTransportDuration(transportDto);
+        transportDto.setEndDate(startDate.plusDays(transportDuration));
+
+        transportService.saveOrUpdate(transportDto);
+
+        sendResponseToTransportOwners(transportDto);
+    }
+
+    private int calculateTransportDuration(TransportDto transportDto) {
+        int transportDistance = getTransportDistance(transportDto);
+        return (int) Math.ceil((float) transportDistance / ReadJsonFilesManager.findVehicleByType(transportDto.getVehicleType()).getSpeed()) ;
         TransportDto savedTransport = transportService.saveOrUpdate(transport);
 
         sendResponseToTransportOwners(savedTransport);
@@ -199,17 +216,36 @@ public class TransportManager
         switch (type)
         {
             case FACTORY:
-                return new double[]{ReadJsonFilesManager.Factories[id].getLatitude(), ReadJsonFilesManager.Factories[id].getLatitude()};
-            //TODO
+                return new double[] {ReadJsonFilesManager.Factories[id].getLatitude(), ReadJsonFilesManager.Factories[id].getLongitude()};
+            case DC:
+                DcDto dcDto = dcService.loadById(id);
+                return new double[] {dcDto.getLatitude(), dcDto.getLongitude()};
+            case SUPPLIER:
+                return new double[] {ReadJsonFilesManager.Suppliers[id].getLatitude(), ReadJsonFilesManager.Suppliers[id].getLongitude()};
+            case GAMEIN_CUSTOMER:
+                GameinCustomerDto customerDto = gameinCustomerService.loadById(id);
+                return new double[] {customerDto.getLatitude(), customerDto.getLongitude()};
+            default:
+                return null;
+                // TODO : Exception?
         }
-
-        return null;
     }
 
-    public float calculateTransportCost(Enums.VehicleType vehicleType, Integer sourceId, Enums.TransportNodeType sourceType, Integer destinationId, Enums.TransportNodeType destinationType)
-    {
-        // TODO
-        return 0;
+    private int getTransportDistance(TransportDto transportDto) {
+        double[] sourceLocation = getLocation(transportDto.getSourceType(), transportDto.getSourceId());
+        double[] destinationLocation = getLocation(transportDto.getDestinationType(), transportDto.getDestinationId());
+        double distance = (sourceLocation[0] - destinationLocation[0]) * (sourceLocation[0] - destinationLocation[0]);
+        distance += (sourceLocation[1] - destinationLocation[1]) * (sourceLocation[1] - destinationLocation[1]);
+        distance = Math.sqrt(distance);
+        return (int) Math.ceil(distance * GameConstants.DistanceConstant * ReadJsonFilesManager.findVehicleByType(transportDto.getVehicleType()).getCoefficient());
+    }
+
+    public float calculateTransportCost(TransportDto transportDto) {
+        Vehicle transportVehicle = ReadJsonFilesManager.findVehicleByType(transportDto.getVehicleType());
+        int vehicleCost = transportVehicle.getCostPerKilometer() * getTransportDistance(transportDto);
+        int productVolume = ReadJsonFilesManager.findProductById(transportDto.getContentProductId()).getVolumetricUnit() * transportDto.getContentProductAmount();
+        int vehicleCount = (int) Math.ceil((float) productVolume / transportVehicle.getCapacity());
+        return vehicleCost * vehicleCount;
     }
 
 }

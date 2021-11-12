@@ -26,6 +26,8 @@ public class GameConstants {
 
     public static final int AuctionRoundLengthInSeconds = 300;
 
+    public static final int DistanceConstant = 100;
+
     public static GameConstants getInstance() {
         return Instance;
     }

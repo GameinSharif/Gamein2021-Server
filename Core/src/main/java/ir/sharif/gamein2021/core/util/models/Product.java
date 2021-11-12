@@ -13,7 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Product {
-    private static final List<Product> allProducts = new ArrayList<>();
     private int id;
     private String categoryIds; //for SemiFinishedProducts only
     private int productionLineTemplateId; //for SemiFinishedProducts & Finished only

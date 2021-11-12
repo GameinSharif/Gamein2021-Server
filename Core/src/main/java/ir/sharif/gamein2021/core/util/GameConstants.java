@@ -19,6 +19,10 @@ public class GameConstants {
             LocalDateTime.of(2021, 11, 6, 22, 13, 0),
             LocalDateTime.of(2021, 11, 6, 22, 16, 0),
     };
+    public final int rawMaterialCapacity = 2000000;
+    public final int semiFinishedProductCapacity = 2000000;
+    public final int finishedProductCapacity = 2000000;
+
     public static final float CrushProbability = 0.01f;
 
     public static final int AuctionRoundLengthInSeconds = 300;

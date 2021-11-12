@@ -13,6 +13,7 @@ import ir.sharif.gamein2021.core.exception.ProductNotFoundException;
 import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
 import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
 import ir.sharif.gamein2021.core.util.Enums;
+import ir.sharif.gamein2021.core.util.GameConstants;
 import ir.sharif.gamein2021.core.util.models.Factory;
 import ir.sharif.gamein2021.core.util.models.Product;
 import lombok.extern.slf4j.Slf4j;
@@ -201,11 +202,11 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
         if (!isDc) {
             Factory factory = ReadJsonFilesManager.findFactoryById(buildingId);
             if (productType.equals(Enums.ProductType.RawMaterial)) {
-                availableCapacity = factory.getRawMaterialCapacity();
+                availableCapacity = GameConstants.Instance.rawMaterialCapacity;
             } else if (productType.equals(Enums.ProductType.SemiFinished)) {
-                availableCapacity = factory.getSecondaryMaterialCapacity();
+                availableCapacity = GameConstants.Instance.semiFinishedProductCapacity;
             } else if (productType.equals(Enums.ProductType.Finished)) {
-                availableCapacity = factory.getFinalMaterialCapacity();
+                availableCapacity = GameConstants.Instance.finishedProductCapacity;
             }
             for (StorageProductDto storageProductDto : storage.getProducts()) {
                 Product storeProduct = ReadJsonFilesManager.findProductById(storageProductDto.getProductId());

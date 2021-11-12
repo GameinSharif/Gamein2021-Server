@@ -6,11 +6,13 @@ import ir.sharif.gamein2021.core.util.GameConstants;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 
 @Component
 @Scope("singleton")
 public class GameCalendar {
+    private int week = 1;
     private LocalDate currentDate = GameConstants.startDate;
     private final ClientHandlerRequestSenderInterface requestSender;
 
@@ -22,8 +24,17 @@ public class GameCalendar {
         return currentDate;
     }
 
+    public int getWeek()
+    {
+        return week;
+    }
+
     public void setCurrentDate(LocalDate newCurrentData) {
         currentDate = newCurrentData;
+        if (currentDate.getDayOfWeek() == DayOfWeek.SATURDAY)
+        {
+            week ++;
+        }
     }
 
     public void increaseOneDay() {

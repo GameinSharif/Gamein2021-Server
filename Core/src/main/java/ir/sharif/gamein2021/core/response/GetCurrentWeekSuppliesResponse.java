@@ -1,4 +1,4 @@
-package ir.sharif.gamein2021.ClientHandler.domain;
+package ir.sharif.gamein2021.core.response;
 
 import ir.sharif.gamein2021.core.domain.dto.WeekSupplyDto;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;

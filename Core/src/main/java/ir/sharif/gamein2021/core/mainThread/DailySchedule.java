@@ -1,14 +1,22 @@
 package ir.sharif.gamein2021.core.mainThread;
 
+import ir.sharif.gamein2021.core.domain.dto.WeekDemandDto;
 import ir.sharif.gamein2021.core.manager.ContractManager;
+import ir.sharif.gamein2021.core.manager.DemandAndSupplyManager;
 import ir.sharif.gamein2021.core.manager.GameCalendar;
 import ir.sharif.gamein2021.core.manager.TransportManager;
+import ir.sharif.gamein2021.core.response.GetCurrentWeekDemandsResponse;
 import ir.sharif.gamein2021.core.service.ProductionLineProductService;
 import ir.sharif.gamein2021.core.util.GameConstants;
+import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
+@AllArgsConstructor
 @Component
 @Profile(value = {"scheduled"})
 public class DailySchedule
@@ -17,15 +25,7 @@ public class DailySchedule
     private ProductionLineProductService productService;
     private final TransportManager transportManager;
     private final ContractManager contractManager;
-
-    public DailySchedule(GameCalendar gameCalendar, ProductionLineProductService productService, TransportManager transportManager,
-                         ContractManager contractManager)
-    {
-        this.gameCalendar = gameCalendar;
-        this.productService = productService;
-        this.transportManager = transportManager;
-        this.contractManager = contractManager;
-    }
+    private final DemandAndSupplyManager demandAndSupplyManager;
 
     @Scheduled(fixedRateString = "${dayLengthMilliSecond}")
     public void scheduledTask()
@@ -68,5 +68,6 @@ public class DailySchedule
     {
         contractManager.updateGameinCustomerContracts();
         GameConstants.addWeakNumber();
+        demandAndSupplyManager.SendCurrentWeekSupplyAndDemandsToAllUsers();
     }
 }

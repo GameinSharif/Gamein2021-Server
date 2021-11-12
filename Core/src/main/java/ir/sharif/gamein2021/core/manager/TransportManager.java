@@ -164,18 +164,15 @@ public class TransportManager
         int transportDuration = calculateTransportDuration(transportDto);
         transportDto.setEndDate(startDate.plusDays(transportDuration));
 
-        transportService.saveOrUpdate(transportDto);
+        TransportDto savedTransport = transportService.saveOrUpdate(transportDto);
 
-        sendResponseToTransportOwners(transportDto);
+        sendResponseToTransportOwners(savedTransport);
+        return savedTransport;
     }
 
     private int calculateTransportDuration(TransportDto transportDto) {
         int transportDistance = getTransportDistance(transportDto);
         return (int) Math.ceil((float) transportDistance / ReadJsonFilesManager.findVehicleByType(transportDto.getVehicleType()).getSpeed()) ;
-        TransportDto savedTransport = transportService.saveOrUpdate(transport);
-
-        sendResponseToTransportOwners(savedTransport);
-        return savedTransport;
     }
 
     //TODO need testing
@@ -202,13 +199,6 @@ public class TransportManager
         {
             storageService.addProduct(transportDto.getDestinationId(), false, transportDto.getContentProductId(), transportDto.getContentProductAmount());
         }
-    }
-
-    private int calculateTransportDuration(Enums.VehicleType vehicleType, Integer sourceId, Enums.TransportNodeType sourceType, Integer destinationId, Enums.TransportNodeType destinationType)
-    {
-        // TODO
-        // TODO : change inputs : source position? transport?
-        return 7;
     }
 
     private double[] getLocation(Enums.TransportNodeType type, Integer id)

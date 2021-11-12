@@ -139,7 +139,7 @@ public class ContractSupplierController
                 Integer terminatedCounter = 0;
                 for(ContractSupplierDetailDto contractSupplierDetailDto: contractSupplierDto.getContractSupplierDetails()){
                     TransportDto transportDto = transportService.loadById(contractSupplierDetailDto.getTransportId());
-                    if (!transportDto.getTransportState().equals(Enums.TransportState.SUCCESSFUL)){
+                    if (transportDto.getTransportState().equals(Enums.TransportState.PENDING)){
                         transportDto.setTransportState(Enums.TransportState.TERMINATED);
                         transportService.saveOrUpdate(transportDto);
                         terminatedCounter++;

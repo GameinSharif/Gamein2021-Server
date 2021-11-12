@@ -44,7 +44,7 @@ public class ContractSupplierController
         Enums.VehicleType vehicleType = newContractSupplierRequest.getVehicleType();
         Boolean hasInsurance = newContractSupplierRequest.getHasInsurance();
         Integer weeks = newContractSupplierRequest.getWeeks();
-        Integer currentWeek = GameConstants.getWeakNumber();
+        Integer currentWeek = gameCalendar.getWeek();
         Integer amount = newContractSupplierRequest.getAmount();
         Supplier supplier = contractSupplierService.SupplierIdValidation(newContractSupplierRequest.getSupplierId());
         NewContractSupplierResponse newContractSupplierResponse;

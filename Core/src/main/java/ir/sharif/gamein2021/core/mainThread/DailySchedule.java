@@ -27,9 +27,20 @@ public class DailySchedule
     private final DemandAndSupplyManager demandAndSupplyManager;
     private final GameDateManager gameDateManager;
 
+    @Scheduled(cron = "0 58 19 12 11 ?")
+    public void startGame()
+    {
+        GameConstants.IsGameStarted = true;
+    }
+
     @Scheduled(fixedRateString = "${dayLengthMilliSecond}")
     public void scheduledTask()
     {
+        if (!GameConstants.IsGameStarted)
+        {
+            return;
+        }
+
         System.out.println(gameCalendar.getCurrentDate());
         gameCalendar.increaseOneDay();
 
@@ -58,15 +69,6 @@ public class DailySchedule
     private void doDailyTasks()
     {
         gameDateManager.SendGameDateToAllUsers();
-        productService.finishProductCreation();
-    @Scheduled(cron = "0 58 19 12 11 ?")
-    public void startGame(){
-        GameConstants.IsGameStarted = true;
-    }
-    public void scheduledTask() {
-        if (!GameConstants.IsGameStarted) {
-            return;
-        }
         productionLineService.enableProductionLines();
         productService.finishProductCreation(gameCalendar.getCurrentDate());
         transportManager.updateTransports();

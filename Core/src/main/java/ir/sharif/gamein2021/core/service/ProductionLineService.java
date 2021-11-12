@@ -135,6 +135,10 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
         }
 
         for (ProductIngredient productIngredient : productTemplate.getIngredientsPerUnit()) {
+            if (isWater(productIngredient.getProductId())) {
+                continue;
+            }
+
             StorageProductDto storageDto = storageService.findProductStorageByIdNull(team.getFactoryId(), productIngredient.getProductId());
             if (storageDto == null || storageDto.getAmount() < amount * productIngredient.getAmount()) {
                 throw new InvalidProductionLineIdException("Production requirements are not available in storage.");
@@ -142,6 +146,10 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
         }
 
         for (ProductIngredient productIngredient : productTemplate.getIngredientsPerUnit()) {
+            if (isWater(productIngredient.getProductId())) {
+                continue;
+            }
+
             storageService.deleteProducts(team.getFactoryId(), false, productId, amount * productIngredient.getAmount());
         }
 
@@ -164,6 +172,10 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
         ProductionLineProduct savedProduct = productRepository.saveAndFlush(newProduct);
         productionLine.getProducts().add(savedProduct);
         return modelMapper.map(productionLine, ProductionLineDto.class);
+    }
+
+    private boolean isWater(int productId) {
+        return productId == 4;
     }
 
     @Transactional

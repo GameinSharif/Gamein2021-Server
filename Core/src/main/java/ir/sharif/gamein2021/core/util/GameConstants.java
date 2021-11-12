@@ -29,5 +29,5 @@ public class GameConstants {
     public static GameConstants getInstance() {
         return Instance;
     }
-    public static boolean IsGameStarted = false;
+    public static boolean IsGameStarted = true;
 }

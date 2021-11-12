@@ -62,11 +62,13 @@ public class MainController
                 offerController.handleGetOffers(processedRequest, getOffersRequest);
                 break;
             case GET_GAME_DATA:
+                GetGameDataRequest getGameDataRequest = gson.fromJson(requestData, GetGameDataRequest.class);
                 gameDataController.getGameData(processedRequest);
                 gameDataController.getCurrentWeekDemands(processedRequest);
                 gameDataController.getCurrentWeekSupplies(processedRequest);
                 gameDataController.getAllAuctions(processedRequest);
                 gameDataController.getAllActiveDc(processedRequest);
+                gameDataController.getServerTime(processedRequest);
                 break;
             case GET_CONTRACTS:
                 GetContractsRequest getContractsRequest = gson.fromJson(requestData, GetContractsRequest.class);

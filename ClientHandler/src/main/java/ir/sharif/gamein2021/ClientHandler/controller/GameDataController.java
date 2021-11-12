@@ -3,6 +3,7 @@ package ir.sharif.gamein2021.ClientHandler.controller;
 import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.GetCurrentWeekSuppliesResponse;
+import ir.sharif.gamein2021.ClientHandler.domain.ServerTimeResponse;
 import ir.sharif.gamein2021.core.domain.dto.WeekSupplyDto;
 import ir.sharif.gamein2021.core.domain.dto.TeamDto;
 import ir.sharif.gamein2021.core.response.GetAllAuctionsResponse;
@@ -30,6 +31,7 @@ import lombok.AllArgsConstructor;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @AllArgsConstructor
@@ -93,6 +95,7 @@ public class GameDataController {
 
         pushMessageManager.sendMessageBySession(request.session, gson.toJson(getAllAuctionsResponse));
     }
+
     public void getAllActiveDc(ProcessedRequest request){
         List<DcDto> dcs = dcService.getAllActiveDc();
 
@@ -101,5 +104,15 @@ public class GameDataController {
 
         pushMessageManager.sendMessageBySession(request.session , gson.toJson(getAllActiveDcResponse));
 
+    }
+
+    public void getServerTime(ProcessedRequest request)
+    {
+        ServerTimeResponse serverTimeResponse = new ServerTimeResponse(
+                ResponseTypeConstant.SERVER_TIME,
+                LocalDateTime.now()
+        );
+
+        pushMessageManager.sendMessageBySession(request.session , gson.toJson(serverTimeResponse));
     }
 }

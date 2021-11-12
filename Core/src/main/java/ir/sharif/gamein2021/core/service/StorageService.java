@@ -13,6 +13,7 @@ import ir.sharif.gamein2021.core.exception.ProductNotFoundException;
 import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
 import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
 import ir.sharif.gamein2021.core.util.Enums;
+import ir.sharif.gamein2021.core.util.GameConstants;
 import ir.sharif.gamein2021.core.util.models.Factory;
 import ir.sharif.gamein2021.core.util.models.Product;
 import lombok.extern.slf4j.Slf4j;
@@ -29,16 +30,14 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-public class StorageService extends AbstractCrudService<StorageDto, Storage, Integer>
-{
+public class StorageService extends AbstractCrudService<StorageDto, Storage, Integer> {
     private final ModelMapper modelMapper;
     private final StorageRepository repository;
     private final StorageProductService storageProductService;
     private final DcService dcService;
 
     public StorageService(ModelMapper modelMapper, StorageRepository repository,
-                          StorageProductService storageProductService, @Lazy DcService dcService)
-    {
+                          StorageProductService storageProductService, @Lazy DcService dcService) {
         this.modelMapper = modelMapper;
         this.repository = repository;
         this.storageProductService = storageProductService;
@@ -47,8 +46,7 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
     }
 
     @Transactional(readOnly = true)
-    public StorageDto loadById(Integer id)
-    {
+    public StorageDto loadById(Integer id) {
         Assert.notNull(id, "The id must not be null!");
 
         return repository.findById(id)
@@ -64,18 +62,15 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
     }
 
     @Override
-    public List<StorageDto> list()
-    {
+    public List<StorageDto> list() {
         return super.list();
     }
 
     @Transactional(readOnly = true)
-    public List<StorageDto> findAllStorageForTeam(TeamDto teamDto)
-    {
+    public List<StorageDto> findAllStorageForTeam(TeamDto teamDto) {
         List<DcDto> dcs = dcService.getAllDcForTeam(teamDto);
         List<StorageDto> storages = new ArrayList<>();
-        for (DcDto dcDto : dcs)
-        {
+        for (DcDto dcDto : dcs) {
             storages.add(findStorageWithBuildingIdAndDc(dcDto.getId(), true));
         }
         storages.add(findStorageWithBuildingIdAndDc(teamDto.getFactoryId(), false));
@@ -83,18 +78,14 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
     }
 
     @Transactional
-    public StorageDto deleteProducts(Integer buildingId, boolean isDc, Integer productId, int amount)
-    {
+    public StorageDto deleteProducts(Integer buildingId, boolean isDc, Integer productId, int amount) {
         StorageDto storage = findStorageWithBuildingIdAndDc(buildingId, isDc);
         Product product = ReadJsonFilesManager.findProductById(productId);
 
         StorageProductDto storageProductDto = findProductStorageById(storage.getId(), product.getId());
-        if (storageProductDto.getAmount() < amount)
-        {
+        if (storageProductDto.getAmount() < amount) {
             throw new InvalidRequestException("You storage doesn't have this much products");
-        }
-        else
-        {
+        } else {
             int index = storage.getProducts().indexOf(storageProductDto);
             storageProductDto.setAmount(storageProductDto.getAmount() - amount);
             storage.getProducts().set(index, storageProductDto);
@@ -102,17 +93,26 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
             return loadById(storage.getId());
         }
     }
+    //TODO need testing
+    @Transactional
+    public StorageDto emptyStorage(Integer buildingId, boolean isDc) {
+        StorageDto storage = findStorageWithBuildingIdAndDc(buildingId, isDc);
+        for(StorageProductDto storageProductDto : storage.getProducts()){
+            int index = storage.getProducts().indexOf(storageProductDto);
+            storageProductDto.setAmount(0);
+            storage.getProducts().set(index , storageProductDto);
+            storageProductService.saveOrUpdate(storageProductDto);
+        }
+        return loadById(storage.getId());
+    }
 
     @Override
-    public StorageDto saveOrUpdate(StorageDto domainObject)
-    {
+    public StorageDto saveOrUpdate(StorageDto domainObject) {
         Assert.notNull(domainObject, "The domainObject must not be null!");
         Storage entity = modelMapper.map(domainObject, getEntityClass());
         entity.getProducts().clear();
-        if (domainObject.getProducts() != null)
-        {
-            for (StorageProductDto s : domainObject.getProducts())
-            {
+        if (domainObject.getProducts() != null) {
+            for (StorageProductDto s : domainObject.getProducts()) {
                 StorageProductDto product = storageProductService.saveOrUpdate(s);
                 StorageProduct productEntity = storageProductService.findStorageProductById(product.getId());
                 entity.getProducts().add(productEntity);
@@ -124,67 +124,57 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
     }
 
     @Transactional(readOnly = true)
-    public Storage findStorageById(Integer id)
-    {
+    public Storage findStorageById(Integer id) {
         return getRepository().findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     @Transactional
-    public StorageDto addProduct(Integer buildingId, boolean isDc, Integer productId, int amount)
-    {
+    public StorageDto addProduct(Integer buildingId, boolean isDc, Integer productId, int amount) {
         Product product = ReadJsonFilesManager.findProductById(productId);
         StorageProductDto storageProductDto = null;
         StorageDto storage = findStorageWithBuildingIdAndDc(buildingId, isDc);
         int availableCapacity = calculateAvailableCapacity(buildingId, isDc, product.getProductType());
-        if (availableCapacity < amount * product.getVolumetricUnit())
-        {
-            throw new InvalidRequestException("Product out of boundary exception, You only have " + availableCapacity + " to add to this building!");
-        }
+//        if (availableCapacity < amount * product.getVolumetricUnit()) {
+//            throw new InvalidRequestException("Product out of boundary exception, You only have " + availableCapacity + " to add to this building!");
+//        }
+        if(availableCapacity > amount * product.getVolumetricUnit())
+            amount = availableCapacity;
         storageProductDto = findProductStorageByIdNull(storage.getId(), product.getId());
-        if (storageProductDto != null)
-        {
+        if (storageProductDto != null) {
             int index = storage.getProducts().indexOf(storageProductDto);
             storageProductDto.setAmount(storageProductDto.getAmount() + amount);
             storage.getProducts().set(index, storageProductDto);
             storageProductService.saveOrUpdate(storageProductDto);
-        }
-        else
-        {
+        } else {
             storageProductDto = StorageProductDto.builder().productId(product.getId()).amount(amount).build();
             storage.getProducts().add(storageProductDto);
         }
         saveOrUpdate(storage);
         return loadById(storage.getId());
     }
+    
 
     @Transactional(readOnly = true)
-    public StorageProductDto findProductStorageById(Integer storageId, Integer productId)
-    {
-        StorageDto storage = loadById(storageId);
-        Product product = ReadJsonFilesManager.findProductById(productId);
-
-        List<StorageProductDto> storageProductDtos = storage.getProducts();
-        for (StorageProductDto storageProduct : storageProductDtos)
-        {
-            if (product.getId() == storageProduct.getProductId())
-            {
-                return storageProduct;
-            }
-        }
+    public StorageProductDto findProductStorageById(Integer storageId, Integer productId) {
+        StorageProductDto storageProduct = getStorageProductDto(storageId, productId);
+        if (storageProduct != null) return storageProduct;
         throw new ProductNotFoundException("Product with id : " + productId + " does not exist in this dc!");
     }
 
     @Transactional(readOnly = true)
-    public StorageProductDto findProductStorageByIdNull(Integer storageId, Integer productId)
-    {
+    public StorageProductDto findProductStorageByIdNull(Integer storageId, Integer productId) {
+        StorageProductDto storageProduct = getStorageProductDto(storageId, productId);
+        if (storageProduct != null) return storageProduct;
+        return null;
+    }
+
+    private StorageProductDto getStorageProductDto(Integer storageId, Integer productId) {
         StorageDto storage = loadById(storageId);
         Product product = ReadJsonFilesManager.findProductById(productId);
 
         List<StorageProductDto> storageProductDtos = storage.getProducts();
-        for (StorageProductDto storageProduct : storageProductDtos)
-        {
-            if (product.getId() == storageProduct.getProductId())
-            {
+        for (StorageProductDto storageProduct : storageProductDtos) {
+            if (product.getId() == storageProduct.getProductId()) {
                 return storageProduct;
             }
         }
@@ -192,17 +182,12 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
     }
 
     @Transactional(readOnly = true)
-    public StorageDto findStorageWithBuildingIdAndDc(Integer buildingId, boolean isDc)
-    {
+    public StorageDto findStorageWithBuildingIdAndDc(Integer buildingId, boolean isDc) {
         Storage storage = repository.findByBuildingIdAndDc(buildingId, isDc);
-        if (storage == null)
-        {
-            if (isDc)
-            {
+        if (storage == null) {
+            if (isDc) {
                 throw new EntityNotFoundException("Dc with id " + buildingId + " does not exist");
-            }
-            else
-            {
+            } else {
                 throw new EntityNotFoundException("Factory with id " + buildingId + " does not exist");
             }
         }
@@ -211,52 +196,36 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
 
 
     @Transactional(readOnly = true)
-    public int calculateAvailableCapacity(Integer buildingId, boolean isDc, Enums.ProductType productType)
-    {
+    public int calculateAvailableCapacity(Integer buildingId, boolean isDc, Enums.ProductType productType) {
         StorageDto storage = findStorageWithBuildingIdAndDc(buildingId, isDc);
         int availableCapacity = 0;
-        if (!isDc)
-        {
+        if (!isDc) {
             Factory factory = ReadJsonFilesManager.findFactoryById(buildingId);
-            if (productType.equals(Enums.ProductType.RawMaterial))
-            {
-                availableCapacity = factory.getRawMaterialCapacity();
+            if (productType.equals(Enums.ProductType.RawMaterial)) {
+                availableCapacity = GameConstants.Instance.rawMaterialCapacity;
+            } else if (productType.equals(Enums.ProductType.SemiFinished)) {
+                availableCapacity = GameConstants.Instance.semiFinishedProductCapacity;
+            } else if (productType.equals(Enums.ProductType.Finished)) {
+                availableCapacity = GameConstants.Instance.finishedProductCapacity;
             }
-            else if (productType.equals(Enums.ProductType.SemiFinished))
-            {
-                availableCapacity = factory.getSecondaryMaterialCapacity();
-            }
-            else if (productType.equals(Enums.ProductType.Finished))
-            {
-                availableCapacity = factory.getFinalMaterialCapacity();
-            }
-            for (StorageProductDto storageProductDto : storage.getProducts())
-            {
+            for (StorageProductDto storageProductDto : storage.getProducts()) {
                 Product storeProduct = ReadJsonFilesManager.findProductById(storageProductDto.getProductId());
-                if (storeProduct.getProductType().equals(productType))
-                {
+                if (storeProduct.getProductType().equals(productType)) {
                     availableCapacity -= storageProductDto.getAmount() * storeProduct.getVolumetricUnit();
                 }
             }
-        }
-        else
-        {
+        } else {
             DcDto dcDto = dcService.loadById(buildingId);
             availableCapacity = dcDto.getCapacity();
             if ((dcDto.getType() == Enums.DCType.SemiFinished && productType.equals(Enums.ProductType.SemiFinished)
-                    || (dcDto.getType() == Enums.DCType.Finished && productType.equals(Enums.ProductType.Finished))))
-            {
-                for (StorageProductDto storageProductDto : storage.getProducts())
-                {
+                    || (dcDto.getType() == Enums.DCType.Finished && productType.equals(Enums.ProductType.Finished)))) {
+                for (StorageProductDto storageProductDto : storage.getProducts()) {
                     Product storeProduct = ReadJsonFilesManager.findProductById(storageProductDto.getProductId());
-                    if (storeProduct.getProductType().equals(productType))
-                    {
+                    if (storeProduct.getProductType().equals(productType)) {
                         availableCapacity -= storageProductDto.getAmount() * storeProduct.getVolumetricUnit();
                     }
                 }
-            }
-            else
-            {
+            } else {
                 throw new InvalidRequestException("This products can't be add to this dc");
             }
             //TODO checking cheating exception

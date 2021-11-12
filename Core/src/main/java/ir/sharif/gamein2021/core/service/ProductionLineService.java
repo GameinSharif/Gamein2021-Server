@@ -74,6 +74,7 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
 
         team.setCredit(team.getCredit() - template.getConstructionCost());
 
+        productionLine.setActivationDate(gameCalendar.getCurrentDate().plusDays(template.getConstructRequiredDays()));
         teamRepository.saveAndFlush(team);
         return saveOrUpdate(productionLine);
     }
@@ -163,7 +164,6 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
         ProductionLineProduct savedProduct = productRepository.saveAndFlush(newProduct);
         productionLine.getProducts().add(savedProduct);
         return modelMapper.map(productionLine, ProductionLineDto.class);
-        //TODO what to do?
     }
 
     @Transactional

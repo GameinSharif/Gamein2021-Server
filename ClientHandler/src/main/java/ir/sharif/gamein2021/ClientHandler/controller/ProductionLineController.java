@@ -65,8 +65,6 @@ public class ProductionLineController {
         productionLine.setTeamId(user.getTeamId());
         productionLine.setEfficiencyLevel(0);
         productionLine.setQualityLevel(0);
-        productionLine.setActivationDate(gameCalendar.getCurrentDate().plusDays(5));
-        // TODO activation duration?
 
         try {
             ProductionLineDto createdProductionLine = productionLineService.CreateProductionLine(productionLine);

@@ -52,7 +52,7 @@ public class Enums
 
     public enum ProductionLineStatus
     {
-        ACTIVE, SCRAPPED
+        ACTIVE, SCRAPPED, IN_CONSTRUCTION
     }
 
     public enum VehicleType

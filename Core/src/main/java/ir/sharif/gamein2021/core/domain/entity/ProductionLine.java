@@ -5,6 +5,7 @@ import ir.sharif.gamein2021.core.util.Enums;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -40,4 +41,7 @@ public class ProductionLine {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private Enums.ProductionLineStatus status;
+
+    @Column(name = "activation_date", nullable = false)
+    private LocalDate activationDate;
 }

@@ -10,6 +10,7 @@ import ir.sharif.gamein2021.core.domain.dto.UserDto;
 import ir.sharif.gamein2021.core.domain.entity.Team;
 import ir.sharif.gamein2021.core.exception.InvalidProductionLineIdException;
 import ir.sharif.gamein2021.core.exception.InvalidProductionLineTemplateIdException;
+import ir.sharif.gamein2021.core.manager.GameCalendar;
 import ir.sharif.gamein2021.core.service.ProductionLineService;
 import ir.sharif.gamein2021.core.service.TeamService;
 import ir.sharif.gamein2021.core.service.UserService;
@@ -27,14 +28,19 @@ public class ProductionLineController {
     private final UserService userService;
     private final TeamService teamService;
     private final ProductionLineService productionLineService;
+    private final GameCalendar gameCalendar;
 
     private final Gson gson = new Gson();
 
-    public ProductionLineController(LocalPushMessageManager pushMessageManager, TeamService teamService, UserService userService, ProductionLineService productionLineService) {
+    public ProductionLineController(LocalPushMessageManager pushMessageManager,
+                                    TeamService teamService, UserService userService,
+                                    ProductionLineService productionLineService,
+                                    GameCalendar gameCalendar) {
         this.pushMessageManager = pushMessageManager;
         this.userService = userService;
         this.teamService = teamService;
         this.productionLineService = productionLineService;
+        this.gameCalendar = gameCalendar;
     }
 
     public void GetProductionLines(ProcessedRequest processedRequest, GetProductionLinesRequest request) {
@@ -54,11 +60,13 @@ public class ProductionLineController {
 
         ProductionLineDto productionLine = new ProductionLineDto();
 
-        productionLine.setStatus(Enums.ProductionLineStatus.ACTIVE);
+        productionLine.setStatus(Enums.ProductionLineStatus.IN_CONSTRUCTION);
         productionLine.setProductionLineTemplateId(request.getProductionLineTemplateId());
         productionLine.setTeamId(user.getTeamId());
         productionLine.setEfficiencyLevel(0);
         productionLine.setQualityLevel(0);
+        productionLine.setActivationDate(gameCalendar.getCurrentDate().plusDays(5));
+        // TODO activation duration?
 
         try {
             ProductionLineDto createdProductionLine = productionLineService.CreateProductionLine(productionLine);

@@ -3,7 +3,6 @@ package ir.sharif.gamein2021.core.service;
 import ir.sharif.gamein2021.core.dao.ProductionLineProductRepository;
 import ir.sharif.gamein2021.core.dao.ProductionLineRepository;
 import ir.sharif.gamein2021.core.domain.dto.ProductionLineDto;
-import ir.sharif.gamein2021.core.domain.dto.ProductionLineProductDto;
 import ir.sharif.gamein2021.core.domain.entity.ProductionLine;
 import ir.sharif.gamein2021.core.domain.entity.ProductionLineProduct;
 import ir.sharif.gamein2021.core.domain.entity.Team;
@@ -180,5 +179,15 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
         }
 
         return productionLine;
+    }
+
+    @Transactional
+    public void enableProductionLines() {
+        List<ProductionLine> productionLines = productionLineRepository.findProductionLinesByStatusEqualsAndActivationDateLessThanEqual(Enums.ProductionLineStatus.IN_CONSTRUCTION, gameCalendar.getCurrentDate());
+        for (ProductionLine productionLine: productionLines) {
+            productionLine.setStatus(Enums.ProductionLineStatus.ACTIVE);
+        }
+
+        productionLineRepository.saveAllAndFlush(productionLines);
     }
 }

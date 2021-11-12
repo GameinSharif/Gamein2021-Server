@@ -19,7 +19,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (13,30,11,0,9,1,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (14,30,12,0,10,1,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (15,30,13,0,9,1,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (16,5,4,0,10,1,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (16,5,7,0,10,1,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (17,4,1,0,11,1,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (18,4,1,0,12,1,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (19,30,11,0,13,1,1);
@@ -75,7 +75,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (69,30,11,0,9,2,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (70,30,12,0,10,2,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (71,30,13,0,9,2,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (72,5,4,0,10,2,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (72,5,7,0,10,2,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (73,4,1,0,11,2,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (74,4,1,0,12,2,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (75,30,11,0,13,2,1);
@@ -131,7 +131,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (125,30,11,0,9,3,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (126,30,12,0,10,3,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (127,30,13,0,9,3,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (128,5,4,0,10,3,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (128,5,7,0,10,3,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (129,4,1,0,11,3,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (130,4,1,0,12,3,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (131,30,11,0,13,3,1);
@@ -187,7 +187,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (181,30,11,0,9,4,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (182,30,12,0,10,4,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (183,30,13,0,9,4,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (184,5,4,0,10,4,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (184,5,7,0,10,4,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (185,4,1,0,11,4,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (186,4,1,0,12,4,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (187,30,11,0,13,4,1);
@@ -243,7 +243,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (237,30,11,0,9,5,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (238,30,12,0,10,5,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (239,30,13,0,9,5,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (240,5,4,0,10,5,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (240,5,7,0,10,5,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (241,4,1,0,11,5,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (242,4,1,0,12,5,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (243,30,11,0,13,5,1);
@@ -299,7 +299,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (293,NULL,11,0,9,6,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (294,NULL,12,0,10,6,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (295,NULL,13,0,9,6,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (296,NULL,4,0,10,6,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (296,NULL,7,0,10,6,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (297,NULL,1,0,11,6,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (298,NULL,1,0,12,6,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (299,NULL,11,0,13,6,1);
@@ -355,7 +355,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (349,NULL,11,0,9,7,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (350,NULL,12,0,10,7,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (351,NULL,13,0,9,7,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (352,NULL,4,0,10,7,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (352,NULL,7,0,10,7,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (353,NULL,1,0,11,7,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (354,NULL,1,0,12,7,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (355,NULL,11,0,13,7,1);
@@ -411,7 +411,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (405,NULL,11,0,9,8,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (406,NULL,12,0,10,8,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (407,NULL,13,0,9,8,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (408,NULL,4,0,10,8,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (408,NULL,7,0,10,8,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (409,NULL,1,0,11,8,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (410,NULL,1,0,12,8,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (411,NULL,11,0,13,8,1);
@@ -467,7 +467,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (461,NULL,11,0,9,9,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (462,NULL,12,0,10,9,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (463,NULL,13,0,9,9,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (464,NULL,4,0,10,9,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (464,NULL,7,0,10,9,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (465,NULL,1,0,11,9,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (466,NULL,1,0,12,9,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (467,NULL,11,0,13,9,1);
@@ -523,7 +523,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (517,NULL,11,0,9,10,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (518,NULL,12,0,10,10,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (519,NULL,13,0,9,10,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (520,NULL,4,0,10,10,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (520,NULL,7,0,10,10,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (521,NULL,1,0,11,10,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (522,NULL,1,0,12,10,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (523,NULL,11,0,13,10,1);
@@ -579,7 +579,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (573,NULL,11,0,9,11,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (574,NULL,12,0,10,11,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (575,NULL,13,0,9,11,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (576,NULL,4,0,10,11,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (576,NULL,7,0,10,11,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (577,NULL,1,0,11,11,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (578,NULL,1,0,12,11,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (579,NULL,11,0,13,11,1);
@@ -635,7 +635,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (629,NULL,11,0,9,12,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (630,NULL,12,0,10,12,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (631,NULL,13,0,9,12,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (632,NULL,4,0,10,12,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (632,NULL,7,0,10,12,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (633,NULL,1,0,11,12,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (634,NULL,1,0,12,12,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (635,NULL,11,0,13,12,1);
@@ -691,7 +691,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (685,NULL,11,0,9,13,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (686,NULL,12,0,10,13,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (687,NULL,13,0,9,13,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (688,NULL,4,0,10,13,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (688,NULL,7,0,10,13,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (689,NULL,1,0,11,13,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (690,NULL,1,0,12,13,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (691,NULL,11,0,13,13,1);
@@ -747,7 +747,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (741,NULL,11,0,9,14,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (742,NULL,12,0,10,14,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (743,NULL,13,0,9,14,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (744,NULL,4,0,10,14,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (744,NULL,7,0,10,14,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (745,NULL,1,0,11,14,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (746,NULL,1,0,12,14,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (747,NULL,11,0,13,14,1);
@@ -803,7 +803,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (797,NULL,11,0,9,15,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (798,NULL,12,0,10,15,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (799,NULL,13,0,9,15,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (800,NULL,4,0,10,15,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (800,NULL,7,0,10,15,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (801,NULL,1,0,11,15,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (802,NULL,1,0,12,15,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (803,NULL,11,0,13,15,1);
@@ -859,7 +859,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (853,NULL,11,0,9,16,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (854,NULL,12,0,10,16,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (855,NULL,13,0,9,16,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (856,NULL,4,0,10,16,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (856,NULL,7,0,10,16,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (857,NULL,1,0,11,16,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (858,NULL,1,0,12,16,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (859,NULL,11,0,13,16,1);
@@ -915,7 +915,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (909,NULL,11,0,9,17,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (910,NULL,12,0,10,17,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (911,NULL,13,0,9,17,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (912,NULL,4,0,10,17,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (912,NULL,7,0,10,17,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (913,NULL,1,0,11,17,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (914,NULL,1,0,12,17,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (915,NULL,11,0,13,17,1);
@@ -971,7 +971,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (965,NULL,11,0,9,18,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (966,NULL,12,0,10,18,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (967,NULL,13,0,9,18,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (968,NULL,4,0,10,18,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (968,NULL,7,0,10,18,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (969,NULL,1,0,11,18,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (970,NULL,1,0,12,18,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (971,NULL,11,0,13,18,1);
@@ -1027,7 +1027,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1021,NULL,11,0,9,19,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1022,NULL,12,0,10,19,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1023,NULL,13,0,9,19,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1024,NULL,4,0,10,19,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1024,NULL,7,0,10,19,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1025,NULL,1,0,11,19,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1026,NULL,1,0,12,19,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1027,NULL,11,0,13,19,1);
@@ -1083,7 +1083,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1077,NULL,11,0,9,20,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1078,NULL,12,0,10,20,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1079,NULL,13,0,9,20,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1080,NULL,4,0,10,20,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1080,NULL,7,0,10,20,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1081,NULL,1,0,11,20,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1082,NULL,1,0,12,20,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1083,NULL,11,0,13,20,1);
@@ -1139,7 +1139,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1133,NULL,11,0,9,21,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1134,NULL,12,0,10,21,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1135,NULL,13,0,9,21,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1136,NULL,4,0,10,21,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1136,NULL,7,0,10,21,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1137,NULL,1,0,11,21,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1138,NULL,1,0,12,21,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1139,NULL,11,0,13,21,1);
@@ -1195,7 +1195,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1189,NULL,11,0,9,22,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1190,NULL,12,0,10,22,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1191,NULL,13,0,9,22,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1192,NULL,4,0,10,22,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1192,NULL,7,0,10,22,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1193,NULL,1,0,11,22,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1194,NULL,1,0,12,22,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1195,NULL,11,0,13,22,1);
@@ -1251,7 +1251,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1245,NULL,11,0,9,23,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1246,NULL,12,0,10,23,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1247,NULL,13,0,9,23,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1248,NULL,4,0,10,23,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1248,NULL,7,0,10,23,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1249,NULL,1,0,11,23,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1250,NULL,1,0,12,23,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1251,NULL,11,0,13,23,1);
@@ -1307,7 +1307,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1301,NULL,11,0,9,24,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1302,NULL,12,0,10,24,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1303,NULL,13,0,9,24,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1304,NULL,4,0,10,24,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1304,NULL,7,0,10,24,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1305,NULL,1,0,11,24,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1306,NULL,1,0,12,24,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1307,NULL,11,0,13,24,1);
@@ -1363,7 +1363,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1357,NULL,11,0,9,25,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1358,NULL,12,0,10,25,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1359,NULL,13,0,9,25,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1360,NULL,4,0,10,25,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1360,NULL,7,0,10,25,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1361,NULL,1,0,11,25,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1362,NULL,1,0,12,25,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1363,NULL,11,0,13,25,1);
@@ -1419,7 +1419,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1413,NULL,11,0,9,26,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1414,NULL,12,0,10,26,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1415,NULL,13,0,9,26,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1416,NULL,4,0,10,26,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1416,NULL,7,0,10,26,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1417,NULL,1,0,11,26,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1418,NULL,1,0,12,26,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1419,NULL,11,0,13,26,1);
@@ -1475,7 +1475,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1469,NULL,11,0,9,27,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1470,NULL,12,0,10,27,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1471,NULL,13,0,9,27,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1472,NULL,4,0,10,27,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1472,NULL,7,0,10,27,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1473,NULL,1,0,11,27,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1474,NULL,1,0,12,27,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1475,NULL,11,0,13,27,1);
@@ -1531,7 +1531,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1525,NULL,11,0,9,28,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1526,NULL,12,0,10,28,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1527,NULL,13,0,9,28,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1528,NULL,4,0,10,28,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1528,NULL,7,0,10,28,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1529,NULL,1,0,11,28,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1530,NULL,1,0,12,28,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1531,NULL,11,0,13,28,1);
@@ -1587,7 +1587,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1581,NULL,11,0,9,29,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1582,NULL,12,0,10,29,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1583,NULL,13,0,9,29,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1584,NULL,4,0,10,29,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1584,NULL,7,0,10,29,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1585,NULL,1,0,11,29,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1586,NULL,1,0,12,29,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1587,NULL,11,0,13,29,1);
@@ -1643,7 +1643,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1637,NULL,11,0,9,30,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1638,NULL,12,0,10,30,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1639,NULL,13,0,9,30,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1640,NULL,4,0,10,30,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1640,NULL,7,0,10,30,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1641,NULL,1,0,11,30,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1642,NULL,1,0,12,30,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1643,NULL,11,0,13,30,1);
@@ -1699,7 +1699,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1693,NULL,11,0,9,31,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1694,NULL,12,0,10,31,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1695,NULL,13,0,9,31,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1696,NULL,4,0,10,31,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1696,NULL,7,0,10,31,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1697,NULL,1,0,11,31,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1698,NULL,1,0,12,31,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1699,NULL,11,0,13,31,1);
@@ -1755,7 +1755,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1749,NULL,11,0,9,32,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1750,NULL,12,0,10,32,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1751,NULL,13,0,9,32,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1752,NULL,4,0,10,32,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1752,NULL,7,0,10,32,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1753,NULL,1,0,11,32,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1754,NULL,1,0,12,32,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1755,NULL,11,0,13,32,1);
@@ -1811,7 +1811,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1805,NULL,11,0,9,33,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1806,NULL,12,0,10,33,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1807,NULL,13,0,9,33,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1808,NULL,4,0,10,33,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1808,NULL,7,0,10,33,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1809,NULL,1,0,11,33,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1810,NULL,1,0,12,33,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1811,NULL,11,0,13,33,1);
@@ -1867,7 +1867,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1861,NULL,11,0,9,34,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1862,NULL,12,0,10,34,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1863,NULL,13,0,9,34,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1864,NULL,4,0,10,34,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1864,NULL,7,0,10,34,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1865,NULL,1,0,11,34,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1866,NULL,1,0,12,34,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1867,NULL,11,0,13,34,1);
@@ -1923,7 +1923,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1917,NULL,11,0,9,35,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1918,NULL,12,0,10,35,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1919,NULL,13,0,9,35,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1920,NULL,4,0,10,35,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1920,NULL,7,0,10,35,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1921,NULL,1,0,11,35,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1922,NULL,1,0,12,35,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1923,NULL,11,0,13,35,1);
@@ -1979,7 +1979,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1973,NULL,11,0,9,36,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1974,NULL,12,0,10,36,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1975,NULL,13,0,9,36,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1976,NULL,4,0,10,36,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1976,NULL,7,0,10,36,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1977,NULL,1,0,11,36,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1978,NULL,1,0,12,36,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (1979,NULL,11,0,13,36,1);
@@ -2035,7 +2035,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2029,NULL,11,0,9,37,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2030,NULL,12,0,10,37,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2031,NULL,13,0,9,37,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2032,NULL,4,0,10,37,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2032,NULL,7,0,10,37,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2033,NULL,1,0,11,37,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2034,NULL,1,0,12,37,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2035,NULL,11,0,13,37,1);
@@ -2091,7 +2091,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2085,NULL,11,0,9,38,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2086,NULL,12,0,10,38,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2087,NULL,13,0,9,38,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2088,NULL,4,0,10,38,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2088,NULL,7,0,10,38,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2089,NULL,1,0,11,38,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2090,NULL,1,0,12,38,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2091,NULL,11,0,13,38,1);
@@ -2147,7 +2147,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2141,NULL,11,0,9,39,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2142,NULL,12,0,10,39,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2143,NULL,13,0,9,39,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2144,NULL,4,0,10,39,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2144,NULL,7,0,10,39,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2145,NULL,1,0,11,39,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2146,NULL,1,0,12,39,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2147,NULL,11,0,13,39,1);
@@ -2203,7 +2203,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2197,NULL,11,0,9,40,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2198,NULL,12,0,10,40,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2199,NULL,13,0,9,40,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2200,NULL,4,0,10,40,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2200,NULL,7,0,10,40,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2201,NULL,1,0,11,40,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2202,NULL,1,0,12,40,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2203,NULL,11,0,13,40,1);
@@ -2259,7 +2259,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2253,NULL,11,0,9,41,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2254,NULL,12,0,10,41,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2255,NULL,13,0,9,41,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2256,NULL,4,0,10,41,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2256,NULL,7,0,10,41,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2257,NULL,1,0,11,41,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2258,NULL,1,0,12,41,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2259,NULL,11,0,13,41,1);
@@ -2315,7 +2315,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2309,NULL,11,0,9,42,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2310,NULL,12,0,10,42,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2311,NULL,13,0,9,42,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2312,NULL,4,0,10,42,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2312,NULL,7,0,10,42,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2313,NULL,1,0,11,42,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2314,NULL,1,0,12,42,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2315,NULL,11,0,13,42,1);
@@ -2371,7 +2371,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2365,NULL,11,0,9,43,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2366,NULL,12,0,10,43,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2367,NULL,13,0,9,43,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2368,NULL,4,0,10,43,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2368,NULL,7,0,10,43,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2369,NULL,1,0,11,43,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2370,NULL,1,0,12,43,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2371,NULL,11,0,13,43,1);
@@ -2427,7 +2427,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2421,NULL,11,0,9,44,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2422,NULL,12,0,10,44,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2423,NULL,13,0,9,44,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2424,NULL,4,0,10,44,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2424,NULL,7,0,10,44,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2425,NULL,1,0,11,44,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2426,NULL,1,0,12,44,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2427,NULL,11,0,13,44,1);
@@ -2483,7 +2483,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2477,NULL,11,0,9,45,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2478,NULL,12,0,10,45,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2479,NULL,13,0,9,45,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2480,NULL,4,0,10,45,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2480,NULL,7,0,10,45,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2481,NULL,1,0,11,45,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2482,NULL,1,0,12,45,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2483,NULL,11,0,13,45,1);
@@ -2539,7 +2539,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2533,NULL,11,0,9,46,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2534,NULL,12,0,10,46,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2535,NULL,13,0,9,46,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2536,NULL,4,0,10,46,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2536,NULL,7,0,10,46,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2537,NULL,1,0,11,46,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2538,NULL,1,0,12,46,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2539,NULL,11,0,13,46,1);
@@ -2595,7 +2595,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2589,NULL,11,0,9,47,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2590,NULL,12,0,10,47,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2591,NULL,13,0,9,47,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2592,NULL,4,0,10,47,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2592,NULL,7,0,10,47,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2593,NULL,1,0,11,47,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2594,NULL,1,0,12,47,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2595,NULL,11,0,13,47,1);
@@ -2651,7 +2651,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2645,NULL,11,0,9,48,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2646,NULL,12,0,10,48,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2647,NULL,13,0,9,48,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2648,NULL,4,0,10,48,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2648,NULL,7,0,10,48,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2649,NULL,1,0,11,48,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2650,NULL,1,0,12,48,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2651,NULL,11,0,13,48,1);
@@ -2707,7 +2707,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2701,NULL,11,0,9,49,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2702,NULL,12,0,10,49,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2703,NULL,13,0,9,49,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2704,NULL,4,0,10,49,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2704,NULL,7,0,10,49,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2705,NULL,1,0,11,49,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2706,NULL,1,0,12,49,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2707,NULL,11,0,13,49,1);
@@ -2763,7 +2763,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2757,NULL,11,0,9,50,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2758,NULL,12,0,10,50,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2759,NULL,13,0,9,50,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2760,NULL,4,0,10,50,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2760,NULL,7,0,10,50,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2761,NULL,1,0,11,50,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2762,NULL,1,0,12,50,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2763,NULL,11,0,13,50,1);
@@ -2819,7 +2819,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2813,NULL,11,0,9,51,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2814,NULL,12,0,10,51,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2815,NULL,13,0,9,51,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2816,NULL,4,0,10,51,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2816,NULL,7,0,10,51,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2817,NULL,1,0,11,51,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2818,NULL,1,0,12,51,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2819,NULL,11,0,13,51,1);
@@ -2875,7 +2875,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2869,NULL,11,0,9,52,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2870,NULL,12,0,10,52,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2871,NULL,13,0,9,52,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2872,NULL,4,0,10,52,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2872,NULL,7,0,10,52,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2873,NULL,1,0,11,52,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2874,NULL,1,0,12,52,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2875,NULL,11,0,13,52,1);
@@ -2931,7 +2931,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2925,NULL,11,0,9,53,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2926,NULL,12,0,10,53,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2927,NULL,13,0,9,53,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2928,NULL,4,0,10,53,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2928,NULL,7,0,10,53,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2929,NULL,1,0,11,53,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2930,NULL,1,0,12,53,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2931,NULL,11,0,13,53,1);
@@ -2987,7 +2987,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2981,NULL,11,0,9,54,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2982,NULL,12,0,10,54,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2983,NULL,13,0,9,54,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2984,NULL,4,0,10,54,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2984,NULL,7,0,10,54,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2985,NULL,1,0,11,54,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2986,NULL,1,0,12,54,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (2987,NULL,11,0,13,54,1);
@@ -3043,7 +3043,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3037,NULL,11,0,9,55,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3038,NULL,12,0,10,55,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3039,NULL,13,0,9,55,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3040,NULL,4,0,10,55,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3040,NULL,7,0,10,55,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3041,NULL,1,0,11,55,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3042,NULL,1,0,12,55,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3043,NULL,11,0,13,55,1);
@@ -3099,7 +3099,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3093,NULL,11,0,9,56,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3094,NULL,12,0,10,56,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3095,NULL,13,0,9,56,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3096,NULL,4,0,10,56,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3096,NULL,7,0,10,56,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3097,NULL,1,0,11,56,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3098,NULL,1,0,12,56,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3099,NULL,11,0,13,56,1);
@@ -3155,7 +3155,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3149,NULL,11,0,9,57,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3150,NULL,12,0,10,57,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3151,NULL,13,0,9,57,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3152,NULL,4,0,10,57,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3152,NULL,7,0,10,57,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3153,NULL,1,0,11,57,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3154,NULL,1,0,12,57,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3155,NULL,11,0,13,57,1);
@@ -3211,7 +3211,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3205,NULL,11,0,9,58,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3206,NULL,12,0,10,58,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3207,NULL,13,0,9,58,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3208,NULL,4,0,10,58,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3208,NULL,7,0,10,58,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3209,NULL,1,0,11,58,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3210,NULL,1,0,12,58,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3211,NULL,11,0,13,58,1);
@@ -3267,7 +3267,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3261,NULL,11,0,9,59,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3262,NULL,12,0,10,59,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3263,NULL,13,0,9,59,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3264,NULL,4,0,10,59,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3264,NULL,7,0,10,59,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3265,NULL,1,0,11,59,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3266,NULL,1,0,12,59,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3267,NULL,11,0,13,59,1);
@@ -3323,7 +3323,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3317,NULL,11,0,9,60,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3318,NULL,12,0,10,60,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3319,NULL,13,0,9,60,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3320,NULL,4,0,10,60,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3320,NULL,7,0,10,60,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3321,NULL,1,0,11,60,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3322,NULL,1,0,12,60,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3323,NULL,11,0,13,60,1);
@@ -3379,7 +3379,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3373,NULL,11,0,9,61,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3374,NULL,12,0,10,61,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3375,NULL,13,0,9,61,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3376,NULL,4,0,10,61,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3376,NULL,7,0,10,61,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3377,NULL,1,0,11,61,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3378,NULL,1,0,12,61,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3379,NULL,11,0,13,61,1);
@@ -3435,7 +3435,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3429,NULL,11,0,9,62,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3430,NULL,12,0,10,62,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3431,NULL,13,0,9,62,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3432,NULL,4,0,10,62,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3432,NULL,7,0,10,62,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3433,NULL,1,0,11,62,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3434,NULL,1,0,12,62,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3435,NULL,11,0,13,62,1);
@@ -3491,7 +3491,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3485,NULL,11,0,9,63,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3486,NULL,12,0,10,63,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3487,NULL,13,0,9,63,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3488,NULL,4,0,10,63,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3488,NULL,7,0,10,63,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3489,NULL,1,0,11,63,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3490,NULL,1,0,12,63,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3491,NULL,11,0,13,63,1);
@@ -3547,7 +3547,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3541,NULL,11,0,9,64,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3542,NULL,12,0,10,64,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3543,NULL,13,0,9,64,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3544,NULL,4,0,10,64,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3544,NULL,7,0,10,64,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3545,NULL,1,0,11,64,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3546,NULL,1,0,12,64,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3547,NULL,11,0,13,64,1);
@@ -3603,7 +3603,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3597,NULL,11,0,9,65,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3598,NULL,12,0,10,65,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3599,NULL,13,0,9,65,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3600,NULL,4,0,10,65,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3600,NULL,7,0,10,65,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3601,NULL,1,0,11,65,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3602,NULL,1,0,12,65,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3603,NULL,11,0,13,65,1);
@@ -3659,7 +3659,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3653,NULL,11,0,9,66,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3654,NULL,12,0,10,66,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3655,NULL,13,0,9,66,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3656,NULL,4,0,10,66,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3656,NULL,7,0,10,66,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3657,NULL,1,0,11,66,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3658,NULL,1,0,12,66,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3659,NULL,11,0,13,66,1);
@@ -3715,7 +3715,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3709,NULL,11,0,9,67,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3710,NULL,12,0,10,67,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3711,NULL,13,0,9,67,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3712,NULL,4,0,10,67,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3712,NULL,7,0,10,67,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3713,NULL,1,0,11,67,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3714,NULL,1,0,12,67,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3715,NULL,11,0,13,67,1);
@@ -3771,7 +3771,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3765,NULL,11,0,9,68,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3766,NULL,12,0,10,68,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3767,NULL,13,0,9,68,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3768,NULL,4,0,10,68,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3768,NULL,7,0,10,68,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3769,NULL,1,0,11,68,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3770,NULL,1,0,12,68,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3771,NULL,11,0,13,68,1);
@@ -3827,7 +3827,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3821,NULL,11,0,9,69,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3822,NULL,12,0,10,69,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3823,NULL,13,0,9,69,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3824,NULL,4,0,10,69,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3824,NULL,7,0,10,69,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3825,NULL,1,0,11,69,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3826,NULL,1,0,12,69,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3827,NULL,11,0,13,69,1);
@@ -3883,7 +3883,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3877,NULL,11,0,9,70,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3878,NULL,12,0,10,70,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3879,NULL,13,0,9,70,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3880,NULL,4,0,10,70,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3880,NULL,7,0,10,70,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3881,NULL,1,0,11,70,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3882,NULL,1,0,12,70,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3883,NULL,11,0,13,70,1);
@@ -3939,7 +3939,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3933,NULL,11,0,9,71,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3934,NULL,12,0,10,71,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3935,NULL,13,0,9,71,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3936,NULL,4,0,10,71,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3936,NULL,7,0,10,71,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3937,NULL,1,0,11,71,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3938,NULL,1,0,12,71,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3939,NULL,11,0,13,71,1);
@@ -3995,7 +3995,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3989,NULL,11,0,9,72,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3990,NULL,12,0,10,72,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3991,NULL,13,0,9,72,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3992,NULL,4,0,10,72,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3992,NULL,7,0,10,72,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3993,NULL,1,0,11,72,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3994,NULL,1,0,12,72,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (3995,NULL,11,0,13,72,1);
@@ -4051,7 +4051,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4045,NULL,11,0,9,73,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4046,NULL,12,0,10,73,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4047,NULL,13,0,9,73,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4048,NULL,4,0,10,73,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4048,NULL,7,0,10,73,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4049,NULL,1,0,11,73,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4050,NULL,1,0,12,73,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4051,NULL,11,0,13,73,1);
@@ -4107,7 +4107,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4101,NULL,11,0,9,74,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4102,NULL,12,0,10,74,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4103,NULL,13,0,9,74,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4104,NULL,4,0,10,74,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4104,NULL,7,0,10,74,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4105,NULL,1,0,11,74,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4106,NULL,1,0,12,74,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4107,NULL,11,0,13,74,1);
@@ -4163,7 +4163,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4157,NULL,11,0,9,75,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4158,NULL,12,0,10,75,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4159,NULL,13,0,9,75,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4160,NULL,4,0,10,75,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4160,NULL,7,0,10,75,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4161,NULL,1,0,11,75,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4162,NULL,1,0,12,75,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4163,NULL,11,0,13,75,1);
@@ -4219,7 +4219,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4213,NULL,11,0,9,76,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4214,NULL,12,0,10,76,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4215,NULL,13,0,9,76,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4216,NULL,4,0,10,76,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4216,NULL,7,0,10,76,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4217,NULL,1,0,11,76,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4218,NULL,1,0,12,76,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4219,NULL,11,0,13,76,1);
@@ -4275,7 +4275,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4269,NULL,11,0,9,77,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4270,NULL,12,0,10,77,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4271,NULL,13,0,9,77,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4272,NULL,4,0,10,77,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4272,NULL,7,0,10,77,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4273,NULL,1,0,11,77,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4274,NULL,1,0,12,77,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4275,NULL,11,0,13,77,1);
@@ -4331,7 +4331,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4325,NULL,11,0,9,78,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4326,NULL,12,0,10,78,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4327,NULL,13,0,9,78,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4328,NULL,4,0,10,78,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4328,NULL,7,0,10,78,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4329,NULL,1,0,11,78,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4330,NULL,1,0,12,78,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4331,NULL,11,0,13,78,1);
@@ -4387,7 +4387,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4381,NULL,11,0,9,79,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4382,NULL,12,0,10,79,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4383,NULL,13,0,9,79,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4384,NULL,4,0,10,79,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4384,NULL,7,0,10,79,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4385,NULL,1,0,11,79,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4386,NULL,1,0,12,79,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4387,NULL,11,0,13,79,1);
@@ -4443,7 +4443,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4437,NULL,11,0,9,80,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4438,NULL,12,0,10,80,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4439,NULL,13,0,9,80,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4440,NULL,4,0,10,80,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4440,NULL,7,0,10,80,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4441,NULL,1,0,11,80,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4442,NULL,1,0,12,80,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4443,NULL,11,0,13,80,1);
@@ -4499,7 +4499,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4493,NULL,11,0,9,81,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4494,NULL,12,0,10,81,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4495,NULL,13,0,9,81,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4496,NULL,4,0,10,81,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4496,NULL,7,0,10,81,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4497,NULL,1,0,11,81,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4498,NULL,1,0,12,81,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4499,NULL,11,0,13,81,1);
@@ -4555,7 +4555,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4549,NULL,11,0,9,82,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4550,NULL,12,0,10,82,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4551,NULL,13,0,9,82,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4552,NULL,4,0,10,82,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4552,NULL,7,0,10,82,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4553,NULL,1,0,11,82,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4554,NULL,1,0,12,82,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4555,NULL,11,0,13,82,1);
@@ -4611,7 +4611,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4605,NULL,11,0,9,83,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4606,NULL,12,0,10,83,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4607,NULL,13,0,9,83,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4608,NULL,4,0,10,83,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4608,NULL,7,0,10,83,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4609,NULL,1,0,11,83,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4610,NULL,1,0,12,83,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4611,NULL,11,0,13,83,1);
@@ -4667,7 +4667,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4661,NULL,11,0,9,84,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4662,NULL,12,0,10,84,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4663,NULL,13,0,9,84,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4664,NULL,4,0,10,84,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4664,NULL,7,0,10,84,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4665,NULL,1,0,11,84,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4666,NULL,1,0,12,84,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4667,NULL,11,0,13,84,1);
@@ -4723,7 +4723,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4717,NULL,11,0,9,85,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4718,NULL,12,0,10,85,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4719,NULL,13,0,9,85,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4720,NULL,4,0,10,85,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4720,NULL,7,0,10,85,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4721,NULL,1,0,11,85,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4722,NULL,1,0,12,85,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4723,NULL,11,0,13,85,1);
@@ -4779,7 +4779,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4773,NULL,11,0,9,86,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4774,NULL,12,0,10,86,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4775,NULL,13,0,9,86,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4776,NULL,4,0,10,86,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4776,NULL,7,0,10,86,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4777,NULL,1,0,11,86,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4778,NULL,1,0,12,86,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4779,NULL,11,0,13,86,1);
@@ -4835,7 +4835,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4829,NULL,11,0,9,87,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4830,NULL,12,0,10,87,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4831,NULL,13,0,9,87,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4832,NULL,4,0,10,87,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4832,NULL,7,0,10,87,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4833,NULL,1,0,11,87,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4834,NULL,1,0,12,87,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4835,NULL,11,0,13,87,1);
@@ -4891,7 +4891,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4885,NULL,11,0,9,88,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4886,NULL,12,0,10,88,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4887,NULL,13,0,9,88,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4888,NULL,4,0,10,88,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4888,NULL,7,0,10,88,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4889,NULL,1,0,11,88,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4890,NULL,1,0,12,88,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4891,NULL,11,0,13,88,1);
@@ -4947,7 +4947,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4941,NULL,11,0,9,89,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4942,NULL,12,0,10,89,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4943,NULL,13,0,9,89,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4944,NULL,4,0,10,89,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4944,NULL,7,0,10,89,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4945,NULL,1,0,11,89,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4946,NULL,1,0,12,89,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4947,NULL,11,0,13,89,1);
@@ -5003,7 +5003,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4997,NULL,11,0,9,90,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4998,NULL,12,0,10,90,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (4999,NULL,13,0,9,90,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5000,NULL,4,0,10,90,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5000,NULL,7,0,10,90,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5001,NULL,1,0,11,90,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5002,NULL,1,0,12,90,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5003,NULL,11,0,13,90,1);
@@ -5059,7 +5059,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5053,NULL,11,0,9,91,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5054,NULL,12,0,10,91,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5055,NULL,13,0,9,91,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5056,NULL,4,0,10,91,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5056,NULL,7,0,10,91,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5057,NULL,1,0,11,91,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5058,NULL,1,0,12,91,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5059,NULL,11,0,13,91,1);
@@ -5115,7 +5115,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5109,NULL,11,0,9,92,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5110,NULL,12,0,10,92,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5111,NULL,13,0,9,92,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5112,NULL,4,0,10,92,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5112,NULL,7,0,10,92,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5113,NULL,1,0,11,92,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5114,NULL,1,0,12,92,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5115,NULL,11,0,13,92,1);
@@ -5171,7 +5171,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5165,NULL,11,0,9,93,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5166,NULL,12,0,10,93,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5167,NULL,13,0,9,93,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5168,NULL,4,0,10,93,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5168,NULL,7,0,10,93,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5169,NULL,1,0,11,93,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5170,NULL,1,0,12,93,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5171,NULL,11,0,13,93,1);
@@ -5227,7 +5227,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5221,NULL,11,0,9,94,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5222,NULL,12,0,10,94,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5223,NULL,13,0,9,94,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5224,NULL,4,0,10,94,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5224,NULL,7,0,10,94,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5225,NULL,1,0,11,94,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5226,NULL,1,0,12,94,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5227,NULL,11,0,13,94,1);
@@ -5283,7 +5283,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5277,NULL,11,0,9,95,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5278,NULL,12,0,10,95,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5279,NULL,13,0,9,95,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5280,NULL,4,0,10,95,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5280,NULL,7,0,10,95,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5281,NULL,1,0,11,95,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5282,NULL,1,0,12,95,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5283,NULL,11,0,13,95,1);
@@ -5339,7 +5339,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5333,NULL,11,0,9,96,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5334,NULL,12,0,10,96,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5335,NULL,13,0,9,96,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5336,NULL,4,0,10,96,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5336,NULL,7,0,10,96,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5337,NULL,1,0,11,96,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5338,NULL,1,0,12,96,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5339,NULL,11,0,13,96,1);
@@ -5395,7 +5395,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5389,NULL,11,0,9,97,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5390,NULL,12,0,10,97,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5391,NULL,13,0,9,97,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5392,NULL,4,0,10,97,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5392,NULL,7,0,10,97,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5393,NULL,1,0,11,97,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5394,NULL,1,0,12,97,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5395,NULL,11,0,13,97,1);
@@ -5451,7 +5451,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5445,NULL,11,0,9,98,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5446,NULL,12,0,10,98,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5447,NULL,13,0,9,98,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5448,NULL,4,0,10,98,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5448,NULL,7,0,10,98,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5449,NULL,1,0,11,98,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5450,NULL,1,0,12,98,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5451,NULL,11,0,13,98,1);
@@ -5507,7 +5507,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5501,NULL,11,0,9,99,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5502,NULL,12,0,10,99,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5503,NULL,13,0,9,99,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5504,NULL,4,0,10,99,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5504,NULL,7,0,10,99,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5505,NULL,1,0,11,99,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5506,NULL,1,0,12,99,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5507,NULL,11,0,13,99,1);
@@ -5563,7 +5563,7 @@ INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5557,NULL,11,0,9,100,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5558,NULL,12,0,10,100,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5559,NULL,13,0,9,100,1);
-INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5560,NULL,4,0,10,100,1);
+INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5560,NULL,7,0,10,100,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5561,NULL,1,0,11,100,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5562,NULL,1,0,12,100,1);
 INSERT INTO gamein_test.week_supply (`id`,`price`,`product_id`,`sales`,`supplier_id`,`week`,`coefficient`) VALUES (5563,NULL,11,0,13,100,1);

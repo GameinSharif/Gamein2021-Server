@@ -11,7 +11,7 @@
     "id": 2,
     "name": "supplier-2",
     "country": "Germany",
-    "materials": [11, 12, 13, 14, 15, 16, 17, 19, 20],
+    "materials": [11, 12, 13, 15, 16],
     "latitude": 47.63578359,
     "longitude": 10.28320313
   },
@@ -19,7 +19,7 @@
     "id": 3,
     "name": "supplier-3",
     "country": "Germany",
-    "materials": [11, 12, 13, 14, 15, 16, 17, 19, 20],
+    "materials": [11, 12, 13, 15, 16],
     "latitude": 53.80065083,
     "longitude":13.09570313
 
@@ -36,7 +36,7 @@
     "id": 5,
     "name": "supplier-5",
     "country": "Germany",
-    "materials": [5, 6, 18],
+    "materials": [5, 6, 14, 27],
     "latitude": 53.40953185,
     "longitude":7.646484375
   },
@@ -44,7 +44,7 @@
     "id": 6,
     "name": "supplier-6",
     "country": "France",
-    "materials": [5, 6, 18],
+    "materials": [5, 6, 14, 27],
     "latitude": 44.49650533,
     "longitude":1.23046875
   },
@@ -68,7 +68,7 @@
     "id": 9,
     "name": "supplier-9",
     "country": "France",
-    "materials": [11, 12, 13, 14, 15, 16, 17, 19, 20],
+    "materials": [11, 12, 13, 15, 16],
     "latitude": 46.98025236,
     "longitude":1.0546875
   },
@@ -100,7 +100,7 @@
     "id": 13,
     "name": "supplier-13",
     "country": "UnitedKingdom",
-    "materials": [11, 12, 13, 14, 15, 16, 17, 19, 20],
+    "materials": [11, 12, 13, 15, 16],
     "latitude": 52.10650519,
     "longitude":0.483398438
   },
@@ -108,7 +108,7 @@
     "id": 14,
     "name": "supplier-14",
     "country": "France",
-    "materials": [5, 6, 18],
+    "materials": [5, 6, 14, 27],
     "latitude": 48.95136647,
     "longitude":5.537109375
   }

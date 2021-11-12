@@ -38,4 +38,6 @@ public class GameConstants {
     public static void addWeakNumber(){
         weakNumber ++;
     }
+
+    public static boolean IsGameStarted = false;
 }

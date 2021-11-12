@@ -31,8 +31,17 @@ public class DailySchedule {
         this.productionLineService = productionLineService;
     }
 
+    @Scheduled(cron = "0 58 19 12 11 ?")
+    public void startGame(){
+        GameConstants.IsGameStarted = true;
+    }
+
     @Scheduled(fixedRateString = "${dayLengthMilliSecond}")
     public void scheduledTask() {
+        if (!GameConstants.IsGameStarted) {
+            return;
+        }
+
         try {
             doDailyTasks();
 

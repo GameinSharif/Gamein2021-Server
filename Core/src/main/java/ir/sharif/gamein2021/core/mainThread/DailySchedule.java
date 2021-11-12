@@ -1,10 +1,7 @@
 package ir.sharif.gamein2021.core.mainThread;
 
 import ir.sharif.gamein2021.core.domain.dto.WeekDemandDto;
-import ir.sharif.gamein2021.core.manager.ContractManager;
-import ir.sharif.gamein2021.core.manager.DemandAndSupplyManager;
-import ir.sharif.gamein2021.core.manager.GameCalendar;
-import ir.sharif.gamein2021.core.manager.TransportManager;
+import ir.sharif.gamein2021.core.manager.*;
 import ir.sharif.gamein2021.core.response.GetCurrentWeekDemandsResponse;
 import ir.sharif.gamein2021.core.service.ProductionLineProductService;
 import ir.sharif.gamein2021.core.util.GameConstants;
@@ -26,10 +23,14 @@ public class DailySchedule
     private final TransportManager transportManager;
     private final ContractManager contractManager;
     private final DemandAndSupplyManager demandAndSupplyManager;
+    private final GameDateManager gameDateManager;
 
     @Scheduled(fixedRateString = "${dayLengthMilliSecond}")
     public void scheduledTask()
     {
+        System.out.println(gameCalendar.getCurrentDate());
+        gameCalendar.increaseOneDay();
+
         doDailyTasks();
 
         switch (gameCalendar.getCurrentDate().getDayOfWeek())
@@ -43,31 +44,26 @@ public class DailySchedule
             case THURSDAY:
                 break;
             case FRIDAY:
-                doWeeklyTasks();
                 break;
             case SATURDAY:
+                doWeeklyTasks();
                 break;
             case SUNDAY:
                 break;
         }
-
-//        System.out.println("daily schedule");
-        System.out.println(gameCalendar.getCurrentDate());
-        gameCalendar.increaseOneDay();
     }
 
     private void doDailyTasks()
     {
+        gameDateManager.SendGameDateToAllUsers();
         productService.finishProductCreation();
         transportManager.updateTransports();
         contractManager.updateContracts();
-
     }
 
     private void doWeeklyTasks()
     {
         contractManager.updateGameinCustomerContracts();
-        GameConstants.addWeakNumber();
         demandAndSupplyManager.SendCurrentWeekSupplyAndDemandsToAllUsers();
     }
 }

@@ -48,7 +48,7 @@ public class ContractManager
             if (!contractSupplierDto.isTerminated())
             {
                 try {
-                    WeekSupplyDto weekSupplyDto = weekSupplyService.findSpecificWeekSupply(contractSupplierDto.getSupplierId(), contractSupplierDto.getMaterialId(), GameConstants.getWeakNumber());
+                    WeekSupplyDto weekSupplyDto = weekSupplyService.findSpecificWeekSupply(contractSupplierDto.getSupplierId(), contractSupplierDto.getMaterialId(), gameCalendar.getWeek());
                     Float price = weekSupplyDto.getPrice();
                     for (ContractSupplierDetailDto contractSupplierDetailDto : contractSupplierService.getContractSupplierDetailDtos(contractSupplierDto))
                     {
@@ -75,7 +75,7 @@ public class ContractManager
 
     public void buyFromContractsWithGameinCustomers(LocalDate today)
     {
-        List<WeekDemandDto> weekDemands = weekDemandService.findByWeek(GameConstants.getWeakNumber());
+        List<WeekDemandDto> weekDemands = weekDemandService.findByWeek(gameCalendar.getWeek());
         List<ContractDetailDto> contractDetailDtos = contractDetailService.findByDate(today);
 
         for (WeekDemandDto weekDemandDto : weekDemands)

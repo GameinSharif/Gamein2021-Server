@@ -4,6 +4,7 @@ import ir.sharif.gamein2021.core.dao.ProductionLineProductRepository;
 import ir.sharif.gamein2021.core.dao.ProductionLineRepository;
 import ir.sharif.gamein2021.core.dao.TeamRepository;
 import ir.sharif.gamein2021.core.domain.dto.ProductionLineDto;
+import ir.sharif.gamein2021.core.domain.dto.StorageProductDto;
 import ir.sharif.gamein2021.core.domain.entity.ProductionLine;
 import ir.sharif.gamein2021.core.domain.entity.ProductionLineProduct;
 import ir.sharif.gamein2021.core.domain.entity.Team;
@@ -15,6 +16,8 @@ import ir.sharif.gamein2021.core.manager.GameCalendar;
 import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
 import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
 import ir.sharif.gamein2021.core.util.Enums;
+import ir.sharif.gamein2021.core.util.models.Product;
+import ir.sharif.gamein2021.core.util.models.ProductIngredient;
 import ir.sharif.gamein2021.core.util.models.ProductionLineTemplate;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -31,13 +34,16 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
     private final ModelMapper modelMapper;
     private final GameCalendar gameCalendar;
     private final TeamRepository teamRepository;
+    private final StorageService storageService;
 
     public ProductionLineService(ProductionLineRepository productionLineRepository,
                                  ProductionLineProductRepository productRepository,
                                  ModelMapper modelMapper,
                                  GameCalendar gameCalendar,
-                                 TeamRepository teamRepository) {
+                                 TeamRepository teamRepository,
+                                 StorageService storageService) {
         setRepository(productionLineRepository);
+        this.storageService = storageService;
         this.teamRepository = teamRepository;
         this.gameCalendar = gameCalendar;
         this.productRepository = productRepository;
@@ -117,6 +123,25 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
 
         if (inProductionProduct != null) {
             throw new InvalidProductionLineIdException("ProductionLine is busy now.");
+        }
+
+        Product productTemplate = ReadJsonFilesManager.ProductHashMap.getOrDefault(productId, null);
+        if (productTemplate == null) {
+            throw new InvalidProductionLineIdException("Invalid operation. No Product exists with specified product id.");
+        }
+        if (productTemplate.getProductionLineTemplateId() != productionLine.getProductionLineTemplateId()) {
+            throw new InvalidProductionLineIdException("Selected productLine is not able to create selected product");
+        }
+
+        for (ProductIngredient productIngredient : productTemplate.getIngredientsPerUnit()) {
+            StorageProductDto storageDto = storageService.findProductStorageByIdNull(team.getFactoryId(), productIngredient.getProductId());
+            if (storageDto == null || storageDto.getAmount() < amount * productIngredient.getAmount()) {
+                throw new InvalidProductionLineIdException("Production requirements are not available in storage.");
+            }
+        }
+
+        for (ProductIngredient productIngredient : productTemplate.getIngredientsPerUnit()) {
+            storageService.deleteProducts(team.getFactoryId(), false, productId, amount * productIngredient.getAmount());
         }
 
         float newCredit = team.getCredit() - productLineTemplate.getSetupCost() - amount * productLineTemplate.getProductionCostPerOneProduct();

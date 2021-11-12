@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 @Component
 public class ReadJsonFilesManager {
     public static Product[] Products;
+    public static HashMap<Integer, Product> ProductHashMap = new HashMap<>();
     public static Vehicle[] Vehicles;
     public static Factory[] Factories;
     public static Supplier[] Suppliers;
@@ -38,6 +39,9 @@ public class ReadJsonFilesManager {
 
             Resource productsJsonFile = new ClassPathResource("JsonFiles/Products.json");
             Products = objectMapper.readValue(productsJsonFile.getInputStream(), Product[].class);
+            for (Product product: Products){
+                ProductHashMap.put(product.getId(), product);
+            }
 
             Resource vehiclesJsonFile = new ClassPathResource("JsonFiles/Vehicles.json");
             Vehicles = objectMapper.readValue(vehiclesJsonFile.getInputStream(), Vehicle[].class);

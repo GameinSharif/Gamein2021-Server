@@ -39,5 +39,5 @@ public class GameConstants {
         weakNumber ++;
     }
 
-    public static boolean IsGameStarted = false;
+    public static boolean IsGameStarted = true;
 }

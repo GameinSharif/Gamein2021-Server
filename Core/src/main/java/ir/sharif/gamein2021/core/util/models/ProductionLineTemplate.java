@@ -13,6 +13,7 @@ public class ProductionLineTemplate {
     private int id;
     private String name;
     private int constructionCost;
+    private int constructRequiredDays;
     private int scrapPrice;
     private int batchSize;
     private int dailyProductionRate;

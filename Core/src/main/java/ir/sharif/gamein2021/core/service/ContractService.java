@@ -6,6 +6,7 @@ import ir.sharif.gamein2021.core.domain.dto.ContractDto;
 import ir.sharif.gamein2021.core.domain.entity.Contract;
 import ir.sharif.gamein2021.core.domain.entity.Team;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,7 @@ public class ContractService extends AbstractCrudService<ContractDto, Contract, 
     private final ContractRepository contractRepository;
     private final ModelMapper modelMapper;
 
+    @Autowired
     public ContractService(ContractRepository contractRepository, ModelMapper modelMapper)
     {
         this.contractRepository = contractRepository;

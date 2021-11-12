@@ -22,6 +22,7 @@ public class ContractManager
     private final ContractSupplierDetailService contractSupplierDetailService;
     private final ContractService contractService;
     private final ContractDetailService contractDetailService;
+    private final TeamService teamService;
     private final WeekSupplyService weekSupplyService;
     private final WeekDemandService weekDemandService;
     private final TransportManager transportManager;
@@ -95,7 +96,7 @@ public class ContractManager
                 }
             }
 
-            FinalizeTheContracts(weekDemandDto, contractDetailDtos);
+            FinalizeTheContracts(weekDemandDto, thisDemandContractDetails);
             contractDetailDtos.removeAll(thisDemandContractDetails);
         }
     }
@@ -111,24 +112,24 @@ public class ContractManager
             //TODO check player has those amount of product
             //TODO if not calculate lost sale penalty and decrease from player money
 
+            contractDetailDto.setBoughtAmount(boughtAmount);
+            contractDetailService.saveOrUpdate(contractDetailDto);
+
             transportManager.createTransport(
                     Enums.VehicleType.TRUCK,
                     Enums.TransportNodeType.FACTORY,
-                    contractDto.getTeamId(),
+                    teamService.findTeamById(contractDto.getTeamId()).getFactoryId(),
                     Enums.TransportNodeType.GAMEIN_CUSTOMER,
                     contractDto.getGameinCustomerId(),
                     gameCalendar.getCurrentDate(),
                     true,
                     contractDto.getProductId(),
                     boughtAmount);
-
-            contractDetailDto.setBoughtAmount(boughtAmount);
-            contractDetailService.saveOrUpdate(contractDetailDto);
         }
     }
 
     private int calculateBoughtAmount()
     {
-        return 1;
+        return 100;
     }
 }

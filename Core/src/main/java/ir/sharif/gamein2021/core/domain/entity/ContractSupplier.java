@@ -40,7 +40,7 @@ public class ContractSupplier implements BaseEntity
     private Integer terminatePenalty;
 
     @Column(name = "is_terminated", nullable = false, columnDefinition = "TINYINT(1)")
-    private Boolean isTerminated;
+    private boolean isTerminated;
 
     @Override
     public Integer getId() {

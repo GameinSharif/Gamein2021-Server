@@ -19,7 +19,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class ReadJsonFilesManager {
@@ -28,6 +30,7 @@ public class ReadJsonFilesManager {
     public static Factory[] Factories;
     public static Supplier[] Suppliers;
     public static ProductionLineTemplate[] ProductionLineTemplates;
+    public static HashMap<Integer, ProductionLineTemplate> ProductionLineTemplateHashMap = new HashMap<>();
 
     public static void ReadJsonFiles() {
         try {
@@ -45,6 +48,9 @@ public class ReadJsonFilesManager {
 
             Resource productionLineTemplateJsonFile = new ClassPathResource("JsonFiles/ProductionLineTemplates.json");
             ProductionLineTemplates = objectMapper.readValue(productionLineTemplateJsonFile.getInputStream(), ProductionLineTemplate[].class);
+            for (ProductionLineTemplate productionLineTemplate: ProductionLineTemplates){
+                ProductionLineTemplateHashMap.put(productionLineTemplate.getId(), productionLineTemplate);
+            }
 
             Resource suppliersJsonFile = new ClassPathResource("JsonFiles/Suppliers.json");
             Suppliers = objectMapper.readValue(suppliersJsonFile.getInputStream(), Supplier[].class);

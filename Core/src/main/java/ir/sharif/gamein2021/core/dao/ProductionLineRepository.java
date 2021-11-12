@@ -12,4 +12,5 @@ public interface ProductionLineRepository extends JpaRepository<ProductionLine, 
     List<ProductionLine> findProductionLinesByTeam(Team team);
     List<ProductionLine> findProductionLinesByTeamAndStatus(Team team, Enums.ProductionLineStatus productionLineStatus);
     List<ProductionLine> findProductionLinesByStatusEqualsAndActivationDateLessThanEqual(Enums.ProductionLineStatus status, LocalDate activationDate);
+    List<ProductionLine> findProductionLinesByStatusEquals(Enums.ProductionLineStatus status);
 }

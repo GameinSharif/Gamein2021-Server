@@ -33,34 +33,35 @@ public class DailySchedule {
 
     @Scheduled(fixedRateString = "${dayLengthMilliSecond}")
     public void scheduledTask() {
-        doDailyTasks();
+        try {
+            doDailyTasks();
 
-        switch (gameCalendar.getCurrentDate().getDayOfWeek()) {
-            case MONDAY:
-                break;
-            case TUESDAY:
-                break;
-            case WEDNESDAY:
-                break;
-            case THURSDAY:
-                break;
-            case FRIDAY:
-                break;
-            case SATURDAY:
-                break;
-            case SUNDAY:
-                doWeeklyTasks();
-                break;
+            switch (gameCalendar.getCurrentDate().getDayOfWeek()) {
+                case MONDAY:
+                    break;
+                case TUESDAY:
+                    break;
+                case WEDNESDAY:
+                    break;
+                case THURSDAY:
+                    break;
+                case FRIDAY:
+                    break;
+                case SATURDAY:
+                    break;
+                case SUNDAY:
+                    doWeeklyTasks();
+                    break;
+            }
+        } finally {
+            System.out.println(gameCalendar.getCurrentDate());
+            gameCalendar.increaseOneDay();
         }
-
-//        System.out.println("daily schedule");
-        System.out.println(gameCalendar.getCurrentDate());
-        gameCalendar.increaseOneDay();
     }
 
     private void doDailyTasks() {
         productionLineService.enableProductionLines();
-        productService.finishProductCreation();
+        productService.finishProductCreation(gameCalendar.getCurrentDate());
         transportManager.updateTransports();
         contractManager.updateContracts();
 
@@ -68,5 +69,6 @@ public class DailySchedule {
 
     private void doWeeklyTasks() {
         GameConstants.addWeakNumber();
+        productionLineService.decreaseWeeklyMaintenanceCost();
     }
 }

@@ -2,6 +2,7 @@ package ir.sharif.gamein2021.core.service;
 
 import ir.sharif.gamein2021.core.dao.ProductionLineProductRepository;
 import ir.sharif.gamein2021.core.dao.ProductionLineRepository;
+import ir.sharif.gamein2021.core.dao.TeamRepository;
 import ir.sharif.gamein2021.core.domain.dto.ProductionLineDto;
 import ir.sharif.gamein2021.core.domain.entity.ProductionLine;
 import ir.sharif.gamein2021.core.domain.entity.ProductionLineProduct;
@@ -14,16 +15,13 @@ import ir.sharif.gamein2021.core.manager.GameCalendar;
 import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
 import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
 import ir.sharif.gamein2021.core.util.Enums;
-import ir.sharif.gamein2021.core.util.models.Product;
 import ir.sharif.gamein2021.core.util.models.ProductionLineTemplate;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,12 +30,16 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
     private final ProductionLineProductRepository productRepository;
     private final ModelMapper modelMapper;
     private final GameCalendar gameCalendar;
+    private final TeamRepository teamRepository;
 
     public ProductionLineService(ProductionLineRepository productionLineRepository,
                                  ProductionLineProductRepository productRepository,
-                                 ModelMapper modelMapper, GameCalendar gameCalendar) {
-        this.gameCalendar = gameCalendar;
+                                 ModelMapper modelMapper,
+                                 GameCalendar gameCalendar,
+                                 TeamRepository teamRepository) {
         setRepository(productionLineRepository);
+        this.teamRepository = teamRepository;
+        this.gameCalendar = gameCalendar;
         this.productRepository = productRepository;
         this.productionLineRepository = productionLineRepository;
         this.modelMapper = modelMapper;
@@ -53,12 +55,20 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
 
     @Transactional
     public ProductionLineDto CreateProductionLine(ProductionLineDto productionLine) throws InvalidProductionLineTemplateIdException {
-        Set<Integer> productLineTemplateIds = Arrays.stream(ReadJsonFilesManager.ProductionLineTemplates).map(ProductionLineTemplate::getId).collect(Collectors.toSet());
+        ProductionLineTemplate template = ReadJsonFilesManager.ProductionLineTemplateHashMap.getOrDefault(productionLine.getProductionLineTemplateId(), null);
 
-        if (!productLineTemplateIds.contains(productionLine.getProductionLineTemplateId())) {
+        if (template == null) {
             throw new InvalidProductionLineTemplateIdException("Invalid productionLineTemplateId used for creating productionLine");
         }
 
+        Team team = teamRepository.getById(productionLine.getTeamId());
+        if (team.getCredit() - template.getConstructionCost() < 0) {
+            throw new InvalidProductionLineTemplateIdException("Invalid Operation. You don't have enough money to construct production line.");
+        }
+
+        team.setCredit(team.getCredit() - template.getConstructionCost());
+
+        teamRepository.saveAndFlush(team);
         return saveOrUpdate(productionLine);
     }
 
@@ -74,9 +84,11 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
             throw new InvalidProductionLineIdException("Production line is busy now and cannot be scrapped");
         }
 
-        // TODO what to with scarp price. better to use e dictionary for saving productionLineTemplates.
-        ProductionLineTemplate template = Arrays.stream(ReadJsonFilesManager.ProductionLineTemplates).filter(x -> x.getId() == productionLine.getProductionLineTemplateId()).findFirst().orElse(null);
+        ProductionLineTemplate template = ReadJsonFilesManager.ProductionLineTemplateHashMap.getOrDefault(productionLine.getProductionLineTemplateId(), null);
+        Team teamObject = teamRepository.getById(team.getId());
         int scrapPrice = template.getScrapPrice();
+        teamObject.setCredit(teamObject.getCredit() + scrapPrice);
+        teamRepository.saveAndFlush(teamObject);
 
         productionLine.setStatus(Enums.ProductionLineStatus.SCRAPPED);
         ProductionLine savedProductionLine = productionLineRepository.saveAndFlush(productionLine);
@@ -91,12 +103,9 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
             throw new InvalidProductionLineIdException("Invalid Operation. Tried to start a production on a deactivated production line.");
         }
 
-        Product productTemplate = Arrays.stream(ReadJsonFilesManager.Products)
-                .filter(x -> x.getId() == productId &&
-                        x.getProductionLineTemplateId() == productionLine.getProductionLineTemplateId())
-                .findFirst().orElse(null);
+        ProductionLineTemplate productLineTemplate = ReadJsonFilesManager.ProductionLineTemplateHashMap.getOrDefault(productionLine.getProductionLineTemplateId(), null);
 
-        if (productTemplate == null) {
+        if (productLineTemplate == null) {
             throw new InvalidProductionLineIdException("Selected productLine is not able to create selected product");
         }
 
@@ -110,11 +119,14 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
             throw new InvalidProductionLineIdException("ProductionLine is busy now.");
         }
 
-        ProductionLineTemplate productionLineTemplate = Arrays.stream(ReadJsonFilesManager.ProductionLineTemplates)
-                .filter(x -> x.getId() == productionLine.getProductionLineTemplateId())
-                .findFirst().orElse(null);
+        float newCredit = team.getCredit() - productLineTemplate.getSetupCost() - amount * productLineTemplate.getProductionCostPerOneProduct();
+        if (newCredit < 0) {
+            throw new InvalidProductionLineIdException("Invalid Operation. You don't have enough money to produce new production.");
+        }
+        team.setCredit(newCredit);
+        teamRepository.saveAndFlush(team);
 
-        int productionDuration = (amount / productionLineTemplate.getDailyProductionRate()) + 1;
+        int productionDuration = (amount / productLineTemplate.getDailyProductionRate()) + 1;
 
         ProductionLineProduct newProduct = new ProductionLineProduct();
         newProduct.setProductId(productId);
@@ -138,11 +150,18 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
         }
 
         Integer currentQualityLevel = productionLine.getQualityLevel();
-        ProductionLineTemplate template = Arrays.stream(ReadJsonFilesManager.ProductionLineTemplates).filter(x -> x.getId() == productionLine.getProductionLineTemplateId()).findFirst().orElse(null);
+        ProductionLineTemplate template = ReadJsonFilesManager.ProductionLineTemplateHashMap.getOrDefault(productionLine.getProductionLineTemplateId(), null);
 
         if (currentQualityLevel + 1 >= template.getQualityLevels().size()) {
             throw new ProductionLineMaximumQualityLevelReachedException("Maximum quality level reached. Cannot upgrade quality level.");
         }
+
+        float newCredit = team.getCredit() - template.getQualityLevels().get(currentQualityLevel + 1).getUpgradeCost();
+        if (newCredit < 0) {
+            throw new InvalidProductionLineIdException("Invalid Operation. You don't have enough money to upgrade quality level.");
+        }
+        team.setCredit(newCredit);
+        teamRepository.saveAndFlush(team);
 
         productionLine.setQualityLevel(currentQualityLevel + 1);
         ProductionLine savedProductionLine = productionLineRepository.saveAndFlush(productionLine);
@@ -158,11 +177,18 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
         }
 
         Integer currentEfficiencyLevel = productionLine.getEfficiencyLevel();
-        ProductionLineTemplate template = Arrays.stream(ReadJsonFilesManager.ProductionLineTemplates).filter(x -> x.getId() == productionLine.getProductionLineTemplateId()).findFirst().orElse(null);
+        ProductionLineTemplate template = ReadJsonFilesManager.ProductionLineTemplateHashMap.getOrDefault(productionLine.getProductionLineTemplateId(), null);
 
         if (currentEfficiencyLevel + 1 >= template.getEfficiencyLevels().size()) {
             throw new ProductionLineMaximumEfficiencyLevelReachedException("Maximum efficiency level reached. Cannot upgrade efficiency level.");
         }
+
+        float newCredit = team.getCredit() - template.getEfficiencyLevels().get(currentEfficiencyLevel + 1).getUpgradeCost();
+        if (newCredit < 0) {
+            throw new InvalidProductionLineIdException("Invalid Operation. You don't have enough money to upgrade efficiency level.");
+        }
+        team.setCredit(newCredit);
+        teamRepository.saveAndFlush(team);
 
         productionLine.setEfficiencyLevel(currentEfficiencyLevel + 1);
         ProductionLine savedProductionLine = productionLineRepository.saveAndFlush(productionLine);
@@ -188,6 +214,18 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
         List<ProductionLine> productionLines = productionLineRepository.findProductionLinesByStatusEqualsAndActivationDateLessThanEqual(Enums.ProductionLineStatus.IN_CONSTRUCTION, gameCalendar.getCurrentDate());
         for (ProductionLine productionLine : productionLines) {
             productionLine.setStatus(Enums.ProductionLineStatus.ACTIVE);
+        }
+
+        productionLineRepository.saveAllAndFlush(productionLines);
+    }
+
+    @Transactional
+    public void decreaseWeeklyMaintenanceCost() {
+        List<ProductionLine> productionLines = productionLineRepository.findProductionLinesByStatusEquals(Enums.ProductionLineStatus.ACTIVE);
+        for (ProductionLine productionLine : productionLines) {
+            Team team = productionLine.getTeam();
+            ProductionLineTemplate template = ReadJsonFilesManager.ProductionLineTemplateHashMap.get(productionLine.getProductionLineTemplateId());
+            team.setCredit(team.getCredit() - template.getWeeklyMaintenanceCost());
         }
 
         productionLineRepository.saveAllAndFlush(productionLines);

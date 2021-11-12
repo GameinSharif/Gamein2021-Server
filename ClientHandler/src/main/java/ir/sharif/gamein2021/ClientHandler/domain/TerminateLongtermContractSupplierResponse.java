@@ -9,10 +9,12 @@ import java.io.Serializable;
 public class TerminateLongtermContractSupplierResponse extends ResponseObject implements Serializable
 {
     private String result;
-
-    public TerminateLongtermContractSupplierResponse(ResponseTypeConstant responseTypeConstant, String result)
+    private ContractSupplierDto contractSupplierDto;
+    public TerminateLongtermContractSupplierResponse(ResponseTypeConstant responseTypeConstant, String result,
+                                                     ContractSupplierDto contractSupplierDto)
     {
         this.responseTypeConstant = responseTypeConstant.ordinal();
         this.result = result;
+        this.contractSupplierDto = contractSupplierDto;
     }
 }

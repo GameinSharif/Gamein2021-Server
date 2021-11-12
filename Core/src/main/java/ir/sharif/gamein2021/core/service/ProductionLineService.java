@@ -70,7 +70,9 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
             throw new InvalidProductionLineIdException("Invalid Operation. Tried to scrap a production line with not active status");
         }
 
-        // TODO check no product is in production.
+        if (productRepository.existsProductionLineProductByProductionLineIdEqualsAndEndDateGreaterThanEqual(productionLineId, gameCalendar.getCurrentDate())) {
+            throw new InvalidProductionLineIdException("Production line is busy now and cannot be scrapped");
+        }
 
         // TODO what to with scarp price. better to use e dictionary for saving productionLineTemplates.
         ProductionLineTemplate template = Arrays.stream(ReadJsonFilesManager.ProductionLineTemplates).filter(x -> x.getId() == productionLine.getProductionLineTemplateId()).findFirst().orElse(null);
@@ -86,7 +88,7 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
         ProductionLine productionLine = getProductionLine(team, productionLineId);
 
         if (productionLine.getStatus() != Enums.ProductionLineStatus.ACTIVE) {
-            throw new InvalidProductionLineIdException("Invalid Operation. Tried to start a production on a scrapped production line.");
+            throw new InvalidProductionLineIdException("Invalid Operation. Tried to start a production on a deactivated production line.");
         }
 
         Product productTemplate = Arrays.stream(ReadJsonFilesManager.Products)
@@ -132,7 +134,7 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
         ProductionLine productionLine = getProductionLine(team, productionLineId);
 
         if (productionLine.getStatus() != Enums.ProductionLineStatus.ACTIVE) {
-            throw new InvalidProductionLineIdException("Invalid Operation. Tried to upgrade a scrapped production line quality.");
+            throw new InvalidProductionLineIdException("Invalid Operation. Tried to upgrade a deactivated production line quality.");
         }
 
         Integer currentQualityLevel = productionLine.getQualityLevel();
@@ -152,7 +154,7 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
         ProductionLine productionLine = getProductionLine(team, productionLineId);
 
         if (productionLine.getStatus() != Enums.ProductionLineStatus.ACTIVE) {
-            throw new InvalidProductionLineIdException("Invalid Operation. Tried to upgrade a scrapped production line efficiency.");
+            throw new InvalidProductionLineIdException("Invalid Operation. Tried to upgrade a deactivated production line efficiency.");
         }
 
         Integer currentEfficiencyLevel = productionLine.getEfficiencyLevel();
@@ -184,7 +186,7 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
     @Transactional
     public void enableProductionLines() {
         List<ProductionLine> productionLines = productionLineRepository.findProductionLinesByStatusEqualsAndActivationDateLessThanEqual(Enums.ProductionLineStatus.IN_CONSTRUCTION, gameCalendar.getCurrentDate());
-        for (ProductionLine productionLine: productionLines) {
+        for (ProductionLine productionLine : productionLines) {
             productionLine.setStatus(Enums.ProductionLineStatus.ACTIVE);
         }
 

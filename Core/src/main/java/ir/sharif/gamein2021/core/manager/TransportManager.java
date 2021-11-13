@@ -67,12 +67,14 @@ public class TransportManager
     private void startTransports(LocalDate today)
     {
         ArrayList<TransportDto> startingTransports = transportService.getStartingTransports(today);
-        //This loop will reduce products from their destination when a transport start!
+
         for (TransportDto transport : startingTransports)
         {
-            if(!transportDto.getTransportState().equals(Enums.TransportState.TERMINATED))
-            removeProductWhenTransportStart(transport);
+            if(!transport.getTransportState().equals(Enums.TransportState.TERMINATED))
+            {
+                removeProductWhenTransportStart(transport);
                 changeTransportsStateAndSendToClients(startingTransports, Enums.TransportState.IN_WAY);
+            }
         }
     }
 

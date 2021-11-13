@@ -33,6 +33,7 @@ public class DailySchedule
     private final WeekSupplyManager weekSupplyManager;
 
     @Scheduled(cron = "0 58 19 12 11 ?")
+    public void startGame()
     {
         GameConstants.IsGameStarted = true;
     }
@@ -84,6 +85,6 @@ public class DailySchedule
         contractManager.updateGameinCustomerContracts();
         demandAndSupplyManager.SendCurrentWeekSupplyAndDemandsToAllUsers();
         productionLineService.decreaseWeeklyMaintenanceCost();
-        weekSupplyManager.updateWeekSupplyPrices(GameConstants.getWeakNumber());
+        weekSupplyManager.updateWeekSupplyPrices(gameCalendar.getWeek());
     }
 }

@@ -105,7 +105,9 @@ public class ContractSupplierController
                     ContractSupplierDto saveContractSupplierDto = contractSupplierService.saveOrUpdate(contractSupplierDto);
                     newContractSupplierResponse = new NewContractSupplierResponse(ResponseTypeConstant.NEW_CONTRACT_WITH_SUPPLIER,
                             saveContractSupplierDto, totalMaterialPrice, "success");
-                    teamService.findTeamById(newContractSupplierRequest.playerId).setCredit(teamCredit - totalMaterialPrice);
+                    TeamDto team = teamService.loadById(newContractSupplierRequest.playerId);
+                    team.setCredit(teamCredit - totalMaterialPrice);
+                    teamService.saveOrUpdate(team);
                     System.out.println("####NOW "+teamService.findTeamById(newContractSupplierRequest.playerId).getCredit());
                 }else{
                     newContractSupplierResponse = new NewContractSupplierResponse(ResponseTypeConstant.NEW_CONTRACT_WITH_SUPPLIER,
@@ -150,7 +152,9 @@ public class ContractSupplierController
                 if(terminatedCounter == 0){
                     terminateLongtermContractSupplierResponse = new TerminateLongtermContractSupplierResponse(ResponseTypeConstant.TERMINATE_LONGTERM_CONTRACT_WITH_SUPPLIER, "nothing_to_terminate", contractSupplierDto);
                 }else{
-                    teamService.findTeamById(terminateLongtermContractSupplierRequest.playerId).setCredit(teamCredit - penalty);
+                    TeamDto team = teamService.loadById(terminateLongtermContractSupplierRequest.playerId);
+                    team.setCredit(teamCredit - penalty);
+                    teamService.saveOrUpdate(team);
                     terminateLongtermContractSupplierResponse = new TerminateLongtermContractSupplierResponse(ResponseTypeConstant.TERMINATE_LONGTERM_CONTRACT_WITH_SUPPLIER, "terminated", contractSupplierDto);
                 }
 

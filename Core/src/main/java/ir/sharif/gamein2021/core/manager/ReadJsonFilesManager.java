@@ -79,6 +79,18 @@ public class ReadJsonFilesManager {
         // TODO : Exception
     }
 
+    public static Vehicle findVehicleById(int id)
+    {
+        for (Vehicle vehicle : Vehicles)
+        {
+            if (vehicle.getId() == id)
+            {
+                return vehicle;
+            }
+        }
+        return null;
+    }
+
     public static Product[] getAllProducts() {
         return Products;
     }

@@ -12,7 +12,7 @@ public class WeekDemandDto implements BaseDto<Integer>
 {
     private Integer id;
     private Integer week;
-    private GameinCustomer gameinCustomer;
+    private Integer gameinCustomerId;
     private Integer productId;
     private Integer amount;
 }

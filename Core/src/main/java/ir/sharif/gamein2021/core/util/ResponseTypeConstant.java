@@ -43,8 +43,9 @@ public enum ResponseTypeConstant {
     TERMINATE_CONTRACT(39),
     SERVER_TIME(40),
     GAME_TIME(41),
-    MONEY_UPDATE(42);
-
+    MONEY_UPDATE(42),
+    PRODUCTION_LINE_CONSTRUCTION_COMPLETED(43),
+    PRODUCT_CREATION_COMPLETED (44);
 
     private int value;
 

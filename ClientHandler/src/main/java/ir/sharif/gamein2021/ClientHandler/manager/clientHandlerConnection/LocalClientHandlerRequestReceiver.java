@@ -1,11 +1,12 @@
 package ir.sharif.gamein2021.ClientHandler.manager.clientHandlerConnection;
 
+import com.google.gson.Gson;
+import ir.sharif.gamein2021.ClientHandler.domain.productionLine.ProductCreationCompletedResponse;
+import ir.sharif.gamein2021.ClientHandler.domain.productionLine.ProductionLineConstructionCompletedResponse;
 import ir.sharif.gamein2021.ClientHandler.manager.LocalPushMessageManager;
+import ir.sharif.gamein2021.core.domain.entity.ProductionLine;
 import ir.sharif.gamein2021.core.manager.clientHandlerConnection.ClientHandlerRequestReceiverInterface;
-import ir.sharif.gamein2021.core.manager.clientHandlerConnection.requests.BaseClientHandlerRequest;
-import ir.sharif.gamein2021.core.manager.clientHandlerConnection.requests.ClientsSendMessageByTeamIdRequest;
-import ir.sharif.gamein2021.core.manager.clientHandlerConnection.requests.ClientsSendMessageByUserIdRequest;
-import ir.sharif.gamein2021.core.manager.clientHandlerConnection.requests.ClientsSendMessageToAllRequest;
+import ir.sharif.gamein2021.core.manager.clientHandlerConnection.requests.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Component;
 public class LocalClientHandlerRequestReceiver implements ClientHandlerRequestReceiverInterface {
     @Autowired
     private LocalPushMessageManager pushMessageManager;
+    private Gson gson = new Gson();
 
     @Override
     public void receive(BaseClientHandlerRequest request) throws InterruptedException {
@@ -29,6 +31,17 @@ public class LocalClientHandlerRequestReceiver implements ClientHandlerRequestRe
         } else if (request instanceof ClientsSendMessageByUserIdRequest) {
             String userId = ((ClientsSendMessageByUserIdRequest) request).getUserId();
             pushMessageManager.sendMessageByUserId(userId, request.getMessage());
+        } else if (request instanceof ProductionLinesConstructionCompletedRequest) {
+            ProductionLinesConstructionCompletedRequest constructionCompletedRequest = (ProductionLinesConstructionCompletedRequest) request;
+            for (ProductionLine productionLine : constructionCompletedRequest.getSavedProductionLines()) {
+                ProductionLineConstructionCompletedResponse response = new ProductionLineConstructionCompletedResponse(productionLine);
+                pushMessageManager.sendMessageByTeamId(productionLine.getTeam().getId().toString(), gson.toJson(response));
+            }
+        } else if (request instanceof ProductCreationCompletedRequest) {
+            ProductCreationCompletedRequest productCreationCompletedRequest = (ProductCreationCompletedRequest) request;
+            ProductCreationCompletedResponse response = new ProductCreationCompletedResponse(productCreationCompletedRequest);
+            pushMessageManager.sendMessageByTeamId(productCreationCompletedRequest.getTeamId().toString(), gson.toJson(response));
         }
+
     }
 }

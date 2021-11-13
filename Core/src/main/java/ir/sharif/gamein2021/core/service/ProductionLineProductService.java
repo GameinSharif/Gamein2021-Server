@@ -5,6 +5,8 @@ import ir.sharif.gamein2021.core.dao.ProductionLineRepository;
 import ir.sharif.gamein2021.core.domain.dto.ProductionLineProductDto;
 import ir.sharif.gamein2021.core.domain.entity.ProductionLine;
 import ir.sharif.gamein2021.core.domain.entity.ProductionLineProduct;
+import ir.sharif.gamein2021.core.manager.clientHandlerConnection.ClientHandlerRequestSenderInterface;
+import ir.sharif.gamein2021.core.manager.clientHandlerConnection.requests.ProductCreationCompletedRequest;
 import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +21,16 @@ public class ProductionLineProductService extends AbstractCrudService<Production
     private final ProductionLineProductRepository productionLineProductRepository;
     private final ProductionLineRepository productionLineRepository;
     private final StorageService storageService;
+    private final ClientHandlerRequestSenderInterface clientHandlerRequestSender;
 
     public ProductionLineProductService(ProductionLineProductRepository productionLineProductRepository,
                                         ProductionLineRepository productionLineRepository,
-                                        StorageService storageService) {
+                                        StorageService storageService,
+                                        ClientHandlerRequestSenderInterface clientHandlerRequestSender) {
         this.productionLineProductRepository = productionLineProductRepository;
         this.productionLineRepository = productionLineRepository;
         this.storageService = storageService;
+        this.clientHandlerRequestSender = clientHandlerRequestSender;
     }
 
     public void finishProductCreation(LocalDate currentDate) {
@@ -41,6 +46,7 @@ public class ProductionLineProductService extends AbstractCrudService<Production
             }
 
             storageService.addProduct(productionLine.getTeam().getFactoryId(), false, product.getProductId(), product.getAmount());
+            clientHandlerRequestSender.send(new ProductCreationCompletedRequest(productionLine, product, "Done"));
         }
     }
 }

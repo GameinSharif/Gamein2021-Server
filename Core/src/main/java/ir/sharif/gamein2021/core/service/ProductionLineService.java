@@ -14,6 +14,8 @@ import ir.sharif.gamein2021.core.exception.ProductionLineMaximumEfficiencyLevelR
 import ir.sharif.gamein2021.core.exception.ProductionLineMaximumQualityLevelReachedException;
 import ir.sharif.gamein2021.core.manager.GameCalendar;
 import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
+import ir.sharif.gamein2021.core.manager.clientHandlerConnection.ClientHandlerRequestSenderInterface;
+import ir.sharif.gamein2021.core.manager.clientHandlerConnection.requests.ProductionLinesConstructionCompletedRequest;
 import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
 import ir.sharif.gamein2021.core.util.Enums;
 import ir.sharif.gamein2021.core.util.models.Product;
@@ -35,14 +37,17 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
     private final GameCalendar gameCalendar;
     private final TeamRepository teamRepository;
     private final StorageService storageService;
+    private final ClientHandlerRequestSenderInterface clientHandlerRequestSender;
 
     public ProductionLineService(ProductionLineRepository productionLineRepository,
                                  ProductionLineProductRepository productRepository,
                                  ModelMapper modelMapper,
                                  GameCalendar gameCalendar,
                                  TeamRepository teamRepository,
-                                 StorageService storageService) {
+                                 StorageService storageService,
+                                 ClientHandlerRequestSenderInterface clientHandlerRequestSender) {
         setRepository(productionLineRepository);
+        this.clientHandlerRequestSender = clientHandlerRequestSender;
         this.storageService = storageService;
         this.teamRepository = teamRepository;
         this.gameCalendar = gameCalendar;
@@ -253,7 +258,9 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
             productionLine.setStatus(Enums.ProductionLineStatus.ACTIVE);
         }
 
-        productionLineRepository.saveAllAndFlush(productionLines);
+        List<ProductionLine> savedProductionLines = productionLineRepository.saveAllAndFlush(productionLines);
+
+        clientHandlerRequestSender.send(new ProductionLinesConstructionCompletedRequest(savedProductionLines, "Done"));
     }
 
     @Transactional

@@ -8,6 +8,7 @@ import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
 import ir.sharif.gamein2021.core.domain.dto.*;
 import ir.sharif.gamein2021.core.domain.entity.Team;
 import ir.sharif.gamein2021.core.manager.GameCalendar;
+import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
 import ir.sharif.gamein2021.core.manager.TransportManager;
 import ir.sharif.gamein2021.core.service.*;
 import ir.sharif.gamein2021.core.util.Enums;
@@ -42,7 +43,8 @@ public class ContractSupplierController
         ContractSupplierDto contractSupplierDto = new ContractSupplierDto();
         Integer supplierId = newContractSupplierRequest.getSupplierId();
         Integer materialId = newContractSupplierRequest.getMaterialId();
-        Enums.VehicleType vehicleType = newContractSupplierRequest.getVehicleType();
+        Enums.VehicleType vehicleType = ReadJsonFilesManager.findVehicleById(newContractSupplierRequest.getVehicleId()).getVehicleType();
+        System.out.println(vehicleType);
         Boolean hasInsurance = newContractSupplierRequest.getHasInsurance();
         Integer weeks = newContractSupplierRequest.getWeeks();
         Integer currentWeek = gameCalendar.getWeek();

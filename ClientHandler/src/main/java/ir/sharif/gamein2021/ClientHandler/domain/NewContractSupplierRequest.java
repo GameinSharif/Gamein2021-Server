@@ -15,8 +15,7 @@ public class NewContractSupplierRequest extends RequestObject implements Seriali
 {
     private Integer supplierId;
     private Integer materialId;
-    //private ContractSupplierDto contractSupplierDto;
-    private Enums.VehicleType vehicleType;
+    private Integer vehicleId;
     private Boolean hasInsurance;
     private Integer amount;
     private Integer weeks; // if contract is ONCE, set this to 0, or else any positive value of this means extra weeks

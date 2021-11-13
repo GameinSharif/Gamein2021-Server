@@ -3,11 +3,13 @@ package ir.sharif.gamein2021.core.dao;
 import ir.sharif.gamein2021.core.domain.entity.Dc;
 import ir.sharif.gamein2021.core.domain.entity.Team;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-
-public interface DcRepository extends JpaRepository<Dc , Integer> {
-    public List<Dc> findAllByOwner(Team owner);
-    public List<Dc> findAllByStartingWeekIsLessThanEqual(int startingWeak);
+@Repository
+public interface DcRepository extends JpaRepository<Dc, Integer>
+{
+    List<Dc> findAllByOwner(Team owner);
+    List<Dc> findAllByStartingWeekIsLessThanEqual(int startingWeek);
 }

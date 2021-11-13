@@ -28,6 +28,7 @@ public class TeamService extends AbstractCrudService<TeamDto, Team, Integer>
         setRepository(repository);
     }
 
+    // TODO WHY ARE YOU RETURNING AN ENTIRE ENTITY!?
     @Transactional(readOnly = true)
     public Team findTeamById(Integer id){
         return getRepository().findById(id).orElseThrow(TeamNotFoundException::new);

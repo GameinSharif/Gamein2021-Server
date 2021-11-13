@@ -15,5 +15,6 @@ public class WeekSupplyDto
     private Integer supplierId;
     private Integer productId;
     private Float price;
+    private Float coefficient;
     private Integer sales;
 }

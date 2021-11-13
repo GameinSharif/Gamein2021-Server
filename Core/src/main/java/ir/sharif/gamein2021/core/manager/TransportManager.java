@@ -70,9 +70,10 @@ public class TransportManager
         //This loop will reduce products from their destination when a transport start!
         for (TransportDto transport : startingTransports)
         {
+            if(!transportDto.getTransportState().equals(Enums.TransportState.TERMINATED))
             removeProductWhenTransportStart(transport);
+                changeTransportsStateAndSendToClients(startingTransports, Enums.TransportState.IN_WAY);
         }
-        changeTransportsStateAndSendToClients(startingTransports, Enums.TransportState.IN_WAY);
     }
 
     private void endTransports(LocalDate today)

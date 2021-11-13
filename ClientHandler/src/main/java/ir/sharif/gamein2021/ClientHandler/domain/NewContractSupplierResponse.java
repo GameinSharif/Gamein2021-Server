@@ -10,12 +10,15 @@ import java.io.Serializable;
 public class NewContractSupplierResponse extends ResponseObject implements Serializable
 {
     private ContractSupplierDto contractSupplier;
+    private Float price;
     private String result;
 
-    public NewContractSupplierResponse(ResponseTypeConstant responseTypeConstant, ContractSupplierDto contractSupplier, String result)
+    public NewContractSupplierResponse(ResponseTypeConstant responseTypeConstant, ContractSupplierDto contractSupplier,
+                                       Float price, String result)
     {
         this.responseTypeConstant = responseTypeConstant.ordinal();
         this.contractSupplier = contractSupplier;
+        this.price = price;
         this.result = result;
     }
 

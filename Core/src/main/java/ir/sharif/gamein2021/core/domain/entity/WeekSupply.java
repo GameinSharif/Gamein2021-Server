@@ -28,6 +28,9 @@ public class WeekSupply implements BaseEntity{
     @Column(name = "price")
     private Float price;
 
+    @Column(name = "coefficient")
+    private Float coefficient;
+
     @Column(name = "sales", nullable = false, columnDefinition = "INT DEFAULT 0")
     private Integer sales;
 

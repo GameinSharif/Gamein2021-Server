@@ -10,6 +10,8 @@ public class GameConstants {
 
     public static final LocalDate startDate = LocalDate.of(2000,1, 1);
 
+    public final int ConstantWeekSupplyPrice = 2000;
+
     public final int AuctionStartValue = 1000;
     public final int AuctionInitialStepValue = 100;
     public final int AuctionRoundDurationSeconds = 180;

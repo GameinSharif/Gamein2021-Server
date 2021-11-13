@@ -1,5 +1,9 @@
 package ir.sharif.gamein2021.core.mainThread;
 
+import ir.sharif.gamein2021.core.manager.ContractManager;
+import ir.sharif.gamein2021.core.manager.GameCalendar;
+import ir.sharif.gamein2021.core.manager.TransportManager;
+import ir.sharif.gamein2021.core.manager.WeekSupplyManager;
 import ir.sharif.gamein2021.core.domain.dto.WeekDemandDto;
 import ir.sharif.gamein2021.core.manager.*;
 import ir.sharif.gamein2021.core.response.GetCurrentWeekDemandsResponse;
@@ -26,9 +30,9 @@ public class DailySchedule
     private final ProductionLineService productionLineService;
     private final DemandAndSupplyManager demandAndSupplyManager;
     private final GameDateManager gameDateManager;
+    private final WeekSupplyManager weekSupplyManager;
 
     @Scheduled(cron = "0 58 19 12 11 ?")
-    public void startGame()
     {
         GameConstants.IsGameStarted = true;
     }
@@ -80,5 +84,6 @@ public class DailySchedule
         contractManager.updateGameinCustomerContracts();
         demandAndSupplyManager.SendCurrentWeekSupplyAndDemandsToAllUsers();
         productionLineService.decreaseWeeklyMaintenanceCost();
+        weekSupplyManager.updateWeekSupplyPrices(GameConstants.getWeakNumber());
     }
 }

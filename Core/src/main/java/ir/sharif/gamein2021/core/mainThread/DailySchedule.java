@@ -32,7 +32,7 @@ public class DailySchedule
     private final GameDateManager gameDateManager;
     private final WeekSupplyManager weekSupplyManager;
 
-    @Scheduled(cron = "0 58 19 12 11 ?")
+    @Scheduled(cron = "0 49 22 13 11 ?")
     public void startGame()
     {
         GameConstants.IsGameStarted = true;

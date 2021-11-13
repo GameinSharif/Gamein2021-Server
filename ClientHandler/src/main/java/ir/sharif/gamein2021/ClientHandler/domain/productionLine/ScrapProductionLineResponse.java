@@ -9,8 +9,16 @@ import java.io.Serializable;
 public class ScrapProductionLineResponse extends ResponseObject implements Serializable {
     private ProductionLineDto productionLine;
 
+    public ScrapProductionLineResponse() {
+        responseTypeConstant = ResponseTypeConstant.SCRAP_PRODUCTION_LINE.ordinal();
+    }
+
     public ScrapProductionLineResponse(ProductionLineDto productionLine) {
         responseTypeConstant = ResponseTypeConstant.SCRAP_PRODUCTION_LINE.ordinal();
+        this.productionLine = productionLine;
+    }
+
+    public void setProductionLine(ProductionLineDto productionLine) {
         this.productionLine = productionLine;
     }
 }

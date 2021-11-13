@@ -9,8 +9,16 @@ import java.io.Serializable;
 public class UpgradeProductionLineQualityResponse extends ResponseObject implements Serializable {
     private ProductionLineDto productionLine;
 
+    public UpgradeProductionLineQualityResponse() {
+        responseTypeConstant = ResponseTypeConstant.UPGRADE_PRODUCTION_LINE_QUALITY.ordinal();
+    }
+
     public UpgradeProductionLineQualityResponse(ProductionLineDto productionLine) {
         responseTypeConstant = ResponseTypeConstant.UPGRADE_PRODUCTION_LINE_QUALITY.ordinal();
+        this.productionLine = productionLine;
+    }
+
+    public void setProductionLine(ProductionLineDto productionLine) {
         this.productionLine = productionLine;
     }
 }

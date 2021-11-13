@@ -9,8 +9,15 @@ import java.io.Serializable;
 public class StartProductionResponse extends ResponseObject implements Serializable {
     private ProductionLineDto productionLine;
 
+    public StartProductionResponse() {
+    }
+
     public StartProductionResponse(ProductionLineDto productionLine) {
         responseTypeConstant = ResponseTypeConstant.START_PRODUCTION.ordinal();
+        this.productionLine = productionLine;
+    }
+
+    public void setProductionLine(ProductionLineDto productionLine) {
         this.productionLine = productionLine;
     }
 }

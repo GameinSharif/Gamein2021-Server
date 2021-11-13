@@ -10,7 +10,6 @@ import ir.sharif.gamein2021.core.domain.dto.UserDto;
 import ir.sharif.gamein2021.core.domain.entity.Team;
 import ir.sharif.gamein2021.core.exception.InvalidProductionLineIdException;
 import ir.sharif.gamein2021.core.exception.InvalidProductionLineTemplateIdException;
-import ir.sharif.gamein2021.core.manager.GameCalendar;
 import ir.sharif.gamein2021.core.service.ProductionLineService;
 import ir.sharif.gamein2021.core.service.TeamService;
 import ir.sharif.gamein2021.core.service.UserService;
@@ -28,19 +27,16 @@ public class ProductionLineController {
     private final UserService userService;
     private final TeamService teamService;
     private final ProductionLineService productionLineService;
-    private final GameCalendar gameCalendar;
 
     private final Gson gson = new Gson();
 
     public ProductionLineController(LocalPushMessageManager pushMessageManager,
                                     TeamService teamService, UserService userService,
-                                    ProductionLineService productionLineService,
-                                    GameCalendar gameCalendar) {
+                                    ProductionLineService productionLineService) {
         this.pushMessageManager = pushMessageManager;
         this.userService = userService;
         this.teamService = teamService;
         this.productionLineService = productionLineService;
-        this.gameCalendar = gameCalendar;
     }
 
     public void GetProductionLines(ProcessedRequest processedRequest, GetProductionLinesRequest request) {
@@ -66,13 +62,15 @@ public class ProductionLineController {
         productionLine.setEfficiencyLevel(0);
         productionLine.setQualityLevel(0);
 
+        ConstructProductionLineResponse response = new ConstructProductionLineResponse();
+
         try {
             ProductionLineDto createdProductionLine = productionLineService.CreateProductionLine(productionLine);
-            ConstructProductionLineResponse response = new ConstructProductionLineResponse(createdProductionLine);
-            pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(response));
+            response.setProductionLine(createdProductionLine);
         } catch (InvalidProductionLineTemplateIdException e) {
             logger.debug(e);
-            pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(e));
+        } finally {
+            pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(response));
         }
     }
 
@@ -80,13 +78,15 @@ public class ProductionLineController {
         int playerId = request.playerId;
         UserDto user = userService.loadById(playerId);
 
+        ScrapProductionLineResponse response = new ScrapProductionLineResponse();
+
         try {
             ProductionLineDto savedProductionLine = productionLineService.scrapProductionLine(teamService.findTeamById(user.getTeamId()), request.getProductionLineId());
-            ScrapProductionLineResponse response = new ScrapProductionLineResponse(savedProductionLine);
-            pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(response));
+            response.setProductionLine(savedProductionLine);
         } catch (InvalidProductionLineIdException e) {
             logger.debug(e);
-            pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(e));
+        } finally {
+            pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(response));
         }
     }
 
@@ -94,16 +94,18 @@ public class ProductionLineController {
         int playerId = request.playerId;
         UserDto user = userService.loadById(playerId);
 
+        StartProductionResponse response = new StartProductionResponse();
+
         try {
             ProductionLineDto savedProductionLine = productionLineService.startProduction(teamService.findTeamById(user.getTeamId()),
                     request.getProductionLineId(),
                     request.getProductId(),
                     request.getAmount());
-            StartProductionResponse response = new StartProductionResponse(savedProductionLine);
-            pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(response));
+            response.setProductionLine(savedProductionLine);
         } catch (InvalidProductionLineIdException e) {
             logger.debug(e);
-            pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(e));
+        } finally {
+            pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(response));
         }
     }
 
@@ -111,14 +113,16 @@ public class ProductionLineController {
         int playerId = request.playerId;
         UserDto user = userService.loadById(playerId);
 
+        UpgradeProductionLineQualityResponse response = new UpgradeProductionLineQualityResponse();
+
         try {
             ProductionLineDto savedProductionLine = productionLineService.upgradeProductionLineQuality(teamService.findTeamById(user.getTeamId()),
                     request.getProductionLineId());
-            UpgradeProductionLineQualityResponse response = new UpgradeProductionLineQualityResponse(savedProductionLine);
-            pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(response));
+            response.setProductionLine(savedProductionLine);
         } catch (Exception e) {
             logger.debug(e);
-            pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(e));
+        } finally {
+            pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(response));
         }
     }
 
@@ -126,14 +130,16 @@ public class ProductionLineController {
         int playerId = request.playerId;
         UserDto user = userService.loadById(playerId);
 
+        UpgradeProductionLineEfficiencyResponse response = new UpgradeProductionLineEfficiencyResponse();
+
         try {
             ProductionLineDto savedProductionLine = productionLineService.upgradeProductionLineEfficiency(teamService.findTeamById(user.getTeamId()),
                     request.getProductionLineId());
-            UpgradeProductionLineEfficiencyResponse response = new UpgradeProductionLineEfficiencyResponse(savedProductionLine);
-            pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(response));
+            response.setProductionLine(savedProductionLine);
         } catch (Exception e) {
             logger.debug(e);
-            pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(e));
+        } finally {
+            pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(response));
         }
     }
 }

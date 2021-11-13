@@ -89,7 +89,7 @@ public class ContractManager
                     continue;
                 }
 
-                if (contractDto.getGameinCustomerId().equals(weekDemandDto.getGameinCustomer().getId())
+                if (contractDto.getGameinCustomerId().equals(weekDemandDto.getGameinCustomerId())
                 && contractDto.getProductId().equals(weekDemandDto.getProductId()))
                 {
                     thisDemandContractDetails.add(contractDetailDto);

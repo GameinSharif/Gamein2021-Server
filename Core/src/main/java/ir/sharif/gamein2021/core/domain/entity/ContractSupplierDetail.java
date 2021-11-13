@@ -24,7 +24,7 @@ public class ContractSupplierDetail implements BaseEntity
     private Integer boughtAmount;
 
     @Column(name = "price_per_unit")
-    private Integer pricePerUnit;
+    private Float pricePerUnit;
 
     @ManyToOne
     @JoinColumn(name = "contract_supplier_id")

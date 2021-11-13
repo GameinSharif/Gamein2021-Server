@@ -32,6 +32,7 @@ public class DailySchedule
     private final GameDateManager gameDateManager;
     private final WeekSupplyManager weekSupplyManager;
 
+    //Second, Minute, Hour, DayOfMonth, Month, WeekDays
     @Scheduled(cron = "0 49 22 13 11 ?")
     public void startGame()
     {

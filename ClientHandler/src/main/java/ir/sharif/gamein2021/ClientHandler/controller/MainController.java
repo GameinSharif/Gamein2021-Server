@@ -18,6 +18,7 @@ import ir.sharif.gamein2021.ClientHandler.domain.RFQ.*;
 import ir.sharif.gamein2021.ClientHandler.domain.Auction.BidForAuctionRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Transport.GetTeamTransportsRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.productionLine.*;
+import ir.sharif.gamein2021.core.util.GameConstants;
 import ir.sharif.gamein2021.core.util.RequestTypeConstant;
 import lombok.AllArgsConstructor;
 import org.json.JSONObject;
@@ -25,8 +26,7 @@ import org.springframework.stereotype.Component;
 
 @AllArgsConstructor
 @Component
-public class MainController
-{
+public class MainController {
     private final UserController userController;
     private final OfferController offerController;
     private final GameDataController gameDataController;
@@ -40,15 +40,19 @@ public class MainController
     private final TransportController transportController;
     private final DcController dcController;
     private final ProductController productController;
+    private final GameStatusController gameStatusController;
     private final Gson gson;
 
-    public void HandleMessage(ProcessedRequest processedRequest)
-    {
+    public void HandleMessage(ProcessedRequest processedRequest) {
         String requestData = processedRequest.requestData;
         JSONObject obj = new JSONObject(requestData);
         RequestTypeConstant requestType = RequestTypeConstant.values()[obj.getInt("requestTypeConstant")];
-        switch (requestType)
-        {
+
+        if (!gameStatusController.validateGameStatus(processedRequest, requestType)) {
+            return;
+        }
+
+        switch (requestType) {
             case LOGIN:
                 LoginRequest loginRequest = gson.fromJson(requestData, LoginRequest.class);
                 userController.authenticate(processedRequest, loginRequest);
@@ -157,35 +161,35 @@ public class MainController
                 try {
                     BuyingDcRequest buyingDcRequest = gson.fromJson(requestData, BuyingDcRequest.class);
                     dcController.buyDc(processedRequest, buyingDcRequest);
-                }catch (Exception e ){
+                } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
                 break;
             case SELL_DC:
                 SellingDcRequest sellingDcRequest = gson.fromJson(requestData, SellingDcRequest.class);
-                dcController.sellDc(processedRequest , sellingDcRequest);
+                dcController.sellDc(processedRequest, sellingDcRequest);
                 break;
             case ADD_PRODUCT:
-                AddProductRequest addProductRequest = gson.fromJson(requestData , AddProductRequest.class);
+                AddProductRequest addProductRequest = gson.fromJson(requestData, AddProductRequest.class);
                 try {
-                    productController.addProduct(processedRequest , addProductRequest);
-                }catch (Exception e){
+                    productController.addProduct(processedRequest, addProductRequest);
+                } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
                 break;
             case REMOVE_PRODUCT:
-                RemoveProductRequest removeProductRequest = gson.fromJson(requestData , RemoveProductRequest.class);
+                RemoveProductRequest removeProductRequest = gson.fromJson(requestData, RemoveProductRequest.class);
                 try {
-                    productController.removeProduct(processedRequest , removeProductRequest);
-                }catch (Exception e){
+                    productController.removeProduct(processedRequest, removeProductRequest);
+                } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
                 break;
             case GET_STORAGES:
-                GetStorageProductsRequest getStorageProductsRequest = gson.fromJson(requestData , GetStorageProductsRequest.class);
+                GetStorageProductsRequest getStorageProductsRequest = gson.fromJson(requestData, GetStorageProductsRequest.class);
                 try {
-                    productController.getStorages(processedRequest , getStorageProductsRequest);
-                }catch (Exception e){
+                    productController.getStorages(processedRequest, getStorageProductsRequest);
+                } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
                 break;

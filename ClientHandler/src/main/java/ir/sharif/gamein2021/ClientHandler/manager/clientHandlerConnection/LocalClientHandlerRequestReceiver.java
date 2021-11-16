@@ -1,12 +1,14 @@
 package ir.sharif.gamein2021.ClientHandler.manager.clientHandlerConnection;
 
 import com.google.gson.Gson;
+import ir.sharif.gamein2021.ClientHandler.domain.ChangeGameStatusResponse;
 import ir.sharif.gamein2021.ClientHandler.domain.productionLine.ProductCreationCompletedResponse;
 import ir.sharif.gamein2021.ClientHandler.domain.productionLine.ProductionLineConstructionCompletedResponse;
 import ir.sharif.gamein2021.ClientHandler.manager.LocalPushMessageManager;
 import ir.sharif.gamein2021.core.domain.entity.ProductionLine;
 import ir.sharif.gamein2021.core.manager.clientHandlerConnection.ClientHandlerRequestReceiverInterface;
 import ir.sharif.gamein2021.core.manager.clientHandlerConnection.requests.*;
+import ir.sharif.gamein2021.core.util.GameConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -41,6 +43,11 @@ public class LocalClientHandlerRequestReceiver implements ClientHandlerRequestRe
             ProductCreationCompletedRequest productCreationCompletedRequest = (ProductCreationCompletedRequest) request;
             ProductCreationCompletedResponse response = new ProductCreationCompletedResponse(productCreationCompletedRequest);
             pushMessageManager.sendMessageByTeamId(productCreationCompletedRequest.getTeamId().toString(), gson.toJson(response));
+        } else if (request instanceof ChangeGameStatusRequest) {
+            ChangeGameStatusRequest changeGameStatusRequest = (ChangeGameStatusRequest) request;
+            GameConstants.gameStatus = changeGameStatusRequest.getGameStatus();
+            ChangeGameStatusResponse response = new ChangeGameStatusResponse(changeGameStatusRequest.getGameStatus());
+            pushMessageManager.sendMessageToAll(gson.toJson(response));
         }
 
     }

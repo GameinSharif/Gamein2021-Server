@@ -1,5 +1,7 @@
 package ir.sharif.gamein2021.core.util;
 
+import ir.sharif.gamein2021.core.util.models.GameStatus;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -34,4 +36,6 @@ public class GameConstants {
         return Instance;
     }
     public static boolean IsGameStarted = false;
+
+    public static GameStatus gameStatus = GameStatus.RUNNING;
 }

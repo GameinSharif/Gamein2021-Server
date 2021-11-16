@@ -2,6 +2,7 @@ package ir.sharif.gamein2021.ClientHandler.controller;
 
 import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.ChangeGameStatusResponse;
 import ir.sharif.gamein2021.core.manager.GameCalendar;
 import ir.sharif.gamein2021.core.response.GetCurrentWeekSuppliesResponse;
 import ir.sharif.gamein2021.ClientHandler.domain.ServerTimeResponse;
@@ -14,6 +15,7 @@ import ir.sharif.gamein2021.ClientHandler.manager.LocalPushMessageManager;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
 import ir.sharif.gamein2021.core.service.WeekSupplyService;
 import ir.sharif.gamein2021.core.service.TeamService;
+import ir.sharif.gamein2021.core.util.GameConstants;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import ir.sharif.gamein2021.core.domain.dto.AuctionDto;
 import ir.sharif.gamein2021.core.domain.dto.DcDto;
@@ -46,8 +48,7 @@ public class GameDataController {
     private final GameCalendar gameCalendar;
     private final Gson gson = new Gson();
 
-    public void getGameData(ProcessedRequest request)
-    {
+    public void getGameData(ProcessedRequest request) {
         List<TeamDto> teams = teamService.list();
         List<GameinCustomerDto> gameinCustomers = gameinCustomerService.list();
 
@@ -70,8 +71,7 @@ public class GameDataController {
         pushMessageManager.sendMessageBySession(request.session, gson.toJson(getCurrentWeekDemandsResponse));
     }
 
-    public void getCurrentWeekSupplies(ProcessedRequest request)
-    {
+    public void getCurrentWeekSupplies(ProcessedRequest request) {
         int week = gameCalendar.getWeek();
         List<WeekSupplyDto> currentWeekSupplies = weekSupplyService.findByWeek(week);
 
@@ -82,8 +82,8 @@ public class GameDataController {
 
         pushMessageManager.sendMessageBySession(request.session, gson.toJson(getCurrentWeekSuppliesResponse));
     }
-    public void getAllAuctions(ProcessedRequest request)
-    {
+
+    public void getAllAuctions(ProcessedRequest request) {
         List<AuctionDto> auctions = auctionService.readAllAuctionsWithStatus();
 
         GetAllAuctionsResponse getAllAuctionsResponse = new GetAllAuctionsResponse(
@@ -94,23 +94,27 @@ public class GameDataController {
         pushMessageManager.sendMessageBySession(request.session, gson.toJson(getAllAuctionsResponse));
     }
 
-    public void getAllActiveDc(ProcessedRequest request){
+    public void getAllActiveDc(ProcessedRequest request) {
         List<DcDto> dcs = dcService.getAllActiveDc();
 
         GetAllActiveDcResponse getAllActiveDcResponse = new GetAllActiveDcResponse(
-                ResponseTypeConstant.GET_ALL_ACTIVE_DC , dcs);
+                ResponseTypeConstant.GET_ALL_ACTIVE_DC, dcs);
 
-        pushMessageManager.sendMessageBySession(request.session , gson.toJson(getAllActiveDcResponse));
+        pushMessageManager.sendMessageBySession(request.session, gson.toJson(getAllActiveDcResponse));
 
     }
 
-    public void getServerTime(ProcessedRequest request)
-    {
+    public void getServerTime(ProcessedRequest request) {
         ServerTimeResponse serverTimeResponse = new ServerTimeResponse(
                 ResponseTypeConstant.SERVER_TIME,
                 LocalDateTime.now()
         );
 
-        pushMessageManager.sendMessageBySession(request.session , gson.toJson(serverTimeResponse));
+        pushMessageManager.sendMessageBySession(request.session, gson.toJson(serverTimeResponse));
+    }
+
+    public void getGameStatus(ProcessedRequest processedRequest) {
+        ChangeGameStatusResponse response = new ChangeGameStatusResponse(GameConstants.gameStatus);
+        pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(response));
     }
 }

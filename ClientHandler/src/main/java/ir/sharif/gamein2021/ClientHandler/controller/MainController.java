@@ -201,6 +201,9 @@ public class MainController
                 TerminateLongtermContractRequest terminateLongtermContractRequest = gson.fromJson(requestData, TerminateLongtermContractRequest.class);
                 contractController.terminateLongtermContract(terminateLongtermContractRequest);
                 break;
+            case GET_GAME_STATUS:
+                gameDataController.getGameStatus(processedRequest);
+                break;
             default:
                 System.out.println("Request type is invalid.");
         }

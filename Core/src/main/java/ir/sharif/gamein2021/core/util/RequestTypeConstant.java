@@ -34,7 +34,8 @@ public enum RequestTypeConstant
     REMOVE_PRODUCT(29),
     GET_STORAGES(30),
     NEW_CONTRACT(31),
-    TERMINATE_CONTRACT(32);
+    TERMINATE_CONTRACT(32),
+    GET_GAME_STATUS(33);
 
     private int value;
 

@@ -1,7 +1,7 @@
 package ir.sharif.gamein2021.ClientHandler.manager.clientHandlerConnection;
 
 import com.google.gson.Gson;
-import ir.sharif.gamein2021.ClientHandler.domain.ChangeGameStatusResponse;
+import ir.sharif.gamein2021.ClientHandler.domain.UpdateGameStatusResponse;
 import ir.sharif.gamein2021.ClientHandler.domain.productionLine.ProductCreationCompletedResponse;
 import ir.sharif.gamein2021.ClientHandler.domain.productionLine.ProductionLineConstructionCompletedResponse;
 import ir.sharif.gamein2021.ClientHandler.manager.LocalPushMessageManager;
@@ -43,10 +43,10 @@ public class LocalClientHandlerRequestReceiver implements ClientHandlerRequestRe
             ProductCreationCompletedRequest productCreationCompletedRequest = (ProductCreationCompletedRequest) request;
             ProductCreationCompletedResponse response = new ProductCreationCompletedResponse(productCreationCompletedRequest);
             pushMessageManager.sendMessageByTeamId(productCreationCompletedRequest.getTeamId().toString(), gson.toJson(response));
-        } else if (request instanceof ChangeGameStatusRequest) {
-            ChangeGameStatusRequest changeGameStatusRequest = (ChangeGameStatusRequest) request;
-            GameConstants.gameStatus = changeGameStatusRequest.getGameStatus();
-            ChangeGameStatusResponse response = new ChangeGameStatusResponse(changeGameStatusRequest.getGameStatus());
+        } else if (request instanceof UpdateGameStatusRequest) {
+            UpdateGameStatusRequest updateGameStatusRequest = (UpdateGameStatusRequest) request;
+            GameConstants.gameStatus = updateGameStatusRequest.getGameStatus();
+            UpdateGameStatusResponse response = new UpdateGameStatusResponse(updateGameStatusRequest.getGameStatus());
             pushMessageManager.sendMessageToAll(gson.toJson(response));
         }
 

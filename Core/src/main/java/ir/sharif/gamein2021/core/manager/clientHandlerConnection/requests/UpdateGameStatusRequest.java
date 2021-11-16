@@ -2,10 +2,10 @@ package ir.sharif.gamein2021.core.manager.clientHandlerConnection.requests;
 
 import ir.sharif.gamein2021.core.util.models.GameStatus;
 
-public class ChangeGameStatusRequest extends BaseClientHandlerRequest {
+public class UpdateGameStatusRequest extends BaseClientHandlerRequest {
     private GameStatus gameStatus;
 
-    public ChangeGameStatusRequest(String message, GameStatus gameStatus) {
+    public UpdateGameStatusRequest(String message, GameStatus gameStatus) {
         super(message);
         this.gameStatus = gameStatus;
     }

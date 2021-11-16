@@ -4,22 +4,17 @@ import ir.sharif.gamein2021.core.manager.ContractManager;
 import ir.sharif.gamein2021.core.manager.GameCalendar;
 import ir.sharif.gamein2021.core.manager.TransportManager;
 import ir.sharif.gamein2021.core.manager.WeekSupplyManager;
-import ir.sharif.gamein2021.core.domain.dto.WeekDemandDto;
 import ir.sharif.gamein2021.core.manager.*;
 import ir.sharif.gamein2021.core.manager.clientHandlerConnection.ClientHandlerRequestSenderInterface;
-import ir.sharif.gamein2021.core.manager.clientHandlerConnection.requests.ChangeGameStatusRequest;
-import ir.sharif.gamein2021.core.response.GetCurrentWeekDemandsResponse;
+import ir.sharif.gamein2021.core.manager.clientHandlerConnection.requests.UpdateGameStatusRequest;
 import ir.sharif.gamein2021.core.service.ProductionLineProductService;
 import ir.sharif.gamein2021.core.service.ProductionLineService;
 import ir.sharif.gamein2021.core.util.GameConstants;
-import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import ir.sharif.gamein2021.core.util.models.GameStatus;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @AllArgsConstructor
 @Component
@@ -40,7 +35,7 @@ public class DailySchedule {
     @Scheduled(cron = "0 49 22 13 11 ?")
     public void startGame() {
         GameConstants.gameStatus = GameStatus.RUNNING;
-        ChangeGameStatusRequest request = new ChangeGameStatusRequest("Done", GameConstants.gameStatus);
+        UpdateGameStatusRequest request = new UpdateGameStatusRequest("Done", GameConstants.gameStatus);
         clientRequestSender.send(request);
     }
 

@@ -2,7 +2,7 @@ package ir.sharif.gamein2021.ClientHandler.controller;
 
 import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.ChangeGameStatusResponse;
+import ir.sharif.gamein2021.ClientHandler.domain.UpdateGameStatusResponse;
 import ir.sharif.gamein2021.core.manager.GameCalendar;
 import ir.sharif.gamein2021.core.response.GetCurrentWeekSuppliesResponse;
 import ir.sharif.gamein2021.ClientHandler.domain.ServerTimeResponse;
@@ -114,7 +114,7 @@ public class GameDataController {
     }
 
     public void getGameStatus(ProcessedRequest processedRequest) {
-        ChangeGameStatusResponse response = new ChangeGameStatusResponse(GameConstants.gameStatus);
+        UpdateGameStatusResponse response = new UpdateGameStatusResponse(GameConstants.gameStatus);
         pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(response));
     }
 }

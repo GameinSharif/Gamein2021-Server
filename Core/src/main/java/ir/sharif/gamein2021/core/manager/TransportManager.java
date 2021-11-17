@@ -243,4 +243,13 @@ public class TransportManager
         return vehicleCost * vehicleCount;
     }
 
+    public float calculateTransportCost(Enums.VehicleType vehicleType, int distance, int productId, int productAmount)
+    {
+        Vehicle transportVehicle = ReadJsonFilesManager.findVehicleByType(vehicleType);
+        float vehicleCost = transportVehicle.getCostPerKilometer() * distance ;
+        int productVolume = ReadJsonFilesManager.findProductById(productId).getVolumetricUnit() * productAmount;
+        int vehicleCount = (int) Math.ceil((float) productVolume / transportVehicle.getCapacity());
+        return vehicleCost * vehicleCount;
+    }
+
 }

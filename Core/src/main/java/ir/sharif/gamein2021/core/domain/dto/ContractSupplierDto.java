@@ -5,6 +5,7 @@ import ir.sharif.gamein2021.core.domain.entity.ContractSupplierDetail;
 import ir.sharif.gamein2021.core.util.Enums;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.List;
 @Getter
 @Setter
@@ -15,12 +16,17 @@ public class ContractSupplierDto
 {
 
     private Integer id;
+    private LocalDate contractDate;
     private Integer supplierId;
     private Integer teamId;
     private Integer materialId;
-    private Enums.ContractType contractType;
-    private List<ContractSupplierDetailDto> contractSupplierDetails;
+    private Float pricePerUnit;
+    private Integer boughtAmount;
+    private Enums.VehicleType transportType;
+    private boolean hasInsurance;
+    private Integer transportationCost;
     private Integer terminatePenalty;
     private boolean isTerminated;
+    private Integer noMoneyPenalty;
 
 }

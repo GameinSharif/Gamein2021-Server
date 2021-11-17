@@ -64,6 +64,7 @@ public class ContractSupplierController
                 Float totalMaterialPrice = (float)0;
                 float teamCredit = teamService.findTeamById(userService.loadById(newContractSupplierRequest.playerId).getTeamId()).getCredit();
                 System.out.println("######TEAM CREDIT" + ((Float)(teamCredit)));
+                boolean success = false;
                 //if(totalMaterialPrice <= teamCredit) {
                     // TODO should we tell in advance about transport cost?
                     for (int i = 0; i < weeks + 1; i++)
@@ -71,10 +72,11 @@ public class ContractSupplierController
                         Float materialPrice = weekSupplyService.findSpecificWeekSupply(supplierId, materialId, currentWeek+i).getPrice();
                         totalMaterialPrice += (float) materialPrice * amount;
                         if(materialPrice > teamCredit && i == 0) {
-                            newContractSupplierResponse = new NewContractSupplierResponse(ResponseTypeConstant.NEW_CONTRACT_WITH_SUPPLIER,
-                                    null, materialPrice, "not_enough_money");
+                            break;
                         }else {
                             // Got enough money for at least this week's purchase
+                            System.out.println("HOLA");
+                            success = true;
                             ContractSupplierDto contractSupplierDto = new ContractSupplierDto();
                             contractSupplierDto.setContractDate(gameCalendar.getCurrentDate().plusDays(i * 7L));
                             contractSupplierDto.setBoughtAmount(newContractSupplierRequest.getAmount());
@@ -88,7 +90,7 @@ public class ContractSupplierController
                             contractSupplierDto.setTransportType(vehicleType);
                             contractSupplierDto.setNoMoneyPenalty(100); //TODO
                             contractSupplierDto.setTransportationCost(100); //TODO compute cost for transportation howw
-
+                            System.out.println(contractSupplierDto);
                             // TODO compute cost for transportation
                             /*System.out.println("##############"+ teamService.findTeamById(userService.loadById(newContractSupplierRequest.playerId).getTeamId()).toString());
                             TransportDto transportDto = transportManager.createTransport(
@@ -110,7 +112,9 @@ public class ContractSupplierController
                                 TeamDto team = teamService.loadById(newContractSupplierRequest.playerId);
                                 team.setCredit(teamCredit - totalMaterialPrice);
                                 teamService.saveOrUpdate(team);
+
                             }
+                            //System.out.println(contractSupplierDto);
                             ContractSupplierDto savedContractSupplierDto = contractSupplierService.saveOrUpdate(contractSupplierDto);
                             contractSupplierDtos.add(savedContractSupplierDto);
                         }
@@ -127,8 +131,14 @@ public class ContractSupplierController
                     contractSupplierDto.setTerminatePenalty(100); //TODO*/
                     //contractSupplierDto.setContractSupplierDetails(contractSupplierDetailDtos);
                     //ContractSupplierDto saveContractSupplierDto = contractSupplierService.saveOrUpdate(contractSupplierDto);
-                    newContractSupplierResponse = new NewContractSupplierResponse(ResponseTypeConstant.NEW_CONTRACT_WITH_SUPPLIER,
-                            contractSupplierDtos, totalMaterialPrice, "success");
+                    if(success){
+                        newContractSupplierResponse = new NewContractSupplierResponse(ResponseTypeConstant.NEW_CONTRACT_WITH_SUPPLIER,
+                                contractSupplierDtos, totalMaterialPrice, "success");
+                    }else{
+                        newContractSupplierResponse = new NewContractSupplierResponse(ResponseTypeConstant.NEW_CONTRACT_WITH_SUPPLIER,
+                                null, totalMaterialPrice, "not_enough_money");
+                    }
+
                     /*TeamDto team = teamService.loadById(newContractSupplierRequest.playerId);
                     team.setCredit(teamCredit - totalMaterialPrice);
                     teamService.saveOrUpdate(team);*/

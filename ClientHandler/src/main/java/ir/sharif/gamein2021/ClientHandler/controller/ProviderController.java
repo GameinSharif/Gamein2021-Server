@@ -41,7 +41,7 @@ public class ProviderController
 
     public void newProvider(ProcessedRequest processedRequest, NewProviderRequest newProviderRequest)
     {
-        int playerId = newProviderRequest.playerId;
+        int playerId = processedRequest.playerId;
         UserDto user = userService.loadById(playerId);
         Team userTeam = teamService.findTeamById(user.getTeamId());
 
@@ -65,7 +65,7 @@ public class ProviderController
 
     public void getProviders(ProcessedRequest processedRequest, GetProvidersRequest getProvidersRequest)
     {
-        int playerId = getProvidersRequest.playerId;
+        int playerId = processedRequest.playerId;
         UserDto user = userService.loadById(playerId);
         Team userTeam = teamService.findTeamById(user.getTeamId());
 
@@ -77,7 +77,7 @@ public class ProviderController
 
     public void removeProvider(ProcessedRequest processedRequest, RemoveProviderRequest removeProviderRequest)
     {
-        int playerId = removeProviderRequest.playerId;
+        int playerId = processedRequest.playerId;
         UserDto user = userService.loadById(playerId);
         Team userTeam = teamService.findTeamById(user.getTeamId());
 

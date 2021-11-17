@@ -33,8 +33,8 @@ public class ProductController {
     private final StorageService storageService;
     private final DcService dcService;
 
-    public void addProduct(ProcessedRequest processedRequest, AddProductRequest addProductRequest) {
-        Integer id = addProductRequest.playerId;
+    public void addProduct(ProcessedRequest request, AddProductRequest addProductRequest) {
+        Integer id = request.playerId;
         AddProductResponse response;
         try {
             UserDto userDto = userService.loadById(id);
@@ -53,11 +53,11 @@ public class ProductController {
             logger.debug(e.getMessage());
             response = new AddProductResponse(ResponseTypeConstant.ADD_PRODUCT, null, e.getMessage());
         }
-        pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(response));
+        pushMessageManager.sendMessageBySession(request.session, gson.toJson(response));
     }
 
-    public void removeProduct(ProcessedRequest processedRequest, RemoveProductRequest removeProductRequest) {
-        Integer id = removeProductRequest.playerId;
+    public void removeProduct(ProcessedRequest request, RemoveProductRequest removeProductRequest) {
+        Integer id = request.playerId;
         RemoveProductResponse response;
         try {
             UserDto userDto = userService.loadById(id);
@@ -76,11 +76,11 @@ public class ProductController {
             logger.debug(e.getMessage());
             response = new RemoveProductResponse(ResponseTypeConstant.REMOVE_PRODUCT, null, e.getMessage());
         }
-        pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(response));
+        pushMessageManager.sendMessageBySession(request.session, gson.toJson(response));
     }
 
-    public void getStorages(ProcessedRequest processedRequest, GetStorageProductsRequest getStorageProductsRequest) {
-        Integer id = getStorageProductsRequest.playerId;
+    public void getStorages(ProcessedRequest request, GetStorageProductsRequest getStorageProductsRequest) {
+        Integer id = request.playerId;
         GetStorageProductsResponse response;
         try {
             UserDto userDto = userService.loadById(id);
@@ -93,7 +93,7 @@ public class ProductController {
             logger.debug(e.getMessage());
             response = new GetStorageProductsResponse(ResponseTypeConstant.GET_STORAGES, null, e.getMessage());
         }
-        pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(response));
+        pushMessageManager.sendMessageBySession(request.session, gson.toJson(response));
     }
 
     private void checkTeamAndStorage(Integer buildingId, boolean isDc, TeamDto teamDto) {

@@ -33,7 +33,7 @@ public class AuctionController
 
     public void addBidForAuction(ProcessedRequest request, BidForAuctionRequest bidForAuctionRequest)
     {
-        Integer id = bidForAuctionRequest.playerId;
+        Integer id = request.playerId;
         UserDto userDto = userService.loadById(id);
         Integer teamId = userDto.getTeamId();
         TeamDto teamDto = teamService.loadById(teamId);

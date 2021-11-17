@@ -42,26 +42,26 @@ public class NegotiationController
     private final GameCalendar gameCalendar;
     private final Gson gson = new Gson();
 
-    public void getNegotiations(ProcessedRequest processedRequest, GetNegotiationsRequest getNegotiationsRequest)
+    public void getNegotiations(ProcessedRequest request, GetNegotiationsRequest getNegotiationsRequest)
     {
-        int playerId = getNegotiationsRequest.playerId;
+        int playerId = request.playerId;
         UserDto user = userService.loadById(playerId);
         Team userTeam = teamService.findTeamById(user.getTeamId());
         if (userTeam == null)
         {
             GetNegotiationsResponse getNegotiationsResponse = new GetNegotiationsResponse(ResponseTypeConstant.GET_NEGOTIATIONS, new ArrayList<>());
-            localPushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(getNegotiationsResponse));
+            localPushMessageManager.sendMessageBySession(request.session, gson.toJson(getNegotiationsResponse));
             return;
         }
 
         ArrayList<NegotiationDto> negotiations = negotiationService.findByTeam(userTeam);
         GetNegotiationsResponse getNegotiationsResponse = new GetNegotiationsResponse(ResponseTypeConstant.GET_NEGOTIATIONS, negotiations);
-        localPushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(getNegotiationsResponse));
+        localPushMessageManager.sendMessageBySession(request.session, gson.toJson(getNegotiationsResponse));
     }
 
-    public void newProviderNegotiation(ProcessedRequest processedRequest, NewProviderNegotiationRequest newProviderNegotiationRequest)
+    public void newProviderNegotiation(ProcessedRequest request, NewProviderNegotiationRequest newProviderNegotiationRequest)
     {
-        UserDto user = userService.loadById(newProviderNegotiationRequest.playerId);
+        UserDto user = userService.loadById(request.playerId);
         NewProviderNegotiationResponse newProviderNegotiationResponse;
         if (user != null)
         {
@@ -95,12 +95,12 @@ public class NegotiationController
             }
         }
         newProviderNegotiationResponse = new NewProviderNegotiationResponse(ResponseTypeConstant.NEW_PROVIDER_NEGOTIATION, null);
-        localPushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(newProviderNegotiationResponse));
+        localPushMessageManager.sendMessageBySession(request.session, gson.toJson(newProviderNegotiationResponse));
     }
 
-    public void editNegotiationCostPerUnit(ProcessedRequest processedRequest, EditNegotiationCostPerUnitRequest editRequest)
+    public void editNegotiationCostPerUnit(ProcessedRequest request, EditNegotiationCostPerUnitRequest editRequest)
     {
-        UserDto user = userService.loadById(editRequest.playerId);
+        UserDto user = userService.loadById(request.playerId);
         EditNegotiationCostPerUnitResponse editResponse;
         if (user != null)
         {
@@ -140,7 +140,7 @@ public class NegotiationController
             }
         }
         editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, null);
-        localPushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(editResponse));
+        localPushMessageManager.sendMessageBySession(request.session, gson.toJson(editResponse));
     }
 
     private void startTransport(NegotiationDto negotiationDto)

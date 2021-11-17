@@ -27,7 +27,7 @@ public class TransportController
 
     public void getTeamTransports(ProcessedRequest processedRequest, GetTeamTransportsRequest getTeamTransportsRequest)
     {
-        int playerId = getTeamTransportsRequest.playerId;
+        int playerId = processedRequest.playerId;
         UserDto user = userService.loadById(playerId);
         Integer teamId = user.getTeamId();
         ArrayList<TransportDto> transportDtos = transportService.getTransportsByTeam(teamId);

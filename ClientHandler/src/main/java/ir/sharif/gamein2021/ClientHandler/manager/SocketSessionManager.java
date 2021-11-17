@@ -9,8 +9,7 @@ import java.util.*;
 
 @Service
 @Scope("singleton")
-public class SocketSessionManager
-{
+public class SocketSessionManager {
     private final Map<String, WebSocketSession> unAuthenticatedSessions = new HashMap<>();
     private final Map<String, WebSocketSession> sessionBySessionId = new HashMap<>();
 
@@ -115,7 +114,7 @@ public class SocketSessionManager
         return sessions;
     }
 
-    public WebSocketSession getSessionByUserId(String userId){
+    public WebSocketSession getSessionByUserId(String userId) {
         String sessionId = sessionIdByUserId.get(userId);
         return getSessionBySessionId(sessionId);
     }
@@ -126,5 +125,13 @@ public class SocketSessionManager
 
     public List<String> getSessionIdsByTeamId(String teamId) {
         return new ArrayList<>(sessionIdsByTeamId.getOrDefault(teamId, new HashSet<>()));
+    }
+
+    public String getUserIdBySessionId(String sessionId) {
+        return userIdBySessionId.getOrDefault(sessionId, null);
+    }
+
+    public String getTeamIdBySessionId(String sessionId) {
+        return teamIdBySessionId.getOrDefault(sessionId, null);
     }
 }

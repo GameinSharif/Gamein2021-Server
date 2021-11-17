@@ -62,7 +62,7 @@ public class ContractSupplierController
                 Float materialPrice = weekSupplyService.findSpecificWeekSupply(supplierId, materialId, currentWeek).getPrice();
                 List<ContractSupplierDetailDto> contractSupplierDetailDtos = new ArrayList<>();
                 Float totalMaterialPrice = (float)weeks * materialPrice * amount;
-                float teamCredit = teamService.findTeamById(userService.loadById(newContractSupplierRequest.playerId).getTeamId()).getCredit();
+                float teamCredit = teamService.findTeamById(userService.loadById(request.playerId).getTeamId()).getCredit();
                 System.out.println("######TEAM CREDIT" + ((Float)(teamCredit)));
                 if(totalMaterialPrice <= teamCredit) {
                     // TODO should we tell in advance about transport cost?
@@ -76,13 +76,13 @@ public class ContractSupplierController
 
 
                         // TODO compute cost for transportation
-                        System.out.println("##############"+ teamService.findTeamById(userService.loadById(newContractSupplierRequest.playerId).getTeamId()).toString());
+                        System.out.println("##############"+ teamService.findTeamById(userService.loadById(request.playerId).getTeamId()).toString());
                         TransportDto transportDto = transportManager.createTransport(
                                 vehicleType,
                                 Enums.TransportNodeType.SUPPLIER,
                                 supplierId,
                                 Enums.TransportNodeType.FACTORY,
-                                teamService.findTeamById(userService.loadById(newContractSupplierRequest.playerId).getTeamId()).getFactoryId(),
+                                teamService.findTeamById(userService.loadById(request.playerId).getTeamId()).getFactoryId(),
                                 gameCalendar.getCurrentDate().plusDays(i * 7L),
                                 hasInsurance,
                                 materialId,
@@ -94,7 +94,7 @@ public class ContractSupplierController
 
                     contractSupplierDto.setSupplierId(supplierId);
                     contractSupplierDto.setMaterialId(materialId);
-                    contractSupplierDto.setTeamId(userService.loadById(newContractSupplierRequest.playerId).getTeamId());
+                    contractSupplierDto.setTeamId(userService.loadById(request.playerId).getTeamId());
                     // check whether or not contract is longterm
                     if(contractSupplierDetailDtos.size() > 1)
                         contractSupplierDto.setContractType(Enums.ContractType.LONGTERM);
@@ -107,10 +107,10 @@ public class ContractSupplierController
                     ContractSupplierDto saveContractSupplierDto = contractSupplierService.saveOrUpdate(contractSupplierDto);
                     newContractSupplierResponse = new NewContractSupplierResponse(ResponseTypeConstant.NEW_CONTRACT_WITH_SUPPLIER,
                             saveContractSupplierDto, totalMaterialPrice, "success");
-                    TeamDto team = teamService.loadById(newContractSupplierRequest.playerId);
+                    TeamDto team = teamService.loadById(request.playerId);
                     team.setCredit(teamCredit - totalMaterialPrice);
                     teamService.saveOrUpdate(team);
-                    System.out.println("####NOW "+teamService.findTeamById(newContractSupplierRequest.playerId).getCredit());
+                    System.out.println("####NOW "+teamService.findTeamById(request.playerId).getCredit());
                 }else{
                     newContractSupplierResponse = new NewContractSupplierResponse(ResponseTypeConstant.NEW_CONTRACT_WITH_SUPPLIER,
                             null, totalMaterialPrice, "not_enough_money");
@@ -129,12 +129,12 @@ public class ContractSupplierController
     {
         ContractSupplierDto contractSupplierDto = contractSupplierService.findById(terminateLongtermContractSupplierRequest.getContractId());
         TerminateLongtermContractSupplierResponse terminateLongtermContractSupplierResponse;
-        if (contractSupplierDto.getTeamId().equals(userService.loadById(terminateLongtermContractSupplierRequest.playerId).getTeamId()) &&
+        if (contractSupplierDto.getTeamId().equals(userService.loadById(request.playerId).getTeamId()) &&
                 contractSupplierDto.getContractType().equals(Enums.ContractType.LONGTERM))
         {
             contractSupplierDto.setTerminated(true);
             Integer penalty = contractSupplierDto.getTerminatePenalty();
-            float teamCredit = teamService.findTeamById(userService.loadById(terminateLongtermContractSupplierRequest.playerId).getTeamId()).getCredit();
+            float teamCredit = teamService.findTeamById(userService.loadById(request.playerId).getTeamId()).getCredit();
             System.out.println("######TEAM CREDIT" + ((Float)(teamCredit)));
             if(teamCredit < penalty)
                 terminateLongtermContractSupplierResponse = new TerminateLongtermContractSupplierResponse(ResponseTypeConstant.TERMINATE_LONGTERM_CONTRACT_WITH_SUPPLIER, "not_enough_money", contractSupplierDto);
@@ -154,7 +154,7 @@ public class ContractSupplierController
                 if(terminatedCounter == 0){
                     terminateLongtermContractSupplierResponse = new TerminateLongtermContractSupplierResponse(ResponseTypeConstant.TERMINATE_LONGTERM_CONTRACT_WITH_SUPPLIER, "nothing_to_terminate", contractSupplierDto);
                 }else{
-                    TeamDto team = teamService.loadById(terminateLongtermContractSupplierRequest.playerId);
+                    TeamDto team = teamService.loadById(request.playerId);
                     team.setCredit(teamCredit - penalty);
                     teamService.saveOrUpdate(team);
                     terminateLongtermContractSupplierResponse = new TerminateLongtermContractSupplierResponse(ResponseTypeConstant.TERMINATE_LONGTERM_CONTRACT_WITH_SUPPLIER, "terminated", contractSupplierDto);
@@ -173,7 +173,7 @@ public class ContractSupplierController
 
     public void getContractsSupplier(ProcessedRequest request, GetContractsSupplierRequest getContractsSupplierRequest)
     {
-        int playerId = getContractsSupplierRequest.playerId;
+        int playerId = request.playerId;
         UserDto user = userService.loadById(playerId);
         Team userTeam = teamService.findTeamById(user.getTeamId());
         GetContractsSupplierResponse getContractsSupplierResponse;

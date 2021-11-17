@@ -54,6 +54,8 @@ public class MainController {
             return;
         }
 
+
+
         switch (requestType) {
             case LOGIN:
                 LoginRequest loginRequest = gson.fromJson(requestData, LoginRequest.class);
@@ -78,7 +80,7 @@ public class MainController {
                 break;
             case GET_CONTRACTS:
                 GetContractsRequest getContractsRequest = gson.fromJson(requestData, GetContractsRequest.class);
-                contractController.getContracts(getContractsRequest);
+                contractController.getContracts(processedRequest, getContractsRequest);
                 break;
             case GET_NEGOTIATIONS:
                 GetNegotiationsRequest getNegotiationsRequest = gson.fromJson(requestData, GetNegotiationsRequest.class);
@@ -201,11 +203,11 @@ public class MainController {
                 break;
             case NEW_CONTRACT:
                 NewContractRequest newContractRequest = gson.fromJson(requestData, NewContractRequest.class);
-                contractController.newContract(newContractRequest);
+                contractController.newContract(processedRequest, newContractRequest);
                 break;
             case TERMINATE_CONTRACT:
                 TerminateLongtermContractRequest terminateLongtermContractRequest = gson.fromJson(requestData, TerminateLongtermContractRequest.class);
-                contractController.terminateLongtermContract(terminateLongtermContractRequest);
+                contractController.terminateLongtermContract(processedRequest, terminateLongtermContractRequest);
                 break;
             case GET_GAME_STATUS:
                 gameDataController.getGameStatus(processedRequest);

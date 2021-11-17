@@ -25,6 +25,7 @@ public class GameConstants {
     public final int rawMaterialCapacity = 2000000;
     public final int semiFinishedProductCapacity = 2000000;
     public final int finishedProductCapacity = 2000000;
+    public final float insuranceCostFactor = 0.05f;
 
     public static final float CrushProbability = 0.01f;
 

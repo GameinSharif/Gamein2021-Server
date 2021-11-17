@@ -50,12 +50,17 @@ public class ContractManager
                 try {
                     WeekSupplyDto weekSupplyDto = weekSupplyService.findSpecificWeekSupply(contractSupplierDto.getSupplierId(), contractSupplierDto.getMaterialId(), gameCalendar.getWeek());
                     Float price = weekSupplyDto.getPrice();
-                    for (ContractSupplierDetailDto contractSupplierDetailDto : contractSupplierService.getContractSupplierDetailDtos(contractSupplierDto))
+                    weekSupplyDto.setSales(weekSupplyDto.getSales() + contractSupplierDto.getBoughtAmount());
+                    weekSupplyService.saveOrUpdate(weekSupplyDto);
+                    contractSupplierService.saveOrUpdate(contractSupplierDto);
+                    // TODO start transport?
+
+                    /*for (ContractSupplierDetailDto contractSupplierDetailDto : contractSupplierService.getContractSupplierDetailDtos(contractSupplierDto))
                     {
                         if (contractSupplierDetailDto.getContractDate().equals(today))
                         {
                             // update price with this week's price
-                            contractSupplierDetailDto.setPricePerUnit(price);
+                            //contractSupplierDetailDto.setPricePerUnit(price);
                             // Add to Supplier's weekly sale
                             weekSupplyDto.setSales(weekSupplyDto.getSales() + contractSupplierDetailDto.getBoughtAmount());
                             weekSupplyService.saveOrUpdate(weekSupplyDto);
@@ -63,7 +68,7 @@ public class ContractManager
 
                             //TODO start transport
                         }
-                    }
+                    }*/
                 }
                 catch (Exception e)
                 {

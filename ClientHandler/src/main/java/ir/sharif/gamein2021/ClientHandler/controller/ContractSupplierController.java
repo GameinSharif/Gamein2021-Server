@@ -152,9 +152,9 @@ public class ContractSupplierController
         ContractSupplierDto contractSupplierDto = contractSupplierService.findById(terminateLongtermContractSupplierRequest.getContractId());
         TerminateLongtermContractSupplierResponse terminateLongtermContractSupplierResponse;
         if (contractSupplierDto.getTeamId().equals(userService.loadById(terminateLongtermContractSupplierRequest.playerId).getTeamId()) &&
-                contractSupplierDto.getContractType().equals(Enums.ContractType.LONGTERM))
+                contractSupplierDto.getContractDate().isBefore(gameCalendar.getCurrentDate()))
         {
-            contractSupplierDto.setTerminated(true);
+
             Integer penalty = contractSupplierDto.getTerminatePenalty();
             float teamCredit = teamService.findTeamById(userService.loadById(terminateLongtermContractSupplierRequest.playerId).getTeamId()).getCredit();
             System.out.println("######TEAM CREDIT" + ((Float)(teamCredit)));
@@ -162,7 +162,8 @@ public class ContractSupplierController
                 terminateLongtermContractSupplierResponse = new TerminateLongtermContractSupplierResponse(ResponseTypeConstant.TERMINATE_LONGTERM_CONTRACT_WITH_SUPPLIER, "not_enough_money", contractSupplierDto);
             else{
                 // Terminating contract's transports
-                Integer terminatedCounter = 0;
+                contractSupplierDto.setTerminated(true);
+                /*Integer terminatedCounter = 0;
                 for(ContractSupplierDetailDto contractSupplierDetailDto: contractSupplierDto.getContractSupplierDetails()){
                     TransportDto transportDto = transportService.loadById(contractSupplierDetailDto.getTransportId());
                     if (transportDto.getTransportState().equals(Enums.TransportState.PENDING)){
@@ -175,12 +176,12 @@ public class ContractSupplierController
                 // Maybe all transports have been sent and you're too late!!
                 if(terminatedCounter == 0){
                     terminateLongtermContractSupplierResponse = new TerminateLongtermContractSupplierResponse(ResponseTypeConstant.TERMINATE_LONGTERM_CONTRACT_WITH_SUPPLIER, "nothing_to_terminate", contractSupplierDto);
-                }else{
+                }else{*/
                     TeamDto team = teamService.loadById(terminateLongtermContractSupplierRequest.playerId);
                     team.setCredit(teamCredit - penalty);
                     teamService.saveOrUpdate(team);
                     terminateLongtermContractSupplierResponse = new TerminateLongtermContractSupplierResponse(ResponseTypeConstant.TERMINATE_LONGTERM_CONTRACT_WITH_SUPPLIER, "terminated", contractSupplierDto);
-                }
+                //}
 
             }
 

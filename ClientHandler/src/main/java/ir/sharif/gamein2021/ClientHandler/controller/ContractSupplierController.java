@@ -67,7 +67,7 @@ public class ContractSupplierController
                 boolean success = false;
                 //if(totalMaterialPrice <= teamCredit) {
                     // TODO should we tell in advance about transport cost?
-                    for (int i = 0; i < weeks + 1; i++)
+                    for (int i = 0; i < weeks; i++)
                     {
                         Float materialPrice = weekSupplyService.findSpecificWeekSupply(supplierId, materialId, currentWeek+i).getPrice();
                         totalMaterialPrice += (float) materialPrice * amount;
@@ -80,7 +80,7 @@ public class ContractSupplierController
                             ContractSupplierDto contractSupplierDto = new ContractSupplierDto();
                             contractSupplierDto.setContractDate(gameCalendar.getCurrentDate().plusDays(i * 7L));
                             contractSupplierDto.setBoughtAmount(newContractSupplierRequest.getAmount());
-                            contractSupplierDto.setPricePerUnit(materialPrice);
+                            //contractSupplierDto.setPricePerUnit(materialPrice);
                             contractSupplierDto.setSupplierId(supplierId);
                             contractSupplierDto.setMaterialId(materialId);
                             contractSupplierDto.setTeamId(userService.loadById(newContractSupplierRequest.playerId).getTeamId());
@@ -89,7 +89,7 @@ public class ContractSupplierController
                             contractSupplierDto.setHasInsurance(hasInsurance);
                             contractSupplierDto.setTransportType(vehicleType);
                             contractSupplierDto.setNoMoneyPenalty(100); //TODO
-                            contractSupplierDto.setTransportationCost(100); //TODO compute cost for transportation howw
+                            //contractSupplierDto.setTransportationCost(100);
                             System.out.println(contractSupplierDto);
                             // TODO compute cost for transportation
                             /*System.out.println("##############"+ teamService.findTeamById(userService.loadById(newContractSupplierRequest.playerId).getTeamId()).toString());
@@ -108,12 +108,12 @@ public class ContractSupplierController
                             //TODO i don't think we should do it here
                             // if we're not gonna count in all contracts' prices
                             // Because then it would be difficult to find which is which
-                            if(i == 0){
+                            /*if(i == 0){
                                 TeamDto team = teamService.loadById(newContractSupplierRequest.playerId);
                                 team.setCredit(teamCredit - totalMaterialPrice);
                                 teamService.saveOrUpdate(team);
 
-                            }
+                            }*/
                             //System.out.println(contractSupplierDto);
                             ContractSupplierDto savedContractSupplierDto = contractSupplierService.saveOrUpdate(contractSupplierDto);
                             contractSupplierDtos.add(savedContractSupplierDto);

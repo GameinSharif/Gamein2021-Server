@@ -224,7 +224,7 @@ public class TransportManager
         }
     }
 
-    private int getTransportDistance(TransportDto transportDto) {
+    public int getTransportDistance(TransportDto transportDto) {
         double[] sourceLocation = getLocation(transportDto.getSourceType(), transportDto.getSourceId());
         double[] destinationLocation = getLocation(transportDto.getDestinationType(), transportDto.getDestinationId());
         double distance = (sourceLocation[0] - destinationLocation[0]) * (sourceLocation[0] - destinationLocation[0]);

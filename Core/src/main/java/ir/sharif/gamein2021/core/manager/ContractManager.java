@@ -3,6 +3,7 @@ package ir.sharif.gamein2021.core.manager;
 
 import ir.sharif.gamein2021.core.domain.dto.*;
 import ir.sharif.gamein2021.core.domain.entity.ContractDetail;
+import ir.sharif.gamein2021.core.domain.entity.User;
 import ir.sharif.gamein2021.core.domain.entity.WeekDemand;
 import ir.sharif.gamein2021.core.service.*;
 import ir.sharif.gamein2021.core.util.Enums;
@@ -18,8 +19,8 @@ import java.time.LocalDate;
 @Component
 public class ContractManager
 {
+    private final TransportService transportService;
     private final ContractSupplierService contractSupplierService;
-    private final ContractSupplierDetailService contractSupplierDetailService;
     private final ContractService contractService;
     private final ContractDetailService contractDetailService;
     private final TeamService teamService;
@@ -50,10 +51,28 @@ public class ContractManager
                 try {
                     WeekSupplyDto weekSupplyDto = weekSupplyService.findSpecificWeekSupply(contractSupplierDto.getSupplierId(), contractSupplierDto.getMaterialId(), gameCalendar.getWeek());
                     Float price = weekSupplyDto.getPrice();
+                    contractSupplierDto.setPricePerUnit(price);
+                    Enums.VehicleType vehicleType = contractSupplierDto.getTransportType();
+                    Integer supplierId = contractSupplierDto.getSupplierId();
+                    boolean hasInsurance = contractSupplierDto.isHasInsurance();
+                    Integer materialId = contractSupplierDto.getMaterialId();
+                    Integer amount = contractSupplierDto.getBoughtAmount();
+                    TransportDto transportDto = transportManager.createTransport(
+                            vehicleType,
+                            Enums.TransportNodeType.SUPPLIER,
+                            supplierId,
+                            Enums.TransportNodeType.FACTORY,
+                            teamService.loadById(contractSupplierDto.getTeamId()).getFactoryId(),
+                            gameCalendar.getCurrentDate(),
+                            hasInsurance,
+                            materialId,
+                            amount);
+                    Integer distance = transportManager.getTransportDistance(transportDto);
+                    contractSupplierDto.setTransportationCost(transportManager.calculateTransportCost(transportDto.getVehicleType(),
+                            distance, materialId, amount, hasInsurance));
                     weekSupplyDto.setSales(weekSupplyDto.getSales() + contractSupplierDto.getBoughtAmount());
                     weekSupplyService.saveOrUpdate(weekSupplyDto);
                     contractSupplierService.saveOrUpdate(contractSupplierDto);
-                    // TODO start transport?
 
                     /*for (ContractSupplierDetailDto contractSupplierDetailDto : contractSupplierService.getContractSupplierDetailDtos(contractSupplierDto))
                     {

@@ -44,8 +44,8 @@ public class ContractSupplier implements BaseEntity
     @Column(name = "has_insurance", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean hasInsurance;
 
-    @Column(name = "transportation_cost", nullable = false)
-    private Integer transportationCost;
+    @Column(name = "transportation_cost")
+    private Float transportationCost;
 
     @Column(name = "terminate_penalty", nullable = false)
     private Integer terminatePenalty;

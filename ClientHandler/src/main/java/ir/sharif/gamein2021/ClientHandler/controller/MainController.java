@@ -43,6 +43,7 @@ public class MainController {
     private final DcController dcController;
     private final ProductController productController;
     private final GameStatusController gameStatusController;
+    private final AccessManagementController accessManagementController;
     private final Gson gson;
 
     public void HandleMessage(ProcessedRequest processedRequest) {
@@ -50,11 +51,8 @@ public class MainController {
         JSONObject obj = new JSONObject(requestData);
         RequestTypeConstant requestType = RequestTypeConstant.values()[obj.getInt("requestTypeConstant")];
 
-        if (!gameStatusController.validateGameStatus(processedRequest, requestType)) {
-            return;
-        }
-
-
+        if (!gameStatusController.validateGameStatus(processedRequest, requestType)) return;
+        if (!accessManagementController.validateAccess(processedRequest, requestType)) return;
 
         switch (requestType) {
             case LOGIN:

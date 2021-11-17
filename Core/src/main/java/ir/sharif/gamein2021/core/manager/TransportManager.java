@@ -233,10 +233,12 @@ public class TransportManager
         return (int) Math.ceil(distance * GameConstants.DistanceConstant * ReadJsonFilesManager.findVehicleByType(transportDto.getVehicleType()).getCoefficient());
     }
 
-    public float calculateTransportCost(TransportDto transportDto) {
-        Vehicle transportVehicle = ReadJsonFilesManager.findVehicleByType(transportDto.getVehicleType());
-        int vehicleCost = transportVehicle.getCostPerKilometer() * getTransportDistance(transportDto);
-        int productVolume = ReadJsonFilesManager.findProductById(transportDto.getContentProductId()).getVolumetricUnit() * transportDto.getContentProductAmount();
+    public float calculateTransportCost(Enums.VehicleType vehicleType, int distance, int productId, int productAmount, boolean hasInsurance)
+    {
+        float insuranceFactor = (hasInsurance ? (1 + GameConstants.Instance.insuranceCostFactor) : 1);
+        Vehicle transportVehicle = ReadJsonFilesManager.findVehicleByType(vehicleType);
+        float vehicleCost = transportVehicle.getCostPerKilometer() * distance * insuranceFactor;
+        int productVolume = ReadJsonFilesManager.findProductById(productId).getVolumetricUnit() * productAmount;
         int vehicleCount = (int) Math.ceil((float) productVolume / transportVehicle.getCapacity());
         return vehicleCost * vehicleCount;
     }

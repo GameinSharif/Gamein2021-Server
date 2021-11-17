@@ -26,17 +26,10 @@ public class GameConstants {
     public final int semiFinishedProductCapacity = 2000000;
     public final int finishedProductCapacity = 2000000;
     public final float insuranceCostFactor = 0.05f;
+    public final int distanceConstant = 100;
 
     public static final float CrushProbability = 0.01f;
 
-    public static final int AuctionRoundLengthInSeconds = 300;
-
-    public static final int DistanceConstant = 100;
-
-    public static GameConstants getInstance() {
-        return Instance;
-    }
     public static boolean IsGameStarted = false;
-
     public static GameStatus gameStatus = GameStatus.RUNNING;
 }

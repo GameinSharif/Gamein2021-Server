@@ -43,6 +43,7 @@ public class MainController {
     private final DcController dcController;
     private final ProductController productController;
     private final GameStatusController gameStatusController;
+    private final AccessManagementController accessManagementController;
     private final Gson gson;
 
     public void HandleMessage(ProcessedRequest processedRequest) {
@@ -50,9 +51,8 @@ public class MainController {
         JSONObject obj = new JSONObject(requestData);
         RequestTypeConstant requestType = RequestTypeConstant.values()[obj.getInt("requestTypeConstant")];
 
-        if (!gameStatusController.validateGameStatus(processedRequest, requestType)) {
-            return;
-        }
+        if (!gameStatusController.validateGameStatus(processedRequest, requestType)) return;
+        if (!accessManagementController.validateAccess(processedRequest, requestType)) return;
 
         switch (requestType) {
             case LOGIN:
@@ -78,7 +78,7 @@ public class MainController {
                 break;
             case GET_CONTRACTS:
                 GetContractsRequest getContractsRequest = gson.fromJson(requestData, GetContractsRequest.class);
-                contractController.getContracts(getContractsRequest);
+                contractController.getContracts(processedRequest, getContractsRequest);
                 break;
             case GET_NEGOTIATIONS:
                 GetNegotiationsRequest getNegotiationsRequest = gson.fromJson(requestData, GetNegotiationsRequest.class);
@@ -201,11 +201,11 @@ public class MainController {
                 break;
             case NEW_CONTRACT:
                 NewContractRequest newContractRequest = gson.fromJson(requestData, NewContractRequest.class);
-                contractController.newContract(newContractRequest);
+                contractController.newContract(processedRequest, newContractRequest);
                 break;
             case TERMINATE_CONTRACT:
                 TerminateLongtermContractRequest terminateLongtermContractRequest = gson.fromJson(requestData, TerminateLongtermContractRequest.class);
-                contractController.terminateLongtermContract(terminateLongtermContractRequest);
+                contractController.terminateLongtermContract(processedRequest, terminateLongtermContractRequest);
                 break;
             case GET_GAME_STATUS:
                 gameDataController.getGameStatus(processedRequest);

@@ -30,8 +30,8 @@ public class DcController {
     private final UserService userService;
     private final TeamService teamService;
 
-    public void buyDc(ProcessedRequest processedRequest, BuyingDcRequest buyingDcRequest) {
-        Integer id = buyingDcRequest.playerId;
+    public void buyDc(ProcessedRequest request, BuyingDcRequest buyingDcRequest) {
+        Integer id = request.playerId;
         BuyingDcResponse response;
         try {
             UserDto userDto = userService.loadById(id);
@@ -46,10 +46,10 @@ public class DcController {
             logger.debug(e.getMessage());
             response = new BuyingDcResponse(ResponseTypeConstant.BUY_DC, null, e.getMessage());
         }
-        pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(response));
+        pushMessageManager.sendMessageBySession(request.session, gson.toJson(response));
     }
-    public void sellDc(ProcessedRequest processedRequest, SellingDcRequest sellingDcRequest) {
-        Integer id = sellingDcRequest.playerId;
+    public void sellDc(ProcessedRequest request, SellingDcRequest sellingDcRequest) {
+        Integer id = request.playerId;
         SellingDcResponse response;
         try {
             UserDto userDto = userService.loadById(id);
@@ -64,6 +64,6 @@ public class DcController {
             logger.debug(e.getMessage());
             response = new SellingDcResponse(ResponseTypeConstant.SELL_DC, null, e.getMessage());
         }
-        pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(response));
+        pushMessageManager.sendMessageBySession(request.session, gson.toJson(response));
     }
 }

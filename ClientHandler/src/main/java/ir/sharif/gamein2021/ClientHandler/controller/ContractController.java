@@ -42,9 +42,9 @@ public class ContractController
     private final TransportManager transportManager;
     private final Gson gson = new Gson();
 
-    public void getContracts(GetContractsRequest getContractsRequest)
+    public void getContracts(ProcessedRequest request, GetContractsRequest getContractsRequest)
     {
-        int playerId = getContractsRequest.playerId;
+        int playerId = request.playerId;
         UserDto user = userService.loadById(playerId);
         Team userTeam = teamService.findTeamById(user.getTeamId());
         //TODO check user and his team is not null
@@ -57,9 +57,9 @@ public class ContractController
         pushMessageManager.sendMessageByTeamId(userTeam.getId().toString(), gson.toJson(getContractsResponse));
     }
 
-    public void newContract(NewContractRequest newContractRequest)
+    public void newContract(ProcessedRequest request, NewContractRequest newContractRequest)
     {
-        int playerId = newContractRequest.playerId;
+        int playerId = request.playerId;
         UserDto user = userService.loadById(playerId);
         Team userTeam = teamService.findTeamById(user.getTeamId());
 
@@ -106,9 +106,9 @@ public class ContractController
         }
     }
 
-    public void terminateLongtermContract(TerminateLongtermContractRequest terminateLongtermContractRequest)
+    public void terminateLongtermContract(ProcessedRequest request, TerminateLongtermContractRequest terminateLongtermContractRequest)
     {
-        int playerId = terminateLongtermContractRequest.playerId;
+        int playerId = request.playerId;
         UserDto user = userService.loadById(playerId);
         TeamDto userTeam = teamService.loadById(user.getTeamId());
 

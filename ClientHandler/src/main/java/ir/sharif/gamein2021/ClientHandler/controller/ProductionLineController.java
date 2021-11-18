@@ -40,7 +40,7 @@ public class ProductionLineController {
     }
 
     public void GetProductionLines(ProcessedRequest processedRequest, GetProductionLinesRequest request) {
-        int playerId = request.playerId;
+        int playerId = processedRequest.playerId;
         UserDto user = userService.loadById(playerId);
         Team userTeam = teamService.findTeamById(user.getTeamId());
 
@@ -51,7 +51,7 @@ public class ProductionLineController {
     }
 
     public void constructProductionLine(ProcessedRequest processedRequest, ConstructProductionLineRequest request) {
-        int playerId = request.playerId;
+        int playerId = processedRequest.playerId;
         UserDto user = userService.loadById(playerId);
 
         ProductionLineDto productionLine = new ProductionLineDto();
@@ -75,7 +75,7 @@ public class ProductionLineController {
     }
 
     public void scrapProductionLine(ProcessedRequest processedRequest, ScrapProductionLineRequest request) {
-        int playerId = request.playerId;
+        int playerId = processedRequest.playerId;
         UserDto user = userService.loadById(playerId);
 
         ScrapProductionLineResponse response = new ScrapProductionLineResponse();
@@ -91,7 +91,7 @@ public class ProductionLineController {
     }
 
     public void StartProduction(ProcessedRequest processedRequest, StartProductionRequest request) {
-        int playerId = request.playerId;
+        int playerId = processedRequest.playerId;
         UserDto user = userService.loadById(playerId);
 
         StartProductionResponse response = new StartProductionResponse();
@@ -110,7 +110,7 @@ public class ProductionLineController {
     }
 
     public void UpgradeProductionLineQuality(ProcessedRequest processedRequest, UpgradeProductionLineQualityRequest request) {
-        int playerId = request.playerId;
+        int playerId = processedRequest.playerId;
         UserDto user = userService.loadById(playerId);
 
         UpgradeProductionLineQualityResponse response = new UpgradeProductionLineQualityResponse();
@@ -127,7 +127,7 @@ public class ProductionLineController {
     }
 
     public void UpgradeProductionLineEfficiency(ProcessedRequest processedRequest, UpgradeProductionLineEfficiencyRequest request) {
-        int playerId = request.playerId;
+        int playerId = processedRequest.playerId;
         UserDto user = userService.loadById(playerId);
 
         UpgradeProductionLineEfficiencyResponse response = new UpgradeProductionLineEfficiencyResponse();

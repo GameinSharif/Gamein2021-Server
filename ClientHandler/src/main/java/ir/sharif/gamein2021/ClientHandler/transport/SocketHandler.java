@@ -56,12 +56,12 @@ public class SocketHandler extends TextWebSocketHandler {
                 mainController.HandleMessage(processedRequest, transaction);
             }catch (Exception e){
                 e.printStackTrace();
+                transaction.captureException(e);
             }
 
             System.out.println("### outta handler");
         } catch (Exception exception) {
             logger.debug(exception);
-            transaction.captureException(exception);
         }
         finally {
             transaction.end();

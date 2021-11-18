@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,6 +38,15 @@ public class ContractService extends AbstractCrudService<ContractDto, Contract, 
     public List<ContractDto> findByTeam(Team team)
     {
         List<Contract> contracts = contractRepository.findContractsByTeam(team);
+        return contracts.stream()
+                .map(e -> modelMapper.map(e, ContractDto.class))
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<ContractDto> findByDate(LocalDate date)
+    {
+        List<Contract> contracts = contractRepository.findContractsByContractDate(date);
         return contracts.stream()
                 .map(e -> modelMapper.map(e, ContractDto.class))
                 .collect(Collectors.toList());

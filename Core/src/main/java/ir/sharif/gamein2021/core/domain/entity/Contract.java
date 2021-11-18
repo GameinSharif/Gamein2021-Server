@@ -4,6 +4,7 @@ import ir.sharif.gamein2021.core.util.Enums.ContractType;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -28,13 +29,22 @@ public class Contract implements BaseEntity
     @Column(name = "product_id", nullable = false)
     private Integer productId;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "contract_type", nullable = false)
-    private ContractType contractType;
+    @Column(name = "contract_date", nullable = false)
+    private LocalDate contractDate;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    @JoinColumn(name = "contract_id")
-    private List<ContractDetail> contractDetails;
+    @Column(name = "supply_amount", nullable = false)
+    private Integer supplyAmount;
+
+    @Column(name = "price_per_unit", nullable = false)
+    private Float pricePerUnit;
+
+    @Column(name = "bought_amount")
+    private Integer boughtAmount;
+
+    //TODO add parameters needed after calculating shares
+
+    @Column(name = "lost_sale_penalty")
+    private Integer lostSalePenalty;
 
     @Column(name = "terminate_penalty", nullable = false)
     private Integer terminatePenalty;

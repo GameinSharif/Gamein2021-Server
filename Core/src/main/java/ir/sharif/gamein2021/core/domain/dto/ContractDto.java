@@ -1,12 +1,8 @@
 package ir.sharif.gamein2021.core.domain.dto;
 
-import ir.sharif.gamein2021.core.domain.entity.ContractDetail;
-import ir.sharif.gamein2021.core.domain.entity.GameinCustomer;
-import ir.sharif.gamein2021.core.domain.entity.Team;
-import ir.sharif.gamein2021.core.util.Enums;
 import lombok.*;
 
-import java.util.List;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -19,8 +15,12 @@ public class ContractDto implements BaseDto<Integer>
     private Integer teamId;
     private Integer gameinCustomerId;
     private Integer productId;
-    private Enums.ContractType contractType;
-    private List<ContractDetailDto> contractDetails;
+    private LocalDate contractDate;
+    private Integer supplyAmount;
+    private Float pricePerUnit;
+    private Integer boughtAmount;
+    //TODO add parameters needed after calculating shares
+    private Integer lostSalePenalty;
     private Integer terminatePenalty;
     private boolean isTerminated;
 }

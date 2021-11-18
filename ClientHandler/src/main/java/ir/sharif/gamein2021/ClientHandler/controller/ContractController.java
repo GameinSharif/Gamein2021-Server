@@ -39,7 +39,6 @@ public class ContractController
     private final TeamService teamService;
     private final GameinCustomerService gameinCustomerService;
     private final GameCalendar gameCalendar;
-    private final TransportManager transportManager;
     private final Gson gson = new Gson();
 
     public void getContracts(ProcessedRequest request, GetContractsRequest getContractsRequest)
@@ -66,37 +65,26 @@ public class ContractController
         NewContractResponse newContractResponse;
         try
         {
-            ContractDto contractDto = new ContractDto();
-            contractDto.setTeamId(userTeam.getId());
-            GameinCustomerDto gameinCustomerDto = gameinCustomerService.loadById(newContractRequest.getGameinCustomerId());
-            contractDto.setGameinCustomerId(gameinCustomerDto.getId());
-            contractDto.setProductId(newContractRequest.getProductId());
-            if (newContractRequest.getWeeks() == 0)
+            for (int i = 0; i < newContractRequest.getWeeks(); i++)
             {
-                contractDto.setContractType(Enums.ContractType.ONCE);
-            }
-            else
-            {
-                contractDto.setContractType(Enums.ContractType.LONGTERM);
-            }
-            contractDto.setTerminatePenalty(1000); //TODO set this penalty
-            contractDto.setTerminated(false);
-            List<ContractDetailDto> contractDetailDtos = new ArrayList<>();
-            for (int i = 0; i < newContractRequest.getWeeks() + 1; i++)
-            {
-                ContractDetailDto contractDetailDto = new ContractDetailDto();
+                ContractDto contractDto = new ContractDto();
+                contractDto.setTeamId(userTeam.getId());
+                GameinCustomerDto gameinCustomerDto = gameinCustomerService.loadById(newContractRequest.getGameinCustomerId());
+                contractDto.setGameinCustomerId(gameinCustomerDto.getId());
+                contractDto.setProductId(newContractRequest.getProductId());
+                contractDto.setTerminatePenalty(1000); //TODO set this penalty
+                contractDto.setLostSalePenalty(1500); //TODO set this penalty
+                contractDto.setTerminated(false);
+
                 LocalDate startDate = gameCalendar.getCurrentDate().with(TemporalAdjusters.next(DayOfWeek.FRIDAY)).plusDays(i * 7L);
-                contractDetailDto.setContractDate(startDate);
-                contractDetailDto.setMaxAmount(newContractRequest.getAmount());
-                contractDetailDto.setPricePerUnit(newContractRequest.getPricePerUnit());
+                contractDto.setContractDate(startDate);
+                contractDto.setSupplyAmount(newContractRequest.getAmount());
+                contractDto.setPricePerUnit(newContractRequest.getPricePerUnit());
 
-                contractDetailDtos.add(contractDetailDto);
+                ContractDto savedContractDto = contractService.saveOrUpdate(contractDto);
+                newContractResponse = new NewContractResponse(ResponseTypeConstant.NEW_CONTRACT, savedContractDto);
+                pushMessageManager.sendMessageByTeamId(userTeam.getId().toString(), gson.toJson(newContractResponse));
             }
-            contractDto.setContractDetails(contractDetailDtos);
-
-            ContractDto savedContractDto = contractService.saveOrUpdate(contractDto);
-            newContractResponse = new NewContractResponse(ResponseTypeConstant.NEW_CONTRACT, savedContractDto);
-            pushMessageManager.sendMessageByTeamId(userTeam.getId().toString(), gson.toJson(newContractResponse));
         }
         catch (Exception e)
         {
@@ -116,7 +104,7 @@ public class ContractController
         try
         {
             ContractDto contractDto = contractService.loadById(terminateLongtermContractRequest.getContractId());
-            if (contractDto.isTerminated() || !contractDto.getTeamId().equals(userTeam.getId()) || contractDto.getContractType() != Enums.ContractType.LONGTERM)
+            if (contractDto.isTerminated() || !contractDto.getTeamId().equals(userTeam.getId()))
             {
                 throw new Exception();
             }

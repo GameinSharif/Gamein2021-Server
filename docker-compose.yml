@@ -55,6 +55,7 @@ services:
       - rabbitmq_net
       - db_net
       - lb_net
+      - elastic
     volumes:
       - ./Core/src/main/resources/JsonFiles:/opt/app/JsonFiles
       - ./Core/src/main/resources/CSVFiles:/opt/app/CSVFiles
@@ -82,6 +83,7 @@ services:
       - rabbitmq_net
       - db_net
       - lb_net
+      - elastic
     volumes:
       - ./Core/src/main/resources/JsonFiles:/opt/app/JsonFiles
       - ./Core/src/main/resources/CSVFiles:/opt/app/CSVFiles
@@ -96,6 +98,7 @@ services:
     depends_on:
       - db
       - rabbitmq
+      - elastic
     environment:
       DB_HOSTNAME: db
       DB_PORT: 3306

@@ -1,5 +1,6 @@
 package ir.sharif.gamein2021.ClientHandler.controller;
 
+import co.elastic.apm.api.Transaction;
 import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Auction.BidForAuctionRequest;
@@ -46,10 +47,11 @@ public class MainController {
     private final AccessManagementController accessManagementController;
     private final Gson gson;
 
-    public void HandleMessage(ProcessedRequest processedRequest) {
+    public void HandleMessage(ProcessedRequest processedRequest, Transaction transaction) {
         String requestData = processedRequest.requestData;
         JSONObject obj = new JSONObject(requestData);
         RequestTypeConstant requestType = RequestTypeConstant.values()[obj.getInt("requestTypeConstant")];
+        transaction.setName(requestType.name());
 
         if (!gameStatusController.validateGameStatus(processedRequest, requestType)) return;
         if (!accessManagementController.validateAccess(processedRequest, requestType)) return;

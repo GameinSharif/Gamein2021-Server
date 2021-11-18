@@ -90,6 +90,10 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
         Product product = ReadJsonFilesManager.findProductById(productId);
 
         StorageProductDto storageProductDto = findProductStorageById(storage.getId(), product.getId());
+        if (amount <= 0)
+        {
+            throw new InvalidRequestException("Amount should be positive bro.");
+        }
         if (storageProductDto.getAmount() < amount)
         {
             throw new InvalidRequestException("You storage doesn't have this much products");

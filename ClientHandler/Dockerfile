@@ -8,4 +8,6 @@ COPY ${JAR_FILE} app.jar
 
 COPY src/main/resources/application-production.properties application.properties
 
+COPY ../agent/ .
+
 ENTRYPOINT ["java","-jar","app.jar"]

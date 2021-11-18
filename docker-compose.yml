@@ -95,10 +95,10 @@ services:
       - rabbitmq_net
       - db_net
       - lb_net
+      - elastic
     depends_on:
       - db
       - rabbitmq
-      - elastic
     environment:
       DB_HOSTNAME: db
       DB_PORT: 3306

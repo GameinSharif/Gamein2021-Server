@@ -9,6 +9,7 @@ import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
 import ir.sharif.gamein2021.core.domain.dto.*;
 import ir.sharif.gamein2021.core.manager.GameCalendar;
 import ir.sharif.gamein2021.core.manager.PushMessageManagerInterface;
+import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
 import ir.sharif.gamein2021.core.manager.TransportManager;
 import ir.sharif.gamein2021.core.service.GameinCustomerService;
 import ir.sharif.gamein2021.core.service.TeamService;
@@ -17,6 +18,7 @@ import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import ir.sharif.gamein2021.core.service.ContractService;
 import ir.sharif.gamein2021.core.service.UserService;
 import ir.sharif.gamein2021.core.domain.entity.Team;
+import ir.sharif.gamein2021.core.util.models.Product;
 import lombok.AllArgsConstructor;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
@@ -67,16 +69,26 @@ public class ContractController
         {
             for (int i = 0; i < newContractRequest.getWeeks(); i++)
             {
+                GameinCustomerDto gameinCustomerDto = gameinCustomerService.loadById(newContractRequest.getGameinCustomerId());
+                LocalDate startDate = gameCalendar.getCurrentDate().with(TemporalAdjusters.next(DayOfWeek.FRIDAY)).plusDays(i * 7L);
+                Product product = ReadJsonFilesManager.findProductById(newContractRequest.getProductId());
+
+                ContractDto existedContract = contractService.findByTeamAndDateAndGameinCustomerAndProduct(userTeam, startDate, gameinCustomerDto, product);
+                if (existedContract != null)
+                {
+                    throw new Exception();
+                }
+
+                //TODO check pricePerUnit to be in range
+
                 ContractDto contractDto = new ContractDto();
                 contractDto.setTeamId(userTeam.getId());
-                GameinCustomerDto gameinCustomerDto = gameinCustomerService.loadById(newContractRequest.getGameinCustomerId());
                 contractDto.setGameinCustomerId(gameinCustomerDto.getId());
-                contractDto.setProductId(newContractRequest.getProductId());
+                contractDto.setProductId(product.getId());
                 contractDto.setTerminatePenalty(1000); //TODO set this penalty
                 contractDto.setLostSalePenalty(1500); //TODO set this penalty
                 contractDto.setTerminated(false);
 
-                LocalDate startDate = gameCalendar.getCurrentDate().with(TemporalAdjusters.next(DayOfWeek.FRIDAY)).plusDays(i * 7L);
                 contractDto.setContractDate(startDate);
                 contractDto.setSupplyAmount(newContractRequest.getAmount());
                 contractDto.setPricePerUnit(newContractRequest.getPricePerUnit());
@@ -88,7 +100,7 @@ public class ContractController
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            System.out.println("Repetitive Contract");
             newContractResponse = new NewContractResponse(ResponseTypeConstant.NEW_CONTRACT, null);
             pushMessageManager.sendMessageByUserId(user.getId().toString(), gson.toJson(newContractResponse));
         }
@@ -120,7 +132,7 @@ public class ContractController
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            System.out.println("Not valid request");
             terminateLongtermContractResponse = new TerminateLongtermContractResponse(ResponseTypeConstant.TERMINATE_CONTRACT, null);
             pushMessageManager.sendMessageByUserId(user.getId().toString(), gson.toJson(terminateLongtermContractResponse));
         }

@@ -1,10 +1,13 @@
 package ir.sharif.gamein2021.core.service;
 
+import ir.sharif.gamein2021.core.domain.dto.GameinCustomerDto;
+import ir.sharif.gamein2021.core.domain.entity.GameinCustomer;
 import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
 import ir.sharif.gamein2021.core.dao.ContractRepository;
 import ir.sharif.gamein2021.core.domain.dto.ContractDto;
 import ir.sharif.gamein2021.core.domain.entity.Contract;
 import ir.sharif.gamein2021.core.domain.entity.Team;
+import ir.sharif.gamein2021.core.util.models.Product;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,5 +53,17 @@ public class ContractService extends AbstractCrudService<ContractDto, Contract, 
         return contracts.stream()
                 .map(e -> modelMapper.map(e, ContractDto.class))
                 .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public ContractDto findByTeamAndDateAndGameinCustomerAndProduct(Team team, LocalDate date, GameinCustomerDto gameinCustomerDto, Product product)
+    {
+        GameinCustomer gameinCustomer = modelMapper.map(gameinCustomerDto, GameinCustomer.class);
+        Contract contract = contractRepository.findContractByTeamAndGameinCustomerAndProductIdAndContractDate(team, gameinCustomer, product.getId(), date);
+        if (contract == null)
+        {
+            return null;
+        }
+        return modelMapper.map(contract, ContractDto.class);
     }
 }

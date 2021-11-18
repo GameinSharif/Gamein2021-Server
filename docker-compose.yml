@@ -142,7 +142,7 @@ services:
       - "5601:5601"
 
   apm-server:
-    image: apm-server:7.14.2
+    image: store/elastic/apm-server:7.14.2
     depends_on:
       - es
       - kibana

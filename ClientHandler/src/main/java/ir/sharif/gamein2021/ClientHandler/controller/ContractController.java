@@ -3,17 +3,13 @@ package ir.sharif.gamein2021.ClientHandler.controller;
 import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Contract.*;
-import ir.sharif.gamein2021.ClientHandler.domain.NewContractSupplierResponse;
-import ir.sharif.gamein2021.ClientHandler.manager.LocalPushMessageManager;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
 import ir.sharif.gamein2021.core.domain.dto.*;
 import ir.sharif.gamein2021.core.manager.GameCalendar;
 import ir.sharif.gamein2021.core.manager.PushMessageManagerInterface;
 import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
-import ir.sharif.gamein2021.core.manager.TransportManager;
 import ir.sharif.gamein2021.core.service.GameinCustomerService;
 import ir.sharif.gamein2021.core.service.TeamService;
-import ir.sharif.gamein2021.core.util.Enums;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import ir.sharif.gamein2021.core.service.ContractService;
 import ir.sharif.gamein2021.core.service.UserService;
@@ -26,7 +22,6 @@ import org.springframework.stereotype.Component;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
-import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -49,7 +44,7 @@ public class ContractController
         UserDto user = userService.loadById(playerId);
         Team userTeam = teamService.findTeamById(user.getTeamId());
         //TODO check user and his team is not null
-        List<ContractDto> contracts = contractService.findByTeam(userTeam);
+        List<ContractDto> contracts = contractService.findByTeamAndTerminatedIsFalse(userTeam);
         GetContractsResponse getContractsResponse = new GetContractsResponse(
                 ResponseTypeConstant.GET_CONTRACTS,
                 contracts

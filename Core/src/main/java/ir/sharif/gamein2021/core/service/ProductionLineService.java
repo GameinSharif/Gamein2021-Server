@@ -139,6 +139,8 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
             throw new InvalidProductionLineIdException("Selected productLine is not able to create selected product");
         }
 
+        amount = amount * productLineTemplate.getBatchSize();
+
         float newCredit = team.getCredit() - productLineTemplate.getSetupCost() - amount * productLineTemplate.getProductionCostPerOneProduct();
         if (newCredit < 0) {
             throw new InvalidProductionLineIdException("Invalid Operation. You don't have enough money to produce new production.");
@@ -151,7 +153,7 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
                     continue;
                 }
 
-                StorageProductDto storageDto = storageService.findProductStorageByIdNull(team.getFactoryId(), productIngredient.getProductId());
+                StorageProductDto storageDto = storageService.findProductStorageByIdNull(storageService.findStorageWithBuildingIdAndDc(team.getFactoryId(), false).getId(), productIngredient.getProductId());
                 if (storageDto == null || storageDto.getAmount() < amount * productIngredient.getAmount()) {
                     throw new InvalidProductionLineIdException("Production requirements are not available in storage.");
                 }

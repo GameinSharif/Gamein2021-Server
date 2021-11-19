@@ -40,7 +40,7 @@ public class ContractService extends AbstractCrudService<ContractDto, Contract, 
     @Transactional(readOnly = true)
     public List<ContractDto> findByTeamAndTerminatedIsFalse(Team team)
     {
-        List<Contract> contracts = contractRepository.findContractsByTeamAndTerminatedIsFalse(team);
+        List<Contract> contracts = contractRepository.findContractsByTeamAndIsTerminatedIsFalse(team);
         return contracts.stream()
                 .map(e -> modelMapper.map(e, ContractDto.class))
                 .collect(Collectors.toList());

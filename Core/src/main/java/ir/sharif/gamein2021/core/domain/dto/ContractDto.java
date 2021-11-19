@@ -22,5 +22,5 @@ public class ContractDto implements BaseDto<Integer>
     //TODO add parameters needed after calculating shares
     private Integer lostSalePenalty;
     private Integer terminatePenalty;
-    private boolean isTerminated;
+    private Boolean isTerminated;
 }

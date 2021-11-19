@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface ContractRepository extends JpaRepository<Contract, Integer>
 {
-    List<Contract> findContractsByTeamAndTerminatedIsFalse(Team team);
+    List<Contract> findContractsByTeamAndIsTerminatedIsFalse(Team team);
     List<Contract> findContractsByContractDate(LocalDate contractDate);
     Contract findContractByTeamAndGameinCustomerAndProductIdAndContractDate(Team team, GameinCustomer gameinCustomer, int productId, LocalDate contractDate);
 }

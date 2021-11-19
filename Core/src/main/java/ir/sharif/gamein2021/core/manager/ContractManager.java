@@ -101,7 +101,7 @@ public class ContractManager
             List<ContractDto> thisDemandContractDtos = contractService.findByDate(today);
             for (ContractDto contractDto : contractDtos)
             {
-                if (contractDto.isTerminated())
+                if (contractDto.getIsTerminated())
                 {
                     continue;
                 }

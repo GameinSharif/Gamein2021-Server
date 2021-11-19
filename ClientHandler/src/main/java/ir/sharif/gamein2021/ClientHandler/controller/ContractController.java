@@ -82,7 +82,7 @@ public class ContractController
                 contractDto.setProductId(product.getId());
                 contractDto.setTerminatePenalty(1000); //TODO set this penalty
                 contractDto.setLostSalePenalty(1500); //TODO set this penalty
-                contractDto.setTerminated(false);
+                contractDto.setIsTerminated(false);
 
                 contractDto.setContractDate(startDate);
                 contractDto.setSupplyAmount(newContractRequest.getAmount());
@@ -111,12 +111,12 @@ public class ContractController
         try
         {
             ContractDto contractDto = contractService.loadById(terminateLongtermContractRequest.getContractId());
-            if (contractDto.isTerminated() || !contractDto.getTeamId().equals(userTeam.getId()))
+            if (contractDto.getIsTerminated() || !contractDto.getTeamId().equals(userTeam.getId()))
             {
                 throw new Exception();
             }
 
-            contractDto.setTerminated(true);
+            contractDto.setIsTerminated(true);
             ContractDto savedContractDto = contractService.saveOrUpdate(contractDto);
 
             userTeam.setCredit(userTeam.getCredit() - contractDto.getTerminatePenalty());

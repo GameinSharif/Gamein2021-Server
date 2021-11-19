@@ -50,5 +50,5 @@ public class Contract implements BaseEntity
     private Integer terminatePenalty;
 
     @Column(name = "is_terminated", nullable = false, columnDefinition = "TINYINT(1)")
-    private boolean isTerminated;
+    private Boolean isTerminated;
 }

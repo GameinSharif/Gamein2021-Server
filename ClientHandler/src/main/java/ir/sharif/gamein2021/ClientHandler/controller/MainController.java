@@ -20,7 +20,9 @@ import ir.sharif.gamein2021.ClientHandler.domain.Product.RemoveProductRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.RFQ.*;
 import ir.sharif.gamein2021.ClientHandler.domain.TerminateLongtermContractSupplierRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Transport.GetTeamTransportsRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.Transport.StartTransportForPlayerStoragesRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.productionLine.*;
+import ir.sharif.gamein2021.core.util.Enums;
 import ir.sharif.gamein2021.core.util.RequestTypeConstant;
 import lombok.AllArgsConstructor;
 import org.json.JSONObject;
@@ -209,6 +211,14 @@ public class MainController {
                 break;
             case GET_GAME_STATUS:
                 gameDataController.getGameStatus(processedRequest);
+                break;
+            case TRANSPORT_TO_STORAGE:
+                try{
+                    StartTransportForPlayerStoragesRequest request = gson.fromJson(requestData , StartTransportForPlayerStoragesRequest.class);
+                    transportController.startTransportForPlayersStorages(processedRequest , request);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
                 break;
             default:
                 System.out.println("Request type is invalid.");

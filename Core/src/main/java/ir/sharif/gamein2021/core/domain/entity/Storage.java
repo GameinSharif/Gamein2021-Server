@@ -24,7 +24,7 @@ public class Storage implements BaseEntity
     @Column(nullable = false)
     private Integer buildingId;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "storage_id")
     private List<StorageProduct> products;
 }

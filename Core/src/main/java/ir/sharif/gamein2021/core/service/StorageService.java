@@ -1,10 +1,7 @@
 package ir.sharif.gamein2021.core.service;
 
 import ir.sharif.gamein2021.core.dao.StorageRepository;
-import ir.sharif.gamein2021.core.domain.dto.DcDto;
-import ir.sharif.gamein2021.core.domain.dto.StorageDto;
-import ir.sharif.gamein2021.core.domain.dto.StorageProductDto;
-import ir.sharif.gamein2021.core.domain.dto.TeamDto;
+import ir.sharif.gamein2021.core.domain.dto.*;
 import ir.sharif.gamein2021.core.domain.entity.Storage;
 import ir.sharif.gamein2021.core.domain.entity.StorageProduct;
 import ir.sharif.gamein2021.core.exception.EntityNotFoundException;
@@ -35,13 +32,16 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
     private final ModelMapper modelMapper;
     private final StorageRepository repository;
     private final StorageProductService storageProductService;
+    private final TransportService transportService;
     private final DcService dcService;
 
     public StorageService(ModelMapper modelMapper, StorageRepository repository,
-                          StorageProductService storageProductService, @Lazy DcService dcService)
+                          StorageProductService storageProductService,
+                          @Lazy DcService dcService , TransportService transportService)
     {
         this.modelMapper = modelMapper;
         this.repository = repository;
+        this.transportService = transportService;
         this.storageProductService = storageProductService;
         this.dcService = dcService;
         setRepository(repository);
@@ -51,16 +51,16 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
     public StorageDto loadById(Integer id)
     {
         Assert.notNull(id, "The id must not be null!");
-
+        Storage storage = repository.findById(id).get();
         return repository.findById(id)
-                .map(e ->
-                {
-                    StorageDto storageDto = modelMapper.map(e, getDtoClass());
-                    List<StorageProductDto> products = e.getProducts().stream().
-                            map(t -> storageProductService.loadById(t.getId())).collect(Collectors.toList());
-                    storageDto.setProducts(products);
-                    return storageDto;
-                })
+                .map(e -> modelMapper.map(e, StorageDto.class))
+//                {
+//                    StorageDto storageDto = modelMapper.map(e, StorageDto.class);
+//                    List<StorageProductDto> products = e.getProducts().stream().
+//                            map(t -> storageProductService.loadById(t.getId())).collect(Collectors.toList());
+//                    storageDto.setProducts(products);
+//                    return storageDto;
+//                })
                 .orElseThrow(() -> new EntityNotFoundException("can not find entity " + getEntityClass().getSimpleName() + "by id: " + id + " "));
     }
 
@@ -82,6 +82,7 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
         storages.add(findStorageWithBuildingIdAndDc(teamDto.getFactoryId(), false));
         return storages;
     }
+
 
     @Transactional
     public StorageDto deleteProducts(Integer buildingId, boolean isDc, Integer productId, int amount)
@@ -150,7 +151,7 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
     {
         Product product = ReadJsonFilesManager.findProductById(productId);
         StorageDto storage = findStorageWithBuildingIdAndDc(buildingId, isDc);
-        int availableCapacity = calculateAvailableCapacity(buildingId, isDc, product.getProductType());
+        int availableCapacity = calculateAvailableCapacityInStorage(buildingId, isDc, product.getProductType());
 
         if (availableCapacity < amount * product.getVolumetricUnit())
         {
@@ -225,9 +226,15 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
         return loadById(storage.getId());
     }
 
+    public StorageProductDto getStorageProductWithBuildingId(Integer buildingId, boolean isDc ,Integer productId){
+        StorageDto storageDto = findStorageWithBuildingIdAndDc(buildingId , isDc );
+        Assert.notNull(storageDto , "Storage with id "  + buildingId + "does not exist !");
+        return getStorageProductDto(storageDto.getId() , productId);
+    }
+
 
     @Transactional(readOnly = true)
-    public int calculateAvailableCapacity(Integer buildingId, boolean isDc, Enums.ProductType productType)
+    public int calculateAvailableCapacityInStorage(Integer buildingId, boolean isDc, Enums.ProductType productType)
     {
         StorageDto storage = findStorageWithBuildingIdAndDc(buildingId, isDc);
         int availableCapacity = 0;
@@ -278,6 +285,25 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
             //TODO checking cheating exception
         }
         return availableCapacity;
+    }
+
+    @Transactional(readOnly = true)
+    public int calculateTransportCapacity(Integer storageId , boolean isDc , Enums.ProductType productType){
+        StorageDto storage = findStorageWithBuildingIdAndDc(storageId , isDc);
+        int availableCapacityInStorage = calculateAvailableCapacityInStorage(storage.getBuildingId(),isDc , productType);
+        List<TransportDto> transportDtos;
+        if(isDc) {
+            transportDtos = transportService.getTransportsByDestinationIdAndBuildingType(storageId, Enums.TransportNodeType.DC);
+        }
+        else {
+            transportDtos = transportService.getTransportsByDestinationIdAndBuildingType(storageId, Enums.TransportNodeType.FACTORY);
+        }
+        for(TransportDto transport : transportDtos){
+            Product product = ReadJsonFilesManager.findProductById(transport.getContentProductId());
+            if(product.getProductType().equals(productType))
+                availableCapacityInStorage -= product.getVolumetricUnit() * transport.getContentProductAmount();
+        }
+        return availableCapacityInStorage;
     }
 
 }

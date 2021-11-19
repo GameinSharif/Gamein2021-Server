@@ -4,13 +4,26 @@ import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Transport.GetTeamTransportsRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Transport.GetTeamTransportsResponse;
+import ir.sharif.gamein2021.ClientHandler.domain.Transport.StartTransportForPlayerStoragesRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.Transport.StartTransportForPlayerStoragesResponse;
 import ir.sharif.gamein2021.ClientHandler.manager.LocalPushMessageManager;
+import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
+import ir.sharif.gamein2021.core.domain.dto.DcDto;
+import ir.sharif.gamein2021.core.domain.dto.StorageProductDto;
 import ir.sharif.gamein2021.core.domain.dto.TransportDto;
 import ir.sharif.gamein2021.core.domain.dto.UserDto;
-import ir.sharif.gamein2021.core.service.TransportService;
-import ir.sharif.gamein2021.core.service.UserService;
+import ir.sharif.gamein2021.core.exception.InvalidRequestException;
+import ir.sharif.gamein2021.core.exception.NotEnoughCapacityException;
+import ir.sharif.gamein2021.core.manager.GameCalendar;
+import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
+import ir.sharif.gamein2021.core.manager.TransportManager;
+import ir.sharif.gamein2021.core.service.*;
+import ir.sharif.gamein2021.core.util.Enums;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
+import ir.sharif.gamein2021.core.util.models.Product;
 import lombok.AllArgsConstructor;
+import org.apache.log4j.Logger;
+import org.modelmapper.internal.util.Assert;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -18,15 +31,19 @@ import java.util.ArrayList;
 
 @AllArgsConstructor
 @Component
-public class TransportController
-{
+public class TransportController {
+    static Logger logger = Logger.getLogger(ExecutorThread.class.getName());
     private final LocalPushMessageManager pushMessageManager;
     private final TransportService transportService;
     private final UserService userService;
+    private final GameCalendar gameCalendar;
+    private final StorageService storageService;
+    private final DcService dcService;
+    private final TeamService teamService;
+    private final TransportManager transportManager;
     private final Gson gson = new Gson();
 
-    public void getTeamTransports(ProcessedRequest processedRequest, GetTeamTransportsRequest getTeamTransportsRequest)
-    {
+    public void getTeamTransports(ProcessedRequest processedRequest, GetTeamTransportsRequest getTeamTransportsRequest) {
         int playerId = processedRequest.playerId;
         UserDto user = userService.loadById(playerId);
         Integer teamId = user.getTeamId();
@@ -34,5 +51,76 @@ public class TransportController
         GetTeamTransportsResponse response = new GetTeamTransportsResponse(ResponseTypeConstant.GET_TEAM_TRANSPORTS, transportDtos);
         pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(response));
     }
-    
+
+    public void startTransportForPlayersStorages(ProcessedRequest processedRequest, StartTransportForPlayerStoragesRequest request) {
+        int playerId = processedRequest.playerId;
+        StartTransportForPlayerStoragesResponse response;
+        try {
+            UserDto user = userService.loadById(playerId);
+            Integer teamId = user.getTeamId();
+            checkIfTransportSourceHasEnoughProduct(request);
+            checkSourceAndDestinationIsForTeam(teamId, request);
+            checkDestinationCapacity(request);
+            TransportDto transportDto = transportManager.createTransport(
+                    Enums.VehicleType.TRUCK,
+                    request.getSourceType(),
+                    request.getSourceId(),
+                    request.getDestinationType(),
+                    request.getDestinationId(),
+                    gameCalendar.getCurrentDate(),
+                    true,
+                    request.getProductId(),
+                    request.getAmount());
+            response = new StartTransportForPlayerStoragesResponse(ResponseTypeConstant.TRANSPORT_TO_STORAGE, transportDto , "success");
+        } catch (Exception e) {
+            e.printStackTrace();
+            response = new StartTransportForPlayerStoragesResponse(ResponseTypeConstant.TRANSPORT_TO_STORAGE, null , e.getMessage());
+            logger.debug(e);
+        }
+        pushMessageManager.sendMessageByTeamId(userService.loadById(playerId).getTeamId().toString(), gson.toJson(response));
+
+    }
+
+    private void checkDestinationCapacity(StartTransportForPlayerStoragesRequest request) {
+        Product product = ReadJsonFilesManager.findProductById(request.getProductId());
+        if (storageService.calculateTransportCapacity(
+                request.getDestinationId(),
+                isDc(request.getDestinationType()),
+                product.getProductType()) <
+                request.getAmount() * product.getVolumetricUnit())
+            throw new NotEnoughCapacityException("You dont have enough space to start this transport.");
+    }
+
+    private void checkSourceAndDestinationIsForTeam(Integer teamId, StartTransportForPlayerStoragesRequest request) {
+        int sourceTeamId = findTeamByStorage(request.getSourceId(), request.getSourceType());
+        int destinationTeamId = findTeamByStorage(request.getDestinationId(), request.getDestinationType());
+        if (!(sourceTeamId == teamId && destinationTeamId == teamId))
+            throw new InvalidRequestException("Both source and destination storages must be yours!");
+    }
+
+    private void checkIfTransportSourceHasEnoughProduct(StartTransportForPlayerStoragesRequest request) {
+        StorageProductDto storageProductDto = storageService.getStorageProductWithBuildingId(request.getSourceId(), isDc(request.getSourceType()), request.getProductId());
+        if (storageProductDto == null || storageProductDto.getAmount() < request.getAmount())
+            throw new InvalidRequestException("You don't have enough of this product !");
+    }
+
+    private Integer findTeamByStorage(Integer buildingId, Enums.TransportNodeType type) {
+        if (type.equals(Enums.TransportNodeType.DC)) {
+            DcDto dc = dcService.loadById(buildingId);
+            Assert.notNull(dc, "Invalid dc id!");
+            return dc.getOwnerId();
+        } else if (type.equals(Enums.TransportNodeType.FACTORY)) {
+            return teamService.findTeamIdByFactoryId(buildingId);
+        } else {
+            throw new InvalidRequestException("Invalid transport type for source or destination!");
+        }
+    }
+
+    private boolean isDc(Enums.TransportNodeType transportNodeType) {
+        if (transportNodeType.equals(Enums.TransportNodeType.DC))
+            return true;
+        return false;
+    }
+
+
 }

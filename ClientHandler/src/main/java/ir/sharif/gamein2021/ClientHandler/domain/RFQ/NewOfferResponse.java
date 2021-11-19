@@ -13,10 +13,12 @@ import java.io.Serializable;
 public class NewOfferResponse extends ResponseObject implements Serializable
 {
     private OfferDto offer;
+    private String message;
 
-    public NewOfferResponse(ResponseTypeConstant responseTypeConstant, OfferDto offer)
+    public NewOfferResponse(ResponseTypeConstant responseTypeConstant, OfferDto offer, String message)
     {
         this.responseTypeConstant = responseTypeConstant.ordinal();
+        this.message = message;
         this.offer = offer;
     }
 }

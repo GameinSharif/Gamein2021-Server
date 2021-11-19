@@ -4,16 +4,15 @@ import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.RFQ.*;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
-import ir.sharif.gamein2021.core.domain.dto.OfferDto;
-import ir.sharif.gamein2021.core.domain.dto.TeamDto;
+import ir.sharif.gamein2021.core.domain.dto.*;
+import ir.sharif.gamein2021.core.domain.entity.ProductionLine;
 import ir.sharif.gamein2021.core.domain.entity.Team;
 import ir.sharif.gamein2021.core.exception.CheatingException;
 import ir.sharif.gamein2021.core.manager.GameCalendar;
 import ir.sharif.gamein2021.core.manager.PushMessageManagerInterface;
+import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
 import ir.sharif.gamein2021.core.manager.TransportManager;
-import ir.sharif.gamein2021.core.service.OfferService;
-import ir.sharif.gamein2021.core.service.TeamService;
-import ir.sharif.gamein2021.core.service.UserService;
+import ir.sharif.gamein2021.core.service.*;
 import ir.sharif.gamein2021.core.util.Enums.OfferStatus;
 import ir.sharif.gamein2021.core.util.Enums.TransportNodeType;
 import ir.sharif.gamein2021.core.util.Enums.VehicleType;
@@ -23,7 +22,9 @@ import org.apache.log4j.Logger;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Component
@@ -37,6 +38,8 @@ public class OfferController
     private final OfferService offerService;
     private final UserService userService;
     private final TeamService teamService;
+    private final ProductionLineService productionLineService;
+    private final StorageService storageService;
     private final TransportManager transportManager;
     private final Gson gson = new Gson();
 
@@ -58,19 +61,33 @@ public class OfferController
     public void createNewOffer(ProcessedRequest request, NewOfferRequest newOfferRequest) {
         NewOfferResponse newOfferResponse;
         try {
-            OfferDto offerDto = newOfferRequest.getOffer();
-            offerDto.setOfferStatus(OfferStatus.ACTIVE);
-            offerDto.setTeamId(userService.loadById(request.playerId).getTeamId());
-            OfferDto savedOfferDto = offerService.addOffer(offerDto);
+            float totalPayment = newOfferRequest.getOffer().getVolume() * newOfferRequest.getOffer().getCostPerUnit();
+            TeamDto teamDto = teamService.loadById(request.teamId);
+            int minPrice = ReadJsonFilesManager.findProductById(newOfferRequest.getOffer().getProductId()).getMinPrice();
+            int maxPrice = ReadJsonFilesManager.findProductById(newOfferRequest.getOffer().getProductId()).getMaxPrice();
+            if (newOfferRequest.getOffer().getCostPerUnit() > maxPrice  || newOfferRequest.getOffer().getCostPerUnit() < minPrice) {
+                newOfferResponse = new NewOfferResponse(ResponseTypeConstant.NEW_OFFER, null, "The price is not in its range!");
+            } else if (totalPayment > teamDto.getCredit()) {
+                newOfferResponse = new NewOfferResponse(ResponseTypeConstant.NEW_OFFER, null, "You don't have enough money for creating this offer!");
+            } else if (!isProductionLineValid(newOfferRequest.getOffer(), teamService.findTeamById(request.teamId))) {
+                newOfferResponse = new NewOfferResponse(ResponseTypeConstant.NEW_OFFER, null, "You can't use this product in any of your production lines!");
+            } else {
+                OfferDto offerDto = newOfferRequest.getOffer();
+                offerDto.setOfferStatus(OfferStatus.ACTIVE);
+                offerDto.setTeamId(userService.loadById(request.playerId).getTeamId());
+                OfferDto savedOfferDto = offerService.addOffer(offerDto);
 
-            newOfferResponse = new NewOfferResponse(ResponseTypeConstant.NEW_OFFER, savedOfferDto);
-            pushMessageManager.sendMessageByTeamId(userService.loadById(request.playerId).getTeamId().toString(), gson.toJson(newOfferResponse));
+                newOfferResponse = new NewOfferResponse(ResponseTypeConstant.NEW_OFFER, savedOfferDto, "OK!");
+            }
         }
         catch (Exception e) {
             logger.debug(e);
-            newOfferResponse = new NewOfferResponse(ResponseTypeConstant.NEW_OFFER, null);
+            newOfferResponse = new NewOfferResponse(ResponseTypeConstant.NEW_OFFER, null, "An Error Occurred!");
             pushMessageManager.sendMessageByUserId(userService.loadById(request.playerId).getId().toString(), gson.toJson(newOfferResponse));
         }
+
+        pushMessageManager.sendMessageByTeamId(teamService.loadById(request.teamId).toString(), gson.toJson(newOfferResponse));
+
     }
 
     public void terminateOffer(ProcessedRequest request, TerminateOfferRequest terminateOfferRequest) {
@@ -104,18 +121,27 @@ public class OfferController
             Team accepterTeam = teamService.findTeamById(userService.loadById(request.playerId).getTeamId());
             Team acceptedTeam = teamService.findTeamById(offerService.findById(acceptOfferRequest.getOfferId()).getTeamId());
             float totalPayment = acceptedOffer.getVolume() * acceptedOffer.getCostPerUnit();
-            //TODO add transport cost
             if (acceptedTeam.getId().equals(accepterTeam.getId())) {
                 acceptOfferResponse = new AcceptOfferResponse(ResponseTypeConstant.ACCEPT_OFFER, null, "Come on!");
-            }
-            else if (acceptedOffer.getOfferStatus() != OfferStatus.ACTIVE || acceptedOffer.getOfferDeadline().isBefore(gameCalendar.getCurrentDate()))
-            {
+            } else if (acceptedOffer.getOfferStatus() != OfferStatus.ACTIVE || acceptedOffer.getOfferDeadline().isBefore(gameCalendar.getCurrentDate())) {
                 acceptOfferResponse = new AcceptOfferResponse(ResponseTypeConstant.ACCEPT_OFFER, null, "The Offer is not valid");
-            }
-            else if (totalPayment > acceptedTeam.getCredit()) {
+            } else if (totalPayment > acceptedTeam.getCredit()) {
                 acceptOfferResponse = new AcceptOfferResponse(ResponseTypeConstant.ACCEPT_OFFER, null, "The Offer Placer Team doesn't have enough money!");
+            } else if (transportManager.calculateTransportCost(
+                    VehicleType.TRUCK,
+                    transportManager.calculateTransportDistance(
+                            TransportNodeType.FACTORY,
+                            accepterTeam.getFactoryId(),
+                            TransportNodeType.FACTORY,
+                            acceptedTeam.getFactoryId(),
+                            VehicleType.TRUCK),
+                    acceptedOffer.getProductId(),
+                    acceptedOffer.getVolume()
+            ) > (acceptedTeam.getCredit() - totalPayment)) {
+                acceptOfferResponse = new AcceptOfferResponse(ResponseTypeConstant.ACCEPT_OFFER, null, "The Offer Placer Team doesn't have transport money!");
+            } else if (!isAmountOK(acceptedOffer, accepterTeam)) {
+                acceptOfferResponse = new AcceptOfferResponse(ResponseTypeConstant.ACCEPT_OFFER, null, "Your team don't have enough amount of product!");
             } else {
-                //TODO: Check the Storage of ACCEPTER!
                 acceptedTeam.setCredit(acceptedTeam.getCredit() - totalPayment);
                 acceptedOffer.setOfferStatus(OfferStatus.ACCEPTED);
                 acceptedOffer.setAccepterTeamId(accepterTeam.getId());
@@ -148,6 +174,33 @@ public class OfferController
             pushMessageManager.sendMessageByTeamId(userService.loadById(request.playerId).getTeamId().toString(), gson.toJson(acceptOfferResponse));
         }
 
+    }
+
+    private boolean isAmountOK (OfferDto offer, Team team) {
+        for (StorageDto storageDto : storageService.findAllStorageForTeam(teamService.loadById(team.getId()))) {
+            for (StorageProductDto product : storageDto.getProducts()) {
+                if (product.getId().equals(offer.getProductId())) {
+                    if (product.getAmount() >= offer.getVolume()) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean isProductionLineValid(OfferDto offerDto, Team team) {
+        List<Integer> categories = Arrays.stream(ReadJsonFilesManager.findProductById(offerDto.getProductId()).getCategoryIds().split(",")).map(string -> Integer.parseInt(string)).collect(Collectors.toList());
+        List<ProductionLineDto> productionLines = productionLineService.findProductionLinesByTeam(team);
+        outer: for (Integer category : categories) {
+            for (ProductionLineDto productionLineDto : productionLines) {
+                if (productionLineDto.getProductionLineTemplateId().equals(category)) {
+                    continue outer;
+                }
+            }
+            return false;
+        }
+        return true;
     }
 
 }

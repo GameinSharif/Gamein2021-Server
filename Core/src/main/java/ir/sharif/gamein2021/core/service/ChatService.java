@@ -41,10 +41,10 @@ public class ChatService extends AbstractCrudService<ChatDto, Chat, Integer>
     }
 
     @Transactional
-    public void addNewChat(ChatDto chatDto)
+    public ChatDto addNewChat(ChatDto chatDto)
     {
         AssertionUtil.assertDtoNotNull(chatDto, Chat.class.getSimpleName());
-        saveOrUpdate(chatDto);
+        return saveOrUpdate(chatDto);
     }
 
     @Transactional(readOnly = true)

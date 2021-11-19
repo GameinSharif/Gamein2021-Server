@@ -22,6 +22,7 @@ import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +54,7 @@ public class MessageController
         Integer senderTeamId = userDto.getTeamId();
 
         MessageDto messageDto = MessageDto.builder()
-                .insertedAt(newMessageRequest.getInsertedAt())
+                .insertedAt(LocalDateTime.now())
                 .senderTeamId(senderTeamId)
                 .receiverTeamId(newMessageRequest.getReceiverTeamId())
                 .text(newMessageRequest.getText())

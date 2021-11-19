@@ -13,6 +13,7 @@ import ir.sharif.gamein2021.core.manager.PushMessageManagerInterface;
 import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
 import ir.sharif.gamein2021.core.manager.TransportManager;
 import ir.sharif.gamein2021.core.service.*;
+import ir.sharif.gamein2021.core.util.Enums;
 import ir.sharif.gamein2021.core.util.Enums.OfferStatus;
 import ir.sharif.gamein2021.core.util.Enums.TransportNodeType;
 import ir.sharif.gamein2021.core.util.Enums.VehicleType;
@@ -65,7 +66,9 @@ public class OfferController
             TeamDto teamDto = teamService.loadById(request.teamId);
             int minPrice = ReadJsonFilesManager.findProductById(newOfferRequest.getOffer().getProductId()).getMinPrice();
             int maxPrice = ReadJsonFilesManager.findProductById(newOfferRequest.getOffer().getProductId()).getMaxPrice();
-            if (newOfferRequest.getOffer().getCostPerUnit() > maxPrice  || newOfferRequest.getOffer().getCostPerUnit() < minPrice) {
+            if (newOfferRequest.getOffer().getVolume() <= 0) {
+                newOfferResponse = new NewOfferResponse(ResponseTypeConstant.NEW_OFFER, null, "Product Amount is not valid!");
+            } else if (newOfferRequest.getOffer().getCostPerUnit() > maxPrice  || newOfferRequest.getOffer().getCostPerUnit() < minPrice) {
                 newOfferResponse = new NewOfferResponse(ResponseTypeConstant.NEW_OFFER, null, "The price is not in its range!");
             } else if (totalPayment > teamDto.getCredit()) {
                 newOfferResponse = new NewOfferResponse(ResponseTypeConstant.NEW_OFFER, null, "You don't have enough money for creating this offer!");
@@ -194,9 +197,10 @@ public class OfferController
         List<ProductionLineDto> productionLines = productionLineService.findProductionLinesByTeam(team);
         outer: for (Integer category : categories) {
             for (ProductionLineDto productionLineDto : productionLines) {
-                if (productionLineDto.getProductionLineTemplateId().equals(category)) {
-                    continue outer;
-                }
+                if (
+                        productionLineDto.getProductionLineTemplateId().equals(category) &&
+                        productionLineDto.getStatus() != Enums.ProductionLineStatus.SCRAPPED
+                ) continue outer;
             }
             return false;
         }

@@ -1,7 +1,5 @@
 package ir.sharif.gamein2021.core.service;
 
-import ir.sharif.gamein2021.core.domain.dto.ContractSupplierDetailDto;
-import ir.sharif.gamein2021.core.domain.entity.ContractSupplierDetail;
 import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
 import ir.sharif.gamein2021.core.dao.ContractDetailRepository;
 import ir.sharif.gamein2021.core.domain.dto.ContractDetailDto;

@@ -1,13 +1,8 @@
 package ir.sharif.gamein2021.core.service;
 
-import ir.sharif.gamein2021.core.dao.ContractSupplierDetailRepository;
 import ir.sharif.gamein2021.core.dao.ContractSupplierRepository;
-import ir.sharif.gamein2021.core.domain.dto.ContractDto;
-import ir.sharif.gamein2021.core.domain.dto.ContractSupplierDetailDto;
 import ir.sharif.gamein2021.core.domain.dto.ContractSupplierDto;
-import ir.sharif.gamein2021.core.domain.dto.NegotiationDto;
 import ir.sharif.gamein2021.core.domain.entity.ContractSupplier;
-import ir.sharif.gamein2021.core.domain.entity.ContractSupplierDetail;
 import ir.sharif.gamein2021.core.domain.entity.Team;
 import ir.sharif.gamein2021.core.exception.EntityNotFoundException;
 import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
@@ -18,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,14 +20,11 @@ import java.util.stream.Collectors;
 public class ContractSupplierService extends AbstractCrudService<ContractSupplierDto, ContractSupplier, Integer>
 {
     private final ContractSupplierRepository contractSupplierRepository;
-    private final ContractSupplierDetailRepository contractSupplierDetailRepository;
     private final ModelMapper modelMapper;
 
-    public ContractSupplierService(ContractSupplierRepository contractSupplierRepository, ContractSupplierDetailRepository contractSupplierDetailRepository,
-                                   ModelMapper modelMapper)
+    public ContractSupplierService(ContractSupplierRepository contractSupplierRepository, ModelMapper modelMapper)
     {
         this.contractSupplierRepository = contractSupplierRepository;
-        this.contractSupplierDetailRepository = contractSupplierDetailRepository;
         this.modelMapper = modelMapper;
         setRepository(contractSupplierRepository);
     }

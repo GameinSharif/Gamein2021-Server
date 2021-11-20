@@ -1,8 +1,6 @@
 package ir.sharif.gamein2021.core.dao;
 
-import ir.sharif.gamein2021.core.domain.entity.Contract;
 import ir.sharif.gamein2021.core.domain.entity.ContractDetail;
-import ir.sharif.gamein2021.core.domain.entity.ContractSupplierDetail;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

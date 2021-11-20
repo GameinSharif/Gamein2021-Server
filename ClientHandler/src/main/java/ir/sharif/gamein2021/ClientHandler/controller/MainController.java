@@ -22,6 +22,7 @@ import ir.sharif.gamein2021.ClientHandler.domain.TerminateLongtermContractSuppli
 import ir.sharif.gamein2021.ClientHandler.domain.Transport.GetTeamTransportsRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Transport.StartTransportForPlayerStoragesRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.productionLine.*;
+import ir.sharif.gamein2021.core.manager.GameDateManager;
 import ir.sharif.gamein2021.core.util.Enums;
 import ir.sharif.gamein2021.core.util.RequestTypeConstant;
 import lombok.AllArgsConstructor;
@@ -46,6 +47,7 @@ public class MainController {
     private final ProductController productController;
     private final GameStatusController gameStatusController;
     private final AccessManagementController accessManagementController;
+    private final GameDateManager gameDateManager;
     private final Gson gson;
 
     public void HandleMessage(ProcessedRequest processedRequest) {
@@ -77,6 +79,7 @@ public class MainController {
                 gameDataController.getAllAuctions(processedRequest);
                 gameDataController.getAllActiveDc(processedRequest);
                 gameDataController.getServerTime(processedRequest);
+                gameDateManager.SendGameDateToThisUser(processedRequest.playerId);
                 break;
             case GET_CONTRACTS:
                 GetContractsRequest getContractsRequest = gson.fromJson(requestData, GetContractsRequest.class);

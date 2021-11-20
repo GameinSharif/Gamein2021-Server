@@ -73,21 +73,6 @@ public class ContractManager
                     weekSupplyDto.setSales(weekSupplyDto.getSales() + contractSupplierDto.getBoughtAmount());
                     weekSupplyService.saveOrUpdate(weekSupplyDto);
                     contractSupplierService.saveOrUpdate(contractSupplierDto);
-
-                    /*for (ContractSupplierDetailDto contractSupplierDetailDto : contractSupplierService.getContractSupplierDetailDtos(contractSupplierDto))
-                    {
-                        if (contractSupplierDetailDto.getContractDate().equals(today))
-                        {
-                            // update price with this week's price
-                            //contractSupplierDetailDto.setPricePerUnit(price);
-                            // Add to Supplier's weekly sale
-                            weekSupplyDto.setSales(weekSupplyDto.getSales() + contractSupplierDetailDto.getBoughtAmount());
-                            weekSupplyService.saveOrUpdate(weekSupplyDto);
-                            contractSupplierDetailService.saveOrUpdate(contractSupplierDetailDto);
-
-                            //TODO start transport
-                        }
-                    }*/
                 }
                 catch (Exception e)
                 {

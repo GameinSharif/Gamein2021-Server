@@ -28,6 +28,7 @@ public class DailySchedule {
     private final DemandAndSupplyManager demandAndSupplyManager;
     private final GameDateManager gameDateManager;
     private final WeekSupplyManager weekSupplyManager;
+    private final TeamManager teamManager;
 
     private final ClientHandlerRequestSenderInterface clientRequestSender;
 
@@ -82,5 +83,6 @@ public class DailySchedule {
         demandAndSupplyManager.SendCurrentWeekSupplyAndDemandsToAllUsers();
         productionLineService.decreaseWeeklyMaintenanceCost();
         weekSupplyManager.updateWeekSupplyPrices(gameCalendar.getWeek());
+        teamManager.updateTeamsBrands((float) -0.2);
     }
 }

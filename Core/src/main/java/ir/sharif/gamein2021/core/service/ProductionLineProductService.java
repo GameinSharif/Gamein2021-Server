@@ -5,9 +5,11 @@ import ir.sharif.gamein2021.core.dao.ProductionLineRepository;
 import ir.sharif.gamein2021.core.domain.dto.ProductionLineProductDto;
 import ir.sharif.gamein2021.core.domain.entity.ProductionLine;
 import ir.sharif.gamein2021.core.domain.entity.ProductionLineProduct;
+import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
 import ir.sharif.gamein2021.core.manager.clientHandlerConnection.ClientHandlerRequestSenderInterface;
 import ir.sharif.gamein2021.core.manager.clientHandlerConnection.requests.ProductCreationCompletedRequest;
 import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
+import ir.sharif.gamein2021.core.util.models.ProductionLineTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -45,6 +47,14 @@ public class ProductionLineProductService extends AbstractCrudService<Production
                 continue;
             }
 
+            // Upgrading brand when production ends.
+            Integer amount = product.getAmount();
+            ProductionLineTemplate productionLineTemplate = ReadJsonFilesManager.ProductionLineTemplates[productionLine.getProductionLineTemplateId()];
+            Float brandCoefficient = (float)(productionLineTemplate.getQualityLevels().get(productionLine.getQualityLevel()).getBrandIncreaseRatioPerProduct());
+            Float newBrand = productionLine.getTeam().getBrand() + amount*brandCoefficient;
+            productionLine.getTeam().setBrand(newBrand);
+
+            //TODO efficiency level
             storageService.addProduct(productionLine.getTeam().getFactoryId(), false, product.getProductId(), product.getAmount());
             clientHandlerRequestSender.send(new ProductCreationCompletedRequest(productionLine, product, "Done"));
         }

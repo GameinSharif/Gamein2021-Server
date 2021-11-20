@@ -45,4 +45,9 @@ public class TeamService extends AbstractCrudService<TeamDto, Team, Integer>
     public Integer findTeamIdByFactoryId(Integer factoryId) {
         return repository.findTeamByFactoryId(factoryId).getId();
     }
+
+    public List<TeamDto> getAllTeams(){
+        return repository.findAll().stream().
+                map(e -> modelMapper.map(e, TeamDto.class)).collect(Collectors.toList());
+    }
 }

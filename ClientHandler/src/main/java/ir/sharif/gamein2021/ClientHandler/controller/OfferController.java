@@ -10,6 +10,7 @@ import ir.sharif.gamein2021.core.domain.entity.Team;
 import ir.sharif.gamein2021.core.exception.CheatingException;
 import ir.sharif.gamein2021.core.manager.GameCalendar;
 import ir.sharif.gamein2021.core.manager.PushMessageManagerInterface;
+import ir.sharif.gamein2021.core.manager.TeamManager;
 import ir.sharif.gamein2021.core.manager.TransportManager;
 import ir.sharif.gamein2021.core.service.OfferService;
 import ir.sharif.gamein2021.core.service.TeamService;
@@ -38,6 +39,7 @@ public class OfferController
     private final UserService userService;
     private final TeamService teamService;
     private final TransportManager transportManager;
+    private final TeamManager teamManager;
     private final Gson gson = new Gson();
 
     public void handleGetOffers(ProcessedRequest request, GetOffersRequest getOffersRequest) {
@@ -116,6 +118,8 @@ public class OfferController
                 acceptOfferResponse = new AcceptOfferResponse(ResponseTypeConstant.ACCEPT_OFFER, null, "The Offer Placer Team doesn't have enough money!");
             } else {
                 //TODO: Check the Storage of ACCEPTER!
+                teamManager.updateTeamBrand(modelMapper.map(accepterTeam, TeamDto.class), (float) 0.05);
+                teamManager.updateTeamBrand(modelMapper.map(acceptedTeam, TeamDto.class), (float) 0.05);
                 acceptedTeam.setCredit(acceptedTeam.getCredit() - totalPayment);
                 acceptedOffer.setOfferStatus(OfferStatus.ACCEPTED);
                 acceptedOffer.setAccepterTeamId(accepterTeam.getId());

@@ -9,6 +9,7 @@ import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
 import ir.sharif.gamein2021.core.domain.dto.ProviderDto;
 import ir.sharif.gamein2021.core.manager.GameCalendar;
 import ir.sharif.gamein2021.core.manager.PushMessageManagerInterface;
+import ir.sharif.gamein2021.core.manager.TeamManager;
 import ir.sharif.gamein2021.core.manager.TransportManager;
 import ir.sharif.gamein2021.core.service.NegotiationService;
 import ir.sharif.gamein2021.core.service.ProviderService;
@@ -40,6 +41,7 @@ public class NegotiationController
     private final NegotiationService negotiationService;
     private final ProviderService providerService;
     private final GameCalendar gameCalendar;
+    private final TeamManager teamManager;
     private final Gson gson = new Gson();
 
     public void getNegotiations(ProcessedRequest request, GetNegotiationsRequest getNegotiationsRequest)
@@ -106,30 +108,27 @@ public class NegotiationController
         {
             NegotiationDto negotiationDto = negotiationService.findById(editRequest.getNegotiationId());
             Team userTeam = teamService.findTeamById(user.getTeamId());
+            boolean validUserTeam = false;
             if (userTeam.getId().equals(negotiationDto.getDemanderId()))
             {
+                validUserTeam = true;
                 negotiationDto.setCostPerUnitDemander(editRequest.getNewCostPerUnit());
-                if (negotiationDto.getCostPerUnitDemander().equals(negotiationDto.getCostPerUnitSupplier()))
-                {
-                    //TODO check if supplier has product and demander has money
-                    //TODO check if demander has transport money
-                    negotiationDto.setState(NegotiationState.DEAL);
-                    startTransport(negotiationDto);
-                }
-                negotiationService.saveOrUpdate(negotiationDto);
-                editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, negotiationDto);
-                pushMessageManager.sendMessageByTeamId(negotiationDto.getDemanderId().toString(), gson.toJson(editResponse));
-                pushMessageManager.sendMessageByTeamId(negotiationDto.getSupplierId().toString(), gson.toJson(editResponse));
-                return;
             }
             else if (userTeam.getId().equals(negotiationDto.getSupplierId()))
             {
+                validUserTeam = true;
                 negotiationDto.setCostPerUnitSupplier(editRequest.getNewCostPerUnit());
+
+            }
+            if(validUserTeam){
                 if (negotiationDto.getCostPerUnitDemander().equals(negotiationDto.getCostPerUnitSupplier()))
                 {
                     //TODO check if supplier has product and demander has money
                     //TODO check if demander has transport money
+                    // Bingo! Teams' brands increase!
                     negotiationDto.setState(NegotiationState.DEAL);
+                    teamManager.updateTeamBrand(teamService.loadById(negotiationDto.getDemanderId()), (float) 0.05);
+                    teamManager.updateTeamBrand(teamService.loadById(negotiationDto.getSupplierId()), (float) 0.05);
                     startTransport(negotiationDto);
                 }
                 negotiationService.saveOrUpdate(negotiationDto);

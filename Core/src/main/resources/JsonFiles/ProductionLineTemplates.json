@@ -33,11 +33,11 @@
       },
       {
         "upgradeCost": 10000,
-        "brandIncreaseRatioPerProduct": 0.001
+        "brandIncreaseRatioPerProduct": 0.0003
       },
       {
         "upgradeCost": 10000,
-        "brandIncreaseRatioPerProduct": 0.002
+        "brandIncreaseRatioPerProduct": 0.0006
       }
     ]
   },

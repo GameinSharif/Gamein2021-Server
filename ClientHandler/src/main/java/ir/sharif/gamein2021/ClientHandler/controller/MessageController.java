@@ -91,6 +91,7 @@ public class MessageController
                         chatDto.getMessages().remove(0);
                     }
                     chatDto.getMessages().add(messageDto);
+                    chatDto.setLatestMessageDate(messageDto.getInsertedAt());
 
                     chatDto = chatService.addNewChat(chatDto);
 

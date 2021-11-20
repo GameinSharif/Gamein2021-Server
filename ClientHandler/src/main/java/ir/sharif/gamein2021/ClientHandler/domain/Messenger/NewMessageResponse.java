@@ -13,13 +13,13 @@ import java.io.Serializable;
 @Getter
 public class NewMessageResponse extends ResponseObject implements Serializable
 {
-    private ChatDto chatDto;
+    private ChatDto chat;
     private MessageDto message;
     private String result;
 
-    public NewMessageResponse(ResponseTypeConstant responseTypeConstant, ChatDto chatDto, MessageDto message, String result)
+    public NewMessageResponse(ResponseTypeConstant responseTypeConstant, ChatDto chat, MessageDto message, String result)
     {
-        this.chatDto = chatDto;
+        this.chat = chat;
         this.responseTypeConstant = responseTypeConstant.ordinal();
         this.message = message;
         this.result = result;

@@ -14,6 +14,7 @@ import ir.sharif.gamein2021.core.exception.InvalidRequestException;
 import ir.sharif.gamein2021.core.exception.NotEnoughCapacityException;
 import ir.sharif.gamein2021.core.exception.NotEnoughMoneyException;
 import ir.sharif.gamein2021.core.manager.GameCalendar;
+import ir.sharif.gamein2021.core.manager.PushMessageManagerInterface;
 import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
 import ir.sharif.gamein2021.core.manager.TransportManager;
 import ir.sharif.gamein2021.core.service.*;
@@ -32,7 +33,7 @@ import java.util.ArrayList;
 @Component
 public class TransportController {
     static Logger logger = Logger.getLogger(ExecutorThread.class.getName());
-    private final LocalPushMessageManager pushMessageManager;
+    private final PushMessageManagerInterface pushMessageManager;
     private final TransportService transportService;
     private final UserService userService;
     private final GameCalendar gameCalendar;
@@ -48,7 +49,7 @@ public class TransportController {
         Integer teamId = user.getTeamId();
         ArrayList<TransportDto> transportDtos = transportService.getTransportsByTeam(teamId);
         GetTeamTransportsResponse response = new GetTeamTransportsResponse(ResponseTypeConstant.GET_TEAM_TRANSPORTS, transportDtos);
-        pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(response));
+        pushMessageManager.sendMessageByUserId(user.getId().toString(), gson.toJson(response));
     }
 
     public void startTransportForPlayersStorages(ProcessedRequest processedRequest, StartTransportForPlayerStoragesRequest request) {
@@ -79,7 +80,6 @@ public class TransportController {
             logger.debug(e);
         }
         pushMessageManager.sendMessageByTeamId(userService.loadById(playerId).getTeamId().toString(), gson.toJson(response));
-
     }
 
     private void checkTeamMoney(StartTransportForPlayerStoragesRequest request, TeamDto team) {
@@ -116,6 +116,8 @@ public class TransportController {
         int destinationTeamId = findTeamByStorage(request.getDestinationId(), request.getDestinationType());
         if (!(sourceTeamId == teamId && destinationTeamId == teamId))
             throw new InvalidRequestException("Both source and destination storages must be yours!");
+        if (request.getSourceId() == request.getDestinationId() && request.getSourceType() == request.getDestinationType())
+            throw new InvalidRequestException("These two storages are the same!");
     }
 
     private void checkIfTransportSourceHasEnoughProduct(StartTransportForPlayerStoragesRequest request) {

@@ -15,5 +15,5 @@ public class NewContractRequest extends RequestObject implements Serializable
     private Integer productId;
     private Integer amount;
     private Float pricePerUnit;
-    private Integer weeks; // if contract is ONCE, set this to 0, or else any positive value of this means extra weeks
+    private Integer weeks;
 }

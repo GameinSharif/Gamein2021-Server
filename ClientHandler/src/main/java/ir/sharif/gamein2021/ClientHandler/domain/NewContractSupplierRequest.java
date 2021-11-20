@@ -18,5 +18,5 @@ public class NewContractSupplierRequest extends RequestObject implements Seriali
     private Integer vehicleId;
     private Boolean hasInsurance;
     private Integer amount;
-    private Integer weeks; // if contract is ONCE, set this to 0, or else any positive value of this means extra weeks
+    private Integer weeks;
 }

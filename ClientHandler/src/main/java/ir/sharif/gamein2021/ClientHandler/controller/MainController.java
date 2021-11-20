@@ -161,6 +161,7 @@ public class MainController {
             case GET_CONTRACTS_WITH_SUPPLIER:
                 GetContractsSupplierRequest getContractsSupplierRequest = gson.fromJson(requestData, GetContractsSupplierRequest.class);
                 contractSupplierController.getContractsSupplier(processedRequest, getContractsSupplierRequest);
+                break;
             case BUY_DC:
                 try {
                     BuyingDcRequest buyingDcRequest = gson.fromJson(requestData, BuyingDcRequest.class);

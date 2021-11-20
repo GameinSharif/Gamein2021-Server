@@ -3,7 +3,7 @@
   "playerId": 1,
   "supplierId": 1,
   "materialId": 1,
-  "vehicleType": "AIRPLANE",
+  "vehicleId": 1,
   "hasInsurance": "true",
   "amount": 20,
   "weeks": 5

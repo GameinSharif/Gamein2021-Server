@@ -10,6 +10,7 @@ public class StartProductionResponse extends ResponseObject implements Serializa
     private ProductionLineDto productionLine;
 
     public StartProductionResponse() {
+        responseTypeConstant = ResponseTypeConstant.START_PRODUCTION.ordinal();
     }
 
     public StartProductionResponse(ProductionLineDto productionLine) {

@@ -8,11 +8,11 @@ import java.io.Serializable;
 
 public class RemoveProductResponse extends ResponseObject implements Serializable {
     private String result;
-    private StorageDto storageDto;
+    private StorageDto storage;
 
-    public RemoveProductResponse(ResponseTypeConstant responseTypeConstant, StorageDto storageDto, String result) {
+    public RemoveProductResponse(ResponseTypeConstant responseTypeConstant, StorageDto storage, String result) {
         this.responseTypeConstant = responseTypeConstant.ordinal();
-        this.storageDto = storageDto;
+        this.storage = storage;
         this.result = result;
     }
 }

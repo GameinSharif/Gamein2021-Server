@@ -8,6 +8,7 @@ import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
 import ir.sharif.gamein2021.core.domain.dto.*;
 import ir.sharif.gamein2021.core.domain.entity.Team;
 import ir.sharif.gamein2021.core.manager.GameCalendar;
+import ir.sharif.gamein2021.core.manager.PushMessageManagerInterface;
 import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
 import ir.sharif.gamein2021.core.manager.TransportManager;
 import ir.sharif.gamein2021.core.service.*;
@@ -28,7 +29,7 @@ public class ContractSupplierController
 {
     static Logger logger = Logger.getLogger(ExecutorThread.class.getName());
 
-    private final LocalPushMessageManager pushMessageManager;
+    private final PushMessageManagerInterface pushMessageManager;
     private final ContractSupplierService contractSupplierService;
     private final UserService userService;
     private final WeekSupplyService weekSupplyService;
@@ -38,37 +39,44 @@ public class ContractSupplierController
 
     public void newContractSupplier(ProcessedRequest request, NewContractSupplierRequest newContractSupplierRequest)
     {
-        Integer supplierId = newContractSupplierRequest.getSupplierId();
-        Integer materialId = newContractSupplierRequest.getMaterialId();
-        Enums.VehicleType vehicleType = ReadJsonFilesManager.findVehicleById(newContractSupplierRequest.getVehicleId()).getVehicleType();
-        System.out.println(vehicleType);
-        Boolean hasInsurance = newContractSupplierRequest.getHasInsurance();
-        Integer weeks = newContractSupplierRequest.getWeeks();
-        Integer currentWeek = gameCalendar.getWeek();
-        Integer amount = newContractSupplierRequest.getAmount();
-        Supplier supplier = contractSupplierService.SupplierIdValidation(newContractSupplierRequest.getSupplierId());
         NewContractSupplierResponse newContractSupplierResponse;
-        if (supplier == null)
+        try
         {
-            newContractSupplierResponse = new NewContractSupplierResponse(ResponseTypeConstant.NEW_CONTRACT_WITH_SUPPLIER, null, "supplier_not_found");
-        }
-        else
-        {
-            if (supplier.getMaterials().contains(newContractSupplierRequest.getMaterialId()))
+            Integer supplierId = newContractSupplierRequest.getSupplierId();
+            Integer materialId = newContractSupplierRequest.getMaterialId();
+            Enums.VehicleType vehicleType = ReadJsonFilesManager.findVehicleById(newContractSupplierRequest.getVehicleId()).getVehicleType();
+            Boolean hasInsurance = newContractSupplierRequest.getHasInsurance();
+            Integer weeks = newContractSupplierRequest.getWeeks();
+            Integer amount = newContractSupplierRequest.getAmount();
+
+            int currentWeek = gameCalendar.getWeek();
+            Supplier supplier = contractSupplierService.SupplierIdValidation(newContractSupplierRequest.getSupplierId());
+            if (supplier == null)
             {
+                throw new Exception();
+            }
+            else
+            {
+                if (!supplier.getMaterials().contains(newContractSupplierRequest.getMaterialId()))
+                {
+                    throw new Exception();
+                }
 
                 List<ContractSupplierDto> contractSupplierDtos = new ArrayList<>();
-                Float totalMaterialPrice = (float)0;
+                Float totalMaterialPrice = (float) 0;
                 float teamCredit = teamService.findTeamById(userService.loadById(request.playerId).getTeamId()).getCredit();
-                System.out.println("######TEAM CREDIT" + ((Float)(teamCredit)));
+
                 boolean success = false;
                 for (int i = 0; i < weeks; i++)
                 {
-                    Float materialPrice = weekSupplyService.findSpecificWeekSupply(supplierId, materialId, currentWeek+i).getPrice();
+                    Float materialPrice = weekSupplyService.findSpecificWeekSupply(supplierId, materialId, currentWeek + i).getPrice();
                     totalMaterialPrice += (float) materialPrice * amount;
-                    if(materialPrice > teamCredit && i == 0) {
+                    if (materialPrice > teamCredit && i == 0)
+                    {
                         break;
-                    }else {
+                    }
+                    else
+                    {
                         // Got enough money for at least this week's purchase
                         System.out.println("I GOT MONEY BABY");
                         success = true;
@@ -91,56 +99,52 @@ public class ContractSupplierController
                 }
 
 
-                if(success){
-                    newContractSupplierResponse = new NewContractSupplierResponse(ResponseTypeConstant.NEW_CONTRACT_WITH_SUPPLIER,
-                            contractSupplierDtos, "success");
-                }else{
-                    newContractSupplierResponse = new NewContractSupplierResponse(ResponseTypeConstant.NEW_CONTRACT_WITH_SUPPLIER,
-                            null, "not_enough_money");
+                if (success)
+                {
+                    newContractSupplierResponse = new NewContractSupplierResponse(ResponseTypeConstant.NEW_CONTRACT_WITH_SUPPLIER, contractSupplierDtos, "Successful");
+                    pushMessageManager.sendMessageByTeamId(request.teamId.toString(), gson.toJson(newContractSupplierResponse));
                 }
-
-                System.out.println("####NOW "+teamService.findTeamById(request.playerId).getCredit());
-
-
-            }
-            else
-            {
-                newContractSupplierResponse = new NewContractSupplierResponse(ResponseTypeConstant.NEW_CONTRACT_WITH_SUPPLIER, null, "supplier_material_not_matching");
+                else
+                {
+                    throw new Exception();
+                }
             }
         }
-        pushMessageManager.sendMessageBySession(request.session, gson.toJson(newContractSupplierResponse));
+        catch (Exception e)
+        {
+            newContractSupplierResponse = new NewContractSupplierResponse(ResponseTypeConstant.NEW_CONTRACT_WITH_SUPPLIER, null, "Failed");
+            pushMessageManager.sendMessageByUserId(request.playerId.toString(), gson.toJson(newContractSupplierResponse));
+        }
     }
 
     public void terminateLongtermContractSupplier(ProcessedRequest request, TerminateLongtermContractSupplierRequest terminateLongtermContractSupplierRequest)
     {
         ContractSupplierDto contractSupplierDto = contractSupplierService.findById(terminateLongtermContractSupplierRequest.getContractId());
         TerminateLongtermContractSupplierResponse terminateLongtermContractSupplierResponse;
-        if (contractSupplierDto.getTeamId().equals(userService.loadById(request.playerId).getTeamId()) &&
-                contractSupplierDto.getContractDate().isBefore(gameCalendar.getCurrentDate()))
+        if (contractSupplierDto.getTeamId().equals(request.teamId) && contractSupplierDto.getContractDate().isAfter(gameCalendar.getCurrentDate()))
         {
-
             Integer penalty = contractSupplierDto.getTerminatePenalty();
-            float teamCredit = teamService.findTeamById(userService.loadById(request.playerId).getTeamId()).getCredit();
-            System.out.println("######TEAM CREDIT" + ((Float)(teamCredit)));
-            if(teamCredit < penalty)
+            float teamCredit = teamService.findTeamById(request.teamId).getCredit();
+            if (teamCredit < penalty)
+            {
                 terminateLongtermContractSupplierResponse = new TerminateLongtermContractSupplierResponse(ResponseTypeConstant.TERMINATE_LONGTERM_CONTRACT_WITH_SUPPLIER, "not_enough_money", contractSupplierDto);
-            else{
-                // Terminating contract's transports
+            }
+            else
+            {
                 contractSupplierDto.setTerminated(true);
-                TeamDto team = teamService.loadById(request.playerId);
+                TeamDto team = teamService.loadById(request.teamId);
                 team.setCredit(teamCredit - penalty);
                 teamService.saveOrUpdate(team);
-                terminateLongtermContractSupplierResponse = new TerminateLongtermContractSupplierResponse(ResponseTypeConstant.TERMINATE_LONGTERM_CONTRACT_WITH_SUPPLIER, "terminated", contractSupplierDto);
+                contractSupplierService.saveOrUpdate(contractSupplierDto);
 
+                terminateLongtermContractSupplierResponse = new TerminateLongtermContractSupplierResponse(ResponseTypeConstant.TERMINATE_LONGTERM_CONTRACT_WITH_SUPPLIER, "Successful", contractSupplierDto);
             }
-
-            contractSupplierService.saveOrUpdate(contractSupplierDto);
         }
         else
         {
             terminateLongtermContractSupplierResponse = new TerminateLongtermContractSupplierResponse(ResponseTypeConstant.TERMINATE_LONGTERM_CONTRACT_WITH_SUPPLIER, "not_terminated", contractSupplierDto);
         }
-        pushMessageManager.sendMessageBySession(request.session, gson.toJson(terminateLongtermContractSupplierResponse));
+        pushMessageManager.sendMessageByTeamId(teamService.loadById(request.teamId).getId().toString(), gson.toJson(terminateLongtermContractSupplierResponse));
     }
 
     public void getContractsSupplier(ProcessedRequest request, GetContractsSupplierRequest getContractsSupplierRequest)
@@ -148,6 +152,7 @@ public class ContractSupplierController
         int playerId = request.playerId;
         UserDto user = userService.loadById(playerId);
         Team userTeam = teamService.findTeamById(user.getTeamId());
+
         GetContractsSupplierResponse getContractsSupplierResponse;
         if (userTeam == null)
         {
@@ -159,6 +164,6 @@ public class ContractSupplierController
             getContractsSupplierResponse = new GetContractsSupplierResponse(ResponseTypeConstant.GET_CONTRACTS_WITH_SUPPLIER, contractSupplierDtos);
         }
 
-        pushMessageManager.sendMessageBySession(request.session, gson.toJson(getContractsSupplierResponse));
+        pushMessageManager.sendMessageByUserId(user.getId().toString(), gson.toJson(getContractsSupplierResponse));
     }
 }

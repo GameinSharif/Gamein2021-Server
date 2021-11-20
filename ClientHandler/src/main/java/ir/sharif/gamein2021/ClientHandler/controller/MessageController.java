@@ -9,6 +9,7 @@ import ir.sharif.gamein2021.ClientHandler.domain.Messenger.NewMessageResponse;
 import ir.sharif.gamein2021.ClientHandler.manager.LocalPushMessageManager;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
 import ir.sharif.gamein2021.core.domain.dto.UserDto;
+import ir.sharif.gamein2021.core.manager.PushMessageManagerInterface;
 import ir.sharif.gamein2021.core.service.ChatService;
 import ir.sharif.gamein2021.core.service.MessageService;
 import ir.sharif.gamein2021.core.service.TeamService;
@@ -29,14 +30,14 @@ public class MessageController
 {
     static Logger logger = Logger.getLogger(ExecutorThread.class.getName());
 
-    private final LocalPushMessageManager pushMessageManager;
+    private final PushMessageManagerInterface pushMessageManager;
     private final ChatService chatService;
     private final MessageService messageService;
     private final UserService userService;
     private final TeamService teamService;
     private final Gson gson = new Gson();
 
-    public MessageController(LocalPushMessageManager pushMessageManager, TeamService teamService, MessageService messageService, ChatService chatService, UserService userService)
+    public MessageController(PushMessageManagerInterface pushMessageManager, TeamService teamService, MessageService messageService, ChatService chatService, UserService userService)
     {
         this.chatService = chatService;
         this.messageService = messageService;
@@ -101,17 +102,20 @@ public class MessageController
                 {
                     e.printStackTrace();
                     newMessageResponse = new NewMessageResponse(ResponseTypeConstant.NEW_MESSAGE, null, null, "Failed to Send the Message!");
+                    pushMessageManager.sendMessageByUserId(userDto.getId().toString(), gson.toJson(newMessageResponse));
+                    return;
                 }
             }
-        } catch (Exception e)
+            pushMessageManager.sendMessageByTeamId(newMessageResponse.getMessage().getReceiverTeamId().toString(), gson.toJson(newMessageResponse));
+            pushMessageManager.sendMessageByTeamId(newMessageResponse.getMessage().getSenderTeamId().toString(), gson.toJson(newMessageResponse));
+        }
+        catch (Exception e)
         {
             logger.debug(e);
-            System.out.println(e);
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             newMessageResponse = new NewMessageResponse(ResponseTypeConstant.NEW_MESSAGE, null, null, "Failed to Send the Message!");
+            pushMessageManager.sendMessageByUserId(userDto.getId().toString(), gson.toJson(newMessageResponse));
         }
-        pushMessageManager.sendMessageBySession(request.session, gson.toJson(newMessageResponse));
-        pushMessageManager.sendMessageByTeamId(newMessageResponse.getMessage().getReceiverTeamId().toString(), gson.toJson(newMessageResponse));
     }
 
     public void getAllChats(ProcessedRequest request, GetAllChatsRequest getAllChatsRequest) {
@@ -127,11 +131,12 @@ public class MessageController
             }
 
             getAllChatsResponse = new GetAllChatsResponse(ResponseTypeConstant.GET_ALL_CHATS, chatDtos);
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             logger.debug(e);
             getAllChatsResponse = new GetAllChatsResponse(ResponseTypeConstant.GET_ALL_CHATS, null);
         }
-        pushMessageManager.sendMessageBySession(request.session, gson.toJson(getAllChatsResponse));
+        pushMessageManager.sendMessageByUserId(request.playerId.toString(), gson.toJson(getAllChatsResponse));
     }
 }

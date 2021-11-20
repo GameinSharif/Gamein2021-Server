@@ -8,12 +8,11 @@ import ir.sharif.gamein2021.ClientHandler.domain.Transport.StartTransportForPlay
 import ir.sharif.gamein2021.ClientHandler.domain.Transport.StartTransportForPlayerStoragesResponse;
 import ir.sharif.gamein2021.ClientHandler.manager.LocalPushMessageManager;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
-import ir.sharif.gamein2021.core.domain.dto.DcDto;
-import ir.sharif.gamein2021.core.domain.dto.StorageProductDto;
-import ir.sharif.gamein2021.core.domain.dto.TransportDto;
-import ir.sharif.gamein2021.core.domain.dto.UserDto;
+import ir.sharif.gamein2021.core.domain.dto.*;
+import ir.sharif.gamein2021.core.domain.entity.Team;
 import ir.sharif.gamein2021.core.exception.InvalidRequestException;
 import ir.sharif.gamein2021.core.exception.NotEnoughCapacityException;
+import ir.sharif.gamein2021.core.exception.NotEnoughMoneyException;
 import ir.sharif.gamein2021.core.manager.GameCalendar;
 import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
 import ir.sharif.gamein2021.core.manager.TransportManager;
@@ -58,17 +57,19 @@ public class TransportController {
         try {
             UserDto user = userService.loadById(playerId);
             Integer teamId = user.getTeamId();
+            TeamDto teamDto = teamService.loadById(teamId);
             checkIfTransportSourceHasEnoughProduct(request);
             checkSourceAndDestinationIsForTeam(teamId, request);
             checkDestinationCapacity(request);
+            checkTeamMoney(request, teamDto);
             TransportDto transportDto = transportManager.createTransport(
-                    Enums.VehicleType.TRUCK,
+                    request.getVehicleType(),
                     request.getSourceType(),
                     request.getSourceId(),
                     request.getDestinationType(),
                     request.getDestinationId(),
                     gameCalendar.getCurrentDate(),
-                    true,
+                    request.isHasInsurance(),
                     request.getProductId(),
                     request.getAmount());
             response = new StartTransportForPlayerStoragesResponse(ResponseTypeConstant.TRANSPORT_TO_STORAGE, transportDto , "success");
@@ -79,6 +80,25 @@ public class TransportController {
         }
         pushMessageManager.sendMessageByTeamId(userService.loadById(playerId).getTeamId().toString(), gson.toJson(response));
 
+    }
+
+    private void checkTeamMoney(StartTransportForPlayerStoragesRequest request, TeamDto team) {
+        TransportDto transportDto = TransportDto.builder()
+                .sourceId(request.getSourceId())
+                .sourceType(request.getSourceType())
+                .destinationId(request.getDestinationId())
+                .destinationType(request.getDestinationType()).build();
+        int distance = transportManager.getTransportDistance(transportDto);
+        float transportCost = transportManager.calculateTransportCost(Enums.VehicleType.TRUCK ,distance ,
+                request.getProductId() ,
+                request.getAmount() ,
+                request.isHasInsurance() );
+        if(team.getCredit() < transportCost)
+            throw new NotEnoughMoneyException("You don't have enough credit to start this transport !");
+        else{
+            team.setCredit(team.getCredit() - transportCost);
+            teamService.saveOrUpdate(team);
+        }
     }
 
     private void checkDestinationCapacity(StartTransportForPlayerStoragesRequest request) {

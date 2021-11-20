@@ -16,4 +16,6 @@ public class StartTransportForPlayerStoragesRequest extends RequestObject implem
     private final Enums.TransportNodeType destinationType;
     private final Integer productId;
     private final Integer amount;
+    private boolean hasInsurance;
+    private Enums.VehicleType vehicleType;
 }

@@ -1,9 +1,11 @@
 {
-  "sourceId":2,
-  "sourceType":"DC",
-  "destinationId":1,
-  "destinationType":"DC",
-  "productId":17,
-  "amount":1,
-  "requestTypeConstant":34
+  "sourceId": 1,
+  "sourceType": "DC",
+  "destinationId": 2,
+  "destinationType": "DC",
+  "productId": 1,
+  "amount": 10,
+  "hasInsurance": true,
+  "vehicleType": "TRUCK",
+  "requestTypeConstant": 34
 }

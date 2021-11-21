@@ -74,7 +74,10 @@ public class ContractController
                     throw new Exception();
                 }
 
-                //TODO check pricePerUnit to be in range
+                if (newContractRequest.getPricePerUnit() < product.getMinPrice() || newContractRequest.getPricePerUnit() > product.getMaxPrice())
+                {
+                    throw new Exception();
+                }
 
                 ContractDto contractDto = new ContractDto();
                 contractDto.setTeamId(userTeam.getId());
@@ -83,6 +86,9 @@ public class ContractController
                 contractDto.setTerminatePenalty(1000); //TODO set this penalty
                 contractDto.setLostSalePenalty(1500); //TODO set this penalty
                 contractDto.setIsTerminated(false);
+
+                TeamDto teamDto = teamService.loadById(request.teamId);
+                contractDto.setCurrentBrand(teamDto.getBrand());
 
                 contractDto.setContractDate(startDate);
                 contractDto.setSupplyAmount(newContractRequest.getAmount());

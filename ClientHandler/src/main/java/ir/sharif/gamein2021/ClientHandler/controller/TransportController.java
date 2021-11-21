@@ -74,7 +74,9 @@ public class TransportController {
                     request.getProductId(),
                     request.getAmount());
             response = new StartTransportForPlayerStoragesResponse(ResponseTypeConstant.TRANSPORT_TO_STORAGE, transportDto , "success");
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
             response = new StartTransportForPlayerStoragesResponse(ResponseTypeConstant.TRANSPORT_TO_STORAGE, null , e.getMessage());
             logger.debug(e);
@@ -83,19 +85,18 @@ public class TransportController {
     }
 
     private void checkTeamMoney(StartTransportForPlayerStoragesRequest request, TeamDto team) {
-        TransportDto transportDto = TransportDto.builder()
-                .sourceId(request.getSourceId())
-                .sourceType(request.getSourceType())
-                .destinationId(request.getDestinationId())
-                .destinationType(request.getDestinationType()).build();
-        int distance = transportManager.getTransportDistance(transportDto);
-        float transportCost = transportManager.calculateTransportCost(Enums.VehicleType.TRUCK ,distance ,
-                request.getProductId() ,
-                request.getAmount() ,
-                request.isHasInsurance() );
+        int distance = transportManager.getTransportDistance(request.getSourceType(), request.getSourceId(), request.getDestinationType(), request.getDestinationId(), request.getVehicleType());
+        float transportCost = transportManager.calculateTransportCost(
+                request.getVehicleType(),
+                distance,
+                request.getProductId(),
+                request.getAmount(),
+                request.isHasInsurance()
+        );
         if(team.getCredit() < transportCost)
             throw new NotEnoughMoneyException("You don't have enough credit to start this transport !");
-        else{
+        else
+        {
             team.setCredit(team.getCredit() - transportCost);
             teamService.saveOrUpdate(team);
         }

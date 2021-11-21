@@ -41,7 +41,20 @@ public class Contract implements BaseEntity
     @Column(name = "bought_amount")
     private Integer boughtAmount;
 
-    //TODO add parameters needed after calculating shares
+    @Column(name = "current_brand", nullable = false)
+    private Float currentBrand;
+
+    @Column(name = "value_share")
+    private Float valueShare;
+
+    @Column(name = "demand_share")
+    private Float demandShare;
+
+    @Column(name = "min_price")
+    private Float minPrice;
+
+    @Column(name = "max_price")
+    private Float maxPrice;
 
     @Column(name = "lost_sale_penalty")
     private Integer lostSalePenalty;

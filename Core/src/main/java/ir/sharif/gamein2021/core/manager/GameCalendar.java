@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @Scope("singleton")
 public class GameCalendar {
     private int week = 1;
-    private LocalDate currentDate = GameConstants.startDate;
+    private LocalDate currentDate;
     private final ClientHandlerRequestSenderInterface requestSender;
     private final DynamicConfigService dynamicConfigService;
 
@@ -22,22 +22,25 @@ public class GameCalendar {
                         DynamicConfigService dynamicConfigService) {
         this.requestSender = requestSender;
         this.dynamicConfigService = dynamicConfigService;
+
+        currentDate = dynamicConfigService.getCurrentDate();
+        if (currentDate == null) {
+            currentDate = GameConstants.startDate;
+        }
     }
 
     public LocalDate getCurrentDate() {
         return currentDate;
     }
 
-    public int getWeek()
-    {
+    public int getWeek() {
         return week;
     }
 
     public void setCurrentDate(LocalDate newCurrentData) {
         currentDate = newCurrentData;
-        if (currentDate.getDayOfWeek() == DayOfWeek.SATURDAY)
-        {
-            week ++;
+        if (currentDate.getDayOfWeek() == DayOfWeek.SATURDAY) {
+            week++;
         }
     }
 

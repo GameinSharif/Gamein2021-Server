@@ -13,5 +13,4 @@ public class NewMessageRequest extends RequestObject implements Serializable
 {
     private Integer receiverTeamId;
     private String text;
-    private LocalDateTime insertedAt;
 }

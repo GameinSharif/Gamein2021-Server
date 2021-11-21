@@ -1,12 +1,9 @@
 package ir.sharif.gamein2021.core.manager;
 
-
 import ir.sharif.gamein2021.core.domain.dto.*;
-import ir.sharif.gamein2021.core.domain.entity.ContractDetail;
-import ir.sharif.gamein2021.core.domain.entity.WeekDemand;
 import ir.sharif.gamein2021.core.service.*;
 import ir.sharif.gamein2021.core.util.Enums;
-import ir.sharif.gamein2021.core.util.GameConstants;
+
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -19,9 +16,7 @@ import java.time.LocalDate;
 public class ContractManager
 {
     private final ContractSupplierService contractSupplierService;
-    private final ContractSupplierDetailService contractSupplierDetailService;
     private final ContractService contractService;
-    private final ContractDetailService contractDetailService;
     private final TeamService teamService;
     private final WeekSupplyService weekSupplyService;
     private final WeekDemandService weekDemandService;
@@ -50,12 +45,35 @@ public class ContractManager
                 try {
                     WeekSupplyDto weekSupplyDto = weekSupplyService.findSpecificWeekSupply(contractSupplierDto.getSupplierId(), contractSupplierDto.getMaterialId(), gameCalendar.getWeek());
                     Float price = weekSupplyDto.getPrice();
-                    for (ContractSupplierDetailDto contractSupplierDetailDto : contractSupplierService.getContractSupplierDetailDtos(contractSupplierDto))
+                    contractSupplierDto.setPricePerUnit(price);
+                    Enums.VehicleType vehicleType = contractSupplierDto.getTransportType();
+                    Integer supplierId = contractSupplierDto.getSupplierId();
+                    boolean hasInsurance = contractSupplierDto.isHasInsurance();
+                    Integer materialId = contractSupplierDto.getMaterialId();
+                    Integer amount = contractSupplierDto.getBoughtAmount();
+                    TransportDto transportDto = transportManager.createTransport(
+                            vehicleType,
+                            Enums.TransportNodeType.SUPPLIER,
+                            supplierId,
+                            Enums.TransportNodeType.FACTORY,
+                            teamService.loadById(contractSupplierDto.getTeamId()).getFactoryId(),
+                            gameCalendar.getCurrentDate(),
+                            hasInsurance,
+                            materialId,
+                            amount);
+                    Integer distance = transportManager.getTransportDistance(transportDto);
+                    contractSupplierDto.setTransportationCost(transportManager.calculateTransportCost(transportDto.getVehicleType(),
+                            distance, materialId, amount, hasInsurance));
+                    weekSupplyDto.setSales(weekSupplyDto.getSales() + contractSupplierDto.getBoughtAmount());
+                    weekSupplyService.saveOrUpdate(weekSupplyDto);
+                    contractSupplierService.saveOrUpdate(contractSupplierDto);
+
+                    /*for (ContractSupplierDetailDto contractSupplierDetailDto : contractSupplierService.getContractSupplierDetailDtos(contractSupplierDto))
                     {
                         if (contractSupplierDetailDto.getContractDate().equals(today))
                         {
                             // update price with this week's price
-                            contractSupplierDetailDto.setPricePerUnit(price);
+                            //contractSupplierDetailDto.setPricePerUnit(price);
                             // Add to Supplier's weekly sale
                             weekSupplyDto.setSales(weekSupplyDto.getSales() + contractSupplierDetailDto.getBoughtAmount());
                             weekSupplyService.saveOrUpdate(weekSupplyDto);
@@ -63,7 +81,7 @@ public class ContractManager
 
                             //TODO start transport
                         }
-                    }
+                    }*/
                 }
                 catch (Exception e)
                 {
@@ -76,44 +94,43 @@ public class ContractManager
     public void buyFromContractsWithGameinCustomers(LocalDate today)
     {
         List<WeekDemandDto> weekDemands = weekDemandService.findByWeek(gameCalendar.getWeek());
-        List<ContractDetailDto> contractDetailDtos = contractDetailService.findByDate(today);
+        List<ContractDto> contractDtos = contractService.findByDate(today);
 
         for (WeekDemandDto weekDemandDto : weekDemands)
         {
-            List<ContractDetailDto> thisDemandContractDetails = new ArrayList<>();
-            for (ContractDetailDto contractDetailDto : contractDetailDtos)
+            List<ContractDto> thisDemandContractDtos = contractService.findByDate(today);
+            for (ContractDto contractDto : contractDtos)
             {
-                ContractDto contractDto = contractService.loadById(contractDetailDto.getContractId());
-                if (contractDto.isTerminated())
+                if (contractDto.getIsTerminated())
                 {
                     continue;
                 }
 
                 if (contractDto.getGameinCustomerId().equals(weekDemandDto.getGameinCustomerId())
-                && contractDto.getProductId().equals(weekDemandDto.getProductId()))
+                    && contractDto.getProductId().equals(weekDemandDto.getProductId()))
                 {
-                    thisDemandContractDetails.add(contractDetailDto);
+                    thisDemandContractDtos.add(contractDto);
                 }
             }
 
-            FinalizeTheContracts(weekDemandDto, thisDemandContractDetails);
-            contractDetailDtos.removeAll(thisDemandContractDetails);
+            FinalizeTheContracts(weekDemandDto, thisDemandContractDtos);
+            contractDtos.removeAll(thisDemandContractDtos);
         }
     }
 
-    private void FinalizeTheContracts(WeekDemandDto weekDemandDto, List<ContractDetailDto> contractDetailDtos)
+    private void FinalizeTheContracts(WeekDemandDto weekDemandDto, List<ContractDto> contractDtos)
     {
-        for (ContractDetailDto contractDetailDto : contractDetailDtos)
+        for (ContractDto contractDto : contractDtos)
         {
-            ContractDto contractDto = contractService.loadById(contractDetailDto.getContractId());
-
             int boughtAmount = calculateBoughtAmount();
 
             //TODO check player has those amount of product
             //TODO if not calculate lost sale penalty and decrease from player money
 
-            contractDetailDto.setBoughtAmount(boughtAmount);
-            contractDetailService.saveOrUpdate(contractDetailDto);
+            contractDto.setBoughtAmount(boughtAmount);
+            //TODO set share, ...
+
+            contractService.saveOrUpdate(contractDto);
 
             transportManager.createTransport(
                     Enums.VehicleType.TRUCK,

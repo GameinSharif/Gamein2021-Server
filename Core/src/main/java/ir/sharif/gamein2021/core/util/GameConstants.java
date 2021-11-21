@@ -30,6 +30,5 @@ public class GameConstants {
 
     public static final float CrushProbability = 0.01f;
 
-    public static boolean IsGameStarted = false;
     public static GameStatus gameStatus = GameStatus.RUNNING;
 }

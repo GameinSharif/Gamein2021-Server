@@ -4,6 +4,7 @@ import ir.sharif.gamein2021.core.util.Enums;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -19,6 +20,9 @@ public class ContractSupplier implements BaseEntity
     @Column(name = "contract_supplier_id")
     private Integer id;
 
+    @Column(name = "contract_date", nullable = false)
+    private LocalDate contractDate;
+
     @Column(name = "supplier_id", nullable = false)
     private Integer supplierId;
 
@@ -28,19 +32,29 @@ public class ContractSupplier implements BaseEntity
     @Column(name = "material_id", nullable = false)
     private Integer materialId;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "contract_type", nullable = false)
-    private Enums.ContractType contractType;
+    @Column(name = "price_per_unit")
+    private Float pricePerUnit;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    @JoinColumn(name = "contract_supplier_id")
-    private List<ContractSupplierDetail> contractSupplierDetails;
+    @Column(name = "bought_amount", nullable = false)
+    private Integer boughtAmount;
+
+    @Column(name = "transport_type", nullable = false)
+    private Enums.VehicleType transportType;
+
+    @Column(name = "has_insurance", nullable = false, columnDefinition = "TINYINT(1)")
+    private boolean hasInsurance;
+
+    @Column(name = "transportation_cost")
+    private Float transportationCost;
 
     @Column(name = "terminate_penalty", nullable = false)
     private Integer terminatePenalty;
 
     @Column(name = "is_terminated", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean isTerminated;
+
+    @Column(name = "no_money_penalty", nullable = false)
+    private Integer noMoneyPenalty;
 
     @Override
     public Integer getId() {

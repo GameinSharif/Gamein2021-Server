@@ -79,19 +79,20 @@ public class ContractSupplierService extends AbstractCrudService<ContractSupplie
     @Transactional(readOnly = true)
     public List<ContractSupplierDto> findTodaysContractSupplier(LocalDate today)
     {
-        List<ContractSupplierDto> contractSupplierDtos = new ArrayList<>();
-        List<ContractSupplierDetail> contractSupplierDetails = contractSupplierDetailRepository.findAllByContractDate(today);
-        for (ContractSupplierDetail contractDetail : contractSupplierDetails)
+        //List<ContractSupplierDto> contractSupplierDtos = new ArrayList<>();
+        List<ContractSupplier> contractSuppliers = contractSupplierRepository.findAllByContractDate(today);
+        /*for (ContractSupplier contract : contractSuppliers)
         {
-            contractSupplierDtos.add(modelMapper.map(contractSupplierRepository.findContractSupplierById(contractDetail.getContractSupplier().getId()), ContractSupplierDto.class));
-        }
-        return contractSupplierDtos;
+            contractSupplierDtos.add(modelMapper.map(contract, ContractSupplierDto.class));
+        }*/
+        return contractSuppliers.stream().map(e -> modelMapper.map(e, ContractSupplierDto.class))
+                .collect(Collectors.toList());
     }
 
-    public List<ContractSupplierDetailDto> getContractSupplierDetailDtos(ContractSupplierDto contractSupplierDto)
+    /*public List<ContractSupplierDetailDto> getContractSupplierDetailDtos(ContractSupplierDto contractSupplierDto)
     {
         return contractSupplierDto.getContractSupplierDetails().stream().map(e -> modelMapper.map(e, ContractSupplierDetailDto.class))
                 .collect(Collectors.toList());
-    }
+    }*/
 
 }

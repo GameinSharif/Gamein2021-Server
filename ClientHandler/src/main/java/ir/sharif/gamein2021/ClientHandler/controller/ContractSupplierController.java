@@ -53,19 +53,23 @@ public class ContractSupplierController
             Supplier supplier = contractSupplierService.SupplierIdValidation(newContractSupplierRequest.getSupplierId());
             if (supplier == null)
             {
+                System.out.println("supp null");
                 throw new Exception();
             }
             else
             {
                 if (!supplier.getMaterials().contains(newContractSupplierRequest.getMaterialId()))
                 {
+                    System.out.println("supp not got what you want");
                     throw new Exception();
                 }
 
                 List<ContractSupplierDto> contractSupplierDtos = new ArrayList<>();
                 float teamCredit = teamService.findTeamById(userService.loadById(request.playerId).getTeamId()).getCredit();
+                System.out.println(teamCredit);
                 Float materialPrice = weekSupplyService.findSpecificWeekSupply(supplierId, materialId, currentWeek).getPrice();
-                if(materialPrice > teamCredit) {
+
+                if(materialPrice < teamCredit) {
                     for (int i = 0; i < weeks; i++)
                     {
                             // Got enough money for at least this week's purchase
@@ -91,6 +95,7 @@ public class ContractSupplierController
                     pushMessageManager.sendMessageByTeamId(request.teamId.toString(), gson.toJson(newContractSupplierResponse));
 
                 }else{
+                    System.out.println("get some money");
                     throw new Exception();
                 }
             }

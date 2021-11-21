@@ -43,11 +43,14 @@ public class ContractManager
 
     public void updateTodayContractCosts(LocalDate today)
     {
+        System.out.println("in update!!");
         List<ContractSupplierDto> contractSupplierDtos = contractSupplierService.findTodaysContractSupplier(today);
         for (ContractSupplierDto contractSupplierDto : contractSupplierDtos)
         {
+            System.out.println("in for looooop");
             if (!contractSupplierDto.isTerminated())
             {
+                System.out.println("not term");
                 try {
                     float teamCredit = teamService.findTeamById(contractSupplierDto.getTeamId()).getCredit();
                     WeekSupplyDto weekSupplyDto = weekSupplyService.findSpecificWeekSupply(contractSupplierDto.getSupplierId(), contractSupplierDto.getMaterialId(), gameCalendar.getWeek());
@@ -97,6 +100,7 @@ public class ContractManager
                     teamCredit -= contractSupplierDto.getTerminatePenalty();
                     team.setCredit(teamCredit);
                     teamService.saveOrUpdate(team);
+                    System.out.println("transport on its way");
                 }
                 catch (Exception e)
                 {

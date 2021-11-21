@@ -5,9 +5,11 @@ import ir.sharif.gamein2021.core.dao.ProductionLineRepository;
 import ir.sharif.gamein2021.core.domain.dto.ProductionLineProductDto;
 import ir.sharif.gamein2021.core.domain.entity.ProductionLine;
 import ir.sharif.gamein2021.core.domain.entity.ProductionLineProduct;
+import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
 import ir.sharif.gamein2021.core.manager.clientHandlerConnection.ClientHandlerRequestSenderInterface;
 import ir.sharif.gamein2021.core.manager.clientHandlerConnection.requests.ProductCreationCompletedRequest;
 import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
+import ir.sharif.gamein2021.core.util.models.ProductionLineTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -45,7 +47,10 @@ public class ProductionLineProductService extends AbstractCrudService<Production
                 continue;
             }
 
-            storageService.addProduct(productionLine.getTeam().getFactoryId(), false, product.getProductId(), product.getAmount());
+            ProductionLineTemplate template = ReadJsonFilesManager.ProductionLineTemplateHashMap.get(productionLine.getProductionLineTemplateId());
+            int amount = (template.getEfficiencyLevels().get(productionLine.getEfficiencyLevel()).getEfficiencyPercentage() / 100) * product.getAmount();
+
+            storageService.addProduct(productionLine.getTeam().getFactoryId(), false, product.getProductId(), amount);
             clientHandlerRequestSender.send(new ProductCreationCompletedRequest(productionLine, product, "Done"));
         }
     }

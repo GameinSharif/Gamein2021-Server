@@ -49,14 +49,31 @@ public class ContractManager
             if (!contractSupplierDto.isTerminated())
             {
                 try {
+                    float teamCredit = teamService.findTeamById(contractSupplierDto.getTeamId()).getCredit();
                     WeekSupplyDto weekSupplyDto = weekSupplyService.findSpecificWeekSupply(contractSupplierDto.getSupplierId(), contractSupplierDto.getMaterialId(), gameCalendar.getWeek());
                     Float price = weekSupplyDto.getPrice();
+                    TeamDto team = teamService.loadById(contractSupplierDto.getTeamId());
+                    if(price > teamCredit){
+                        System.out.println("You don't have enough money! Costs you a penalty..");
+                        team.setCredit(teamCredit - contractSupplierDto.getNoMoneyPenalty());
+                        teamService.saveOrUpdate(team);
+                        continue;
+                    }
                     contractSupplierDto.setPricePerUnit(price);
+                    teamCredit -= price;
+                    team.setCredit(teamCredit);
+                    teamService.saveOrUpdate(team);
                     Enums.VehicleType vehicleType = contractSupplierDto.getTransportType();
                     Integer supplierId = contractSupplierDto.getSupplierId();
                     boolean hasInsurance = contractSupplierDto.isHasInsurance();
                     Integer materialId = contractSupplierDto.getMaterialId();
                     Integer amount = contractSupplierDto.getBoughtAmount();
+
+                    weekSupplyDto.setSales(weekSupplyDto.getSales() + contractSupplierDto.getBoughtAmount());
+                    weekSupplyService.saveOrUpdate(weekSupplyDto);
+                    contractSupplierService.saveOrUpdate(contractSupplierDto);
+
+                    // Creating transport for this contract
                     TransportDto transportDto = transportManager.createTransport(
                             vehicleType,
                             Enums.TransportNodeType.SUPPLIER,
@@ -70,9 +87,16 @@ public class ContractManager
                     Integer distance = transportManager.getTransportDistance(transportDto);
                     contractSupplierDto.setTransportationCost(transportManager.calculateTransportCost(transportDto.getVehicleType(),
                             distance, materialId, amount, hasInsurance));
-                    weekSupplyDto.setSales(weekSupplyDto.getSales() + contractSupplierDto.getBoughtAmount());
-                    weekSupplyService.saveOrUpdate(weekSupplyDto);
-                    contractSupplierService.saveOrUpdate(contractSupplierDto);
+                    if(contractSupplierDto.getTransportationCost() > teamCredit){
+                        System.out.println("You don't have enough money for transport! Costs you a penalty..");
+                        transportDto.setTransportState(Enums.TransportState.TERMINATED);
+                        team.setCredit(teamCredit - contractSupplierDto.getTerminatePenalty());
+                        teamService.saveOrUpdate(team);
+                        continue;
+                    }
+                    teamCredit -= contractSupplierDto.getTerminatePenalty();
+                    team.setCredit(teamCredit);
+                    teamService.saveOrUpdate(team);
                 }
                 catch (Exception e)
                 {

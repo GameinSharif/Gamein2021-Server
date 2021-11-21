@@ -63,49 +63,34 @@ public class ContractSupplierController
                 }
 
                 List<ContractSupplierDto> contractSupplierDtos = new ArrayList<>();
-                Float totalMaterialPrice = (float) 0;
                 float teamCredit = teamService.findTeamById(userService.loadById(request.playerId).getTeamId()).getCredit();
-
-                boolean success = false;
-                for (int i = 0; i < weeks; i++)
-                {
-                    Float materialPrice = weekSupplyService.findSpecificWeekSupply(supplierId, materialId, currentWeek + i).getPrice();
-                    totalMaterialPrice += (float) materialPrice * amount;
-                    if (materialPrice > teamCredit && i == 0)
+                Float materialPrice = weekSupplyService.findSpecificWeekSupply(supplierId, materialId, currentWeek).getPrice();
+                if(materialPrice > teamCredit) {
+                    for (int i = 0; i < weeks; i++)
                     {
-                        break;
-                    }
-                    else
-                    {
-                        // Got enough money for at least this week's purchase
-                        System.out.println("I GOT MONEY BABY");
-                        success = true;
-                        ContractSupplierDto contractSupplierDto = new ContractSupplierDto();
-                        contractSupplierDto.setContractDate(gameCalendar.getCurrentDate().plusDays(i * 7L));
-                        contractSupplierDto.setBoughtAmount(newContractSupplierRequest.getAmount());
-                        contractSupplierDto.setSupplierId(supplierId);
-                        contractSupplierDto.setMaterialId(materialId);
-                        contractSupplierDto.setTeamId(userService.loadById(request.playerId).getTeamId());
-                        contractSupplierDto.setTerminated(false);
-                        contractSupplierDto.setTerminatePenalty(100); //TODO
-                        contractSupplierDto.setHasInsurance(hasInsurance);
-                        contractSupplierDto.setTransportType(vehicleType);
-                        contractSupplierDto.setNoMoneyPenalty(100); //TODO
-                        System.out.println(contractSupplierDto);
-                        // TODO compute cost for transportation?
-                        ContractSupplierDto savedContractSupplierDto = contractSupplierService.saveOrUpdate(contractSupplierDto);
-                        contractSupplierDtos.add(savedContractSupplierDto);
-                    }
-                }
+                            // Got enough money for at least this week's purchase
+                            System.out.println("I GOT MONEY BABY");
+                            ContractSupplierDto contractSupplierDto = new ContractSupplierDto();
+                            contractSupplierDto.setContractDate(gameCalendar.getCurrentDate().plusDays(i * 7L));
+                            contractSupplierDto.setBoughtAmount(newContractSupplierRequest.getAmount());
+                            contractSupplierDto.setSupplierId(supplierId);
+                            contractSupplierDto.setMaterialId(materialId);
+                            contractSupplierDto.setTeamId(userService.loadById(request.playerId).getTeamId());
+                            contractSupplierDto.setTerminated(false);
+                            contractSupplierDto.setTerminatePenalty(100); //TODO
+                            contractSupplierDto.setHasInsurance(hasInsurance);
+                            contractSupplierDto.setTransportType(vehicleType);
+                            contractSupplierDto.setNoMoneyPenalty(100); //TODO
+                            System.out.println(contractSupplierDto);
+                            // TODO compute cost for transportation?
+                            ContractSupplierDto savedContractSupplierDto = contractSupplierService.saveOrUpdate(contractSupplierDto);
+                            contractSupplierDtos.add(savedContractSupplierDto);
 
-
-                if (success)
-                {
+                    }
                     newContractSupplierResponse = new NewContractSupplierResponse(ResponseTypeConstant.NEW_CONTRACT_WITH_SUPPLIER, contractSupplierDtos, "Successful");
                     pushMessageManager.sendMessageByTeamId(request.teamId.toString(), gson.toJson(newContractSupplierResponse));
-                }
-                else
-                {
+
+                }else{
                     throw new Exception();
                 }
             }

@@ -60,6 +60,19 @@ public class NegotiationController
         Integer supplierId = 0;
         NewProviderNegotiationResponse newProviderNegotiationResponse;
         try {
+            float totalPayment =
+                    newProviderNegotiationRequest.getAmount() * newProviderNegotiationRequest.getCostPerUnitDemander() +
+                    transportManager.calculateTransportCost(
+                            Enums.VehicleType.TRUCK,
+                            transportManager.calculateTransportDistance(
+                            Enums.TransportNodeType.FACTORY,
+                            teamService.findTeamById(providerService.findProviderById(newProviderNegotiationRequest.getProviderId()).getTeamId()).getFactoryId(),
+                            Enums.TransportNodeType.FACTORY,
+                            teamService.findTeamById(request.teamId).getFactoryId(),
+                            Enums.VehicleType.TRUCK),
+                    providerService.findProviderById(newProviderNegotiationRequest.getProviderId()).getProductId(),
+                    newProviderNegotiationRequest.getAmount()
+            );
             UserDto user = userService.loadById(request.playerId);
             ProviderDto provider = providerService.findProviderById(newProviderNegotiationRequest.getProviderId());
             if (newProviderNegotiationRequest.getAmount() <= 0) {
@@ -67,6 +80,8 @@ public class NegotiationController
             } else if (!isCostInRange(newProviderNegotiationRequest.getProviderId(), newProviderNegotiationRequest.getCostPerUnitDemander())) {
                 newProviderNegotiationResponse = new NewProviderNegotiationResponse(ResponseTypeConstant.NEW_PROVIDER_NEGOTIATION, null);
             } else if (!isProductionLineValid(user.getTeamId(), teamService.findTeamById(request.teamId))) {
+                newProviderNegotiationResponse = new NewProviderNegotiationResponse(ResponseTypeConstant.NEW_PROVIDER_NEGOTIATION, null);
+            } else if (totalPayment > teamService.findTeamById(request.teamId).getCredit()) {
                 newProviderNegotiationResponse = new NewProviderNegotiationResponse(ResponseTypeConstant.NEW_PROVIDER_NEGOTIATION, null);
             } else {
                 NegotiationDto newNegotiation = new NegotiationDto();
@@ -79,7 +94,6 @@ public class NegotiationController
                 newNegotiation.setState(NegotiationState.IN_PROGRESS);
                 if (newNegotiation.getCostPerUnitDemander().equals(newNegotiation.getCostPerUnitSupplier())) {
                     //TODO check if supplier has product and demander has money
-                    //TODO check if demander has transport money
                     newNegotiation.setState(NegotiationState.DEAL);
                     startTransport(newNegotiation);
                 }
@@ -105,45 +119,56 @@ public class NegotiationController
     public void editNegotiationCostPerUnit(ProcessedRequest request, EditNegotiationCostPerUnitRequest editRequest) {
         UserDto user = userService.loadById(request.playerId);
         EditNegotiationCostPerUnitResponse editResponse;
-        if (user != null)
-        {
+        try {
             NegotiationDto negotiationDto = negotiationService.findById(editRequest.getNegotiationId());
             Team userTeam = teamService.findTeamById(user.getTeamId());
-            if (userTeam.getId().equals(negotiationDto.getDemanderId()))
-            {
-                negotiationDto.setCostPerUnitDemander(editRequest.getNewCostPerUnit());
-                if (negotiationDto.getCostPerUnitDemander().equals(negotiationDto.getCostPerUnitSupplier()))
-                {
-                    //TODO check if supplier has product and demander has money
-                    //TODO check if demander has transport money
-                    negotiationDto.setState(NegotiationState.DEAL);
-                    startTransport(negotiationDto);
+            if (negotiationDto.getCostPerUnitDemander() < 0 || negotiationDto.getCostPerUnitSupplier() < 0) {
+                editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, null);
+            } else if (
+                    !isCostInRange(
+                            providerService.findProviderById(negotiationDto.getSupplierId()).getId(), negotiationDto.getCostPerUnitDemander()
+                    ) ||
+                    !isCostInRange(
+                            providerService.findProviderById(negotiationDto.getSupplierId()).getId(), negotiationDto.getCostPerUnitDemander())
+            ) {
+                editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, null);
+            } else {
+                if (userTeam.getId().equals(negotiationDto.getDemanderId())) {
+                    negotiationDto.setCostPerUnitDemander(editRequest.getNewCostPerUnit());
+                    if (negotiationDto.getCostPerUnitDemander().equals(negotiationDto.getCostPerUnitSupplier())) {
+                        //TODO check if supplier has product and demander has money
+                        //TODO check if demander has transport money
+                        negotiationDto.setState(NegotiationState.DEAL);
+                        startTransport(negotiationDto);
+                    }
+                    negotiationService.saveOrUpdate(negotiationDto);
+                    editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, negotiationDto);
+                } else if (userTeam.getId().equals(negotiationDto.getSupplierId())) {
+                    negotiationDto.setCostPerUnitSupplier(editRequest.getNewCostPerUnit());
+                    if (negotiationDto.getCostPerUnitDemander().equals(negotiationDto.getCostPerUnitSupplier())) {
+                        //TODO check if supplier has product and demander has money
+                        //TODO check if demander has transport money
+                        negotiationDto.setState(NegotiationState.DEAL);
+                        startTransport(negotiationDto);
+                    }
+                    negotiationService.saveOrUpdate(negotiationDto);
+                    editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, negotiationDto);
+                } else {
+                    editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, null);
                 }
-                negotiationService.saveOrUpdate(negotiationDto);
-                editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, negotiationDto);
-                pushMessageManager.sendMessageByTeamId(negotiationDto.getDemanderId().toString(), gson.toJson(editResponse));
-                pushMessageManager.sendMessageByTeamId(negotiationDto.getSupplierId().toString(), gson.toJson(editResponse));
-                return;
             }
-            else if (userTeam.getId().equals(negotiationDto.getSupplierId()))
-            {
-                negotiationDto.setCostPerUnitSupplier(editRequest.getNewCostPerUnit());
-                if (negotiationDto.getCostPerUnitDemander().equals(negotiationDto.getCostPerUnitSupplier()))
-                {
-                    //TODO check if supplier has product and demander has money
-                    //TODO check if demander has transport money
-                    negotiationDto.setState(NegotiationState.DEAL);
-                    startTransport(negotiationDto);
-                }
-                negotiationService.saveOrUpdate(negotiationDto);
-                editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, negotiationDto);
-                pushMessageManager.sendMessageByTeamId(negotiationDto.getDemanderId().toString(), gson.toJson(editResponse));
-                pushMessageManager.sendMessageByTeamId(negotiationDto.getSupplierId().toString(), gson.toJson(editResponse));
-                return;
-            }
+
+        } catch (Exception e) {
+            editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, null);
         }
-        editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, null);
-        pushMessageManager.sendMessageByUserId(request.playerId.toString(), gson.toJson(editResponse));
+
+        if (editResponse.getNegotiation() == null) {
+            pushMessageManager.sendMessageByUserId(request.playerId.toString(), gson.toJson(editResponse));
+        } else {
+            pushMessageManager.sendMessageByTeamId(negotiationService.findById(editRequest.getNegotiationId()).getDemanderId().toString(), gson.toJson(editResponse));
+            pushMessageManager.sendMessageByTeamId(negotiationService.findById(editRequest.getNegotiationId()).getSupplierId().toString(), gson.toJson(editResponse));
+        }
+
     }
 
     private void startTransport(NegotiationDto negotiationDto) {
@@ -162,9 +187,9 @@ public class NegotiationController
 
     private boolean isCostInRange(Integer providerId, Float cost) {
         ProviderDto providerDto = providerService.findProviderById(providerId);
-        Integer minPrice = ReadJsonFilesManager.findProductById(providerDto.getProductId()).getMinPrice();
-        Integer maxPrice = ReadJsonFilesManager.findProductById(providerDto.getProductId()).getMaxPrice();
-        return providerDto.getPrice() >= minPrice && providerDto.getPrice() <= maxPrice;
+        int minPrice = ReadJsonFilesManager.findProductById(providerDto.getProductId()).getMinPrice();
+        int maxPrice = ReadJsonFilesManager.findProductById(providerDto.getProductId()).getMaxPrice();
+        return cost >= minPrice && cost <= maxPrice;
     }
 
     private boolean isProductionLineValid(Integer demanderId, Team team) {

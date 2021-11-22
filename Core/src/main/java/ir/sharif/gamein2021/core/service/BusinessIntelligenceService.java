@@ -48,20 +48,4 @@ public class BusinessIntelligenceService {
     private void setCompetitionReportData(Map<Integer, WeeklyReport> weeklyReportByTeamId) {
         List<TeamDto> teams = teamService.getAllTeams();
     }
-
-    public List<CompetitionWeeklyReportDto> getCompetitionWeeklyReports(int teamId) {
-        return null;
-    }
-
-    public List<FinanceWeeklyReportDto> getFinanceWeeklyReports(int teamId) {
-        return null;
-    }
-
-    public List<CostsWeeklyReportDto> getCostsWeeklyReports(int teamId) {
-        return null;
-    }
-
-    public List<InventoryWeeklyReportDto> getInventoryWeeklyReports(int teamId) {
-        return null;
-    }
 }

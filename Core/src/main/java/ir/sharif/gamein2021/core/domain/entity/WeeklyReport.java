@@ -12,6 +12,7 @@ import javax.persistence.*;
 @Builder
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class WeeklyReport implements BaseEntity {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Integer id;
 

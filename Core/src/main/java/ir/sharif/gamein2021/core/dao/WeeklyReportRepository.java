@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface WeeklyReportRepository<T> extends JpaRepository<WeeklyReport, Integer> {
-    List<T> findAllByTeamId(int teamId);
+public interface WeeklyReportRepository extends JpaRepository<WeeklyReport, Integer> {
+    List<WeeklyReport> findAllByTeamId(int teamId);
 }

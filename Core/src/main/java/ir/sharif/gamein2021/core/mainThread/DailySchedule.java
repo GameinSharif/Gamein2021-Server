@@ -75,7 +75,6 @@ public class DailySchedule {
         productionLineService.enableProductionLines();
         productService.finishProductCreation(gameCalendar.getCurrentDate());
         transportManager.updateTransports();
-        System.out.println("are u even workin?");
         contractManager.updateContracts();
     }
 

@@ -45,6 +45,7 @@ public class ContractManager
     {
         System.out.println("in update!!");
         List<ContractSupplierDto> contractSupplierDtos = contractSupplierService.findTodaysContractSupplier(today);
+        System.out.println(contractSupplierDtos.size());
         for (ContractSupplierDto contractSupplierDto : contractSupplierDtos)
         {
             System.out.println("in for looooop");
@@ -55,6 +56,7 @@ public class ContractManager
                     float teamCredit = teamService.findTeamById(contractSupplierDto.getTeamId()).getCredit();
                     WeekSupplyDto weekSupplyDto = weekSupplyService.findSpecificWeekSupply(contractSupplierDto.getSupplierId(), contractSupplierDto.getMaterialId(), gameCalendar.getWeek());
                     Float price = weekSupplyDto.getPrice();
+                    System.out.println("price for material "+ price);
                     TeamDto team = teamService.loadById(contractSupplierDto.getTeamId());
                     if(price > teamCredit){
                         System.out.println("You don't have enough money! Costs you a penalty..");
@@ -91,7 +93,7 @@ public class ContractManager
                     contractSupplierDto.setTransportationCost(transportManager.calculateTransportCost(transportDto.getVehicleType(),
                             distance, materialId, amount, hasInsurance));
                     if(contractSupplierDto.getTransportationCost() > teamCredit){
-                        System.out.println("You don't have enough money for transport! Costs you a penalty..");
+                        System.out.println(teamCredit+"You don't have enough money for transport! Costs you a penalty.."+contractSupplierDto.getTransportationCost());
                         transportDto.setTransportState(Enums.TransportState.TERMINATED);
                         team.setCredit(teamCredit - contractSupplierDto.getTerminatePenalty());
                         teamService.saveOrUpdate(team);

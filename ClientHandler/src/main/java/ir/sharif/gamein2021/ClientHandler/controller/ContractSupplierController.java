@@ -7,13 +7,12 @@ import ir.sharif.gamein2021.ClientHandler.manager.LocalPushMessageManager;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
 import ir.sharif.gamein2021.core.domain.dto.*;
 import ir.sharif.gamein2021.core.domain.entity.Team;
+import ir.sharif.gamein2021.core.manager.ContractManager;
 import ir.sharif.gamein2021.core.manager.GameCalendar;
 import ir.sharif.gamein2021.core.manager.PushMessageManagerInterface;
 import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
-import ir.sharif.gamein2021.core.manager.TransportManager;
 import ir.sharif.gamein2021.core.service.*;
 import ir.sharif.gamein2021.core.util.Enums;
-import ir.sharif.gamein2021.core.util.GameConstants;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import ir.sharif.gamein2021.core.util.models.Supplier;
 import lombok.AllArgsConstructor;
@@ -35,6 +34,7 @@ public class ContractSupplierController
     private final WeekSupplyService weekSupplyService;
     private final TeamService teamService;
     private final GameCalendar gameCalendar;
+    private final ContractManager contractManager;
     private final Gson gson = new Gson();
 
     public void newContractSupplier(ProcessedRequest request, NewContractSupplierRequest newContractSupplierRequest)
@@ -91,6 +91,7 @@ public class ContractSupplierController
                             contractSupplierDtos.add(savedContractSupplierDto);
 
                     }
+                    contractManager.updateContracts();
                     newContractSupplierResponse = new NewContractSupplierResponse(ResponseTypeConstant.NEW_CONTRACT_WITH_SUPPLIER, contractSupplierDtos, "Successful");
                     pushMessageManager.sendMessageByTeamId(request.teamId.toString(), gson.toJson(newContractSupplierResponse));
 

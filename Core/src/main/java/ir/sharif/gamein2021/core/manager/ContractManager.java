@@ -7,7 +7,6 @@ import ir.sharif.gamein2021.core.util.Enums;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
 
@@ -43,7 +42,7 @@ public class ContractManager
             if (!contractSupplierDto.isTerminated())
             {
                 try {
-                    WeekSupplyDto weekSupplyDto = weekSupplyService.findSpecificWeekSupply(contractSupplierDto.getSupplierId(), contractSupplierDto.getMaterialId(), gameCalendar.getWeek());
+                    WeekSupplyDto weekSupplyDto = weekSupplyService.findSpecificWeekSupply(contractSupplierDto.getSupplierId(), contractSupplierDto.getMaterialId(), gameCalendar.getCurrentWeek());
                     Float price = weekSupplyDto.getPrice();
                     contractSupplierDto.setPricePerUnit(price);
                     Enums.VehicleType vehicleType = contractSupplierDto.getTransportType();
@@ -93,7 +92,7 @@ public class ContractManager
 
     public void buyFromContractsWithGameinCustomers(LocalDate today)
     {
-        List<WeekDemandDto> weekDemands = weekDemandService.findByWeek(gameCalendar.getWeek());
+        List<WeekDemandDto> weekDemands = weekDemandService.findByWeek(gameCalendar.getCurrentWeek());
         List<ContractDto> contractDtos = contractService.findByDate(today);
 
         for (WeekDemandDto weekDemandDto : weekDemands)

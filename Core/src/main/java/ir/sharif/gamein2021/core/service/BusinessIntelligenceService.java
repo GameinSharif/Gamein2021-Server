@@ -24,7 +24,7 @@ public class BusinessIntelligenceService {
 
     public void prepareWeeklyReport() {
         List<TeamDto> teams = teamService.getAllTeams();
-        int weakNumber=  gameCalendar.getWeek();
+        int weakNumber=  gameCalendar.getCurrentWeek();
         Map<Integer, WeeklyReport> weeklyReportByTeamId = teams.stream()
                 .collect(Collectors.toMap(TeamDto::getId, x -> new WeeklyReport(weakNumber, x.getId())));
         
@@ -47,21 +47,5 @@ public class BusinessIntelligenceService {
 
     private void setCompetitionReportData(Map<Integer, WeeklyReport> weeklyReportByTeamId) {
         List<TeamDto> teams = teamService.getAllTeams();
-    }
-
-    public List<CompetitionWeeklyReportDto> getCompetitionWeeklyReports(int teamId) {
-        return null;
-    }
-
-    public List<FinanceWeeklyReportDto> getFinanceWeeklyReports(int teamId) {
-        return null;
-    }
-
-    public List<CostsWeeklyReportDto> getCostsWeeklyReports(int teamId) {
-        return null;
-    }
-
-    public List<InventoryWeeklyReportDto> getInventoryWeeklyReports(int teamId) {
-        return null;
     }
 }

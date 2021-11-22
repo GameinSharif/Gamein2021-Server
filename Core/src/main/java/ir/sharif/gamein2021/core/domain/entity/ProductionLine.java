@@ -1,6 +1,5 @@
 package ir.sharif.gamein2021.core.domain.entity;
 
-
 import ir.sharif.gamein2021.core.util.Enums;
 import lombok.*;
 
@@ -30,11 +29,9 @@ public class ProductionLine {
     @ManyToOne
     private Team team;
 
-//    @Enumerated(EnumType.STRING)
     @Column(name = "quality_level", nullable = false)
     private Integer qualityLevel;
 
-//    @Enumerated(EnumType.STRING)
     @Column(name = "efficiency_level", nullable = false)
     private Integer efficiencyLevel;
 

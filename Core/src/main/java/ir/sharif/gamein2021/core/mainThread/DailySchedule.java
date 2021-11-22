@@ -7,6 +7,7 @@ import ir.sharif.gamein2021.core.manager.WeekSupplyManager;
 import ir.sharif.gamein2021.core.manager.*;
 import ir.sharif.gamein2021.core.manager.clientHandlerConnection.ClientHandlerRequestSenderInterface;
 import ir.sharif.gamein2021.core.manager.clientHandlerConnection.requests.UpdateGameStatusRequest;
+import ir.sharif.gamein2021.core.service.BusinessIntelligenceService;
 import ir.sharif.gamein2021.core.service.DynamicConfigService;
 import ir.sharif.gamein2021.core.service.ProductionLineProductService;
 import ir.sharif.gamein2021.core.service.ProductionLineService;
@@ -32,6 +33,7 @@ public class DailySchedule {
     private final GameDateManager gameDateManager;
     private final WeekSupplyManager weekSupplyManager;
     private final DynamicConfigService dynamicConfigService;
+    private final BusinessIntelligenceService businessIntelligenceService;
 
     private final ClientHandlerRequestSenderInterface clientRequestSender;
 
@@ -102,5 +104,6 @@ public class DailySchedule {
         demandAndSupplyManager.SendCurrentWeekSupplyAndDemandsToAllUsers();
         productionLineService.decreaseWeeklyMaintenanceCost();
         weekSupplyManager.updateWeekSupplyPrices(gameCalendar.getWeek());
+        businessIntelligenceService.prepareWeeklyReport();
     }
 }

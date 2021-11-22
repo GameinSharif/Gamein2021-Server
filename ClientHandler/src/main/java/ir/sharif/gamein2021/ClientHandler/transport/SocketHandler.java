@@ -20,8 +20,6 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import java.time.LocalDateTime;
-
 @Component
 public class SocketHandler extends TextWebSocketHandler {
     static Logger logger = Logger.getLogger(ExecutorThread.class.getName());
@@ -52,15 +50,10 @@ public class SocketHandler extends TextWebSocketHandler {
             //String encryptedMessage = message.getPayload();
             //String decryptedMessage = encryptDecryptService.decryptMessage(encryptedMessage);
             ProcessedRequest processedRequest = new ProcessedRequest(session, message.getPayload(), socketSessionManager);
-            try{
-                mainController.HandleMessage(processedRequest, transaction);
-            }catch (Exception e){
-                e.printStackTrace();
-                transaction.captureException(e);
-            }
-
-            System.out.println("### outta handler");
+            mainController.HandleMessage(processedRequest, transaction);
         } catch (Exception exception) {
+            transaction.captureException(exception);
+            exception.printStackTrace();
             logger.debug(exception);
         }
         finally {

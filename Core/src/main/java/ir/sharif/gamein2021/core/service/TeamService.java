@@ -15,14 +15,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class TeamService extends AbstractCrudService<TeamDto, Team, Integer>
-{
+public class TeamService extends AbstractCrudService<TeamDto, Team, Integer> {
 
     private final TeamRepository repository;
     private final ModelMapper modelMapper;
 
-    public TeamService(TeamRepository repository, ModelMapper modelMapper)
-    {
+    public TeamService(TeamRepository repository, ModelMapper modelMapper) {
         this.repository = repository;
         this.modelMapper = modelMapper;
         setRepository(repository);
@@ -30,13 +28,12 @@ public class TeamService extends AbstractCrudService<TeamDto, Team, Integer>
 
     // TODO WHY ARE YOU RETURNING AN ENTIRE ENTITY!?
     @Transactional(readOnly = true)
-    public Team findTeamById(Integer id){
+    public Team findTeamById(Integer id) {
         return getRepository().findById(id).orElseThrow(TeamNotFoundException::new);
     }
 
     @Transactional
-    public List<TeamDto> findAllEmptyTeamWithCountry(Country country)
-    {
+    public List<TeamDto> findAllEmptyTeamWithCountry(Country country) {
         return repository.findAllByFactoryIdIsNullAndCountry(country).stream().
                 map(e -> modelMapper.map(e, TeamDto.class)).collect(Collectors.toList());
     }
@@ -44,5 +41,10 @@ public class TeamService extends AbstractCrudService<TeamDto, Team, Integer>
 
     public Integer findTeamIdByFactoryId(Integer factoryId) {
         return repository.findTeamByFactoryId(factoryId).getId();
+    }
+
+    public List<TeamDto> getAllTeams() {
+        return repository.findAll().stream()
+                .map(e -> modelMapper.map(e, TeamDto.class)).collect(Collectors.toList());
     }
 }

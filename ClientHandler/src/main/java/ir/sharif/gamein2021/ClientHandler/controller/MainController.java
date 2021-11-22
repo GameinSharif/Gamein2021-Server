@@ -24,7 +24,6 @@ import ir.sharif.gamein2021.ClientHandler.domain.Transport.GetTeamTransportsRequ
 import ir.sharif.gamein2021.ClientHandler.domain.Transport.StartTransportForPlayerStoragesRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.productionLine.*;
 import ir.sharif.gamein2021.core.manager.GameDateManager;
-import ir.sharif.gamein2021.core.util.Enums;
 import ir.sharif.gamein2021.core.util.RequestTypeConstant;
 import lombok.AllArgsConstructor;
 import org.json.JSONObject;
@@ -49,6 +48,7 @@ public class MainController {
     private final GameStatusController gameStatusController;
     private final AccessManagementController accessManagementController;
     private final GameDateManager gameDateManager;
+    private final WeeklyReportController weeklyReportController;
     private final Gson gson;
 
     public void HandleMessage(ProcessedRequest processedRequest, Transaction transaction) {
@@ -168,12 +168,8 @@ public class MainController {
                 contractSupplierController.getContractsSupplier(processedRequest, getContractsSupplierRequest);
                 break;
             case BUY_DC:
-                try {
-                    BuyingDcRequest buyingDcRequest = gson.fromJson(requestData, BuyingDcRequest.class);
-                    dcController.buyDc(processedRequest, buyingDcRequest);
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                }
+                BuyingDcRequest buyingDcRequest = gson.fromJson(requestData, BuyingDcRequest.class);
+                dcController.buyDc(processedRequest, buyingDcRequest);
                 break;
             case SELL_DC:
                 SellingDcRequest sellingDcRequest = gson.fromJson(requestData, SellingDcRequest.class);
@@ -181,27 +177,15 @@ public class MainController {
                 break;
             case ADD_PRODUCT:
                 AddProductRequest addProductRequest = gson.fromJson(requestData, AddProductRequest.class);
-                try {
-                    productController.addProduct(processedRequest, addProductRequest);
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                }
+                productController.addProduct(processedRequest, addProductRequest);
                 break;
             case REMOVE_PRODUCT:
                 RemoveProductRequest removeProductRequest = gson.fromJson(requestData, RemoveProductRequest.class);
-                try {
-                    productController.removeProduct(processedRequest, removeProductRequest);
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                }
+                productController.removeProduct(processedRequest, removeProductRequest);
                 break;
             case GET_STORAGES:
                 GetStorageProductsRequest getStorageProductsRequest = gson.fromJson(requestData, GetStorageProductsRequest.class);
-                try {
-                    productController.getStorages(processedRequest, getStorageProductsRequest);
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                }
+                productController.getStorages(processedRequest, getStorageProductsRequest);
                 break;
             case ACCEPT_OFFER:
                 AcceptOfferRequest acceptOfferRequest = gson.fromJson(requestData, AcceptOfferRequest.class);
@@ -219,12 +203,11 @@ public class MainController {
                 gameDataController.getGameStatus(processedRequest);
                 break;
             case TRANSPORT_TO_STORAGE:
-                try{
-                    StartTransportForPlayerStoragesRequest request = gson.fromJson(requestData , StartTransportForPlayerStoragesRequest.class);
-                    transportController.startTransportForPlayersStorages(processedRequest , request);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
+                StartTransportForPlayerStoragesRequest request = gson.fromJson(requestData, StartTransportForPlayerStoragesRequest.class);
+                transportController.startTransportForPlayersStorages(processedRequest, request);
+                break;
+            case WEEKLY_REPORT:
+                weeklyReportController.getWeeklyReport(processedRequest);
                 break;
             default:
                 System.out.println("Request type is invalid.");

@@ -12,7 +12,6 @@ import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
 import ir.sharif.gamein2021.core.manager.TransportManager;
 import ir.sharif.gamein2021.core.service.*;
 import ir.sharif.gamein2021.core.util.Enums;
-import ir.sharif.gamein2021.core.util.GameConstants;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import ir.sharif.gamein2021.core.util.models.Supplier;
 import lombok.AllArgsConstructor;
@@ -47,7 +46,7 @@ public class ContractSupplierController
         System.out.println(vehicleType);
         Boolean hasInsurance = newContractSupplierRequest.getHasInsurance();
         Integer weeks = newContractSupplierRequest.getWeeks();
-        Integer currentWeek = gameCalendar.getWeek();
+        Integer currentWeek = gameCalendar.getCurrentWeek();
         Integer amount = newContractSupplierRequest.getAmount();
         Supplier supplier = contractSupplierService.SupplierIdValidation(newContractSupplierRequest.getSupplierId());
         NewContractSupplierResponse newContractSupplierResponse;

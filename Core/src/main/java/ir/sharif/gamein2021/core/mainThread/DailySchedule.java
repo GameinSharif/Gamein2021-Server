@@ -44,6 +44,11 @@ public class DailySchedule {
             if (newCurrentDate != null) {
                 gameCalendar.setCurrentDate(newCurrentDate);
             }
+
+            Integer newCurrentWeek = dynamicConfigService.getCurrentWeek();
+            if(newCurrentWeek != null){
+                gameCalendar.setCurrentWeek(newCurrentWeek);
+            }
         }
 
         GameStatus newGameStatus = dynamicConfigService.getGameStatus();
@@ -103,7 +108,7 @@ public class DailySchedule {
         contractManager.updateGameinCustomerContracts();
         demandAndSupplyManager.SendCurrentWeekSupplyAndDemandsToAllUsers();
         productionLineService.decreaseWeeklyMaintenanceCost();
-        weekSupplyManager.updateWeekSupplyPrices(gameCalendar.getWeek());
+        weekSupplyManager.updateWeekSupplyPrices(gameCalendar.getCurrentWeek());
         businessIntelligenceService.prepareWeeklyReport();
     }
 }

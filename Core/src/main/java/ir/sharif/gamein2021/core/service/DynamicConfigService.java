@@ -14,6 +14,7 @@ import java.time.LocalDate;
 public class DynamicConfigService extends AbstractCrudService<DynamicConfigDto, DynamicConfig, String> {
     private final static String CURRENT_DATE_KEY = "currentDate";
     private final static String GAME_STATUS_KEY = "gameStatus";
+    private final static String CURRENT_WEEK_KEY = "currentWeek";
 
     private final DynamicConfigRepository repository;
 
@@ -63,5 +64,20 @@ public class DynamicConfigService extends AbstractCrudService<DynamicConfigDto, 
     @Transactional
     public void setGameStatus(GameStatus gameStatus) {
         setConfig(GAME_STATUS_KEY, gameStatus.toString());
+    }
+
+    @Transactional(readOnly = true)
+    public Integer getCurrentWeek() {
+        DynamicConfig currentWeekConfig = getConfig(CURRENT_WEEK_KEY);
+        if (currentWeekConfig == null) {
+            return null;
+        }
+
+        return Integer.parseInt(currentWeekConfig.getValue());
+    }
+
+    @Transactional
+    public void setCurrentWeek(Integer currentWeek) {
+        setConfig(CURRENT_WEEK_KEY, currentWeek.toString());
     }
 }

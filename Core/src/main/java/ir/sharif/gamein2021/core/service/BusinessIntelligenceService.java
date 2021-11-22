@@ -24,7 +24,7 @@ public class BusinessIntelligenceService {
 
     public void prepareWeeklyReport() {
         List<TeamDto> teams = teamService.getAllTeams();
-        int weakNumber=  gameCalendar.getWeek();
+        int weakNumber=  gameCalendar.getCurrentWeek();
         Map<Integer, WeeklyReport> weeklyReportByTeamId = teams.stream()
                 .collect(Collectors.toMap(TeamDto::getId, x -> new WeeklyReport(weakNumber, x.getId())));
         

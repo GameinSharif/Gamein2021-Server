@@ -60,7 +60,7 @@ public class GameDataController {
     }
 
     public void getCurrentWeekDemands(ProcessedRequest request) {
-        int week = gameCalendar.getWeek();
+        int week = gameCalendar.getCurrentWeek();
         List<WeekDemandDto> currentWeekDemands = weekDemandService.findByWeek(week);
 
         GetCurrentWeekDemandsResponse getCurrentWeekDemandsResponse = new GetCurrentWeekDemandsResponse(
@@ -72,7 +72,7 @@ public class GameDataController {
     }
 
     public void getCurrentWeekSupplies(ProcessedRequest request) {
-        int week = gameCalendar.getWeek();
+        int week = gameCalendar.getCurrentWeek();
         List<WeekSupplyDto> currentWeekSupplies = weekSupplyService.findByWeek(week);
 
         GetCurrentWeekSuppliesResponse getCurrentWeekSuppliesResponse = new GetCurrentWeekSuppliesResponse(

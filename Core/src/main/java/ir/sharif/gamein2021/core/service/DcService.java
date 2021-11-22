@@ -8,7 +8,6 @@ import ir.sharif.gamein2021.core.domain.entity.Team;
 import ir.sharif.gamein2021.core.exception.*;
 import ir.sharif.gamein2021.core.manager.GameCalendar;
 import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
-import ir.sharif.gamein2021.core.util.GameConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -132,14 +131,14 @@ public class DcService extends AbstractCrudService<DcDto, Dc, Integer> {
     public boolean isActive(DcDto dc) {
         Assert.notNull(dc, "This dc must not be null!");
         dc = loadById(dc.getId());
-        if (dc.getStartingWeek() <= gameCalendar.getWeek())
+        if (dc.getStartingWeek() <= gameCalendar.getCurrentWeek())
             return true;
         return false;
     }
 
     @Transactional(readOnly = true)
     public List<DcDto> getAllActiveDc() {
-        return repository.findAllByStartingWeekIsLessThanEqual(gameCalendar.getWeek())
+        return repository.findAllByStartingWeekIsLessThanEqual(gameCalendar.getCurrentWeek())
                 .stream()
                 .map(e -> modelMapper.map(e, DcDto.class))
                 .collect(Collectors.toList());

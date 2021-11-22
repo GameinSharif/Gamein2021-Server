@@ -25,7 +25,7 @@ public class DemandAndSupplyManager
 
     public void SendCurrentWeekSupplyAndDemandsToAllUsers()
     {
-        int week = gameCalendar.getWeek();
+        int week = gameCalendar.getCurrentWeek();
 
         List<WeekDemandDto> currentWeekDemands = weekDemandService.findByWeek(week);
         GetCurrentWeekDemandsResponse getCurrentWeekDemandsResponse = new GetCurrentWeekDemandsResponse(

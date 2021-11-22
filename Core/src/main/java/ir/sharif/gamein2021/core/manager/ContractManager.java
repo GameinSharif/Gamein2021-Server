@@ -40,23 +40,18 @@ public class ContractManager
 
     public void updateTodayContractCosts(LocalDate today)
     {
-        System.out.println("in update!!");
         List<ContractSupplierDto> contractSupplierDtos = contractSupplierService.findTodaysContractSupplier(today);
         System.out.println(contractSupplierDtos.size());
         for (ContractSupplierDto contractSupplierDto : contractSupplierDtos)
         {
-            System.out.println("in for looooop");
             if (!contractSupplierDto.isTerminated())
             {
-                System.out.println("not term");
                 try {
                     float teamCredit = teamService.findTeamById(contractSupplierDto.getTeamId()).getCredit();
                     WeekSupplyDto weekSupplyDto = weekSupplyService.findSpecificWeekSupply(contractSupplierDto.getSupplierId(), contractSupplierDto.getMaterialId(), gameCalendar.getWeek());
                     Float price = weekSupplyDto.getPrice();
-                    System.out.println("price for material "+ price);
                     TeamDto team = teamService.loadById(contractSupplierDto.getTeamId());
                     if(price > teamCredit){
-                        System.out.println("You don't have enough money! Costs you a penalty..");
                         team.setCredit(teamCredit - contractSupplierDto.getNoMoneyPenalty());
                         teamService.saveOrUpdate(team);
                         continue;
@@ -74,9 +69,17 @@ public class ContractManager
                     weekSupplyDto.setSales(weekSupplyDto.getSales() + contractSupplierDto.getBoughtAmount());
                     weekSupplyService.saveOrUpdate(weekSupplyDto);
                     contractSupplierService.saveOrUpdate(contractSupplierDto);
-
+                    Integer distance = transportManager.getTransportDistance(Enums.TransportNodeType.SUPPLIER, supplierId,
+                            Enums.TransportNodeType.FACTORY, teamService.loadById(contractSupplierDto.getTeamId()).getFactoryId(), vehicleType);
+                    contractSupplierDto.setTransportationCost(transportManager.calculateTransportCost(vehicleType,
+                            distance, materialId, amount, hasInsurance));
+                    if(contractSupplierDto.getTransportationCost() > teamCredit){
+                        team.setCredit(teamCredit - contractSupplierDto.getTerminatePenalty());
+                        teamService.saveOrUpdate(team);
+                        continue;
+                    }
                     // Creating transport for this contract
-                    TransportDto transportDto = transportManager.createTransport(
+                    transportManager.createTransport(
                             vehicleType,
                             Enums.TransportNodeType.SUPPLIER,
                             supplierId,
@@ -86,17 +89,7 @@ public class ContractManager
                             hasInsurance,
                             materialId,
                             amount);
-                    Integer distance = transportManager.getTransportDistance(transportDto);
-                    contractSupplierDto.setTransportationCost(transportManager.calculateTransportCost(transportDto.getVehicleType(),
-                            distance, materialId, amount, hasInsurance));
-                    if(contractSupplierDto.getTransportationCost() > teamCredit){
-                        System.out.println(teamCredit+"You don't have enough money for transport! Costs you a penalty.."+contractSupplierDto.getTransportationCost());
-                        transportDto.setTransportState(Enums.TransportState.TERMINATED);
-                        team.setCredit(teamCredit - contractSupplierDto.getTerminatePenalty());
-                        teamService.saveOrUpdate(team);
-                        continue;
-                    }
-                    teamCredit -= contractSupplierDto.getTerminatePenalty();
+                    teamCredit -= contractSupplierDto.getTransportationCost();
                     team.setCredit(teamCredit);
                     teamService.saveOrUpdate(team);
                     System.out.println("transport on its way");

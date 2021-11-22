@@ -22,8 +22,8 @@ import ir.sharif.gamein2021.ClientHandler.domain.TerminateLongtermContractSuppli
 import ir.sharif.gamein2021.ClientHandler.domain.Transport.GetTeamTransportsRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Transport.StartTransportForPlayerStoragesRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.productionLine.*;
+import ir.sharif.gamein2021.ClientHandler.domain.weeklyReport.WeeklyReportRequest;
 import ir.sharif.gamein2021.core.manager.GameDateManager;
-import ir.sharif.gamein2021.core.util.Enums;
 import ir.sharif.gamein2021.core.util.RequestTypeConstant;
 import lombok.AllArgsConstructor;
 import org.json.JSONObject;
@@ -48,6 +48,7 @@ public class MainController {
     private final GameStatusController gameStatusController;
     private final AccessManagementController accessManagementController;
     private final GameDateManager gameDateManager;
+    private final WeeklyReportController weeklyReportController;
     private final Gson gson;
 
     public void HandleMessage(ProcessedRequest processedRequest) {
@@ -224,6 +225,10 @@ public class MainController {
                     e.printStackTrace();
                 }
                 break;
+            case WEEKLY_REPORT:
+                WeeklyReportRequest request = gson.fromJson(requestData, WeeklyReportRequest.class);
+                weeklyReportController.getWeeklyReport(processedRequest);
+
             default:
                 System.out.println("Request type is invalid.");
         }

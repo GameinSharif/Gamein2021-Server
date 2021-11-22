@@ -21,4 +21,12 @@ public class GameDateManager
 
         pushMessageManager.sendMessageToAll(gson.toJson(gameTimeResponse));
     }
+
+    public void SendGameDateToThisUser(Integer userId)
+    {
+        GameTimeResponse gameTimeResponse = new GameTimeResponse(ResponseTypeConstant.GAME_TIME,
+                gameCalendar.getCurrentDate());
+
+        pushMessageManager.sendMessageByUserId(userId.toString(), gson.toJson(gameTimeResponse));
+    }
 }

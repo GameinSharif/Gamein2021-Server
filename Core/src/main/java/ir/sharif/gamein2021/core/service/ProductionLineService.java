@@ -139,29 +139,35 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
             throw new InvalidProductionLineIdException("Selected productLine is not able to create selected product");
         }
 
-        for (ProductIngredient productIngredient : productTemplate.getIngredientsPerUnit()) {
-            if (isWater(productIngredient.getProductId())) {
-                continue;
-            }
-
-            StorageProductDto storageDto = storageService.findProductStorageByIdNull(team.getFactoryId(), productIngredient.getProductId());
-            if (storageDto == null || storageDto.getAmount() < amount * productIngredient.getAmount()) {
-                throw new InvalidProductionLineIdException("Production requirements are not available in storage.");
-            }
-        }
-
-        for (ProductIngredient productIngredient : productTemplate.getIngredientsPerUnit()) {
-            if (isWater(productIngredient.getProductId())) {
-                continue;
-            }
-
-            storageService.deleteProducts(team.getFactoryId(), false, productId, amount * productIngredient.getAmount());
-        }
+        amount = amount * productLineTemplate.getBatchSize();
 
         float newCredit = team.getCredit() - productLineTemplate.getSetupCost() - amount * productLineTemplate.getProductionCostPerOneProduct();
         if (newCredit < 0) {
             throw new InvalidProductionLineIdException("Invalid Operation. You don't have enough money to produce new production.");
         }
+
+        if (productTemplate.getId() != 27) //CarbonDioxide
+        {
+            for (ProductIngredient productIngredient : productTemplate.getIngredientsPerUnit()) {
+                if (isWater(productIngredient.getProductId())) {
+                    continue;
+                }
+
+                StorageProductDto storageDto = storageService.findProductStorageByIdNull(storageService.findStorageWithBuildingIdAndDc(team.getFactoryId(), false).getId(), productIngredient.getProductId());
+                if (storageDto == null || storageDto.getAmount() < amount * productIngredient.getAmount()) {
+                    throw new InvalidProductionLineIdException("Production requirements are not available in storage.");
+                }
+            }
+
+            for (ProductIngredient productIngredient : productTemplate.getIngredientsPerUnit()) {
+                if (isWater(productIngredient.getProductId())) {
+                    continue;
+                }
+
+                storageService.deleteProducts(team.getFactoryId(), false, productId, amount * productIngredient.getAmount());
+            }
+        }
+
         team.setCredit(newCredit);
         teamRepository.saveAndFlush(team);
 

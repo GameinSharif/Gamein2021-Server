@@ -87,6 +87,14 @@ public class TransportService extends AbstractCrudService<TransportDto, Transpor
                 .collect(Collectors.toList());
     }
 
+    public List<TransportDto> getTransportsByDestinationIdAndBuildingType(
+            Integer destinationId ,
+            Enums.TransportNodeType destinationType){
+        return transportRepository.findAllByDestinationTypeAndDestinationId(destinationType , destinationId)
+                .stream().map(e -> modelMapper.map(e, TransportDto.class))
+                .collect(Collectors.toList());
+    }
+
     @Transactional
     public TransportDto save(TransportDto transportDto) {
         return saveOrUpdate(transportDto);

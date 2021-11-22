@@ -35,7 +35,8 @@ public enum RequestTypeConstant
     GET_STORAGES(30),
     NEW_CONTRACT(31),
     TERMINATE_CONTRACT(32),
-    GET_GAME_STATUS(33);
+    GET_GAME_STATUS(33),
+    TRANSPORT_TO_STORAGE(34);
 
     private int value;
 

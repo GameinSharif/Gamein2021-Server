@@ -2,6 +2,7 @@ package ir.sharif.gamein2021.core.manager;
 
 import ir.sharif.gamein2021.core.manager.clientHandlerConnection.ClientHandlerRequestSenderInterface;
 import ir.sharif.gamein2021.core.manager.clientHandlerConnection.requests.UpdateCalendarRequest;
+import ir.sharif.gamein2021.core.service.DynamicConfigService;
 import ir.sharif.gamein2021.core.util.GameConstants;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -15,9 +16,12 @@ public class GameCalendar {
     private int week = 1;
     private LocalDate currentDate = GameConstants.startDate;
     private final ClientHandlerRequestSenderInterface requestSender;
+    private final DynamicConfigService dynamicConfigService;
 
-    public GameCalendar(ClientHandlerRequestSenderInterface requestSender) {
+    public GameCalendar(ClientHandlerRequestSenderInterface requestSender,
+                        DynamicConfigService dynamicConfigService) {
         this.requestSender = requestSender;
+        this.dynamicConfigService = dynamicConfigService;
     }
 
     public LocalDate getCurrentDate() {
@@ -39,6 +43,7 @@ public class GameCalendar {
 
     public void increaseOneDay() {
         currentDate = currentDate.plusDays(1);
+        dynamicConfigService.setCurrentDate(currentDate);
         requestSender.send(new UpdateCalendarRequest("nothing!", currentDate));
     }
 }

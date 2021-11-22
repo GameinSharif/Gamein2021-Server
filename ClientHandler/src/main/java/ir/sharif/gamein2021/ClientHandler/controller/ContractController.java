@@ -3,20 +3,18 @@ package ir.sharif.gamein2021.ClientHandler.controller;
 import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Contract.*;
-import ir.sharif.gamein2021.ClientHandler.domain.NewContractSupplierResponse;
-import ir.sharif.gamein2021.ClientHandler.manager.LocalPushMessageManager;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
 import ir.sharif.gamein2021.core.domain.dto.*;
 import ir.sharif.gamein2021.core.manager.GameCalendar;
 import ir.sharif.gamein2021.core.manager.PushMessageManagerInterface;
-import ir.sharif.gamein2021.core.manager.TransportManager;
+import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
 import ir.sharif.gamein2021.core.service.GameinCustomerService;
 import ir.sharif.gamein2021.core.service.TeamService;
-import ir.sharif.gamein2021.core.util.Enums;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import ir.sharif.gamein2021.core.service.ContractService;
 import ir.sharif.gamein2021.core.service.UserService;
 import ir.sharif.gamein2021.core.domain.entity.Team;
+import ir.sharif.gamein2021.core.util.models.Product;
 import lombok.AllArgsConstructor;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
@@ -24,7 +22,6 @@ import org.springframework.stereotype.Component;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
-import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -39,7 +36,6 @@ public class ContractController
     private final TeamService teamService;
     private final GameinCustomerService gameinCustomerService;
     private final GameCalendar gameCalendar;
-    private final TransportManager transportManager;
     private final Gson gson = new Gson();
 
     public void getContracts(ProcessedRequest request, GetContractsRequest getContractsRequest)
@@ -47,8 +43,8 @@ public class ContractController
         int playerId = request.playerId;
         UserDto user = userService.loadById(playerId);
         Team userTeam = teamService.findTeamById(user.getTeamId());
-
-        List<ContractDto> contracts = contractService.findByTeam(userTeam);
+        //TODO check user and his team is not null
+        List<ContractDto> contracts = contractService.findByTeamAndTerminatedIsFalse(userTeam);
         GetContractsResponse getContractsResponse = new GetContractsResponse(
                 ResponseTypeConstant.GET_CONTRACTS,
                 contracts
@@ -66,41 +62,46 @@ public class ContractController
         NewContractResponse newContractResponse;
         try
         {
-            ContractDto contractDto = new ContractDto();
-            contractDto.setTeamId(userTeam.getId());
-            GameinCustomerDto gameinCustomerDto = gameinCustomerService.loadById(newContractRequest.getGameinCustomerId());
-            contractDto.setGameinCustomerId(gameinCustomerDto.getId());
-            contractDto.setProductId(newContractRequest.getProductId());
-            if (newContractRequest.getWeeks() == 0)
+            for (int i = 0; i < newContractRequest.getWeeks(); i++)
             {
-                contractDto.setContractType(Enums.ContractType.ONCE);
-            }
-            else
-            {
-                contractDto.setContractType(Enums.ContractType.LONGTERM);
-            }
-            contractDto.setTerminatePenalty(1000); //TODO set this penalty
-            contractDto.setTerminated(false);
-            List<ContractDetailDto> contractDetailDtos = new ArrayList<>();
-            for (int i = 0; i < newContractRequest.getWeeks() + 1; i++)
-            {
-                ContractDetailDto contractDetailDto = new ContractDetailDto();
+                GameinCustomerDto gameinCustomerDto = gameinCustomerService.loadById(newContractRequest.getGameinCustomerId());
                 LocalDate startDate = gameCalendar.getCurrentDate().with(TemporalAdjusters.next(DayOfWeek.FRIDAY)).plusDays(i * 7L);
-                contractDetailDto.setContractDate(startDate);
-                contractDetailDto.setMaxAmount(newContractRequest.getAmount());
-                contractDetailDto.setPricePerUnit(newContractRequest.getPricePerUnit());
+                Product product = ReadJsonFilesManager.findProductById(newContractRequest.getProductId());
 
-                contractDetailDtos.add(contractDetailDto);
+                ContractDto existedContract = contractService.findByTeamAndDateAndGameinCustomerAndProduct(userTeam, startDate, gameinCustomerDto, product);
+                if (existedContract != null)
+                {
+                    throw new Exception();
+                }
+
+                if (newContractRequest.getPricePerUnit() < product.getMinPrice() || newContractRequest.getPricePerUnit() > product.getMaxPrice())
+                {
+                    throw new Exception();
+                }
+
+                ContractDto contractDto = new ContractDto();
+                contractDto.setTeamId(userTeam.getId());
+                contractDto.setGameinCustomerId(gameinCustomerDto.getId());
+                contractDto.setProductId(product.getId());
+                contractDto.setTerminatePenalty(1000); //TODO set this penalty
+                contractDto.setLostSalePenalty(1500); //TODO set this penalty
+                contractDto.setIsTerminated(false);
+
+                TeamDto teamDto = teamService.loadById(request.teamId);
+                contractDto.setCurrentBrand(teamDto.getBrand());
+
+                contractDto.setContractDate(startDate);
+                contractDto.setSupplyAmount(newContractRequest.getAmount());
+                contractDto.setPricePerUnit(newContractRequest.getPricePerUnit());
+
+                ContractDto savedContractDto = contractService.saveOrUpdate(contractDto);
+                newContractResponse = new NewContractResponse(ResponseTypeConstant.NEW_CONTRACT, savedContractDto);
+                pushMessageManager.sendMessageByTeamId(userTeam.getId().toString(), gson.toJson(newContractResponse));
             }
-            contractDto.setContractDetails(contractDetailDtos);
-
-            ContractDto savedContractDto = contractService.saveOrUpdate(contractDto);
-            newContractResponse = new NewContractResponse(ResponseTypeConstant.NEW_CONTRACT, savedContractDto);
-            pushMessageManager.sendMessageByTeamId(userTeam.getId().toString(), gson.toJson(newContractResponse));
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            System.out.println("Repetitive Contract");
             newContractResponse = new NewContractResponse(ResponseTypeConstant.NEW_CONTRACT, null);
             pushMessageManager.sendMessageByUserId(user.getId().toString(), gson.toJson(newContractResponse));
         }
@@ -116,12 +117,12 @@ public class ContractController
         try
         {
             ContractDto contractDto = contractService.loadById(terminateLongtermContractRequest.getContractId());
-            if (contractDto.isTerminated() || !contractDto.getTeamId().equals(userTeam.getId()) || contractDto.getContractType() != Enums.ContractType.LONGTERM)
+            if (contractDto.getIsTerminated() || !contractDto.getTeamId().equals(userTeam.getId()))
             {
                 throw new Exception();
             }
 
-            contractDto.setTerminated(true);
+            contractDto.setIsTerminated(true);
             ContractDto savedContractDto = contractService.saveOrUpdate(contractDto);
 
             userTeam.setCredit(userTeam.getCredit() - contractDto.getTerminatePenalty());
@@ -132,7 +133,7 @@ public class ContractController
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            System.out.println("Not valid request");
             terminateLongtermContractResponse = new TerminateLongtermContractResponse(ResponseTypeConstant.TERMINATE_CONTRACT, null);
             pushMessageManager.sendMessageByUserId(user.getId().toString(), gson.toJson(terminateLongtermContractResponse));
         }

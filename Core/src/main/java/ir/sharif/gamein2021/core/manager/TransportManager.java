@@ -5,15 +5,10 @@ import ir.sharif.gamein2021.core.domain.dto.DcDto;
 import ir.sharif.gamein2021.core.domain.dto.GameinCustomerDto;
 import ir.sharif.gamein2021.core.domain.dto.TransportDto;
 import ir.sharif.gamein2021.core.response.TransportStateChangedResponse;
-import ir.sharif.gamein2021.core.service.DcService;
-import ir.sharif.gamein2021.core.service.GameinCustomerService;
-import ir.sharif.gamein2021.core.service.StorageService;
-import ir.sharif.gamein2021.core.service.TeamService;
-import ir.sharif.gamein2021.core.service.TransportService;
+import ir.sharif.gamein2021.core.service.*;
 import ir.sharif.gamein2021.core.util.Enums;
 import ir.sharif.gamein2021.core.util.GameConstants;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
-import ir.sharif.gamein2021.core.util.models.Product;
 import ir.sharif.gamein2021.core.util.models.Vehicle;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -21,14 +16,11 @@ import org.springframework.util.Assert;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 
 @AllArgsConstructor
 @Component
-public class TransportManager
-{
+public class TransportManager {
 
     private final TransportService transportService;
     private final GameinCustomerService gameinCustomerService;
@@ -39,8 +31,7 @@ public class TransportManager
     private final GameCalendar gameCalendar;
     private final Gson gson = new Gson();
 
-    public void updateTransports()
-    {
+    public void updateTransports() {
         handleTransportCrush();
         // TODO : handle transport crashing when day starts or ends?
         LocalDate today = gameCalendar.getCurrentDate();
@@ -48,75 +39,60 @@ public class TransportManager
         endTransports(today);
     }
 
-    private void handleTransportCrush()
-    {
+    private void handleTransportCrush() {
         ArrayList<TransportDto> inWayTransports = transportService.getTransportsByState(Enums.TransportState.IN_WAY);
         // TODO : needs seed?
         Random random = new Random();
         ArrayList<TransportDto> crushingTransports = new ArrayList<>();
-        for (TransportDto inWayTransport : inWayTransports)
-        {
-            if (!inWayTransport.getHasInsurance() && random.nextFloat() < GameConstants.CrushProbability)
-            {
+        for (TransportDto inWayTransport : inWayTransports) {
+            if (!inWayTransport.getHasInsurance() && random.nextFloat() < GameConstants.CrushProbability) {
                 crushingTransports.add(inWayTransport);
             }
         }
         changeTransportsStateAndSendToClients(crushingTransports, Enums.TransportState.CRUSHED);
     }
 
-    private void startTransports(LocalDate today)
-    {
+    private void startTransports(LocalDate today) {
         ArrayList<TransportDto> startingTransports = transportService.getStartingTransports(today);
 
-        for (TransportDto transport : startingTransports)
-        {
-            if(!transport.getTransportState().equals(Enums.TransportState.TERMINATED))
-            {
+        for (TransportDto transport : startingTransports) {
+            if (!transport.getTransportState().equals(Enums.TransportState.TERMINATED)) {
                 removeProductWhenTransportStart(transport);
                 changeTransportsStateAndSendToClients(startingTransports, Enums.TransportState.IN_WAY);
             }
         }
     }
 
-    private void endTransports(LocalDate today)
-    {
+    private void endTransports(LocalDate today) {
         ArrayList<TransportDto> arrivedTransports = transportService.getEndingTransports(today);
-        for (TransportDto transport : arrivedTransports)
-        {
+        for (TransportDto transport : arrivedTransports) {
             addProductWhenTransportEnd(transport);
         }
         changeTransportsStateAndSendToClients(arrivedTransports, Enums.TransportState.SUCCESSFUL);
     }
 
-    private void changeTransportsStateAndSendToClients(ArrayList<TransportDto> transportDtos, Enums.TransportState newState)
-    {
-        for (TransportDto transportDto : transportDtos)
-        {
+    private void changeTransportsStateAndSendToClients(ArrayList<TransportDto> transportDtos, Enums.TransportState newState) {
+        for (TransportDto transportDto : transportDtos) {
             TransportDto savedTransportDto = transportService.changeTransportState(transportDto, newState);
             sendResponseToTransportOwners(savedTransportDto);
         }
     }
 
-    private void sendResponseToTransportOwners(TransportDto transportDto)
-    {
+    private void sendResponseToTransportOwners(TransportDto transportDto) {
         Integer sourceTeamId = getTransportSourceOwnerId(transportDto);
         Integer destinationId = getTransportDestinationOwnerId(transportDto);
         TransportStateChangedResponse response = new TransportStateChangedResponse(ResponseTypeConstant.TRANSPORT_STATE_CHANGED, transportDto);
-        if (sourceTeamId != null)
-        {
+        if (sourceTeamId != null) {
             pushMessageManager.sendMessageByTeamId(sourceTeamId.toString(), gson.toJson(response));
         }
-        if (destinationId != null)
-        {
+        if (destinationId != null) {
             pushMessageManager.sendMessageByTeamId(destinationId.toString(), gson.toJson(response));
         }
     }
 
-    private Integer getTransportDestinationOwnerId(TransportDto transportDto)
-    {
+    private Integer getTransportDestinationOwnerId(TransportDto transportDto) {
         Assert.notNull(transportDto, "transport should have destination type");
-        switch (transportDto.getDestinationType())
-        {
+        switch (transportDto.getDestinationType()) {
             case DC:
                 return dcService.loadById(transportDto.getSourceId()).getOwnerId();
             case FACTORY:
@@ -126,11 +102,9 @@ public class TransportManager
         }
     }
 
-    private Integer getTransportSourceOwnerId(TransportDto transportDto)
-    {
+    private Integer getTransportSourceOwnerId(TransportDto transportDto) {
         Assert.notNull(transportDto, "transport should have source type");
-        switch (transportDto.getSourceType())
-        {
+        switch (transportDto.getSourceType()) {
             case DC:
                 return dcService.loadById(transportDto.getSourceId()).getOwnerId();
             case FACTORY:
@@ -142,13 +116,11 @@ public class TransportManager
 
     public TransportDto createTransport(Enums.VehicleType vehicleType, Enums.TransportNodeType sourceType, Integer sourceId
             , Enums.TransportNodeType destinationType, Integer destinationId, LocalDate startDate
-            , Boolean hasInsurance, Integer contentProductId, Integer contentProductAmount)
-    {
+            , Boolean hasInsurance, Integer contentProductId, Integer contentProductAmount) {
         // TODO : check inputs. validate source and dest? check start date has'nt passed
 
         Enums.TransportState transportState = Enums.TransportState.IN_WAY;
-        if (gameCalendar.getCurrentDate().isBefore(startDate))
-        {
+        if (gameCalendar.getCurrentDate().isBefore(startDate)) {
             transportState = Enums.TransportState.PENDING;
         }
         TransportDto transportDto = TransportDto.builder()
@@ -175,52 +147,42 @@ public class TransportManager
 
     private int calculateTransportDuration(TransportDto transportDto) {
         int transportDistance = getTransportDistance(transportDto);
-        return (int) Math.ceil((float) transportDistance / ReadJsonFilesManager.findVehicleByType(transportDto.getVehicleType()).getSpeed()) ;
+        return (int) Math.ceil((float) transportDistance / ReadJsonFilesManager.findVehicleByType(transportDto.getVehicleType()).getSpeed());
     }
 
     //TODO need testing
-    private void removeProductWhenTransportStart(TransportDto transportDto)
-    {
-        if (transportDto.getSourceType().equals(Enums.TransportNodeType.DC))
-        {
+    private void removeProductWhenTransportStart(TransportDto transportDto) {
+        if (transportDto.getSourceType().equals(Enums.TransportNodeType.DC)) {
             storageService.deleteProducts(transportDto.getSourceId(), true, transportDto.getContentProductId(), transportDto.getContentProductAmount());
-        }
-        else if (transportDto.getSourceType().equals(Enums.TransportNodeType.FACTORY))
-        {
+        } else if (transportDto.getSourceType().equals(Enums.TransportNodeType.FACTORY)) {
             storageService.deleteProducts(transportDto.getSourceId(), false, transportDto.getContentProductId(), transportDto.getContentProductAmount());
         }
     }
 
     //TODO testing
-    private void addProductWhenTransportEnd(TransportDto transportDto)
-    {
-        if (transportDto.getDestinationType().equals(Enums.TransportNodeType.DC))
-        {
+    private void addProductWhenTransportEnd(TransportDto transportDto) {
+        if (transportDto.getDestinationType().equals(Enums.TransportNodeType.DC)) {
             storageService.addProduct(transportDto.getDestinationId(), true, transportDto.getContentProductId(), transportDto.getContentProductAmount());
-        }
-        else if (transportDto.getDestinationType().equals(Enums.TransportNodeType.FACTORY))
-        {
+        } else if (transportDto.getDestinationType().equals(Enums.TransportNodeType.FACTORY)) {
             storageService.addProduct(transportDto.getDestinationId(), false, transportDto.getContentProductId(), transportDto.getContentProductAmount());
         }
     }
 
-    private double[] getLocation(Enums.TransportNodeType type, Integer id)
-    {
-        switch (type)
-        {
+    private double[] getLocation(Enums.TransportNodeType type, Integer id) {
+        switch (type) {
             case FACTORY:
-                return new double[] {ReadJsonFilesManager.Factories[id].getLatitude(), ReadJsonFilesManager.Factories[id].getLongitude()};
+                return new double[]{ReadJsonFilesManager.Factories[id].getLatitude(), ReadJsonFilesManager.Factories[id].getLongitude()};
             case DC:
                 DcDto dcDto = dcService.loadById(id);
-                return new double[] {dcDto.getLatitude(), dcDto.getLongitude()};
+                return new double[]{dcDto.getLatitude(), dcDto.getLongitude()};
             case SUPPLIER:
-                return new double[] {ReadJsonFilesManager.Suppliers[id].getLatitude(), ReadJsonFilesManager.Suppliers[id].getLongitude()};
+                return new double[]{ReadJsonFilesManager.Suppliers[id].getLatitude(), ReadJsonFilesManager.Suppliers[id].getLongitude()};
             case GAMEIN_CUSTOMER:
                 GameinCustomerDto customerDto = gameinCustomerService.loadById(id);
-                return new double[] {customerDto.getLatitude(), customerDto.getLongitude()};
+                return new double[]{customerDto.getLatitude(), customerDto.getLongitude()};
             default:
                 return null;
-                // TODO : Exception?
+            // TODO : Exception?
         }
     }
 
@@ -233,8 +195,17 @@ public class TransportManager
         return (int) Math.ceil(distance * GameConstants.Instance.distanceConstant * ReadJsonFilesManager.findVehicleByType(transportDto.getVehicleType()).getCoefficient());
     }
 
-    public float calculateTransportCost(Enums.VehicleType vehicleType, int distance, int productId, int productAmount, boolean hasInsurance)
+    public int getTransportDistance(Enums.TransportNodeType sourceType, int sourceId, Enums.TransportNodeType destinationType, int destinationId, Enums.VehicleType vehicleType)
     {
+        double[] sourceLocation = getLocation(sourceType, sourceId);
+        double[] destinationLocation = getLocation(destinationType, destinationId);
+        double distance = (sourceLocation[0] - destinationLocation[0]) * (sourceLocation[0] - destinationLocation[0]);
+        distance += (sourceLocation[1] - destinationLocation[1]) * (sourceLocation[1] - destinationLocation[1]);
+        distance = Math.sqrt(distance);
+        return (int) Math.ceil(distance * GameConstants.Instance.distanceConstant * ReadJsonFilesManager.findVehicleByType(vehicleType).getCoefficient());
+    }
+
+    public float calculateTransportCost(Enums.VehicleType vehicleType, int distance, int productId, int productAmount, boolean hasInsurance) {
         float insuranceFactor = (hasInsurance ? (1 + GameConstants.Instance.insuranceCostFactor) : 1);
         Vehicle transportVehicle = ReadJsonFilesManager.findVehicleByType(vehicleType);
         float vehicleCost = transportVehicle.getCostPerKilometer() * distance * insuranceFactor;
@@ -243,10 +214,9 @@ public class TransportManager
         return vehicleCost * vehicleCount;
     }
 
-    public float calculateTransportCost(Enums.VehicleType vehicleType, int distance, int productId, int productAmount)
-    {
+    public float calculateTransportCost(Enums.VehicleType vehicleType, int distance, int productId, int productAmount) {
         Vehicle transportVehicle = ReadJsonFilesManager.findVehicleByType(vehicleType);
-        float vehicleCost = transportVehicle.getCostPerKilometer() * distance ;
+        float vehicleCost = transportVehicle.getCostPerKilometer() * distance;
         int productVolume = ReadJsonFilesManager.findProductById(productId).getVolumetricUnit() * productAmount;
         int vehicleCount = (int) Math.ceil((float) productVolume / transportVehicle.getCapacity());
         return vehicleCost * vehicleCount;

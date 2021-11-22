@@ -7,6 +7,7 @@ import ir.sharif.gamein2021.core.manager.WeekSupplyManager;
 import ir.sharif.gamein2021.core.manager.*;
 import ir.sharif.gamein2021.core.manager.clientHandlerConnection.ClientHandlerRequestSenderInterface;
 import ir.sharif.gamein2021.core.manager.clientHandlerConnection.requests.UpdateGameStatusRequest;
+import ir.sharif.gamein2021.core.service.DynamicConfigService;
 import ir.sharif.gamein2021.core.service.ProductionLineProductService;
 import ir.sharif.gamein2021.core.service.ProductionLineService;
 import ir.sharif.gamein2021.core.util.GameConstants;
@@ -15,6 +16,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
 
 @AllArgsConstructor
 @Component
@@ -29,20 +32,37 @@ public class DailySchedule {
     private final GameDateManager gameDateManager;
     private final WeekSupplyManager weekSupplyManager;
     private final TeamManager teamManager;
+    private final DynamicConfigService dynamicConfigService;
 
     private final ClientHandlerRequestSenderInterface clientRequestSender;
+
+    @Scheduled(fixedRate = 1000)
+    public void updateConfigs() {
+        if (GameConstants.gameStatus != GameStatus.RUNNING) {
+            LocalDate newCurrentDate = dynamicConfigService.getCurrentDate();
+            if (newCurrentDate != null) {
+                gameCalendar.setCurrentDate(newCurrentDate);
+            }
+        }
+
+        GameStatus newGameStatus = dynamicConfigService.getGameStatus();
+        if (newGameStatus != null) {
+            GameConstants.gameStatus = newGameStatus;
+        }
+    }
 
     //Second, Minute, Hour, DayOfMonth, Month, WeekDays
     @Scheduled(cron = "0 49 22 13 11 ?")
     public void startGame() {
         GameConstants.gameStatus = GameStatus.RUNNING;
+        dynamicConfigService.setGameStatus(GameConstants.gameStatus);
         UpdateGameStatusRequest request = new UpdateGameStatusRequest("Done", GameConstants.gameStatus);
         clientRequestSender.send(request);
     }
 
     @Scheduled(fixedRateString = "${dayLengthMilliSecond}")
     public void scheduledTask() {
-        if (!GameConstants.IsGameStarted) {
+        if (GameConstants.gameStatus != GameStatus.RUNNING) {
             return;
         }
 

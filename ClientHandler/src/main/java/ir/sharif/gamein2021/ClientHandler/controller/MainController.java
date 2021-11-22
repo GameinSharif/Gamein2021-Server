@@ -20,7 +20,10 @@ import ir.sharif.gamein2021.ClientHandler.domain.Product.RemoveProductRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.RFQ.*;
 import ir.sharif.gamein2021.ClientHandler.domain.TerminateLongtermContractSupplierRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Transport.GetTeamTransportsRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.Transport.StartTransportForPlayerStoragesRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.productionLine.*;
+import ir.sharif.gamein2021.core.manager.GameDateManager;
+import ir.sharif.gamein2021.core.util.Enums;
 import ir.sharif.gamein2021.core.util.RequestTypeConstant;
 import lombok.AllArgsConstructor;
 import org.json.JSONObject;
@@ -44,6 +47,7 @@ public class MainController {
     private final ProductController productController;
     private final GameStatusController gameStatusController;
     private final AccessManagementController accessManagementController;
+    private final GameDateManager gameDateManager;
     private final Gson gson;
 
     public void HandleMessage(ProcessedRequest processedRequest) {
@@ -75,6 +79,7 @@ public class MainController {
                 gameDataController.getAllAuctions(processedRequest);
                 gameDataController.getAllActiveDc(processedRequest);
                 gameDataController.getServerTime(processedRequest);
+                gameDateManager.SendGameDateToThisUser(processedRequest.playerId);
                 break;
             case GET_CONTRACTS:
                 GetContractsRequest getContractsRequest = gson.fromJson(requestData, GetContractsRequest.class);
@@ -159,6 +164,7 @@ public class MainController {
             case GET_CONTRACTS_WITH_SUPPLIER:
                 GetContractsSupplierRequest getContractsSupplierRequest = gson.fromJson(requestData, GetContractsSupplierRequest.class);
                 contractSupplierController.getContractsSupplier(processedRequest, getContractsSupplierRequest);
+                break;
             case BUY_DC:
                 try {
                     BuyingDcRequest buyingDcRequest = gson.fromJson(requestData, BuyingDcRequest.class);
@@ -209,6 +215,14 @@ public class MainController {
                 break;
             case GET_GAME_STATUS:
                 gameDataController.getGameStatus(processedRequest);
+                break;
+            case TRANSPORT_TO_STORAGE:
+                try{
+                    StartTransportForPlayerStoragesRequest request = gson.fromJson(requestData , StartTransportForPlayerStoragesRequest.class);
+                    transportController.startTransportForPlayersStorages(processedRequest , request);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
                 break;
             default:
                 System.out.println("Request type is invalid.");

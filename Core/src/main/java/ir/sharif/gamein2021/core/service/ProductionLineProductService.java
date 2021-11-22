@@ -49,6 +49,8 @@ public class ProductionLineProductService extends AbstractCrudService<Production
             ProductionLineTemplate productionLineTemplate = ReadJsonFilesManager.ProductionLineTemplateHashMap.getOrDefault(productionLine.getProductionLineTemplateId(), null);
             Float brandCoefficient = (float)(productionLineTemplate.getQualityLevels().get(productionLine.getQualityLevel()).getBrandIncreaseRatioPerProduct());
             teamManager.updateTeamBrand(teamService.loadById(productionLine.getTeam().getId()),  amount * brandCoefficient);
+            ProductionLineTemplate template = ReadJsonFilesManager.ProductionLineTemplateHashMap.get(productionLine.getProductionLineTemplateId());
+            int amount = (template.getEfficiencyLevels().get(productionLine.getEfficiencyLevel()).getEfficiencyPercentage() / 100) * product.getAmount();
 
             storageService.addProduct(productionLine.getTeam().getFactoryId(), false, product.getProductId(), amount);
             clientHandlerRequestSender.send(new ProductCreationCompletedRequest(productionLine, product, "Done"));

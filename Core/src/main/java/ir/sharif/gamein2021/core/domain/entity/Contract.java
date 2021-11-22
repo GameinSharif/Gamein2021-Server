@@ -4,6 +4,7 @@ import ir.sharif.gamein2021.core.util.Enums.ContractType;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -28,17 +29,39 @@ public class Contract implements BaseEntity
     @Column(name = "product_id", nullable = false)
     private Integer productId;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "contract_type", nullable = false)
-    private ContractType contractType;
+    @Column(name = "contract_date", nullable = false)
+    private LocalDate contractDate;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    @JoinColumn(name = "contract_id")
-    private List<ContractDetail> contractDetails;
+    @Column(name = "supply_amount", nullable = false)
+    private Integer supplyAmount;
+
+    @Column(name = "price_per_unit", nullable = false)
+    private Float pricePerUnit;
+
+    @Column(name = "bought_amount")
+    private Integer boughtAmount;
+
+    @Column(name = "current_brand", nullable = false)
+    private Float currentBrand;
+
+    @Column(name = "value_share")
+    private Float valueShare;
+
+    @Column(name = "demand_share")
+    private Float demandShare;
+
+    @Column(name = "min_price")
+    private Float minPrice;
+
+    @Column(name = "max_price")
+    private Float maxPrice;
+
+    @Column(name = "lost_sale_penalty")
+    private Integer lostSalePenalty;
 
     @Column(name = "terminate_penalty", nullable = false)
     private Integer terminatePenalty;
 
     @Column(name = "is_terminated", nullable = false, columnDefinition = "TINYINT(1)")
-    private boolean isTerminated;
+    private Boolean isTerminated;
 }

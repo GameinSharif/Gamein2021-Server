@@ -213,7 +213,7 @@ public class NegotiationController
     {
         return amount * costPerUnit + transportManager.calculateTransportCost(
                 Enums.VehicleType.TRUCK,
-                transportManager.calculateTransportDistance(
+                transportManager.getTransportDistance(
                         Enums.TransportNodeType.FACTORY, //TODO this can be DC too
                         teamService.findTeamById(sourceId).getFactoryId(),
                         Enums.TransportNodeType.FACTORY,

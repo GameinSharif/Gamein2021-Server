@@ -96,7 +96,7 @@ public class ContractManager
 
     public void buyFromContractsWithGameinCustomers(LocalDate today)
     {
-        List<WeekDemandDto> weekDemands = weekDemandService.findByWeek(gameCalendar.getWeek());
+        List<WeekDemandDto> weekDemands = weekDemandService.findByWeek(gameCalendar.getCurrentWeek());
 
         for (WeekDemandDto weekDemandDto : weekDemands)
         {

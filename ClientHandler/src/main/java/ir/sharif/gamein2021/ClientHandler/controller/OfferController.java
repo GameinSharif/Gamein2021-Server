@@ -157,7 +157,7 @@ public class OfferController
             float totalPayment = acceptedOffer.getVolume() * acceptedOffer.getCostPerUnit();
             totalPayment += transportManager.calculateTransportCost(
                     VehicleType.TRUCK,
-                    transportManager.calculateTransportDistance(
+                    transportManager.getTransportDistance(
                             TransportNodeType.FACTORY,
                             accepterTeam.getFactoryId(),
                             TransportNodeType.FACTORY,

@@ -11,6 +11,7 @@ import ir.sharif.gamein2021.core.exception.CheatingException;
 import ir.sharif.gamein2021.core.manager.GameCalendar;
 import ir.sharif.gamein2021.core.manager.PushMessageManagerInterface;
 import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
+import ir.sharif.gamein2021.core.manager.TeamManager;
 import ir.sharif.gamein2021.core.manager.TransportManager;
 import ir.sharif.gamein2021.core.service.*;
 import ir.sharif.gamein2021.core.util.Enums;
@@ -42,6 +43,7 @@ public class OfferController
     private final ProductionLineService productionLineService;
     private final StorageService storageService;
     private final TransportManager transportManager;
+    private final TeamManager teamManager;
     private final Gson gson = new Gson();
 
     public void handleGetOffers(ProcessedRequest request, GetOffersRequest getOffersRequest)
@@ -186,6 +188,11 @@ public class OfferController
             //TODO need to check capacity of accepted team? i think not...
             else
             {
+            } else {
+                //TODO: Check the Storage of ACCEPTER!
+                teamManager.updateTeamBrand(modelMapper.map(accepterTeam, TeamDto.class), (float) 0.05);
+                teamManager.updateTeamBrand(modelMapper.map(acceptedTeam, TeamDto.class), (float) 0.05);
+                acceptedTeam.setCredit(acceptedTeam.getCredit() - totalPayment);
                 acceptedOffer.setOfferStatus(OfferStatus.ACCEPTED);
                 acceptedOffer.setAccepterTeamId(accepterTeam.getId());
                 offerService.saveOrUpdate(acceptedOffer);

@@ -6,10 +6,12 @@ import ir.sharif.gamein2021.core.domain.dto.ProductionLineProductDto;
 import ir.sharif.gamein2021.core.domain.entity.ProductionLine;
 import ir.sharif.gamein2021.core.domain.entity.ProductionLineProduct;
 import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
+import ir.sharif.gamein2021.core.manager.TeamManager;
 import ir.sharif.gamein2021.core.manager.clientHandlerConnection.ClientHandlerRequestSenderInterface;
 import ir.sharif.gamein2021.core.manager.clientHandlerConnection.requests.ProductCreationCompletedRequest;
 import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
 import ir.sharif.gamein2021.core.util.models.ProductionLineTemplate;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -18,22 +20,15 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@AllArgsConstructor
 @Service
 public class ProductionLineProductService extends AbstractCrudService<ProductionLineProductDto, ProductionLineProduct, Integer> {
     private final ProductionLineProductRepository productionLineProductRepository;
     private final ProductionLineRepository productionLineRepository;
     private final StorageService storageService;
     private final ClientHandlerRequestSenderInterface clientHandlerRequestSender;
-
-    public ProductionLineProductService(ProductionLineProductRepository productionLineProductRepository,
-                                        ProductionLineRepository productionLineRepository,
-                                        StorageService storageService,
-                                        ClientHandlerRequestSenderInterface clientHandlerRequestSender) {
-        this.productionLineProductRepository = productionLineProductRepository;
-        this.productionLineRepository = productionLineRepository;
-        this.storageService = storageService;
-        this.clientHandlerRequestSender = clientHandlerRequestSender;
-    }
+    private final TeamService teamService;
+    private final TeamManager teamManager;
 
     public void finishProductCreation(LocalDate currentDate) {
         List<ProductionLineProduct> products = productionLineProductRepository.findProductionLineProductsByEndDateEquals(currentDate);
@@ -47,10 +42,17 @@ public class ProductionLineProductService extends AbstractCrudService<Production
                 continue;
             }
 
-            ProductionLineTemplate template = ReadJsonFilesManager.ProductionLineTemplateHashMap.get(productionLine.getProductionLineTemplateId());
-            int amount = (template.getEfficiencyLevels().get(productionLine.getEfficiencyLevel()).getEfficiencyPercentage() / 100) * product.getAmount();
+            //TODO efficiency level
+            Integer amount = product.getAmount();
 
-            storageService.addProduct(productionLine.getTeam().getFactoryId(), false, product.getProductId(), amount);
+            // Upgrading brand when production ends.
+            ProductionLineTemplate productionLineTemplate = ReadJsonFilesManager.ProductionLineTemplateHashMap.getOrDefault(productionLine.getProductionLineTemplateId(), null);
+            Float brandCoefficient = (float)(productionLineTemplate.getQualityLevels().get(productionLine.getQualityLevel()).getBrandIncreaseRatioPerProduct());
+            teamManager.updateTeamBrand(teamService.loadById(productionLine.getTeam().getId()),  amount * brandCoefficient);
+            ProductionLineTemplate template = ReadJsonFilesManager.ProductionLineTemplateHashMap.get(productionLine.getProductionLineTemplateId());
+            int amount_2 = (template.getEfficiencyLevels().get(productionLine.getEfficiencyLevel()).getEfficiencyPercentage() / 100) * product.getAmount();
+
+            storageService.addProduct(productionLine.getTeam().getFactoryId(), false, product.getProductId(), amount_2);
             clientHandlerRequestSender.send(new ProductCreationCompletedRequest(productionLine, product, "Done"));
         }
     }

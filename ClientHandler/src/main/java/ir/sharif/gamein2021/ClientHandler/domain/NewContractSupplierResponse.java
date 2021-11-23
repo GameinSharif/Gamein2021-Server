@@ -11,15 +11,13 @@ import java.util.List;
 public class NewContractSupplierResponse extends ResponseObject implements Serializable
 {
     private List<ContractSupplierDto> contractSuppliers;
-    private Float price;
     private String result;
 
     public NewContractSupplierResponse(ResponseTypeConstant responseTypeConstant, List<ContractSupplierDto> contractSuppliers,
-                                       Float price, String result)
+                                       String result)
     {
         this.responseTypeConstant = responseTypeConstant.ordinal();
         this.contractSuppliers = contractSuppliers;
-        this.price = price;
         this.result = result;
     }
 

@@ -50,7 +50,7 @@ public class ContractController
                 contracts
         );
 
-        pushMessageManager.sendMessageByTeamId(userTeam.getId().toString(), gson.toJson(getContractsResponse));
+        pushMessageManager.sendMessageByUserId(userTeam.getId().toString(), gson.toJson(getContractsResponse));
     }
 
     public void newContract(ProcessedRequest request, NewContractRequest newContractRequest)

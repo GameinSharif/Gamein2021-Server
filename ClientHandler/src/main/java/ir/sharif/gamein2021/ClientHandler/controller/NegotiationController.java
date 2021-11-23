@@ -94,6 +94,13 @@ public class NegotiationController
                 newNegotiation.setState(NegotiationState.IN_PROGRESS);
                 if (newNegotiation.getCostPerUnitDemander().equals(newNegotiation.getCostPerUnitSupplier())) {
                     //TODO check if supplier has product and demander has money
+                    TeamDto demanderDto = teamService.loadById(newNegotiation.getDemanderId());
+                    demanderDto.setCredit(demanderDto.getCredit() - newNegotiation.getCostPerUnitDemander() * newNegotiation.getAmount());
+                    TeamDto supplierDto = teamService.loadById(newNegotiation.getSupplierId());
+                    supplierDto.setCredit(supplierDto.getCredit() - newNegotiation.getAmount() * newNegotiation.getCostPerUnitSupplier());
+                    teamService.saveOrUpdate(demanderDto);
+                    teamService.saveOrUpdate(supplierDto);
+
                     newNegotiation.setState(NegotiationState.DEAL);
                     startTransport(newNegotiation);
                 }
@@ -138,6 +145,12 @@ public class NegotiationController
                     if (negotiationDto.getCostPerUnitDemander().equals(negotiationDto.getCostPerUnitSupplier())) {
                         //TODO check if supplier has product and demander has money
                         //TODO check if demander has transport money
+                        TeamDto demanderDto = teamService.loadById(negotiationDto.getDemanderId());
+                        demanderDto.setCredit(demanderDto.getCredit() - negotiationDto.getCostPerUnitDemander() * negotiationDto.getAmount());
+                        TeamDto supplierDto = teamService.loadById(negotiationDto.getSupplierId());
+                        supplierDto.setCredit(supplierDto.getCredit() - negotiationDto.getAmount() * negotiationDto.getCostPerUnitSupplier());
+                        teamService.saveOrUpdate(demanderDto);
+                        teamService.saveOrUpdate(supplierDto);
                         negotiationDto.setState(NegotiationState.DEAL);
                         startTransport(negotiationDto);
                     }
@@ -148,6 +161,12 @@ public class NegotiationController
                     if (negotiationDto.getCostPerUnitDemander().equals(negotiationDto.getCostPerUnitSupplier())) {
                         //TODO check if supplier has product and demander has money
                         //TODO check if demander has transport money
+                        TeamDto demanderDto = teamService.loadById(negotiationDto.getDemanderId());
+                        demanderDto.setCredit(demanderDto.getCredit() - negotiationDto.getCostPerUnitDemander() * negotiationDto.getAmount());
+                        TeamDto supplierDto = teamService.loadById(negotiationDto.getSupplierId());
+                        supplierDto.setCredit(supplierDto.getCredit() - negotiationDto.getAmount() * negotiationDto.getCostPerUnitSupplier());
+                        teamService.saveOrUpdate(demanderDto);
+                        teamService.saveOrUpdate(supplierDto);
                         negotiationDto.setState(NegotiationState.DEAL);
                         startTransport(negotiationDto);
                     }

@@ -41,8 +41,7 @@ public class ProviderController
     private final ProviderService providerService;
     private final Gson gson = new Gson();
 
-    public void newProvider(ProcessedRequest processedRequest, NewProviderRequest newProviderRequest)
-    {
+    public void newProvider(ProcessedRequest processedRequest, NewProviderRequest newProviderRequest) {
         NewProviderResponse newProviderResponse;
         try {
             Team userTeam = teamService.findTeamById(processedRequest.teamId);
@@ -51,9 +50,9 @@ public class ProviderController
             if (userTeam == null) {
                 newProviderResponse = new NewProviderResponse(ResponseTypeConstant.NEW_PROVIDER, null, "Come On!");
             } else if (newProviderRequest.getCapacity() <= 0) {
-                newProviderResponse = new NewProviderResponse(ResponseTypeConstant.NEW_PROVIDER, null, "Product cannot be provided by you!");
-            } else if (!isInProductionLinesProducts(userTeam, newProviderRequest.getProductId())) {
                 newProviderResponse = new NewProviderResponse(ResponseTypeConstant.NEW_PROVIDER, null, "Product Amount is not valid!");
+            } else if (!isInProductionLinesProducts(userTeam, newProviderRequest.getProductId())) {
+                newProviderResponse = new NewProviderResponse(ResponseTypeConstant.NEW_PROVIDER, null, "Product cannot be provided by you!");
             } else if (newProviderRequest.getPrice() > maxPrice  || newProviderRequest.getPrice() < minPrice) {
                 newProviderResponse = new NewProviderResponse(ResponseTypeConstant.NEW_PROVIDER, null, "The price is not in its range!");
             } else {

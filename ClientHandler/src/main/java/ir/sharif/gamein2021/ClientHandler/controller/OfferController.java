@@ -86,10 +86,13 @@ public class OfferController
         catch (Exception e) {
             logger.debug(e);
             newOfferResponse = new NewOfferResponse(ResponseTypeConstant.NEW_OFFER, null, "An Error Occurred!");
-            pushMessageManager.sendMessageByUserId(userService.loadById(request.playerId).getId().toString(), gson.toJson(newOfferResponse));
         }
 
-        pushMessageManager.sendMessageByTeamId(teamService.loadById(request.teamId).toString(), gson.toJson(newOfferResponse));
+        if (newOfferResponse.getOffer() == null) {
+            pushMessageManager.sendMessageByTeamId(teamService.loadById(request.teamId).getId().toString(), gson.toJson(newOfferResponse));
+        } else {
+            pushMessageManager.sendMessageByTeamId(teamService.loadById(request.teamId).getId().toString(), gson.toJson(newOfferResponse));
+        }
 
     }
 

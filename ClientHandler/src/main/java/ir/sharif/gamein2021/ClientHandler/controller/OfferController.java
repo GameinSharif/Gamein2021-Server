@@ -114,7 +114,6 @@ public class OfferController
         {
             pushMessageManager.sendMessageByTeamId(request.teamId.toString(), gson.toJson(newOfferResponse));
         }
-
     }
 
     public void terminateOffer(ProcessedRequest request, TerminateOfferRequest terminateOfferRequest)

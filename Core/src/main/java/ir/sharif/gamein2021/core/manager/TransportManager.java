@@ -195,7 +195,8 @@ public class TransportManager {
         return (int) Math.ceil(distance * GameConstants.Instance.distanceConstant * ReadJsonFilesManager.findVehicleByType(transportDto.getVehicleType()).getCoefficient());
     }
 
-    public int calculateTransportDistance(Enums.TransportNodeType sourceType, Integer sourceId, Enums.TransportNodeType destinationType, Integer destinationId, Enums.VehicleType vehicleType) {
+    public int getTransportDistance(Enums.TransportNodeType sourceType, int sourceId, Enums.TransportNodeType destinationType, int destinationId, Enums.VehicleType vehicleType)
+    {
         double[] sourceLocation = getLocation(sourceType, sourceId);
         double[] destinationLocation = getLocation(destinationType, destinationId);
         double distance = (sourceLocation[0] - destinationLocation[0]) * (sourceLocation[0] - destinationLocation[0]);

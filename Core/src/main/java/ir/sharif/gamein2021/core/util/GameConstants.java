@@ -14,6 +14,9 @@ public class GameConstants {
 
     public final int ConstantWeekSupplyPrice = 2000;
 
+    public static final float ShareAllocationAlpha = 1f;
+    public static final float ShareAllocationBeta = 0.01f;
+
     public final int AuctionStartValue = 1000;
     public final int AuctionInitialStepValue = 100;
     public final int AuctionRoundDurationSeconds = 180;

@@ -56,6 +56,16 @@ public class ContractService extends AbstractCrudService<ContractDto, Contract, 
     }
 
     @Transactional(readOnly = true)
+    public List<ContractDto> findValidContracts(LocalDate date, GameinCustomerDto gameinCustomerDto, Product product)
+    {
+        GameinCustomer gameinCustomer = modelMapper.map(gameinCustomerDto, GameinCustomer.class);
+        List<Contract> contracts = contractRepository.findContractsByGameinCustomerAndProductIdAndContractDateAndIsTerminatedIsFalse(gameinCustomer, product.getId(), date);
+        return contracts.stream()
+                .map(e -> modelMapper.map(e, ContractDto.class))
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
     public ContractDto findByTeamAndDateAndGameinCustomerAndProduct(Team team, LocalDate date, GameinCustomerDto gameinCustomerDto, Product product)
     {
         GameinCustomer gameinCustomer = modelMapper.map(gameinCustomerDto, GameinCustomer.class);

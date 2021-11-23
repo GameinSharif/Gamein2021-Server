@@ -5,7 +5,6 @@ import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.RFQ.*;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
 import ir.sharif.gamein2021.core.domain.dto.*;
-import ir.sharif.gamein2021.core.domain.entity.ProductionLine;
 import ir.sharif.gamein2021.core.domain.entity.Team;
 import ir.sharif.gamein2021.core.exception.CheatingException;
 import ir.sharif.gamein2021.core.manager.GameCalendar;
@@ -18,6 +17,7 @@ import ir.sharif.gamein2021.core.util.Enums;
 import ir.sharif.gamein2021.core.util.Enums.OfferStatus;
 import ir.sharif.gamein2021.core.util.Enums.TransportNodeType;
 import ir.sharif.gamein2021.core.util.Enums.VehicleType;
+import ir.sharif.gamein2021.core.util.GameConstants;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import lombok.AllArgsConstructor;
 import org.apache.log4j.Logger;
@@ -181,24 +181,22 @@ public class OfferController
             {
                 acceptOfferResponse = new AcceptOfferResponse(ResponseTypeConstant.ACCEPT_OFFER, null, "The Offer Placer Team doesn't have enough money!");
             }
-            else if (!isAmountOK(acceptedOffer, accepterTeam))
+            else if (!hasRequiredAmount(acceptedOffer, accepterTeam))
             {
                 acceptOfferResponse = new AcceptOfferResponse(ResponseTypeConstant.ACCEPT_OFFER, null, "Your team don't have enough amount of product!");
             }
             //TODO need to check capacity of accepted team? i think not...
             else
             {
-            } else {
-                //TODO: Check the Storage of ACCEPTER!
-                teamManager.updateTeamBrand(modelMapper.map(accepterTeam, TeamDto.class), (float) 0.05);
-                teamManager.updateTeamBrand(modelMapper.map(acceptedTeam, TeamDto.class), (float) 0.05);
-                acceptedTeam.setCredit(acceptedTeam.getCredit() - totalPayment);
                 acceptedOffer.setOfferStatus(OfferStatus.ACCEPTED);
                 acceptedOffer.setAccepterTeamId(accepterTeam.getId());
                 offerService.saveOrUpdate(acceptedOffer);
 
                 acceptedTeam.setCredit(acceptedTeam.getCredit() - totalPayment);
                 teamService.saveOrUpdate(modelMapper.map(acceptedTeam, TeamDto.class));
+
+                teamManager.updateTeamBrand(modelMapper.map(accepterTeam, TeamDto.class), GameConstants.brandIncreaseAfterDeal);
+                teamManager.updateTeamBrand(modelMapper.map(acceptedTeam, TeamDto.class), GameConstants.brandIncreaseAfterDeal);
 
                 transportManager.createTransport(
                         VehicleType.TRUCK,
@@ -231,7 +229,7 @@ public class OfferController
 
     }
 
-    private boolean isAmountOK(OfferDto offer, Team team)
+    private boolean hasRequiredAmount(OfferDto offer, Team team)
     {
         StorageDto storageDto = storageService.findStorageWithBuildingIdAndDc(teamService.loadById(team.getId()).getFactoryId(), false);
         for (StorageProductDto product : storageDto.getProducts())

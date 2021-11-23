@@ -49,7 +49,7 @@ public class ContractSupplierController
             Integer weeks = newContractSupplierRequest.getWeeks();
             Integer amount = newContractSupplierRequest.getAmount();
 
-            int currentWeek = gameCalendar.getWeek();
+            int currentWeek = gameCalendar.getCurrentWeek();
             Supplier supplier = contractSupplierService.SupplierIdValidation(newContractSupplierRequest.getSupplierId());
             if (supplier == null)
             {

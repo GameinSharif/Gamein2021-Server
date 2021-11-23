@@ -84,7 +84,7 @@ public class DailySchedule {
         contractManager.updateGameinCustomerContracts();
         demandAndSupplyManager.SendCurrentWeekSupplyAndDemandsToAllUsers();
         productionLineService.decreaseWeeklyMaintenanceCost();
-        teamManager.updateTeamsBrands((float) -0.2);
+        teamManager.updateTeamsBrands(GameConstants.brandDailyDecrease);
         weekSupplyManager.updateWeekSupplyPrices(gameCalendar.getCurrentWeek());
         businessIntelligenceService.prepareWeeklyReport();
     }

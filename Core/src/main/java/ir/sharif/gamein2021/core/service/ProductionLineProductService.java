@@ -42,17 +42,13 @@ public class ProductionLineProductService extends AbstractCrudService<Production
                 continue;
             }
 
-            //TODO efficiency level
-            Integer amount = product.getAmount();
-
-            // Upgrading brand when production ends.
-            ProductionLineTemplate productionLineTemplate = ReadJsonFilesManager.ProductionLineTemplateHashMap.getOrDefault(productionLine.getProductionLineTemplateId(), null);
-            Float brandCoefficient = (float)(productionLineTemplate.getQualityLevels().get(productionLine.getQualityLevel()).getBrandIncreaseRatioPerProduct());
-            teamManager.updateTeamBrand(teamService.loadById(productionLine.getTeam().getId()),  amount * brandCoefficient);
             ProductionLineTemplate template = ReadJsonFilesManager.ProductionLineTemplateHashMap.get(productionLine.getProductionLineTemplateId());
-            int amount_2 = (template.getEfficiencyLevels().get(productionLine.getEfficiencyLevel()).getEfficiencyPercentage() / 100) * product.getAmount();
+            int amount = product.getAmount() * (template.getEfficiencyLevels().get(productionLine.getEfficiencyLevel()).getEfficiencyPercentage() / 100);
 
-            storageService.addProduct(productionLine.getTeam().getFactoryId(), false, product.getProductId(), amount_2);
+            float brandCoefficient = (float)(template.getQualityLevels().get(productionLine.getQualityLevel()).getBrandIncreaseRatioPerProduct());
+            teamManager.updateTeamBrand(teamService.loadById(productionLine.getTeam().getId()),  amount * brandCoefficient);
+
+            storageService.addProduct(productionLine.getTeam().getFactoryId(), false, product.getProductId(), amount);
             clientHandlerRequestSender.send(new ProductCreationCompletedRequest(productionLine, product, "Done"));
         }
     }

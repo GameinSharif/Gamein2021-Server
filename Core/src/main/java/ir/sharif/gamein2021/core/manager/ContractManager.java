@@ -48,7 +48,7 @@ public class ContractManager
             {
                 try {
                     float teamCredit = teamService.findTeamById(contractSupplierDto.getTeamId()).getCredit();
-                    WeekSupplyDto weekSupplyDto = weekSupplyService.findSpecificWeekSupply(contractSupplierDto.getSupplierId(), contractSupplierDto.getMaterialId(), gameCalendar.getWeek());
+                    WeekSupplyDto weekSupplyDto = weekSupplyService.findSpecificWeekSupply(contractSupplierDto.getSupplierId(), contractSupplierDto.getMaterialId(), gameCalendar.getCurrentWeek());
                     Float price = weekSupplyDto.getPrice();
                     TeamDto team = teamService.loadById(contractSupplierDto.getTeamId());
                     if(price > teamCredit){

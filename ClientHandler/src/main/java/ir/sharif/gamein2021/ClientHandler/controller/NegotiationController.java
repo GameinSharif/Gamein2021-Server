@@ -13,6 +13,7 @@ import ir.sharif.gamein2021.core.manager.TeamManager;
 import ir.sharif.gamein2021.core.manager.TransportManager;
 import ir.sharif.gamein2021.core.service.*;
 import ir.sharif.gamein2021.core.util.Enums;
+import ir.sharif.gamein2021.core.util.GameConstants;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import ir.sharif.gamein2021.core.domain.entity.Team;
 import ir.sharif.gamein2021.core.util.Enums.NegotiationState;
@@ -133,11 +134,6 @@ public class NegotiationController
             if (editRequest.getNewCostPerUnit() < 0)
             {
                 editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, null);
-            boolean validUserTeam = false;
-            if (userTeam.getId().equals(negotiationDto.getDemanderId()))
-            {
-                validUserTeam = true;
-                negotiationDto.setCostPerUnitDemander(editRequest.getNewCostPerUnit());
             }
             else
             {
@@ -148,20 +144,6 @@ public class NegotiationController
 
                     negotiationService.saveOrUpdate(negotiationDto);
                     editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, negotiationDto);
-                validUserTeam = true;
-                negotiationDto.setCostPerUnitSupplier(editRequest.getNewCostPerUnit());
-
-            }
-            if(validUserTeam){
-                if (negotiationDto.getCostPerUnitDemander().equals(negotiationDto.getCostPerUnitSupplier()))
-                {
-                    //TODO check if supplier has product and demander has money
-                    //TODO check if demander has transport money
-                    // Bingo! Teams' brands increase!
-                    negotiationDto.setState(NegotiationState.DEAL);
-                    teamManager.updateTeamBrand(teamService.loadById(negotiationDto.getDemanderId()), (float) 0.05);
-                    teamManager.updateTeamBrand(teamService.loadById(negotiationDto.getSupplierId()), (float) 0.05);
-                    startTransport(negotiationDto);
                 }
                 else if (userTeam.getId().equals(negotiationDto.getSupplierId()))
                 {
@@ -224,6 +206,9 @@ public class NegotiationController
 
             teamService.saveOrUpdate(demanderDto);
             teamService.saveOrUpdate(supplierDto);
+
+            teamManager.updateTeamBrand(demanderDto, GameConstants.brandIncreaseAfterDeal);
+            teamManager.updateTeamBrand(supplierDto, GameConstants.brandIncreaseAfterDeal);
 
             negotiationDto.setState(NegotiationState.DEAL);
             startTransport(negotiationDto);

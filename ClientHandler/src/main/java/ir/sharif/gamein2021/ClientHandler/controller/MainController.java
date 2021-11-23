@@ -57,7 +57,7 @@ public class MainController {
 
         if (!gameStatusController.validateGameStatus(processedRequest, requestType)) return;
         if (!accessManagementController.validateAccess(processedRequest, requestType)) return;
-        System.out.println(requestType);
+
         switch (requestType) {
             case LOGIN:
                 LoginRequest loginRequest = gson.fromJson(requestData, LoginRequest.class);

@@ -154,7 +154,20 @@ public class OfferController
             OfferDto acceptedOffer = offerService.findById(acceptOfferRequest.getOfferId());
             Team accepterTeam = teamService.findTeamById(userService.loadById(request.playerId).getTeamId());
             Team acceptedTeam = teamService.findTeamById(offerService.findById(acceptOfferRequest.getOfferId()).getTeamId());
+
             float totalPayment = acceptedOffer.getVolume() * acceptedOffer.getCostPerUnit();
+            totalPayment += transportManager.calculateTransportCost(
+                    VehicleType.TRUCK,
+                    transportManager.calculateTransportDistance(
+                            TransportNodeType.FACTORY,
+                            accepterTeam.getFactoryId(),
+                            TransportNodeType.FACTORY,
+                            acceptedTeam.getFactoryId(),
+                            VehicleType.TRUCK),
+                    acceptedOffer.getProductId(),
+                    acceptedOffer.getVolume()
+            );
+
             if (acceptedTeam.getId().equals(accepterTeam.getId()))
             {
                 acceptOfferResponse = new AcceptOfferResponse(ResponseTypeConstant.ACCEPT_OFFER, null, "Come on!");
@@ -167,31 +180,18 @@ public class OfferController
             {
                 acceptOfferResponse = new AcceptOfferResponse(ResponseTypeConstant.ACCEPT_OFFER, null, "The Offer Placer Team doesn't have enough money!");
             }
-            else if (transportManager.calculateTransportCost(
-                    VehicleType.TRUCK,
-                    transportManager.calculateTransportDistance(
-                            TransportNodeType.FACTORY,
-                            accepterTeam.getFactoryId(),
-                            TransportNodeType.FACTORY,
-                            acceptedTeam.getFactoryId(),
-                            VehicleType.TRUCK),
-                    acceptedOffer.getProductId(),
-                    acceptedOffer.getVolume()
-            ) > (acceptedTeam.getCredit() - totalPayment))
-            {
-                acceptOfferResponse = new AcceptOfferResponse(ResponseTypeConstant.ACCEPT_OFFER, null, "The Offer Placer Team doesn't have transport money!");
-            }
             else if (!isAmountOK(acceptedOffer, accepterTeam))
             {
                 acceptOfferResponse = new AcceptOfferResponse(ResponseTypeConstant.ACCEPT_OFFER, null, "Your team don't have enough amount of product!");
             }
+            //TODO need to check capacity of accepted team? i think not...
             else
             {
-                acceptedTeam.setCredit(acceptedTeam.getCredit() - totalPayment);
                 acceptedOffer.setOfferStatus(OfferStatus.ACCEPTED);
                 acceptedOffer.setAccepterTeamId(accepterTeam.getId());
                 offerService.saveOrUpdate(acceptedOffer);
 
+                acceptedTeam.setCredit(acceptedTeam.getCredit() - totalPayment);
                 teamService.saveOrUpdate(modelMapper.map(acceptedTeam, TeamDto.class));
 
                 transportManager.createTransport(

@@ -37,26 +37,6 @@ public class DailySchedule {
 
     private final ClientHandlerRequestSenderInterface clientRequestSender;
 
-    @Scheduled(fixedRate = 1000)
-    public void updateConfigs() {
-        if (GameConstants.gameStatus != GameStatus.RUNNING) {
-            LocalDate newCurrentDate = dynamicConfigService.getCurrentDate();
-            if (newCurrentDate != null) {
-                gameCalendar.setCurrentDate(newCurrentDate);
-            }
-
-            Integer newCurrentWeek = dynamicConfigService.getCurrentWeek();
-            if(newCurrentWeek != null){
-                gameCalendar.setCurrentWeek(newCurrentWeek);
-            }
-        }
-
-        GameStatus newGameStatus = dynamicConfigService.getGameStatus();
-        if (newGameStatus != null) {
-            GameConstants.gameStatus = newGameStatus;
-        }
-    }
-
     //Second, Minute, Hour, DayOfMonth, Month, WeekDays
     @Scheduled(cron = "0 49 22 13 11 ?")
     public void startGame() {
@@ -68,30 +48,25 @@ public class DailySchedule {
 
     @Scheduled(fixedRateString = "${dayLengthMilliSecond}")
     public void scheduledTask() {
-        if (GameConstants.gameStatus != GameStatus.RUNNING) {
-            return;
+        if (GameConstants.gameStatus == GameStatus.RUNNING) {
+            try {
+                DoRunningStateTasks();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
+        updateConfigs();
+    }
+
+    private void DoRunningStateTasks() {
         System.out.println(gameCalendar.getCurrentDate());
         gameCalendar.increaseOneDay();
 
         doDailyTasks();
-
         switch (gameCalendar.getCurrentDate().getDayOfWeek()) {
-            case MONDAY:
-                break;
-            case TUESDAY:
-                break;
-            case WEDNESDAY:
-                break;
-            case THURSDAY:
-                break;
-            case FRIDAY:
-                break;
             case SATURDAY:
                 doWeeklyTasks();
-                break;
-            case SUNDAY:
                 break;
         }
     }
@@ -110,5 +85,24 @@ public class DailySchedule {
         productionLineService.decreaseWeeklyMaintenanceCost();
         weekSupplyManager.updateWeekSupplyPrices(gameCalendar.getCurrentWeek());
         businessIntelligenceService.prepareWeeklyReport();
+    }
+
+    private void updateConfigs() {
+        if (GameConstants.gameStatus != GameStatus.RUNNING) {
+            LocalDate newCurrentDate = dynamicConfigService.getCurrentDate();
+            if (newCurrentDate != null) {
+                gameCalendar.setCurrentDate(newCurrentDate);
+            }
+
+            Integer newCurrentWeek = dynamicConfigService.getCurrentWeek();
+            if (newCurrentWeek != null) {
+                gameCalendar.setCurrentWeek(newCurrentWeek);
+            }
+        }
+
+        GameStatus newGameStatus = dynamicConfigService.getGameStatus();
+        if (newGameStatus != null) {
+            GameConstants.gameStatus = newGameStatus;
+        }
     }
 }

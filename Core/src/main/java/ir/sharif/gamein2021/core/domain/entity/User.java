@@ -16,9 +16,9 @@ public class User implements BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, updatable = false)
     private String username;
-    @Column(nullable = false)
+    @Column(nullable = false, updatable = false)
     private String password;
 
     @OneToOne

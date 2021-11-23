@@ -19,7 +19,7 @@ public class ProductionLine {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "production_line_template_id", nullable = false)
+    @Column(name = "production_line_template_id", nullable = false, updatable = false)
     private Integer productionLineTemplateId;
 
     @JoinColumn(name = "production_line_id")
@@ -39,6 +39,6 @@ public class ProductionLine {
     @Column(name = "status", nullable = false)
     private Enums.ProductionLineStatus status;
 
-    @Column(name = "activation_date", nullable = false)
+    @Column(name = "activation_date", nullable = false, updatable = false)
     private LocalDate activationDate;
 }

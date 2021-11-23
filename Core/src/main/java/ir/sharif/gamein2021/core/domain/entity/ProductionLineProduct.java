@@ -17,18 +17,18 @@ public class ProductionLineProduct {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "product_id", nullable = false)
+    @Column(name = "product_id", nullable = false, updatable = false)
     private Integer productId;
 
     @Column
     private Integer amount;
 
-    @Column(name = "start_date", nullable = false)
+    @Column(name = "start_date", nullable = false, updatable = false)
     private LocalDate startDate;
 
-    @Column(name = "end_date")
+    @Column(name = "end_date", updatable = false)
     private LocalDate endDate;
 
-    @Column(name = "production_line_id")
+    @Column(name = "production_line_id", updatable = false)
     private Integer productionLineId;
 }

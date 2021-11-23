@@ -226,16 +226,14 @@ public class OfferController
 
     private boolean isAmountOK(OfferDto offer, Team team)
     {
-        for (StorageDto storageDto : storageService.findAllStorageForTeam(teamService.loadById(team.getId())))
+        StorageDto storageDto = storageService.findStorageWithBuildingIdAndDc(teamService.loadById(team.getId()).getFactoryId(), false);
+        for (StorageProductDto product : storageDto.getProducts())
         {
-            for (StorageProductDto product : storageDto.getProducts())
+            if (product.getId().equals(offer.getProductId()))
             {
-                if (product.getId().equals(offer.getProductId()))
+                if (product.getAmount() >= offer.getVolume())
                 {
-                    if (product.getAmount() >= offer.getVolume())
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
         }

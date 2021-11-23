@@ -131,10 +131,9 @@ public class ProviderController
             Team userTeam = teamService.findTeamById(user.getTeamId());
 
             Integer providerId = removeProviderRequest.getProviderId();
-            // TODO : Exception -> if provider does not exist
             ProviderDto requestedProvider = providerService.loadById(providerId);
             Team requestedProviderTeam = teamService.findTeamById(requestedProvider.getTeamId());
-            if (userTeam.getId().equals(requestedProviderTeam.getId()))
+            if (userTeam.getId().equals(requestedProviderTeam.getId()) && requestedProvider.getState() == Enums.ProviderState.ACTIVE)
             {
                 providerService.terminateProvider(providerId);
                 removeProviderResponse = new RemoveProviderResponse(ResponseTypeConstant.REMOVE_PROVIDER, providerId, "Provider Removed!");
@@ -142,9 +141,7 @@ public class ProviderController
             else
             {
                 removeProviderResponse = new RemoveProviderResponse(ResponseTypeConstant.REMOVE_PROVIDER, null, "Provider couldn't be removed!");
-                // TODO : Exception -> provider team does not match, provider is terminated
             }
-
         } catch (Exception e)
         {
             removeProviderResponse = new RemoveProviderResponse(ResponseTypeConstant.REMOVE_PROVIDER, null, "An internal error occurred!");

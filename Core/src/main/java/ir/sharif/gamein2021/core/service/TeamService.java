@@ -38,13 +38,12 @@ public class TeamService extends AbstractCrudService<TeamDto, Team, Integer> {
                 map(e -> modelMapper.map(e, TeamDto.class)).collect(Collectors.toList());
     }
 
-
     public Integer findTeamIdByFactoryId(Integer factoryId) {
         return repository.findTeamByFactoryId(factoryId).getId();
     }
 
-    public List<TeamDto> getAllTeams() {
-        return repository.findAll().stream()
+    public List<TeamDto> getTeamsOrderByWealthDesc() {
+        return repository.findAllByOrderByWealthDesc().stream()
                 .map(e -> modelMapper.map(e, TeamDto.class)).collect(Collectors.toList());
     }
 }

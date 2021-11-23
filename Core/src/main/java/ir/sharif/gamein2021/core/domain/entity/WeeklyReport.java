@@ -35,7 +35,7 @@ public class WeeklyReport implements BaseEntity {
     private long productionCosts;
 
     @Column(name = "total_capital")
-    private long totalCapital;
+    private Float totalCapital;
 
     @Column(name = "in_flow")
     private long inFlow;
@@ -44,13 +44,13 @@ public class WeeklyReport implements BaseEntity {
     private long outFlow;
 
     @Column(name = "raw_material_percentage")
-    private int rawMaterialPercentage;
+    private Float rawMaterialPercentage;
 
     @Column(name = "intermediate_material_percentage")
-    private int intermediateMaterialPercentage;
+    private Float intermediateMaterialPercentage;
 
     @Column(name = "final_product_percentage")
-    private int finalProductPercentage;
+    private Float finalProductPercentage;
 
     public WeeklyReport(int weekNumber, int teamId) {
         this.weekNumber = weekNumber;

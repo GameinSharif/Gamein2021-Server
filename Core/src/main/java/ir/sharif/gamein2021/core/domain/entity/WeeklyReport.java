@@ -34,9 +34,6 @@ public class WeeklyReport implements BaseEntity {
     @Column(name = "production_costs")
     private long productionCosts;
 
-    @Column(name = "marketing_costs")
-    private long marketingCosts;
-
     @Column(name = "total_capital")
     private long totalCapital;
 

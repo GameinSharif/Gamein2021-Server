@@ -16,7 +16,6 @@ public class WeeklyReportDto extends BaseWeeklyReport {
     private long outFlow;
     private long transportationCosts;
     private long productionCosts;
-    private long marketingCosts;
     private int ranking;
     private Float brand;
 }

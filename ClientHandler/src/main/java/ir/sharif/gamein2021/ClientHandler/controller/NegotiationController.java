@@ -4,18 +4,13 @@ package ir.sharif.gamein2021.ClientHandler.controller;
 import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.RFQ.*;
-import ir.sharif.gamein2021.ClientHandler.manager.LocalPushMessageManager;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
-import ir.sharif.gamein2021.core.domain.dto.ProviderDto;
+import ir.sharif.gamein2021.core.domain.dto.*;
 import ir.sharif.gamein2021.core.manager.GameCalendar;
 import ir.sharif.gamein2021.core.manager.PushMessageManagerInterface;
+import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
 import ir.sharif.gamein2021.core.manager.TransportManager;
-import ir.sharif.gamein2021.core.service.NegotiationService;
-import ir.sharif.gamein2021.core.service.ProviderService;
-import ir.sharif.gamein2021.core.service.TeamService;
-import ir.sharif.gamein2021.core.service.UserService;
-import ir.sharif.gamein2021.core.domain.dto.UserDto;
-import ir.sharif.gamein2021.core.domain.dto.NegotiationDto;
+import ir.sharif.gamein2021.core.service.*;
 import ir.sharif.gamein2021.core.util.Enums;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import ir.sharif.gamein2021.core.domain.entity.Team;
@@ -25,6 +20,9 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Component
@@ -32,41 +30,60 @@ public class NegotiationController
 {
     static Logger logger = Logger.getLogger(ExecutorThread.class.getName());
 
-    private final LocalPushMessageManager localPushMessageManager;
     private final PushMessageManagerInterface pushMessageManager;
     private final TransportManager transportManager;
     private final UserService userService;
     private final TeamService teamService;
     private final NegotiationService negotiationService;
     private final ProviderService providerService;
+    private final ProductionLineService productionLineService;
+    private final StorageService storageService;
     private final GameCalendar gameCalendar;
     private final Gson gson = new Gson();
 
     public void getNegotiations(ProcessedRequest request, GetNegotiationsRequest getNegotiationsRequest)
     {
-        int playerId = request.playerId;
-        UserDto user = userService.loadById(playerId);
-        Team userTeam = teamService.findTeamById(user.getTeamId());
-        if (userTeam == null)
+        GetNegotiationsResponse getNegotiationsResponse;
+        try
         {
-            GetNegotiationsResponse getNegotiationsResponse = new GetNegotiationsResponse(ResponseTypeConstant.GET_NEGOTIATIONS, new ArrayList<>());
-            localPushMessageManager.sendMessageBySession(request.session, gson.toJson(getNegotiationsResponse));
-            return;
-        }
+            int playerId = request.playerId;
+            UserDto user = userService.loadById(playerId);
+            Team userTeam = teamService.findTeamById(user.getTeamId());
 
-        ArrayList<NegotiationDto> negotiations = negotiationService.findByTeam(userTeam);
-        GetNegotiationsResponse getNegotiationsResponse = new GetNegotiationsResponse(ResponseTypeConstant.GET_NEGOTIATIONS, negotiations);
-        localPushMessageManager.sendMessageBySession(request.session, gson.toJson(getNegotiationsResponse));
+            ArrayList<NegotiationDto> negotiations = negotiationService.findByTeam(userTeam);
+            getNegotiationsResponse = new GetNegotiationsResponse(ResponseTypeConstant.GET_NEGOTIATIONS, negotiations);
+        }
+        catch (Exception e)
+        {
+            getNegotiationsResponse = new GetNegotiationsResponse(ResponseTypeConstant.GET_NEGOTIATIONS, null);
+        }
+        pushMessageManager.sendMessageByUserId(request.playerId.toString(), gson.toJson(getNegotiationsResponse));
     }
 
     public void newProviderNegotiation(ProcessedRequest request, NewProviderNegotiationRequest newProviderNegotiationRequest)
     {
-        UserDto user = userService.loadById(request.playerId);
+        Integer demanderId = 0;
+        Integer supplierId = 0;
         NewProviderNegotiationResponse newProviderNegotiationResponse;
-        if (user != null)
+        try
         {
             ProviderDto provider = providerService.findProviderById(newProviderNegotiationRequest.getProviderId());
-            if (provider != null)
+            Team team = teamService.findTeamById(request.teamId);
+            UserDto user = userService.loadById(request.playerId);
+
+            if (newProviderNegotiationRequest.getAmount() <= 0)
+            {
+                newProviderNegotiationResponse = new NewProviderNegotiationResponse(ResponseTypeConstant.NEW_PROVIDER_NEGOTIATION, null);
+            }
+            else if (!isCostInRange(newProviderNegotiationRequest.getProviderId(), newProviderNegotiationRequest.getCostPerUnitDemander()))
+            {
+                newProviderNegotiationResponse = new NewProviderNegotiationResponse(ResponseTypeConstant.NEW_PROVIDER_NEGOTIATION, null);
+            }
+            else if (!isProductionLineValid(team, provider.getProductId()))
+            {
+                newProviderNegotiationResponse = new NewProviderNegotiationResponse(ResponseTypeConstant.NEW_PROVIDER_NEGOTIATION, null);
+            }
+            else
             {
                 NegotiationDto newNegotiation = new NegotiationDto();
                 newNegotiation.setDemanderId(user.getTeamId());
@@ -76,71 +93,135 @@ public class NegotiationController
                 newNegotiation.setProductId(provider.getProductId());
                 newNegotiation.setAmount(newProviderNegotiationRequest.getAmount());
                 newNegotiation.setState(NegotiationState.IN_PROGRESS);
-                if (newNegotiation.getCostPerUnitDemander().equals(newNegotiation.getCostPerUnitSupplier()))
-                {
-                    //TODO check if supplier has product and demander has money
-                    //TODO check if demander has transport money
-                    newNegotiation.setState(NegotiationState.DEAL);
-                    startTransport(newNegotiation);
-                }
-                NegotiationDto savedNegotiation = negotiationService.save(newNegotiation);
 
-                if (savedNegotiation != null)
-                {
-                    newProviderNegotiationResponse = new NewProviderNegotiationResponse(ResponseTypeConstant.NEW_PROVIDER_NEGOTIATION, savedNegotiation);
-                    pushMessageManager.sendMessageByTeamId(savedNegotiation.getDemanderId().toString(), gson.toJson(newProviderNegotiationResponse));
-                    pushMessageManager.sendMessageByTeamId(savedNegotiation.getSupplierId().toString(), gson.toJson(newProviderNegotiationResponse));
-                    return;
-                }
+                CheckNegotiationDeal(newNegotiation);
+
+                NegotiationDto savedNegotiation = negotiationService.saveOrUpdate(newNegotiation);
+                demanderId = savedNegotiation.getDemanderId();
+                supplierId = savedNegotiation.getSupplierId();
+
+                newProviderNegotiationResponse = new NewProviderNegotiationResponse(ResponseTypeConstant.NEW_PROVIDER_NEGOTIATION, savedNegotiation);
             }
+
         }
-        newProviderNegotiationResponse = new NewProviderNegotiationResponse(ResponseTypeConstant.NEW_PROVIDER_NEGOTIATION, null);
-        localPushMessageManager.sendMessageBySession(request.session, gson.toJson(newProviderNegotiationResponse));
+        catch (Exception e)
+        {
+            newProviderNegotiationResponse = new NewProviderNegotiationResponse(ResponseTypeConstant.NEW_PROVIDER_NEGOTIATION, null);
+        }
+
+        if (newProviderNegotiationResponse.getNegotiation() == null)
+        {
+            pushMessageManager.sendMessageByUserId(request.playerId.toString(), gson.toJson(newProviderNegotiationResponse));
+        }
+        else
+        {
+            pushMessageManager.sendMessageByTeamId(demanderId.toString(), gson.toJson(newProviderNegotiationResponse));
+            pushMessageManager.sendMessageByTeamId(supplierId.toString(), gson.toJson(newProviderNegotiationResponse));
+        }
     }
 
     public void editNegotiationCostPerUnit(ProcessedRequest request, EditNegotiationCostPerUnitRequest editRequest)
     {
         UserDto user = userService.loadById(request.playerId);
         EditNegotiationCostPerUnitResponse editResponse;
-        if (user != null)
+        try
         {
             NegotiationDto negotiationDto = negotiationService.findById(editRequest.getNegotiationId());
             Team userTeam = teamService.findTeamById(user.getTeamId());
-            if (userTeam.getId().equals(negotiationDto.getDemanderId()))
+            if (editRequest.getNewCostPerUnit() < 0)
             {
-                negotiationDto.setCostPerUnitDemander(editRequest.getNewCostPerUnit());
-                if (negotiationDto.getCostPerUnitDemander().equals(negotiationDto.getCostPerUnitSupplier()))
-                {
-                    //TODO check if supplier has product and demander has money
-                    //TODO check if demander has transport money
-                    negotiationDto.setState(NegotiationState.DEAL);
-                    startTransport(negotiationDto);
-                }
-                negotiationService.saveOrUpdate(negotiationDto);
-                editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, negotiationDto);
-                pushMessageManager.sendMessageByTeamId(negotiationDto.getDemanderId().toString(), gson.toJson(editResponse));
-                pushMessageManager.sendMessageByTeamId(negotiationDto.getSupplierId().toString(), gson.toJson(editResponse));
-                return;
+                editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, null);
             }
-            else if (userTeam.getId().equals(negotiationDto.getSupplierId()))
+            else
             {
-                negotiationDto.setCostPerUnitSupplier(editRequest.getNewCostPerUnit());
-                if (negotiationDto.getCostPerUnitDemander().equals(negotiationDto.getCostPerUnitSupplier()))
+                if (userTeam.getId().equals(negotiationDto.getDemanderId()))
                 {
-                    //TODO check if supplier has product and demander has money
-                    //TODO check if demander has transport money
-                    negotiationDto.setState(NegotiationState.DEAL);
-                    startTransport(negotiationDto);
+                    negotiationDto.setCostPerUnitDemander(editRequest.getNewCostPerUnit());
+                    CheckNegotiationDeal(negotiationDto);
+
+                    negotiationService.saveOrUpdate(negotiationDto);
+                    editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, negotiationDto);
                 }
-                negotiationService.saveOrUpdate(negotiationDto);
-                editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, negotiationDto);
-                pushMessageManager.sendMessageByTeamId(negotiationDto.getDemanderId().toString(), gson.toJson(editResponse));
-                pushMessageManager.sendMessageByTeamId(negotiationDto.getSupplierId().toString(), gson.toJson(editResponse));
-                return;
+                else if (userTeam.getId().equals(negotiationDto.getSupplierId()))
+                {
+                    negotiationDto.setCostPerUnitSupplier(editRequest.getNewCostPerUnit());
+                    CheckNegotiationDeal(negotiationDto);
+
+                    negotiationService.saveOrUpdate(negotiationDto);
+                    editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, negotiationDto);
+                }
+                else
+                {
+                    editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, null);
+                }
             }
+
         }
-        editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, null);
-        localPushMessageManager.sendMessageBySession(request.session, gson.toJson(editResponse));
+        catch (Exception e)
+        {
+            editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, null);
+        }
+
+        if (editResponse.getNegotiation() == null)
+        {
+            pushMessageManager.sendMessageByUserId(request.playerId.toString(), gson.toJson(editResponse));
+        }
+        else
+        {
+            pushMessageManager.sendMessageByTeamId(negotiationService.findById(editRequest.getNegotiationId()).getDemanderId().toString(), gson.toJson(editResponse));
+            pushMessageManager.sendMessageByTeamId(negotiationService.findById(editRequest.getNegotiationId()).getSupplierId().toString(), gson.toJson(editResponse));
+        }
+    }
+
+    private void CheckNegotiationDeal(NegotiationDto negotiationDto) throws Exception
+    {
+        if (negotiationDto.getCostPerUnitDemander().equals(negotiationDto.getCostPerUnitSupplier()))
+        {
+            float totalPayment = calculateTotalPayment(
+                    teamService.findTeamById(negotiationDto.getSupplierId()).getFactoryId(),
+                    teamService.findTeamById(negotiationDto.getDemanderId()).getFactoryId(),
+                    negotiationDto.getAmount(),
+                    negotiationDto.getCostPerUnitDemander(),
+                    negotiationDto.getProductId());
+
+            TeamDto demanderDto = teamService.loadById(negotiationDto.getDemanderId());
+            TeamDto supplierDto = teamService.loadById(negotiationDto.getSupplierId());
+
+            if (totalPayment > demanderDto.getCredit())
+            {
+                throw new Exception();
+            }
+
+            if (!hasRequiredAmount(supplierDto, negotiationDto.getProductId(), negotiationDto.getAmount()))
+            {
+                throw new Exception();
+            }
+
+            demanderDto.setCredit(demanderDto.getCredit() - totalPayment);
+            supplierDto.setCredit(supplierDto.getCredit() + negotiationDto.getAmount() * negotiationDto.getCostPerUnitSupplier());
+            storageService.deleteProducts(supplierDto.getFactoryId(), false, negotiationDto.getProductId(), negotiationDto.getAmount());
+
+            teamService.saveOrUpdate(demanderDto);
+            teamService.saveOrUpdate(supplierDto);
+
+            negotiationDto.setState(NegotiationState.DEAL);
+            startTransport(negotiationDto);
+        }
+    }
+
+    private float calculateTotalPayment(int sourceId, int destinationId, int amount, float costPerUnit, int productId)
+    {
+        return amount * costPerUnit + transportManager.calculateTransportCost(
+                Enums.VehicleType.TRUCK,
+                transportManager.calculateTransportDistance(
+                        Enums.TransportNodeType.FACTORY, //TODO this can be DC too
+                        teamService.findTeamById(sourceId).getFactoryId(),
+                        Enums.TransportNodeType.FACTORY,
+                        teamService.findTeamById(destinationId).getFactoryId(),
+                        Enums.VehicleType.TRUCK),
+                productId,
+                amount
+        );
     }
 
     private void startTransport(NegotiationDto negotiationDto)
@@ -156,5 +237,46 @@ public class NegotiationController
                 negotiationDto.getProductId(),
                 negotiationDto.getAmount()
         );
+    }
+
+    private boolean isCostInRange(Integer providerId, Float cost)
+    {
+        ProviderDto providerDto = providerService.findProviderById(providerId);
+        int minPrice = ReadJsonFilesManager.findProductById(providerDto.getProductId()).getMinPrice();
+        int maxPrice = ReadJsonFilesManager.findProductById(providerDto.getProductId()).getMaxPrice();
+        return cost >= minPrice && cost <= maxPrice;
+    }
+
+    private boolean isProductionLineValid(Team team, int productId)
+    {
+        List<Integer> categories = Arrays.stream(ReadJsonFilesManager.findProductById(productId).getCategoryIds().split(",")).map(string -> Integer.parseInt(string)).collect(Collectors.toList());
+        List<ProductionLineDto> productionLines = productionLineService.findProductionLinesByTeam(team);
+        for (ProductionLineDto productionLineDto : productionLines)
+        {
+            for (Integer category : categories)
+            {
+                if (productionLineDto.getProductionLineTemplateId().equals(category) && productionLineDto.getStatus() != Enums.ProductionLineStatus.SCRAPPED)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean hasRequiredAmount(TeamDto team, int productId, int amount)
+    {
+        StorageDto storageDto = storageService.findStorageWithBuildingIdAndDc(teamService.loadById(team.getId()).getFactoryId(), false);
+        for (StorageProductDto product : storageDto.getProducts())
+        {
+            if (product.getId().equals(productId))
+            {
+                if (product.getAmount() >= amount)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

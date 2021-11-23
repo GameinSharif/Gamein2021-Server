@@ -12,4 +12,12 @@ import java.io.Serializable;
 public class NewOfferRequest extends RequestObject implements Serializable
 {
     private OfferDto offer;
+
+    @Override
+    public String toString() {
+        return "NewOfferRequest{" +
+                "offer=" + offer +
+                ", requestTypeConstant=" + requestTypeConstant +
+                '}';
+    }
 }

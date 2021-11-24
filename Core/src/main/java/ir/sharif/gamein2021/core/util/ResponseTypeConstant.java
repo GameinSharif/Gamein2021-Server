@@ -49,7 +49,8 @@ public enum ResponseTypeConstant {
     UPDATE_GAME_STATUS(45),
     ACCESS_DENIED(46),
     TRANSPORT_TO_STORAGE(47),
-    WEEKLY_REPORT(48);
+    GET_ALL_WEEKLY_REPORTS(48),
+    UPDATE_WEEKLY_REPORT(49);
 
     private int value;
 

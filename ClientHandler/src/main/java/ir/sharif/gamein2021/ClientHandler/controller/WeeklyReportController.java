@@ -2,7 +2,7 @@ package ir.sharif.gamein2021.ClientHandler.controller;
 
 import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.weeklyReport.WeeklyReportResponse;
+import ir.sharif.gamein2021.ClientHandler.domain.weeklyReport.GetAllWeeklyReportsResponse;
 import ir.sharif.gamein2021.ClientHandler.manager.LocalPushMessageManager;
 import ir.sharif.gamein2021.core.domain.dto.WeeklyReportDto;
 import ir.sharif.gamein2021.core.service.WeeklyReportService;
@@ -20,7 +20,7 @@ public class WeeklyReportController {
 
     public void getWeeklyReport(ProcessedRequest processedRequest) {
         List<WeeklyReportDto> weeklyReports = weeklyReportService.findAllByTeamId(processedRequest.teamId);
-        WeeklyReportResponse response = new WeeklyReportResponse(weeklyReports);
+        GetAllWeeklyReportsResponse response = new GetAllWeeklyReportsResponse(weeklyReports);
         pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(response));
     }
 }

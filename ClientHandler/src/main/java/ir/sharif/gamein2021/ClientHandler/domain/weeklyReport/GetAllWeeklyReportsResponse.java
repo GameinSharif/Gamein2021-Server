@@ -7,11 +7,11 @@ import ir.sharif.gamein2021.core.view.ResponseObject;
 import java.io.Serializable;
 import java.util.List;
 
-public class WeeklyReportResponse extends ResponseObject implements Serializable {
+public class GetAllWeeklyReportsResponse extends ResponseObject implements Serializable {
     private List<WeeklyReportDto> weeklyReports;
 
-    public WeeklyReportResponse(List<WeeklyReportDto> weeklyReports) {
-        this.responseTypeConstant = ResponseTypeConstant.WEEKLY_REPORT.ordinal();
+    public GetAllWeeklyReportsResponse(List<WeeklyReportDto> weeklyReports) {
+        this.responseTypeConstant = ResponseTypeConstant.GET_ALL_WEEKLY_REPORTS.ordinal();
         this.weeklyReports = weeklyReports;
     }
 }

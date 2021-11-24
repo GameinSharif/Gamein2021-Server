@@ -4,6 +4,8 @@ import ir.sharif.gamein2021.core.domain.dto.*;
 import ir.sharif.gamein2021.core.domain.entity.WeeklyReport;
 import ir.sharif.gamein2021.core.manager.GameCalendar;
 import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
+import ir.sharif.gamein2021.core.manager.clientHandlerConnection.ClientHandlerRequestSenderInterface;
+import ir.sharif.gamein2021.core.manager.clientHandlerConnection.requests.UpdateWeeklyReportsRequest;
 import ir.sharif.gamein2021.core.util.GameConstants;
 import ir.sharif.gamein2021.core.util.models.Product;
 import org.springframework.stereotype.Service;
@@ -19,36 +21,45 @@ public class BusinessIntelligenceService {
     private final TeamService teamService;
     private final GameCalendar gameCalendar;
     private final StorageService storageService;
-    private final List<TeamDto> teamsOrderedByWealthDesc;
-    private final Map<Integer, TeamDto> teamsByTeamId;
-    private final Map<Integer, TeamDto> teamsByFactoryId;
+    private final ClientHandlerRequestSenderInterface clientHandlerRequestSender;
 
     public BusinessIntelligenceService(WeeklyReportService weeklyReportService,
                                        TeamService teamService,
                                        GameCalendar gameCalendar,
-                                       StorageService storageService) {
+                                       StorageService storageService,
+                                       ClientHandlerRequestSenderInterface clientHandlerRequestSender) {
         this.weeklyReportService = weeklyReportService;
         this.teamService = teamService;
         this.gameCalendar = gameCalendar;
         this.storageService = storageService;
-
-        teamsOrderedByWealthDesc = teamService.getTeamsOrderByWealthDesc();
-        teamsByTeamId = teamsOrderedByWealthDesc.stream().collect(Collectors.toMap(TeamDto::getId, x -> x));
-        teamsByFactoryId = teamsOrderedByWealthDesc.stream().collect(Collectors.toMap(TeamDto::getFactoryId, x -> x));
+        this.clientHandlerRequestSender = clientHandlerRequestSender;
     }
 
+    /**
+     * Prepares weeklyReports, saves them in database and send each report to its team.
+     */
     public void prepareWeeklyReport() {
+        List<TeamDto> teamsOrderedByWealthDesc = teamService.getTeamsOrderByWealthDesc();
+        Map<Integer, TeamDto> teamsByFactoryId = teamsOrderedByWealthDesc.stream().collect(Collectors.toMap(TeamDto::getFactoryId, x -> x));
+        Map<Integer, TeamDto> teamsByTeamId = teamsOrderedByWealthDesc.stream().collect(Collectors.toMap(TeamDto::getId, x -> x));
+
         int weakNumber = gameCalendar.getCurrentWeek();
         Map<Integer, WeeklyReport> weeklyReportByTeamId = teamsByTeamId.values().stream()
                 .collect(Collectors.toMap(TeamDto::getId, x -> new WeeklyReport(weakNumber, x.getId())));
 
-        setTeamRelatedReportData(weeklyReportByTeamId);
-        setInventoryReportData(weeklyReportByTeamId);
+        setTeamRelatedReportData(weeklyReportByTeamId, teamsOrderedByWealthDesc);
+        setInventoryReportData(weeklyReportByTeamId, teamsByFactoryId);
 
-        weeklyReportService.saveAll(weeklyReportByTeamId.values());
+        List<WeeklyReportDto> weeklyReports = weeklyReportService.saveAll(weeklyReportByTeamId.values());
+        sendReports(weeklyReports);
     }
 
-    private void setInventoryReportData(Map<Integer, WeeklyReport> weeklyReportByTeamId) {
+    private void sendReports(List<WeeklyReportDto> weeklyReports) {
+        UpdateWeeklyReportsRequest request = new UpdateWeeklyReportsRequest("why", weeklyReports);
+        clientHandlerRequestSender.send(request);
+    }
+
+    private void setInventoryReportData(Map<Integer, WeeklyReport> weeklyReportByTeamId, Map<Integer, TeamDto> teamsByFactoryId) {
         for (StorageDto storageDto : storageService.list()) {
             if (storageDto.getDc()) {
                 continue;
@@ -83,7 +94,7 @@ public class BusinessIntelligenceService {
         }
     }
 
-    private void setTeamRelatedReportData(Map<Integer, WeeklyReport> weeklyReportByTeamId) {
+    private void setTeamRelatedReportData(Map<Integer, WeeklyReport> weeklyReportByTeamId, List<TeamDto> teamsOrderedByWealthDesc) {
         int ranking = 1;
 
         for (TeamDto team : teamsOrderedByWealthDesc) {
@@ -94,7 +105,7 @@ public class BusinessIntelligenceService {
             weeklyReport.setOutFlow(team.getOutFlow() != null ? team.getOutFlow() : 0);
             weeklyReport.setTotalCapital(team.getCredit());
             weeklyReport.setProductionCosts(team.getProductionCost() != null ? team.getOutFlow() : 0);
-            weeklyReport.setTransportationCosts(team.getTransportationCost()!= null ? team.getOutFlow() : 0);
+            weeklyReport.setTransportationCosts(team.getTransportationCost() != null ? team.getOutFlow() : 0);
 
             ranking++;
         }

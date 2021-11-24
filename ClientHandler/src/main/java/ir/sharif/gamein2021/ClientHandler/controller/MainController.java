@@ -204,7 +204,7 @@ public class MainController {
                 StartTransportForPlayerStoragesRequest request = gson.fromJson(requestData, StartTransportForPlayerStoragesRequest.class);
                 transportController.startTransportForPlayersStorages(processedRequest, request);
                 break;
-            case WEEKLY_REPORT:
+            case GET_ALL_WEEKLY_REPORTS:
                 weeklyReportController.getWeeklyReport(processedRequest);
                 break;
             default:

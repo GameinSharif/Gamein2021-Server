@@ -1,9 +1,5 @@
 package ir.sharif.gamein2021.core.mainThread;
 
-import ir.sharif.gamein2021.core.manager.ContractManager;
-import ir.sharif.gamein2021.core.manager.GameCalendar;
-import ir.sharif.gamein2021.core.manager.TransportManager;
-import ir.sharif.gamein2021.core.manager.WeekSupplyManager;
 import ir.sharif.gamein2021.core.manager.*;
 import ir.sharif.gamein2021.core.manager.clientHandlerConnection.ClientHandlerRequestSenderInterface;
 import ir.sharif.gamein2021.core.manager.clientHandlerConnection.requests.UpdateGameStatusRequest;

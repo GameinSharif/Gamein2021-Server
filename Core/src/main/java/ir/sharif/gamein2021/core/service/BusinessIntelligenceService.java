@@ -2,7 +2,7 @@ package ir.sharif.gamein2021.core.service;
 
 import ir.sharif.gamein2021.core.domain.dto.*;
 import ir.sharif.gamein2021.core.domain.entity.WeeklyReport;
-import ir.sharif.gamein2021.core.manager.GameCalendar;
+import ir.sharif.gamein2021.core.mainThread.GameCalendar;
 import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
 import ir.sharif.gamein2021.core.manager.clientHandlerConnection.ClientHandlerRequestSenderInterface;
 import ir.sharif.gamein2021.core.manager.clientHandlerConnection.requests.UpdateWeeklyReportsRequest;

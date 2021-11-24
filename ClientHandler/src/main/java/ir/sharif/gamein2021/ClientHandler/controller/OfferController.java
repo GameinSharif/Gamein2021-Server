@@ -7,7 +7,7 @@ import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
 import ir.sharif.gamein2021.core.domain.dto.*;
 import ir.sharif.gamein2021.core.domain.entity.Team;
 import ir.sharif.gamein2021.core.exception.CheatingException;
-import ir.sharif.gamein2021.core.manager.GameCalendar;
+import ir.sharif.gamein2021.core.mainThread.GameCalendar;
 import ir.sharif.gamein2021.core.manager.PushMessageManagerInterface;
 import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
 import ir.sharif.gamein2021.core.manager.TeamManager;

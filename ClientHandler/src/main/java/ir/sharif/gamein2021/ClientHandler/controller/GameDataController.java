@@ -3,7 +3,7 @@ package ir.sharif.gamein2021.ClientHandler.controller;
 import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.UpdateGameStatusResponse;
-import ir.sharif.gamein2021.core.manager.GameCalendar;
+import ir.sharif.gamein2021.core.mainThread.GameCalendar;
 import ir.sharif.gamein2021.core.response.GetCurrentWeekSuppliesResponse;
 import ir.sharif.gamein2021.ClientHandler.domain.ServerTimeResponse;
 import ir.sharif.gamein2021.core.domain.dto.WeekSupplyDto;

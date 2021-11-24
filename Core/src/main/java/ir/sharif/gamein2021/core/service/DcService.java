@@ -6,7 +6,7 @@ import ir.sharif.gamein2021.core.domain.dto.TeamDto;
 import ir.sharif.gamein2021.core.domain.entity.Dc;
 import ir.sharif.gamein2021.core.domain.entity.Team;
 import ir.sharif.gamein2021.core.exception.*;
-import ir.sharif.gamein2021.core.manager.GameCalendar;
+import ir.sharif.gamein2021.core.mainThread.GameCalendar;
 import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;

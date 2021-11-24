@@ -33,6 +33,11 @@ public class Provider implements BaseEntity {
     @Column(name = "state", nullable = false)
     private Enums.ProviderState state;
 
+    @Column(name = "storage", nullable = false)
+    @ManyToOne
+    // TODO : many to one or one to one?
+    private Storage storage;
+
     @Override
     public Integer getId() {
         return id;

@@ -8,21 +8,21 @@ import ir.sharif.gamein2021.ClientHandler.domain.RFQ.NewProviderResponse;
 import ir.sharif.gamein2021.ClientHandler.manager.LocalPushMessageManager;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
 import ir.sharif.gamein2021.core.domain.dto.ProductionLineDto;
+import ir.sharif.gamein2021.core.domain.dto.TeamDto;
 import ir.sharif.gamein2021.core.domain.entity.ProductionLineProduct;
+import ir.sharif.gamein2021.core.domain.entity.Storage;
 import ir.sharif.gamein2021.core.manager.PushMessageManagerInterface;
 import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
-import ir.sharif.gamein2021.core.service.ProductionLineService;
-import ir.sharif.gamein2021.core.service.TeamService;
+import ir.sharif.gamein2021.core.service.*;
 import ir.sharif.gamein2021.core.util.Enums;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
-import ir.sharif.gamein2021.core.service.ProviderService;
-import ir.sharif.gamein2021.core.service.UserService;
 import ir.sharif.gamein2021.core.domain.dto.ProviderDto;
 import ir.sharif.gamein2021.core.domain.dto.UserDto;
 import ir.sharif.gamein2021.core.domain.entity.Team;
 import ir.sharif.gamein2021.core.util.models.Product;
 import lombok.AllArgsConstructor;
 import org.apache.log4j.Logger;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -39,6 +39,8 @@ public class ProviderController
     private final TeamService teamService;
     private final ProductionLineService productionLineService;
     private final ProviderService providerService;
+    private final StorageService storageService;
+    private final ModelMapper modelMapper;
     private final Gson gson = new Gson();
 
     public void newProvider(ProcessedRequest processedRequest, NewProviderRequest newProviderRequest)
@@ -70,9 +72,13 @@ public class ProviderController
             {
                 newProviderResponse = new NewProviderResponse(ResponseTypeConstant.NEW_PROVIDER, null, "The price is not in its range!");
             }
-            else if (isAlreadyProviderOfThisProduct(userTeam, newProviderRequest.getProductId()))
+            else if (isAlreadyProviderOfThisProduct(userTeam, newProviderRequest.getProductId(), newProviderRequest.getStorageId()))
             {
                 newProviderResponse = new NewProviderResponse(ResponseTypeConstant.NEW_PROVIDER, null, "You already are a provider of this product.");
+            }
+            else if (!storageBelongsToTeam(userTeam, newProviderRequest.getStorageId()))
+            {
+                newProviderResponse = new NewProviderResponse(ResponseTypeConstant.NEW_PROVIDER, null, "Provided storage does not belong to you!");
             }
             else
             {
@@ -99,6 +105,11 @@ public class ProviderController
         {
             pushMessageManager.sendMessageByTeamId(processedRequest.teamId.toString(), gson.toJson(newProviderResponse));
         }
+    }
+
+    private boolean storageBelongsToTeam(Team userTeam, Integer storageId) {
+        TeamDto userTeamDto = modelMapper.map(userTeam, TeamDto.class);
+        return storageService.storageBelongsToTeam(storageId, userTeamDto);
     }
 
     public void getProviders(ProcessedRequest processedRequest, GetProvidersRequest getProvidersRequest)
@@ -171,12 +182,12 @@ public class ProviderController
         return false;
     }
 
-    private boolean isAlreadyProviderOfThisProduct(Team team, Integer productId)
+    private boolean isAlreadyProviderOfThisProduct(Team team, Integer productId, Integer storageId)
     {
         List<ProviderDto> providerDtos = providerService.findProvidersByTeam(team);
         for (ProviderDto providerDto : providerDtos)
         {
-            if (providerDto.getProductId().equals(productId)) //TODO storages should be equal too
+            if (providerDto.getProductId().equals(productId) && providerDto.getStorageId().equals(storageId))
             {
                 return true;
             }

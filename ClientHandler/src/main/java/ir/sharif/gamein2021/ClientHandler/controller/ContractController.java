@@ -126,6 +126,7 @@ public class ContractController
             ContractDto savedContractDto = contractService.saveOrUpdate(contractDto);
 
             userTeam.setCredit(userTeam.getCredit() - contractDto.getTerminatePenalty());
+            userTeam.setWealth(userTeam.getWealth() - contractDto.getTerminatePenalty());
             teamService.saveOrUpdate(userTeam);
 
             terminateLongtermContractResponse = new TerminateLongtermContractResponse(ResponseTypeConstant.TERMINATE_CONTRACT, savedContractDto);

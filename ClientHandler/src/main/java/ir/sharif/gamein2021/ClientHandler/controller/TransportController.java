@@ -96,6 +96,9 @@ public class TransportController {
         else
         {
             team.setCredit(team.getCredit() - transportCost);
+            team.setWealth(team.getWealth() - transportCost);
+            team.setTransportationCost(team.getTransportationCost() + transportCost);
+            
             teamService.saveOrUpdate(team);
         }
     }

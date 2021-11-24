@@ -101,10 +101,12 @@ public class DcService extends AbstractCrudService<DcDto, Dc, Integer> {
         if (transportService.getTransportsByDestinationIdForDc(dc.getId()).size() != 0)
             throw new DcHasActiveTransportException("Can not sell dc with id " + dc.getId() + " because it has active transport.");
         //This line will empty the dc storage
-        storageService.emptyStorage(dc.getId() , true);
+        storageService.emptyStorage(dc.getId(), true);
 
         float credit = teamDto.getCredit() + dc.getSellingPrice();
         teamDto.setCredit(credit);
+        teamDto.setWealth(teamDto.getWealth() - dc.getBuyingPrice() + dc.getSellingPrice());
+
         dc.setOwnerId(null);
         saveOrUpdate(dc);
         teamService.saveOrUpdate(teamDto);

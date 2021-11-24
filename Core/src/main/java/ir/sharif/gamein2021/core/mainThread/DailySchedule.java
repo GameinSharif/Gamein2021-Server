@@ -1,9 +1,5 @@
 package ir.sharif.gamein2021.core.mainThread;
 
-import ir.sharif.gamein2021.core.manager.ContractManager;
-import ir.sharif.gamein2021.core.manager.GameCalendar;
-import ir.sharif.gamein2021.core.manager.TransportManager;
-import ir.sharif.gamein2021.core.manager.WeekSupplyManager;
 import ir.sharif.gamein2021.core.manager.*;
 import ir.sharif.gamein2021.core.manager.clientHandlerConnection.ClientHandlerRequestSenderInterface;
 import ir.sharif.gamein2021.core.manager.clientHandlerConnection.requests.UpdateGameStatusRequest;
@@ -32,30 +28,11 @@ public class DailySchedule {
     private final DemandAndSupplyManager demandAndSupplyManager;
     private final GameDateManager gameDateManager;
     private final WeekSupplyManager weekSupplyManager;
+    private final TeamManager teamManager;
     private final DynamicConfigService dynamicConfigService;
     private final BusinessIntelligenceService businessIntelligenceService;
 
     private final ClientHandlerRequestSenderInterface clientRequestSender;
-
-    @Scheduled(fixedRate = 1000)
-    public void updateConfigs() {
-        if (GameConstants.gameStatus != GameStatus.RUNNING) {
-            LocalDate newCurrentDate = dynamicConfigService.getCurrentDate();
-            if (newCurrentDate != null) {
-                gameCalendar.setCurrentDate(newCurrentDate);
-            }
-
-            Integer newCurrentWeek = dynamicConfigService.getCurrentWeek();
-            if(newCurrentWeek != null){
-                gameCalendar.setCurrentWeek(newCurrentWeek);
-            }
-        }
-
-        GameStatus newGameStatus = dynamicConfigService.getGameStatus();
-        if (newGameStatus != null) {
-            GameConstants.gameStatus = newGameStatus;
-        }
-    }
 
     //Second, Minute, Hour, DayOfMonth, Month, WeekDays
     @Scheduled(cron = "0 49 22 13 11 ?")
@@ -68,30 +45,25 @@ public class DailySchedule {
 
     @Scheduled(fixedRateString = "${dayLengthMilliSecond}")
     public void scheduledTask() {
-        if (GameConstants.gameStatus != GameStatus.RUNNING) {
-            return;
+        if (GameConstants.gameStatus == GameStatus.RUNNING) {
+            try {
+                DoRunningStateTasks();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
+        updateConfigs();
+    }
+
+    private void DoRunningStateTasks() {
         System.out.println(gameCalendar.getCurrentDate());
         gameCalendar.increaseOneDay();
 
         doDailyTasks();
-
         switch (gameCalendar.getCurrentDate().getDayOfWeek()) {
-            case MONDAY:
-                break;
-            case TUESDAY:
-                break;
-            case WEDNESDAY:
-                break;
-            case THURSDAY:
-                break;
-            case FRIDAY:
-                break;
             case SATURDAY:
                 doWeeklyTasks();
-                break;
-            case SUNDAY:
                 break;
         }
     }
@@ -108,7 +80,27 @@ public class DailySchedule {
         contractManager.updateGameinCustomerContracts();
         demandAndSupplyManager.SendCurrentWeekSupplyAndDemandsToAllUsers();
         productionLineService.decreaseWeeklyMaintenanceCost();
+        teamManager.updateTeamsBrands(GameConstants.brandDailyDecrease);
         weekSupplyManager.updateWeekSupplyPrices(gameCalendar.getCurrentWeek());
         businessIntelligenceService.prepareWeeklyReport();
+    }
+
+    private void updateConfigs() {
+        if (GameConstants.gameStatus != GameStatus.RUNNING) {
+            LocalDate newCurrentDate = dynamicConfigService.getCurrentDate();
+            if (newCurrentDate != null) {
+                gameCalendar.setCurrentDate(newCurrentDate);
+            }
+
+            Integer newCurrentWeek = dynamicConfigService.getCurrentWeek();
+            if (newCurrentWeek != null) {
+                gameCalendar.setCurrentWeek(newCurrentWeek);
+            }
+        }
+
+        GameStatus newGameStatus = dynamicConfigService.getGameStatus();
+        if (newGameStatus != null) {
+            GameConstants.gameStatus = newGameStatus;
+        }
     }
 }

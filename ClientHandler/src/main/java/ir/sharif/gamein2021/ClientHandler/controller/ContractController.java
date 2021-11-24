@@ -5,7 +5,7 @@ import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Contract.*;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
 import ir.sharif.gamein2021.core.domain.dto.*;
-import ir.sharif.gamein2021.core.manager.GameCalendar;
+import ir.sharif.gamein2021.core.mainThread.GameCalendar;
 import ir.sharif.gamein2021.core.manager.PushMessageManagerInterface;
 import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
 import ir.sharif.gamein2021.core.service.GameinCustomerService;
@@ -50,7 +50,7 @@ public class ContractController
                 contracts
         );
 
-        pushMessageManager.sendMessageByTeamId(userTeam.getId().toString(), gson.toJson(getContractsResponse));
+        pushMessageManager.sendMessageByUserId(userTeam.getId().toString(), gson.toJson(getContractsResponse));
     }
 
     public void newContract(ProcessedRequest request, NewContractRequest newContractRequest)
@@ -74,7 +74,10 @@ public class ContractController
                     throw new Exception();
                 }
 
-                //TODO check pricePerUnit to be in range
+                if (newContractRequest.getPricePerUnit() < product.getMinPrice() || newContractRequest.getPricePerUnit() > product.getMaxPrice())
+                {
+                    throw new Exception();
+                }
 
                 ContractDto contractDto = new ContractDto();
                 contractDto.setTeamId(userTeam.getId());
@@ -83,6 +86,9 @@ public class ContractController
                 contractDto.setTerminatePenalty(1000); //TODO set this penalty
                 contractDto.setLostSalePenalty(1500); //TODO set this penalty
                 contractDto.setIsTerminated(false);
+
+                TeamDto teamDto = teamService.loadById(request.teamId);
+                contractDto.setCurrentBrand(teamDto.getBrand());
 
                 contractDto.setContractDate(startDate);
                 contractDto.setSupplyAmount(newContractRequest.getAmount());

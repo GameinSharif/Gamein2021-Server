@@ -8,5 +8,5 @@ import java.io.Serializable;
 
 @Getter
 @AllArgsConstructor
-public class WeeklyReportRequest extends RequestObject implements Serializable {
+public class GetAllWeeklyReportsRequest extends RequestObject implements Serializable {
 }

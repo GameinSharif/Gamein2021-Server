@@ -1,4 +1,4 @@
-package ir.sharif.gamein2021.core.manager;
+package ir.sharif.gamein2021.core.mainThread;
 
 import ir.sharif.gamein2021.core.manager.clientHandlerConnection.ClientHandlerRequestSenderInterface;
 import ir.sharif.gamein2021.core.manager.clientHandlerConnection.requests.UpdateCalendarRequest;
@@ -32,6 +32,8 @@ public class GameCalendar {
         if (currentWeek == null) {
             currentWeek = 1;
         }
+
+        requestSender.send(new UpdateCalendarRequest("nothing!", currentDate, currentWeek));
     }
 
     public LocalDate getCurrentDate() {
@@ -42,21 +44,30 @@ public class GameCalendar {
         return currentWeek;
     }
 
-    public void setCurrentDate(LocalDate newCurrentData) {
-        currentDate = newCurrentData;
+    void increaseOneDay() {
+        currentDate = currentDate.plusDays(1);
+        dynamicConfigService.setCurrentDate(currentDate);
+
         if (currentDate.getDayOfWeek() == DayOfWeek.SATURDAY) {
             currentWeek++;
             dynamicConfigService.setCurrentWeek(currentWeek);
         }
+
+        requestSender.send(new UpdateCalendarRequest("nothing!", currentDate, currentWeek));
     }
 
-    public void increaseOneDay() {
-        setCurrentDate(currentDate.plusDays(1));
-        dynamicConfigService.setCurrentDate(currentDate);
-        requestSender.send(new UpdateCalendarRequest("nothing!", currentDate));
-    }
-
-    public void setCurrentWeek(Integer newCurrentWeek) {
+    public void updateCalendarLocally(LocalDate newCurrentDate, Integer newCurrentWeek) {
+        currentDate = newCurrentDate;
         currentWeek = newCurrentWeek;
+    }
+
+    void setCurrentDate(LocalDate newCurrentDate) {
+        currentDate = newCurrentDate;
+        requestSender.send(new UpdateCalendarRequest("nothing!", currentDate, currentWeek));
+    }
+
+    void setCurrentWeek(Integer newCurrentWeek) {
+        currentWeek = newCurrentWeek;
+        requestSender.send(new UpdateCalendarRequest("nothing!", currentDate, currentWeek));
     }
 }

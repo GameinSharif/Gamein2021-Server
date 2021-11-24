@@ -12,7 +12,7 @@ import ir.sharif.gamein2021.core.exception.InvalidProductionLineIdException;
 import ir.sharif.gamein2021.core.exception.InvalidProductionLineTemplateIdException;
 import ir.sharif.gamein2021.core.exception.ProductionLineMaximumEfficiencyLevelReachedException;
 import ir.sharif.gamein2021.core.exception.ProductionLineMaximumQualityLevelReachedException;
-import ir.sharif.gamein2021.core.manager.GameCalendar;
+import ir.sharif.gamein2021.core.mainThread.GameCalendar;
 import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
 import ir.sharif.gamein2021.core.manager.clientHandlerConnection.ClientHandlerRequestSenderInterface;
 import ir.sharif.gamein2021.core.manager.clientHandlerConnection.requests.ProductionLinesConstructionCompletedRequest;

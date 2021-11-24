@@ -37,7 +37,7 @@ public enum RequestTypeConstant
     TERMINATE_CONTRACT(32),
     GET_GAME_STATUS(33),
     TRANSPORT_TO_STORAGE(34),
-    WEEKLY_REPORT(35);
+    GET_ALL_WEEKLY_REPORTS(35);
 
     private int value;
 

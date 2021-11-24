@@ -19,7 +19,13 @@ public class ContractDto implements BaseDto<Integer>
     private Integer supplyAmount;
     private Float pricePerUnit;
     private Integer boughtAmount;
-    //TODO add parameters needed after calculating shares
+    private Float currentBrand;
+
+    private Float valueShare;
+    private Float demandShare;
+    private Float minPrice;
+    private Float maxPrice;
+
     private Integer lostSalePenalty;
     private Integer terminatePenalty;
     private Boolean isTerminated;

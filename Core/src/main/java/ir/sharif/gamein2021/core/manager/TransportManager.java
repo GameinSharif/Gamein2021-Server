@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import ir.sharif.gamein2021.core.domain.dto.DcDto;
 import ir.sharif.gamein2021.core.domain.dto.GameinCustomerDto;
 import ir.sharif.gamein2021.core.domain.dto.TransportDto;
+import ir.sharif.gamein2021.core.mainThread.GameCalendar;
 import ir.sharif.gamein2021.core.response.TransportStateChangedResponse;
 import ir.sharif.gamein2021.core.service.*;
 import ir.sharif.gamein2021.core.util.Enums;
@@ -195,7 +196,18 @@ public class TransportManager {
         return (int) Math.ceil(distance * GameConstants.Instance.distanceConstant * ReadJsonFilesManager.findVehicleByType(transportDto.getVehicleType()).getCoefficient());
     }
 
-    public float    calculateTransportCost(Enums.VehicleType vehicleType, int distance, int productId, int productAmount, boolean hasInsurance) {
+    public int getTransportDistance(Enums.TransportNodeType sourceType, int sourceId, Enums.TransportNodeType destinationType, int destinationId, Enums.VehicleType vehicleType)
+    {
+        double[] sourceLocation = getLocation(sourceType, sourceId);
+        double[] destinationLocation = getLocation(destinationType, destinationId);
+        double distance = (sourceLocation[0] - destinationLocation[0]) * (sourceLocation[0] - destinationLocation[0]);
+        distance += (sourceLocation[1] - destinationLocation[1]) * (sourceLocation[1] - destinationLocation[1]);
+        distance = Math.sqrt(distance);
+        return (int) Math.ceil(distance * GameConstants.Instance.distanceConstant * ReadJsonFilesManager.findVehicleByType(vehicleType).getCoefficient());
+    }
+
+    public float calculateTransportCost(Enums.VehicleType vehicleType, int distance, int productId, int productAmount, boolean hasInsurance)
+    {
         float insuranceFactor = (hasInsurance ? (1 + GameConstants.Instance.insuranceCostFactor) : 1);
         Vehicle transportVehicle = ReadJsonFilesManager.findVehicleByType(vehicleType);
         float vehicleCost = transportVehicle.getCostPerKilometer() * distance * insuranceFactor;

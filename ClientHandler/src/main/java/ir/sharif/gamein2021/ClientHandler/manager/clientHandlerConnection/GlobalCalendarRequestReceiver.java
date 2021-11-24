@@ -1,6 +1,6 @@
 package ir.sharif.gamein2021.ClientHandler.manager.clientHandlerConnection;
 
-import ir.sharif.gamein2021.core.manager.GameCalendar;
+import ir.sharif.gamein2021.core.mainThread.GameCalendar;
 import ir.sharif.gamein2021.core.manager.clientHandlerConnection.requests.BaseClientHandlerRequest;
 import ir.sharif.gamein2021.core.manager.clientHandlerConnection.requests.UpdateCalendarRequest;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
@@ -22,9 +22,11 @@ public class GlobalCalendarRequestReceiver {
 
     @RabbitHandler
     public void receive(BaseClientHandlerRequest request) throws InterruptedException {
-        if(request instanceof UpdateCalendarRequest){
+        if (request instanceof UpdateCalendarRequest) {
             System.out.println(((UpdateCalendarRequest) request).getNewDate());
-            gameCalendar.setCurrentDate(((UpdateCalendarRequest) request).getNewDate());
+            UpdateCalendarRequest updateCalendarRequest = (UpdateCalendarRequest) request;
+
+            gameCalendar.updateCalendarLocally(updateCalendarRequest.getNewDate(), updateCalendarRequest.getCurrentWeek());
         }
     }
 }

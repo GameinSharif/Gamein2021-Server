@@ -28,6 +28,8 @@ public class WeekDemand implements BaseEntity
     @Column(name = "amount", nullable = false)
     private Integer amount;
 
+    @Column(name = "remained_amount")
+    private Integer remainedAmount;
 
     @Override
     public Integer getId()

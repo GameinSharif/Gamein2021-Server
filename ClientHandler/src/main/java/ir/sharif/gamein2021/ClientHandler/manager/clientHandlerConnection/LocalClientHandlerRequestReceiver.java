@@ -4,7 +4,9 @@ import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.domain.UpdateGameStatusResponse;
 import ir.sharif.gamein2021.ClientHandler.domain.productionLine.ProductCreationCompletedResponse;
 import ir.sharif.gamein2021.ClientHandler.domain.productionLine.ProductionLineConstructionCompletedResponse;
+import ir.sharif.gamein2021.ClientHandler.domain.weeklyReport.UpdateWeeklyReportResponse;
 import ir.sharif.gamein2021.ClientHandler.manager.LocalPushMessageManager;
+import ir.sharif.gamein2021.core.domain.dto.WeeklyReportDto;
 import ir.sharif.gamein2021.core.domain.entity.ProductionLine;
 import ir.sharif.gamein2021.core.manager.clientHandlerConnection.ClientHandlerRequestReceiverInterface;
 import ir.sharif.gamein2021.core.manager.clientHandlerConnection.requests.*;
@@ -19,7 +21,7 @@ import org.springframework.stereotype.Component;
 public class LocalClientHandlerRequestReceiver implements ClientHandlerRequestReceiverInterface {
     @Autowired
     private LocalPushMessageManager pushMessageManager;
-    private Gson gson = new Gson();
+    private final Gson gson = new Gson();
 
     @Override
     public void receive(BaseClientHandlerRequest request) throws InterruptedException {
@@ -48,6 +50,13 @@ public class LocalClientHandlerRequestReceiver implements ClientHandlerRequestRe
             GameConstants.gameStatus = updateGameStatusRequest.getGameStatus();
             UpdateGameStatusResponse response = new UpdateGameStatusResponse(updateGameStatusRequest.getGameStatus());
             pushMessageManager.sendMessageToAll(gson.toJson(response));
+        }
+        else if (request instanceof UpdateWeeklyReportsRequest){
+            UpdateWeeklyReportsRequest updateWeeklyReportsRequest = (UpdateWeeklyReportsRequest) request;
+            for (WeeklyReportDto weeklyReport : updateWeeklyReportsRequest.getWeeklyReports()) {
+                UpdateWeeklyReportResponse response = new UpdateWeeklyReportResponse(weeklyReport);
+                pushMessageManager.sendMessageByTeamId(String.valueOf(weeklyReport.getTeamId()), gson.toJson(response));
+            }
         }
 
     }

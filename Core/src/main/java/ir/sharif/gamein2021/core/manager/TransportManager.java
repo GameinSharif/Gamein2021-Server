@@ -151,11 +151,14 @@ public class TransportManager {
         return (int) Math.ceil((float) transportDistance / ReadJsonFilesManager.findVehicleByType(transportDto.getVehicleType()).getSpeed());
     }
 
-    //TODO need testing
-    private void removeProductWhenTransportStart(TransportDto transportDto) {
-        if (transportDto.getSourceType().equals(Enums.TransportNodeType.DC)) {
+    public void removeProductWhenTransportStart(TransportDto transportDto)
+    {
+        if (transportDto.getSourceType().equals(Enums.TransportNodeType.DC))
+        {
             storageService.deleteProducts(transportDto.getSourceId(), true, transportDto.getContentProductId(), transportDto.getContentProductAmount());
-        } else if (transportDto.getSourceType().equals(Enums.TransportNodeType.FACTORY)) {
+        }
+        else if (transportDto.getSourceType().equals(Enums.TransportNodeType.FACTORY))
+        {
             storageService.deleteProducts(transportDto.getSourceId(), false, transportDto.getContentProductId(), transportDto.getContentProductAmount());
         }
     }

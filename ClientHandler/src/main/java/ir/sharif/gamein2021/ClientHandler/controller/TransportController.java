@@ -57,10 +57,12 @@ public class TransportController {
             UserDto user = userService.loadById(playerId);
             Integer teamId = user.getTeamId();
             TeamDto teamDto = teamService.loadById(teamId);
+
             checkIfTransportSourceHasEnoughProduct(request);
             checkSourceAndDestinationIsForTeam(teamId, request);
             checkDestinationCapacity(request);
             checkTeamMoney(request, teamDto);
+
             TransportDto transportDto = transportManager.createTransport(
                     request.getVehicleType(),
                     request.getSourceType(),
@@ -71,6 +73,9 @@ public class TransportController {
                     request.isHasInsurance(),
                     request.getProductId(),
                     request.getAmount());
+
+            transportManager.removeProductWhenTransportStart(transportDto);
+
             response = new StartTransportForPlayerStoragesResponse(ResponseTypeConstant.TRANSPORT_TO_STORAGE, transportDto , "success");
         }
         catch (Exception e)
@@ -141,9 +146,7 @@ public class TransportController {
     }
 
     private boolean isDc(Enums.TransportNodeType transportNodeType) {
-        if (transportNodeType.equals(Enums.TransportNodeType.DC))
-            return true;
-        return false;
+        return transportNodeType.equals(Enums.TransportNodeType.DC);
     }
 
 

@@ -176,7 +176,7 @@ public class ProviderController
         List<ProviderDto> providerDtos = providerService.findProvidersByTeam(team);
         for (ProviderDto providerDto : providerDtos)
         {
-            if (providerDto.getProductId().equals(productId)) //TODO storages should be equal too
+            if (providerDto.getProductId().equals(productId) && providerDto.getState() == Enums.ProviderState.ACTIVE) //TODO storages should be equal too
             {
                 return true;
             }

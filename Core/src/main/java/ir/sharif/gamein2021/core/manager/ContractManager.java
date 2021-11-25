@@ -42,7 +42,7 @@ public class ContractManager
     public void updateTodayContractCosts(LocalDate today)
     {
         List<ContractSupplierDto> contractSupplierDtos = contractSupplierService.findTodaysContractSupplier(today);
-        System.out.println(contractSupplierDtos.size());
+
         for (ContractSupplierDto contractSupplierDto : contractSupplierDtos)
         {
             if (!contractSupplierDto.isTerminated())
@@ -112,6 +112,12 @@ public class ContractManager
             GameinCustomerDto gameinCustomerDto =gameinCustomerService.loadById(weekDemandDto.getGameinCustomerId());
             Product product = ReadJsonFilesManager.findProductById(weekDemandDto.getProductId());
             List<ContractDto> contractDtos = contractService.findValidContracts(today, gameinCustomerDto, product);
+            if (contractDtos == null || contractDtos.size() == 0)
+            {
+                weekDemandDto.setRemainedAmount(weekDemandDto.getAmount());
+                weekDemandService.saveOrUpdate(weekDemandDto);
+                continue;
+            }
             FinalizeTheContracts(weekDemandDto, contractDtos);
         }
     }

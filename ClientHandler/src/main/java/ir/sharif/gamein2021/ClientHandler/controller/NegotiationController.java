@@ -136,6 +136,7 @@ public class NegotiationController {
             }
 
         } catch (Exception e) {
+            e.printStackTrace();
             editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, null);
         }
 
@@ -163,6 +164,7 @@ public class NegotiationController {
             }
 
         } catch (Exception e) {
+            e.printStackTrace();
             response = new RejectNegotiationResponse(ResponseTypeConstant.REJECT_NEGOTIATION, null);
         }
 

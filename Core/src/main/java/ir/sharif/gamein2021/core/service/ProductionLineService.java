@@ -179,13 +179,13 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
 
         teamRepository.saveAndFlush(team);
 
-        int productionDuration = (amount / productLineTemplate.getDailyProductionRate()) + 1;
+        int productionDuration = (int) Math.ceil(1f * amount / productLineTemplate.getDailyProductionRate());
 
         ProductionLineProduct newProduct = new ProductionLineProduct();
         newProduct.setProductId(productId);
-        newProduct.setStartDate(currentDate.plusDays(1));
+        newProduct.setStartDate(currentDate);
         newProduct.setAmount(amount);
-        newProduct.setEndDate(currentDate.plusDays(1 + productionDuration));
+        newProduct.setEndDate(currentDate.plusDays(productionDuration));
         newProduct.setProductionLineId(productionLineId);
 
         ProductionLineProduct savedProduct = productRepository.saveAndFlush(newProduct);

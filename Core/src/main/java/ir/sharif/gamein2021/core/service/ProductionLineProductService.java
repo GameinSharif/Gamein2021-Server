@@ -49,6 +49,8 @@ public class ProductionLineProductService extends AbstractCrudService<Production
             teamManager.updateTeamBrand(teamService.loadById(productionLine.getTeam().getId()),  amount * brandCoefficient);
 
             storageService.addProduct(productionLine.getTeam().getFactoryId(), false, product.getProductId(), amount);
+            
+            product.setAmount(amount);
             clientHandlerRequestSender.send(new ProductCreationCompletedRequest(productionLine, product, "Done"));
         }
     }

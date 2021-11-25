@@ -29,19 +29,19 @@ public class WeeklyReport implements BaseEntity {
     private Float brand;
 
     @Column(name = "transportation_costs")
-    private long transportationCosts;
+    private Float transportationCosts;
 
     @Column(name = "production_costs")
-    private long productionCosts;
+    private Float productionCosts;
 
     @Column(name = "total_capital")
     private Float totalCapital;
 
     @Column(name = "in_flow")
-    private long inFlow;
+    private Float inFlow;
 
     @Column(name = "out_flow")
-    private long outFlow;
+    private Float outFlow;
 
     @Column(name = "raw_material_percentage")
     private Float rawMaterialPercentage;

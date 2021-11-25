@@ -124,6 +124,7 @@ public class ContractSupplierController
                 contractSupplierDto.setTerminated(true);
                 TeamDto team = teamService.loadById(request.teamId);
                 team.setCredit(teamCredit - penalty);
+                team.setWealth(team.getWealth() - penalty);
                 teamService.saveOrUpdate(team);
                 contractSupplierService.saveOrUpdate(contractSupplierDto);
 

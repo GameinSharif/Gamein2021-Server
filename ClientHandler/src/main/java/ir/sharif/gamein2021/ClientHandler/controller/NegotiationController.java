@@ -113,24 +113,30 @@ public class NegotiationController {
             if (editRequest.getNewCostPerUnit() < 0) {
                 editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, null);
             } else {
-                if (userTeam.getId().equals(negotiationDto.getDemanderId())) {
-                    negotiationDto.setCostPerUnitDemander(editRequest.getNewCostPerUnit());
-                    CheckNegotiationDeal(negotiationDto);
+                if(!negotiationDto.getState().equals(NegotiationState.REJECTED)){
+                    if (userTeam.getId().equals(negotiationDto.getDemanderId())) {
+                        negotiationDto.setCostPerUnitDemander(editRequest.getNewCostPerUnit());
+                        CheckNegotiationDeal(negotiationDto);
 
-                    negotiationService.saveOrUpdate(negotiationDto);
-                    editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, negotiationDto);
-                } else if (userTeam.getId().equals(negotiationDto.getSupplierId())) {
-                    negotiationDto.setCostPerUnitSupplier(editRequest.getNewCostPerUnit());
-                    CheckNegotiationDeal(negotiationDto);
+                        negotiationService.saveOrUpdate(negotiationDto);
+                        editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, negotiationDto);
+                    } else if (userTeam.getId().equals(negotiationDto.getSupplierId())) {
+                        negotiationDto.setCostPerUnitSupplier(editRequest.getNewCostPerUnit());
+                        CheckNegotiationDeal(negotiationDto);
 
-                    negotiationService.saveOrUpdate(negotiationDto);
-                    editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, negotiationDto);
-                } else {
+                        negotiationService.saveOrUpdate(negotiationDto);
+                        editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, negotiationDto);
+                    } else {
+                        editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, null);
+                    }
+                }else{
                     editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, null);
                 }
+
             }
 
         } catch (Exception e) {
+            e.printStackTrace();
             editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, null);
         }
 
@@ -142,8 +148,37 @@ public class NegotiationController {
         }
     }
 
+    public void rejectNegotiation(ProcessedRequest request, RejectNegotiationRequest rejectNegotiationRequest){
+        UserDto user = userService.loadById(request.playerId);
+        RejectNegotiationResponse response;
+        try {
+            NegotiationDto negotiationDto = negotiationService.findById(rejectNegotiationRequest.getNegotiationId());
+            Team userTeam = teamService.findTeamById(user.getTeamId());
+            if (userTeam.getId().equals(negotiationDto.getDemanderId()) ||
+                userTeam.getId().equals(negotiationDto.getSupplierId())) {
+                negotiationDto.setState(NegotiationState.REJECTED);
+                negotiationService.saveOrUpdate(negotiationDto);
+                response = new RejectNegotiationResponse(ResponseTypeConstant.REJECT_NEGOTIATION, negotiationDto);
+            } else {
+                response = new RejectNegotiationResponse(ResponseTypeConstant.REJECT_NEGOTIATION, null);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            response = new RejectNegotiationResponse(ResponseTypeConstant.REJECT_NEGOTIATION, null);
+        }
+
+        if (response.getNegotiation() == null) {
+            pushMessageManager.sendMessageByUserId(request.playerId.toString(), gson.toJson(response));
+        } else {
+            pushMessageManager.sendMessageByTeamId(negotiationService.findById(rejectNegotiationRequest.getNegotiationId()).getDemanderId().toString(), gson.toJson(response));
+            pushMessageManager.sendMessageByTeamId(negotiationService.findById(rejectNegotiationRequest.getNegotiationId()).getSupplierId().toString(), gson.toJson(response));
+        }
+    }
+
     private void CheckNegotiationDeal(NegotiationDto negotiationDto) throws Exception {
-        if (negotiationDto.getCostPerUnitDemander().equals(negotiationDto.getCostPerUnitSupplier())) {
+        if (negotiationDto.getCostPerUnitDemander().equals(negotiationDto.getCostPerUnitSupplier()) &&
+            !negotiationDto.getState().equals(NegotiationState.REJECTED)) {
             float totalPayment = calculateTotalPayment(
                     teamService.findTeamById(negotiationDto.getSupplierId()).getFactoryId(),
                     teamService.findTeamById(negotiationDto.getDemanderId()).getFactoryId(),

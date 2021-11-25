@@ -93,6 +93,10 @@ public class MainController {
                 EditNegotiationCostPerUnitRequest editRequest = gson.fromJson(requestData, EditNegotiationCostPerUnitRequest.class);
                 negotiationController.editNegotiationCostPerUnit(processedRequest, editRequest);
                 break;
+            case REJECT_NEGOTIATION:
+                RejectNegotiationRequest rejectNegotiationRequest = gson.fromJson(requestData, RejectNegotiationRequest.class);
+                negotiationController.rejectNegotiation(processedRequest, rejectNegotiationRequest);
+                break;
             case NEW_PROVIDER:
                 NewProviderRequest newProviderRequest = gson.fromJson(requestData, NewProviderRequest.class);
                 providerController.newProvider(processedRequest, newProviderRequest);

@@ -70,15 +70,18 @@ public class DailySchedule {
         }
     }
 
-    private void doDailyTasks() {
+    private void doDailyTasks()
+    {
         gameDateManager.SendGameDateToAllUsers();
         productionLineService.enableProductionLines();
         productService.finishProductCreation(gameCalendar.getCurrentDate());
         transportManager.updateTransports();
         contractManager.updateContracts();
+        teamManager.updateAllTeamsMoneyOnClient();
     }
 
-    private void doWeeklyTasks() {
+    private void doWeeklyTasks()
+    {
         contractManager.updateGameinCustomerContracts();
         demandAndSupplyManager.SendCurrentWeekSupplyAndDemandsToAllUsers();
         productionLineService.decreaseWeeklyMaintenanceCost();

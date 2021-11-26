@@ -41,8 +41,11 @@ public class WeekSupplyService extends AbstractCrudService<WeekSupplyDto, WeekSu
         return modelMapper.map(weekSupply, WeekSupplyDto.class);
     }
 
-    public Float weeklyPriceFormula(Float firstPrice, Float lastWeekPrice, Float lastlastWeekPrice){
-        return (float)(firstPrice* (1 + ((lastWeekPrice/lastlastWeekPrice + GameConstants.Instance.ConstantWeekSupplyPrice) +
-                (lastlastWeekPrice/lastWeekPrice + GameConstants.Instance.ConstantWeekSupplyPrice)*0.05)) * 1); //TODO coefficient
+    public Float weeklyPriceFormula(Float lastWeekPrice, Integer lastWeekSale, Integer lastlastWeekSale){
+        if(lastlastWeekSale == 0 || lastWeekSale == 0){
+            return lastWeekPrice;
+        }
+        return (float)(lastWeekPrice* (1 + (((lastWeekSale/lastlastWeekSale + GameConstants.Instance.ConstantWeekSupplyPrice) +
+                (lastlastWeekSale/lastWeekSale + GameConstants.Instance.ConstantWeekSupplyPrice))*0.05)) * 1); //TODO coefficient
     }
 }

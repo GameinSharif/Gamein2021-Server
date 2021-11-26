@@ -17,20 +17,24 @@ public class WeekSupplyManager
     public void updateWeekSupplyPrices(int week){
         Supplier[] suppliers = ReadJsonFilesManager.Suppliers;
         if(week > 5){
-            for(Supplier supplier: suppliers) {
-                for (Integer material : supplier.getMaterials()) {
-                    WeekSupplyDto weekSupplyDtoLastWeek = weekSupplyService.findSpecificWeekSupply(supplier.getId(), material, week - 1);
-                    WeekSupplyDto weekSupplyDtoLastLastWeek = weekSupplyService.findSpecificWeekSupply(supplier.getId(), material, week - 2);
-                    WeekSupplyDto weekSupplyDtoFirstWeek = weekSupplyService.findSpecificWeekSupply(supplier.getId(), material, 1);
-                    WeekSupplyDto weekSupplyDtoCurrentWeek = weekSupplyService.findSpecificWeekSupply(supplier.getId(), material, week);
-                    Float firstPrice = weekSupplyDtoFirstWeek.getPrice();
-                    Float lastWeekPrice = weekSupplyDtoLastWeek.getPrice();
-                    Float lastlastWeekPrice = weekSupplyDtoLastLastWeek.getPrice();
-                    Float newPrice = weekSupplyService.weeklyPriceFormula(firstPrice,lastWeekPrice, lastlastWeekPrice);
-                    weekSupplyDtoCurrentWeek.setPrice(newPrice);
-                    weekSupplyService.saveOrUpdate(weekSupplyDtoCurrentWeek);
+            try {
+                for(Supplier supplier: suppliers) {
+                    for (Integer material : supplier.getMaterials()) {
+                        WeekSupplyDto weekSupplyDtoLastWeek = weekSupplyService.findSpecificWeekSupply(supplier.getId(), material, week - 1);
+                        WeekSupplyDto weekSupplyDtoLastLastWeek = weekSupplyService.findSpecificWeekSupply(supplier.getId(), material, week - 2);
+                        WeekSupplyDto weekSupplyDtoCurrentWeek = weekSupplyService.findSpecificWeekSupply(supplier.getId(), material, week);
+                        Float lastWeekPrice = weekSupplyDtoLastWeek.getPrice();
+                        Integer lastWeekSales = weekSupplyDtoLastWeek.getSales();
+                        Integer lastLastWeekSales = weekSupplyDtoLastLastWeek.getSales();
+                        Float newPrice = weekSupplyService.weeklyPriceFormula(lastWeekPrice, lastWeekSales, lastLastWeekSales);
+                        weekSupplyDtoCurrentWeek.setPrice(newPrice);
+                        weekSupplyService.saveOrUpdate(weekSupplyDtoCurrentWeek);
+                    }
                 }
+            }catch (Exception e){
+                e.printStackTrace();
             }
+
         }
 
 

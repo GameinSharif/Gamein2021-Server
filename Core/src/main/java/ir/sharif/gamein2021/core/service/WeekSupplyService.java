@@ -3,8 +3,10 @@ package ir.sharif.gamein2021.core.service;
 import ir.sharif.gamein2021.core.dao.WeekSupplyRepository;
 import ir.sharif.gamein2021.core.domain.dto.WeekSupplyDto;
 import ir.sharif.gamein2021.core.domain.entity.WeekSupply;
+import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
 import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
 import ir.sharif.gamein2021.core.util.GameConstants;
+import ir.sharif.gamein2021.core.util.models.Product;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +19,6 @@ public class WeekSupplyService extends AbstractCrudService<WeekSupplyDto, WeekSu
 {
     private final WeekSupplyRepository weekSupplyRepository;
     private final ModelMapper modelMapper;
-
 
     public WeekSupplyService(WeekSupplyRepository weekSupplyRepository, ModelMapper modelMapper)
     {
@@ -41,9 +42,18 @@ public class WeekSupplyService extends AbstractCrudService<WeekSupplyDto, WeekSu
         return modelMapper.map(weekSupply, WeekSupplyDto.class);
     }
 
-    public Float weeklyPriceFormula(Float lastWeekPrice, Integer lastWeekSale, Integer lastlastWeekSale, Float lastWeekCoef){
-        return (float)(lastWeekPrice* (1 + (((lastWeekSale/(lastlastWeekSale + GameConstants.Instance.ConstantOneWeekSupplyPrice)) +
-                (lastlastWeekSale/(lastWeekSale + GameConstants.Instance.ConstantOneWeekSupplyPrice)))*
-                GameConstants.Instance.ConstantTwoWeekSupplyPrice)) * lastWeekCoef); //TODO coefficient
+    public Float weeklyPriceFormula(int productId, Float lastWeekPrice, Integer lastWeekSale, Integer twoWeeksAgoSale, Float coefficient)
+    {
+        Product product = ReadJsonFilesManager.findProductById(productId);
+
+        float changeAmount = (lastWeekSale / (twoWeeksAgoSale + GameConstants.ConstantOneWeekSupplyPrice) +
+                twoWeeksAgoSale / (lastWeekSale + GameConstants.ConstantOneWeekSupplyPrice)) *
+                GameConstants.ConstantTwoWeekSupplyPrice;
+
+        float newPrice = lastWeekPrice * (1 + changeAmount) * coefficient;
+        newPrice = Math.min(newPrice, product.getMaxPrice());
+        newPrice = Math.max(newPrice, product.getMinPrice());
+
+        return newPrice;
     }
 }

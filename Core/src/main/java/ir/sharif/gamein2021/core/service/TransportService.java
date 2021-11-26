@@ -80,9 +80,9 @@ public class TransportService extends AbstractCrudService<TransportDto, Transpor
         return mapEntityListToDto(teamTransports);
     }
 
-    public List<TransportDto> getTransportsByDestinationIdForDc(Integer destinationId){
-        return transportRepository.findAllByDestinationTypeAndDestinationId
-                (Enums.TransportNodeType.DC , destinationId)
+    public List<TransportDto> getActiveTransportsByDestinationIdForDc(Integer destinationId){
+        return transportRepository.findAllByDestinationTypeAndDestinationIdAndTransportState
+                (Enums.TransportNodeType.DC , destinationId, Enums.TransportState.IN_WAY)
                 .stream().map(e -> modelMapper.map(e , TransportDto.class))
                 .collect(Collectors.toList());
     }
@@ -90,7 +90,7 @@ public class TransportService extends AbstractCrudService<TransportDto, Transpor
     public List<TransportDto> getTransportsByDestinationIdAndBuildingType(
             Integer destinationId ,
             Enums.TransportNodeType destinationType){
-        return transportRepository.findAllByDestinationTypeAndDestinationId(destinationType , destinationId)
+        return transportRepository.findAllByDestinationTypeAndDestinationIdAndTransportState(destinationType , destinationId, Enums.TransportState.IN_WAY)
                 .stream().map(e -> modelMapper.map(e, TransportDto.class))
                 .collect(Collectors.toList());
     }

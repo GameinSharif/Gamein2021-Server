@@ -42,7 +42,6 @@ public class Negotiation implements BaseEntity{
     private NegotiationState state;
 
     @ManyToOne
-    @Column(name = "source_storage", nullable = false)
     private Storage sourceStorage;
 
     @Override

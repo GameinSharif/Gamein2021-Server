@@ -21,5 +21,6 @@ public class NegotiationDto implements BaseDto<Integer> {
     private Float costPerUnitDemander;
     private Float costPerUnitSupplier;
     private NegotiationState state;
+    private Integer sourceStorageId;
 
 }

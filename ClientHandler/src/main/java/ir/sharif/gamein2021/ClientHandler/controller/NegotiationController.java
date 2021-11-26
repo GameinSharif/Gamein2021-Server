@@ -20,6 +20,7 @@ import ir.sharif.gamein2021.core.util.Enums.NegotiationState;
 import ir.sharif.gamein2021.core.util.models.Product;
 import lombok.AllArgsConstructor;
 import org.apache.log4j.Logger;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -43,6 +44,7 @@ public class NegotiationController
     private final StorageService storageService;
     private final GameCalendar gameCalendar;
     private final TeamManager teamManager;
+    private final ModelMapper modelMapper;
     private final Gson gson = new Gson();
 
     public void getNegotiations(ProcessedRequest request, GetNegotiationsRequest getNegotiationsRequest)
@@ -96,6 +98,7 @@ public class NegotiationController
                 newNegotiation.setProductId(provider.getProductId());
                 newNegotiation.setAmount(newProviderNegotiationRequest.getAmount());
                 newNegotiation.setState(NegotiationState.IN_PROGRESS);
+                newNegotiation.setSourceStorageId(provider.getStorageId());
 
                 CheckNegotiationDeal(newNegotiation);
 
@@ -224,15 +227,15 @@ public class NegotiationController
     {
         if (negotiationDto.getCostPerUnitDemander().equals(negotiationDto.getCostPerUnitSupplier()))
         {
+            TeamDto demanderDto = teamService.loadById(negotiationDto.getDemanderId());
+            TeamDto supplierDto = teamService.loadById(negotiationDto.getSupplierId());
+
             float totalPayment = calculateTotalPayment(
-                    teamService.findTeamById(negotiationDto.getSupplierId()).getFactoryId(),
-                    teamService.findTeamById(negotiationDto.getDemanderId()).getFactoryId(),
+                    negotiationDto.getSourceStorageId(),
+                    demanderDto.getFactoryId(),
                     negotiationDto.getAmount(),
                     negotiationDto.getCostPerUnitDemander(),
                     negotiationDto.getProductId());
-
-            TeamDto demanderDto = teamService.loadById(negotiationDto.getDemanderId());
-            TeamDto supplierDto = teamService.loadById(negotiationDto.getSupplierId());
 
             if (totalPayment > demanderDto.getCredit())
             {
@@ -270,15 +273,17 @@ public class NegotiationController
         }
     }
 
-    private float calculateTotalPayment(int sourceId, int destinationId, int amount, float costPerUnit, int productId)
+    private float calculateTotalPayment(int sourceStorageId, int destinationId, int amount, float costPerUnit, int productId)
     {
+        StorageDto storageDto = storageService.loadById(sourceStorageId);
+
         return amount * costPerUnit + transportManager.calculateTransportCost(
                 Enums.VehicleType.TRUCK,
                 transportManager.getTransportDistance(
-                        Enums.TransportNodeType.FACTORY, //TODO this can be DC too
-                        teamService.findTeamById(sourceId).getFactoryId(),
+                        storageDto.getDc() ? Enums.TransportNodeType.DC : Enums.TransportNodeType.FACTORY,
+                        storageDto.getBuildingId(),
                         Enums.TransportNodeType.FACTORY,
-                        teamService.findTeamById(destinationId).getFactoryId(),
+                        destinationId,
                         Enums.VehicleType.TRUCK),
                 productId,
                 amount
@@ -287,10 +292,16 @@ public class NegotiationController
 
     private void startTransport(NegotiationDto negotiationDto)
     {
+        StorageDto sourceStorageDto = modelMapper.map(storageService.findStorageById(negotiationDto.getSourceStorageId()), StorageDto.class);
+
+        Enums.TransportNodeType sourceStorageType = Enums.TransportNodeType.FACTORY;
+        if (sourceStorageDto.getDc())
+            sourceStorageType = Enums.TransportNodeType.DC;
+
         transportManager.createTransport(
                 Enums.VehicleType.TRUCK,
-                Enums.TransportNodeType.FACTORY,
-                teamService.findTeamById(negotiationDto.getSupplierId()).getFactoryId(),
+                sourceStorageType,
+                sourceStorageDto.getBuildingId(),
                 Enums.TransportNodeType.FACTORY,
                 teamService.findTeamById(negotiationDto.getDemanderId()).getFactoryId(),
                 gameCalendar.getCurrentDate(),

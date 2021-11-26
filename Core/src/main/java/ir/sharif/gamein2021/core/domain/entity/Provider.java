@@ -35,7 +35,6 @@ public class Provider implements BaseEntity {
 
     @Column(name = "storage", nullable = false)
     @ManyToOne
-    // TODO : many to one or one to one?
     private Storage storage;
 
     @Override

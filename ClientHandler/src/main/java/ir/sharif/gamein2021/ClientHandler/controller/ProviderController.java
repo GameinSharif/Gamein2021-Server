@@ -88,6 +88,7 @@ public class ProviderController
                 providerDto.setCapacity(newProviderRequest.getCapacity());
                 providerDto.setPrice(newProviderRequest.getPrice());
                 providerDto.setState(Enums.ProviderState.ACTIVE);
+                providerDto.setStorageId(newProviderRequest.getStorageId());
                 ProviderDto savedProviderDto = providerService.save(providerDto);
                 newProviderResponse = new NewProviderResponse(ResponseTypeConstant.NEW_PROVIDER, savedProviderDto, "Provider Created!");
             }
@@ -107,7 +108,8 @@ public class ProviderController
         }
     }
 
-    private boolean storageBelongsToTeam(Team userTeam, Integer storageId) {
+    private boolean storageBelongsToTeam(Team userTeam, Integer storageId)
+    {
         TeamDto userTeamDto = modelMapper.map(userTeam, TeamDto.class);
         return storageService.storageBelongsToTeam(storageId, userTeamDto);
     }

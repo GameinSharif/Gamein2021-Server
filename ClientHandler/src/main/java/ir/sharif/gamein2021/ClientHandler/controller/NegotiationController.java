@@ -80,7 +80,7 @@ public class NegotiationController
             {
                 newProviderNegotiationResponse = new NewProviderNegotiationResponse(ResponseTypeConstant.NEW_PROVIDER_NEGOTIATION, null);
             }
-            else if (!isCostInRange(newProviderNegotiationRequest.getProviderId(), newProviderNegotiationRequest.getCostPerUnitDemander()))
+            else if (!isCostInRange(provider.getProductId(), newProviderNegotiationRequest.getCostPerUnitDemander()))
             {
                 newProviderNegotiationResponse = new NewProviderNegotiationResponse(ResponseTypeConstant.NEW_PROVIDER_NEGOTIATION, null);
             }
@@ -309,12 +309,6 @@ public class NegotiationController
                 negotiationDto.getProductId(),
                 negotiationDto.getAmount()
         );
-    }
-
-    private boolean isCostInRange(Integer providerId, Float cost)
-    {
-        ProviderDto providerDto = providerService.findProviderById(providerId);
-        return isCostInRange(providerDto.getProductId(), cost);
     }
 
     private boolean isCostInRange(int productId, Float cost)

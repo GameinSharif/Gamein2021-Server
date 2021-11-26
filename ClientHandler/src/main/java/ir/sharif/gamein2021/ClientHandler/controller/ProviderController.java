@@ -24,7 +24,8 @@ import java.util.List;
 
 @Component
 @AllArgsConstructor
-public class ProviderController {
+public class ProviderController
+{
     static Logger logger = Logger.getLogger(ExecutorThread.class.getName());
 
     private final PushMessageManagerInterface pushMessageManager;
@@ -36,28 +37,45 @@ public class ProviderController {
     private final ModelMapper modelMapper;
     private final Gson gson = new Gson();
 
-    public void newProvider(ProcessedRequest processedRequest, NewProviderRequest newProviderRequest) {
+    public void newProvider(ProcessedRequest processedRequest, NewProviderRequest newProviderRequest)
+    {
         NewProviderResponse newProviderResponse;
-        try {
+        try
+        {
             Team userTeam = teamService.findTeamById(processedRequest.teamId);
             int minPrice = ReadJsonFilesManager.findProductById(newProviderRequest.getProductId()).getMinPrice();
             int maxPrice = ReadJsonFilesManager.findProductById(newProviderRequest.getProductId()).getMaxPrice();
 
-            if (userTeam == null) {
+            if (userTeam == null)
+            {
                 newProviderResponse = new NewProviderResponse(ResponseTypeConstant.NEW_PROVIDER, null, "Come On!");
-            } else if (ReadJsonFilesManager.findProductById(newProviderRequest.getProductId()).getProductType() != Enums.ProductType.SemiFinished) {
+            }
+            else if (ReadJsonFilesManager.findProductById(newProviderRequest.getProductId()).getProductType() != Enums.ProductType.SemiFinished)
+            {
                 newProviderResponse = new NewProviderResponse(ResponseTypeConstant.NEW_PROVIDER, null, "Product is not SemiFinished");
-            } else if (newProviderRequest.getCapacity() <= 0) {
+            }
+            else if (newProviderRequest.getCapacity() <= 0)
+            {
                 newProviderResponse = new NewProviderResponse(ResponseTypeConstant.NEW_PROVIDER, null, "Product Amount is not valid!");
-            } else if (!isInProductionLinesProducts(userTeam, newProviderRequest.getProductId())) {
+            }
+            else if (!isInProductionLinesProducts(userTeam, newProviderRequest.getProductId()))
+            {
                 newProviderResponse = new NewProviderResponse(ResponseTypeConstant.NEW_PROVIDER, null, "Product cannot be provided by you!");
-            } else if (newProviderRequest.getPrice() > maxPrice || newProviderRequest.getPrice() < minPrice) {
+            }
+            else if (newProviderRequest.getPrice() > maxPrice || newProviderRequest.getPrice() < minPrice)
+            {
                 newProviderResponse = new NewProviderResponse(ResponseTypeConstant.NEW_PROVIDER, null, "The price is not in its range!");
-            } else if (isAlreadyProviderOfThisProduct(userTeam, newProviderRequest.getProductId(), newProviderRequest.getStorageId())) {
+            }
+            else if (isAlreadyProviderOfThisProduct(userTeam, newProviderRequest.getProductId(), newProviderRequest.getStorageId()))
+            {
                 newProviderResponse = new NewProviderResponse(ResponseTypeConstant.NEW_PROVIDER, null, "You already are a provider of this product.");
-            } else if (!storageBelongsToTeam(userTeam, newProviderRequest.getStorageId())) {
+            }
+            else if (!storageBelongsToTeam(userTeam, newProviderRequest.getStorageId()))
+            {
                 newProviderResponse = new NewProviderResponse(ResponseTypeConstant.NEW_PROVIDER, null, "Provided storage does not belong to you!");
-            } else {
+            }
+            else
+            {
                 ProviderDto providerDto = new ProviderDto();
                 providerDto.setTeamId(userTeam.getId());
                 providerDto.setProductId(newProviderRequest.getProductId());
@@ -68,25 +86,32 @@ public class ProviderController {
                 ProviderDto savedProviderDto = providerService.save(providerDto);
                 newProviderResponse = new NewProviderResponse(ResponseTypeConstant.NEW_PROVIDER, savedProviderDto, "Provider Created!");
             }
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             newProviderResponse = new NewProviderResponse(ResponseTypeConstant.NEW_PROVIDER, null, "An Internal Server Error Occurred!");
         }
 
-        if (newProviderResponse.getNewProvider() == null) {
+        if (newProviderResponse.getNewProvider() == null)
+        {
             pushMessageManager.sendMessageByUserId(processedRequest.playerId.toString(), gson.toJson(newProviderResponse));
-        } else {
+        }
+        else
+        {
             pushMessageManager.sendMessageByTeamId(processedRequest.teamId.toString(), gson.toJson(newProviderResponse));
         }
     }
 
-    private boolean storageBelongsToTeam(Team userTeam, Integer storageId) {
+    private boolean storageBelongsToTeam(Team userTeam, Integer storageId)
+    {
         TeamDto userTeamDto = modelMapper.map(userTeam, TeamDto.class);
         return storageService.storageBelongsToTeam(storageId, userTeamDto);
     }
 
-    public void getProviders(ProcessedRequest processedRequest, GetProvidersRequest getProvidersRequest) {
+    public void getProviders(ProcessedRequest processedRequest, GetProvidersRequest getProvidersRequest)
+    {
         GetProvidersResponse getProvidersResponse;
-        try {
+        try
+        {
             int playerId = processedRequest.playerId;
             UserDto user = userService.loadById(playerId);
             Team userTeam = teamService.findTeamById(user.getTeamId());
@@ -94,15 +119,18 @@ public class ProviderController {
             ArrayList<ProviderDto> teamProviders = providerService.findProvidersByTeam(userTeam);
             ArrayList<ProviderDto> otherProviders = providerService.findProvidersExceptTeam(userTeam);
             getProvidersResponse = new GetProvidersResponse(ResponseTypeConstant.GET_PROVIDERS, teamProviders, otherProviders);
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             getProvidersResponse = new GetProvidersResponse(ResponseTypeConstant.GET_PROVIDERS, null, null);
         }
         pushMessageManager.sendMessageByUserId(processedRequest.playerId.toString(), gson.toJson(getProvidersResponse));
     }
 
-    public void removeProvider(ProcessedRequest processedRequest, RemoveProviderRequest removeProviderRequest) {
+    public void removeProvider(ProcessedRequest processedRequest, RemoveProviderRequest removeProviderRequest)
+    {
         RemoveProviderResponse removeProviderResponse;
-        try {
+        try
+        {
             int playerId = processedRequest.playerId;
             UserDto user = userService.loadById(playerId);
             Team userTeam = teamService.findTeamById(user.getTeamId());
@@ -110,83 +138,111 @@ public class ProviderController {
             Integer providerId = removeProviderRequest.getProviderId();
             ProviderDto requestedProvider = providerService.loadById(providerId);
             Team requestedProviderTeam = teamService.findTeamById(requestedProvider.getTeamId());
-            if (userTeam.getId().equals(requestedProviderTeam.getId()) && requestedProvider.getState() == Enums.ProviderState.ACTIVE) {
+            if (userTeam.getId().equals(requestedProviderTeam.getId()) && requestedProvider.getState() == Enums.ProviderState.ACTIVE)
+            {
                 providerService.terminateProvider(providerId);
                 removeProviderResponse = new RemoveProviderResponse(ResponseTypeConstant.REMOVE_PROVIDER, providerId, "Provider Removed!");
-            } else {
+            }
+            else
+            {
                 removeProviderResponse = new RemoveProviderResponse(ResponseTypeConstant.REMOVE_PROVIDER, null, "Provider couldn't be removed!");
             }
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             removeProviderResponse = new RemoveProviderResponse(ResponseTypeConstant.REMOVE_PROVIDER, null, "An internal error occurred!");
         }
 
-        if (removeProviderResponse.getRemovedProviderId() == null) {
+        if (removeProviderResponse.getRemovedProviderId() == null)
+        {
             pushMessageManager.sendMessageByUserId(processedRequest.playerId.toString(), gson.toJson(removeProviderResponse));
-        } else {
+        }
+        else
+        {
             pushMessageManager.sendMessageByTeamId(processedRequest.teamId.toString(), gson.toJson(removeProviderResponse));
         }
     }
 
-    private boolean isInProductionLinesProducts(Team team, Integer productId) {
+    private boolean isInProductionLinesProducts(Team team, Integer productId)
+    {
         Product product = ReadJsonFilesManager.findProductById(productId);
         List<ProductionLineDto> productionLines = productionLineService.findProductionLinesByTeam(team);
-        for (ProductionLineDto productionLineDto : productionLines) {
-            if (productionLineDto.getProductionLineTemplateId().equals(product.getProductionLineTemplateId()) && productionLineDto.getStatus() != Enums.ProductionLineStatus.SCRAPPED) {
+        for (ProductionLineDto productionLineDto : productionLines)
+        {
+            if (productionLineDto.getProductionLineTemplateId().equals(product.getProductionLineTemplateId()) && productionLineDto.getStatus() != Enums.ProductionLineStatus.SCRAPPED)
+            {
                 return true;
             }
         }
         return false;
     }
 
-    private boolean isAlreadyProviderOfThisProduct(Team team, Integer productId, Integer storageId) {
+    private boolean isAlreadyProviderOfThisProduct(Team team, Integer productId, Integer storageId)
+    {
         List<ProviderDto> providerDtos = providerService.findProvidersByTeam(team);
-        for (ProviderDto providerDto : providerDtos) {
-            if (providerDto.getProductId().equals(productId) && providerDto.getStorageId().equals(storageId) && providerDto.getState() == Enums.ProviderState.ACTIVE) {
+        for (ProviderDto providerDto : providerDtos)
+        {
+            if (providerDto.getProductId().equals(productId) && providerDto.getStorageId().equals(storageId) && providerDto.getState() == Enums.ProviderState.ACTIVE)
+            {
                 return true;
             }
         }
         return false;
     }
 
-    public void editProvider(ProcessedRequest processedRequest, EditProviderRequest editRequest) {
+    public void editProvider(ProcessedRequest processedRequest, EditProviderRequest editRequest)
+    {
         UserDto user = userService.loadById(processedRequest.playerId);
         EditProviderResponse editResponse;
-        try {
+        try
+        {
             ProviderDto providerDto = providerService.findProviderById(editRequest.getProviderId());
             Team userTeam = teamService.findTeamById(user.getTeamId());
 
             int minPrice = ReadJsonFilesManager.findProductById(providerDto.getProductId()).getMinPrice();
             int maxPrice = ReadJsonFilesManager.findProductById(providerDto.getProductId()).getMaxPrice();
 
-
-            if (editRequest.getNewPrice() < 0) {
-                editResponse = new EditProviderResponse(ResponseTypeConstant.EDIT_PROVIDER_RESPONSE, "price should be greater than zero!", null);
-            } else if (editRequest.getNewPrice() > maxPrice || editRequest.getNewPrice() < minPrice) {
+            if (editRequest.getNewPrice() > maxPrice || editRequest.getNewPrice() < minPrice)
+            {
                 editResponse = new EditProviderResponse(ResponseTypeConstant.EDIT_PROVIDER_RESPONSE, "The price is not in its range!", null);
-            } else if (editRequest.getNewCapacity() <= 0) {
+            }
+            else if (editRequest.getNewCapacity() <= 0)
+            {
                 editResponse = new EditProviderResponse(ResponseTypeConstant.EDIT_PROVIDER_RESPONSE, "Product Amount is not valid!", null);
-            } else {
-                if (!providerDto.getState().equals(Enums.ProviderState.TERMINATED)) {
+            }
+            else
+            {
+                if (providerDto.getState().equals(Enums.ProviderState.TERMINATED))
+                {
                     throw new Exception();
                 }
 
-                if (userTeam.getId().equals(providerDto.getTeamId())) {
+                if (userTeam.getId().equals(providerDto.getTeamId()))
+                {
                     providerDto.setPrice(editRequest.getNewPrice());
                     providerDto.setCapacity(editRequest.getNewCapacity());
 
                     ProviderDto savedProvider = providerService.saveOrUpdate(providerDto);
                     editResponse = new EditProviderResponse(ResponseTypeConstant.EDIT_PROVIDER_RESPONSE, "successful!", savedProvider);
-                } else {
+                }
+                else
+                {
                     editResponse = new EditProviderResponse(ResponseTypeConstant.EDIT_PROVIDER_RESPONSE, "this provider does not belong to this team!", null);
                 }
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
-            editResponse = new EditProviderResponse(ResponseTypeConstant.EDIT_PROVIDER_RESPONSE, "some error has happend!", null);
+            editResponse = new EditProviderResponse(ResponseTypeConstant.EDIT_PROVIDER_RESPONSE, "some error has happened!", null);
         }
 
-
-        pushMessageManager.sendMessageByUserId(processedRequest.playerId.toString(), gson.toJson(editResponse));
-
+        if (editResponse.getEditedProvider() == null)
+        {
+            pushMessageManager.sendMessageByUserId(processedRequest.playerId.toString(), gson.toJson(editResponse));
+        }
+        else
+        {
+            pushMessageManager.sendMessageByTeamId(processedRequest.teamId.toString(), gson.toJson(editResponse));
+        }
     }
 }

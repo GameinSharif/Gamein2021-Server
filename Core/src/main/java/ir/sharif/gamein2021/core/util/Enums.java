@@ -39,7 +39,7 @@ public class Enums
 
     public enum NegotiationState
     {
-        CLOSED, DEAL, IN_PROGRESS, REJECTED
+        CLOSED, DEAL, IN_PROGRESS
     }
 
     public enum ProductionLineStatus

@@ -211,6 +211,10 @@ public class MainController {
             case GET_ALL_WEEKLY_REPORTS:
                 weeklyReportController.getWeeklyReport(processedRequest);
                 break;
+            case EDIT_PROVIDER:
+                EditProviderRequest editProviderRequest = gson.fromJson(requestData, EditProviderRequest.class);
+                providerController.editProvider(processedRequest, editProviderRequest);
+                break;
             default:
                 System.out.println("Request type is invalid.");
         }

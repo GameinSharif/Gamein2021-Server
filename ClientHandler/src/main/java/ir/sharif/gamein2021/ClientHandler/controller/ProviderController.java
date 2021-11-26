@@ -189,7 +189,7 @@ public class ProviderController
         List<ProviderDto> providerDtos = providerService.findProvidersByTeam(team);
         for (ProviderDto providerDto : providerDtos)
         {
-            if (providerDto.getProductId().equals(productId) && providerDto.getStorageId().equals(storageId))
+            if (providerDto.getProductId().equals(productId) && providerDto.getStorageId().equals(storageId) && providerDto.getState() == Enums.ProviderState.ACTIVE)
             {
                 return true;
             }

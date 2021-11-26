@@ -93,7 +93,6 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
         return false;
     }
 
-
     @Transactional
     public StorageDto deleteProducts(Integer buildingId, boolean isDc, Integer productId, int amount)
     {

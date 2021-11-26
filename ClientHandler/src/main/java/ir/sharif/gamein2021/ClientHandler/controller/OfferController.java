@@ -171,6 +171,8 @@ public class OfferController {
                 teamManager.updateTeamBrand(modelMapper.map(accepterTeam, TeamDto.class), GameConstants.brandIncreaseAfterDeal);
                 teamManager.updateTeamBrand(modelMapper.map(acceptedTeam, TeamDto.class), GameConstants.brandIncreaseAfterDeal);
 
+                storageService.deleteProducts(accepterTeam.getFactoryId(), false, acceptedOffer.getProductId(), acceptedOffer.getVolume());
+
                 transportManager.createTransport(
                         VehicleType.TRUCK,
                         TransportNodeType.FACTORY,

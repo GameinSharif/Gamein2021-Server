@@ -12,7 +12,8 @@ public class GameConstants {
 
     public static final LocalDate startDate = LocalDate.of(2000,1, 1);
 
-    public final int ConstantWeekSupplyPrice = 2000;
+    public final int ConstantOneWeekSupplyPrice = 2000;
+    public final float ConstantTwoWeekSupplyPrice = (float) 0.05;
 
     public static final float ShareAllocationAlpha = 1f;
     public static final float ShareAllocationBeta = 0.01f;

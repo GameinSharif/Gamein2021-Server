@@ -25,9 +25,11 @@ public class WeekSupplyManager
                         WeekSupplyDto weekSupplyDtoCurrentWeek = weekSupplyService.findSpecificWeekSupply(supplier.getId(), material, week);
                         Float lastWeekPrice = weekSupplyDtoLastWeek.getPrice();
                         Integer lastWeekSales = weekSupplyDtoLastWeek.getSales();
+                        Float lastWeekCoef = weekSupplyDtoCurrentWeek.getCoefficient();
                         Integer lastLastWeekSales = weekSupplyDtoLastLastWeek.getSales();
-                        Float newPrice = weekSupplyService.weeklyPriceFormula(lastWeekPrice, lastWeekSales, lastLastWeekSales);
+                        Float newPrice = weekSupplyService.weeklyPriceFormula(lastWeekPrice, lastWeekSales, lastLastWeekSales, lastWeekCoef);
                         weekSupplyDtoCurrentWeek.setPrice(newPrice);
+                        System.out.println(newPrice);
                         weekSupplyService.saveOrUpdate(weekSupplyDtoCurrentWeek);
                     }
                 }

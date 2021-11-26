@@ -21,4 +21,5 @@ public class TeamDto
     private Float outFlow;
     private Float transportationCost;
     private Float productionCost;
+    private Float donatedAmount;
 }

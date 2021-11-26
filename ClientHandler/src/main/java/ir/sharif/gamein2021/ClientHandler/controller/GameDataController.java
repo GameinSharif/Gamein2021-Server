@@ -3,29 +3,19 @@ package ir.sharif.gamein2021.ClientHandler.controller;
 import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.UpdateGameStatusResponse;
+import ir.sharif.gamein2021.core.domain.dto.*;
 import ir.sharif.gamein2021.core.mainThread.GameCalendar;
 import ir.sharif.gamein2021.core.response.GetCurrentWeekSuppliesResponse;
 import ir.sharif.gamein2021.ClientHandler.domain.ServerTimeResponse;
-import ir.sharif.gamein2021.core.domain.dto.WeekSupplyDto;
-import ir.sharif.gamein2021.core.domain.dto.TeamDto;
 import ir.sharif.gamein2021.core.response.GetAllAuctionsResponse;
 import ir.sharif.gamein2021.core.response.GetCurrentWeekDemandsResponse;
 import ir.sharif.gamein2021.ClientHandler.domain.GetGameDataResponse;
 import ir.sharif.gamein2021.ClientHandler.manager.LocalPushMessageManager;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
-import ir.sharif.gamein2021.core.service.WeekSupplyService;
-import ir.sharif.gamein2021.core.service.TeamService;
+import ir.sharif.gamein2021.core.service.*;
 import ir.sharif.gamein2021.core.util.GameConstants;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
-import ir.sharif.gamein2021.core.domain.dto.AuctionDto;
-import ir.sharif.gamein2021.core.domain.dto.DcDto;
-import ir.sharif.gamein2021.core.domain.dto.GameinCustomerDto;
-import ir.sharif.gamein2021.core.domain.dto.WeekDemandDto;
 import ir.sharif.gamein2021.core.response.GetAllActiveDcResponse;
-import ir.sharif.gamein2021.core.service.AuctionService;
-import ir.sharif.gamein2021.core.service.DcService;
-import ir.sharif.gamein2021.core.service.GameinCustomerService;
-import ir.sharif.gamein2021.core.service.WeekDemandService;
 import lombok.AllArgsConstructor;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
@@ -46,15 +36,16 @@ public class GameDataController {
     private final AuctionService auctionService;
     private final DcService dcService;
     private final GameCalendar gameCalendar;
+    private final CoronaService coronaService;
     private final Gson gson = new Gson();
 
     public void getGameData(ProcessedRequest request) {
         List<TeamDto> teams = teamService.list();
         List<GameinCustomerDto> gameinCustomers = gameinCustomerService.list();
-
+        List<CoronaInfoDto> coronaInfo = coronaService.getCoronasInfoIfCoronaIsStarted();
         GetGameDataResponse getGameDataResponse = new GetGameDataResponse(
                 ResponseTypeConstant.GET_GAME_DATA,
-                teams, gameinCustomers);
+                teams, gameinCustomers , coronaInfo);
 
         pushMessageManager.sendMessageBySession(request.session, gson.toJson(getGameDataResponse));
     }

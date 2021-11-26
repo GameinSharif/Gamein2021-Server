@@ -32,13 +32,13 @@ public class DailySchedule {
     private final TeamManager teamManager;
     private final DynamicConfigService dynamicConfigService;
     private final BusinessIntelligenceService businessIntelligenceService;
+    private final CoronaManager coronaManager;
 
     private final ClientHandlerRequestSenderInterface clientRequestSender;
 
     //Second, Minute, Hour, DayOfMonth, Month, WeekDays
     @Scheduled(cron = "0 49 22 13 11 ?")
-    public void startGame()
-    {
+    public void startGame() {
         GameConstants.gameStatus = GameStatus.RUNNING;
         dynamicConfigService.setGameStatus(GameConstants.gameStatus);
         UpdateGameStatusRequest request = new UpdateGameStatusRequest("Done", GameConstants.gameStatus);
@@ -58,14 +58,12 @@ public class DailySchedule {
         updateConfigs();
     }
 
-    private void DoRunningStateTasks()
-    {
+    private void DoRunningStateTasks() {
         gameCalendar.increaseOneDay();
         System.out.println(gameCalendar.getCurrentDate());
 
         doDailyTasks();
-        if (gameCalendar.getCurrentDate().getDayOfWeek() == DayOfWeek.SATURDAY)
-        {
+        if (gameCalendar.getCurrentDate().getDayOfWeek() == DayOfWeek.SATURDAY) {
             doWeeklyTasks();
         }
     }
@@ -78,6 +76,7 @@ public class DailySchedule {
         contractManager.updateContracts();
     }
 
+
     private void doWeeklyTasks() {
         contractManager.updateGameinCustomerContracts();
         demandAndSupplyManager.SendCurrentWeekSupplyAndDemandsToAllUsers();
@@ -85,6 +84,7 @@ public class DailySchedule {
         teamManager.updateTeamsBrands(GameConstants.brandDailyDecrease);
         weekSupplyManager.updateWeekSupplyPrices(gameCalendar.getCurrentWeek());
         businessIntelligenceService.prepareWeeklyReport();
+        coronaManager.SendCoronaInfoToAllUsers();
     }
 
     private void updateConfigs() {

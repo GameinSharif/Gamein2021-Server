@@ -6,6 +6,7 @@ import ir.sharif.gamein2021.ClientHandler.domain.Auction.BidForAuctionRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Contract.GetContractsRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Contract.NewContractRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Contract.TerminateLongtermContractRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.Corona.DonateRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Dc.BuyingDcRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Dc.SellingDcRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.GetContractsSupplierRequest;
@@ -48,6 +49,7 @@ public class MainController {
     private final AccessManagementController accessManagementController;
     private final GameDateManager gameDateManager;
     private final WeeklyReportController weeklyReportController;
+    private final CoronaController coronaController;
     private final Gson gson;
 
     public void HandleMessage(ProcessedRequest processedRequest) {
@@ -207,6 +209,9 @@ public class MainController {
             case GET_ALL_WEEKLY_REPORTS:
                 weeklyReportController.getWeeklyReport(processedRequest);
                 break;
+            case DONATE:
+                DonateRequest donateRequest = gson.fromJson(requestData , DonateRequest.class);
+                coronaController.donate(processedRequest , donateRequest);
             default:
                 System.out.println("Request type is invalid.");
         }

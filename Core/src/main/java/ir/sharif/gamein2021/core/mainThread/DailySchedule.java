@@ -83,10 +83,10 @@ public class DailySchedule {
     private void doWeeklyTasks()
     {
         contractManager.updateGameinCustomerContracts();
-        demandAndSupplyManager.SendCurrentWeekSupplyAndDemandsToAllUsers();
         productionLineService.decreaseWeeklyMaintenanceCost();
         teamManager.updateTeamsBrands(GameConstants.brandDailyDecrease);
         weekSupplyManager.updateWeekSupplyPrices(gameCalendar.getCurrentWeek());
+        demandAndSupplyManager.SendCurrentWeekSupplyAndDemandsToAllUsers();
         businessIntelligenceService.prepareWeeklyReport();
     }
 

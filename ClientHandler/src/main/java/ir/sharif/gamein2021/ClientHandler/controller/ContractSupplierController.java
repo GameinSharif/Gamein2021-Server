@@ -10,6 +10,7 @@ import ir.sharif.gamein2021.core.manager.ContractManager;
 import ir.sharif.gamein2021.core.mainThread.GameCalendar;
 import ir.sharif.gamein2021.core.manager.PushMessageManagerInterface;
 import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
+import ir.sharif.gamein2021.core.manager.TransportManager;
 import ir.sharif.gamein2021.core.service.*;
 import ir.sharif.gamein2021.core.util.Enums;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
@@ -34,6 +35,7 @@ public class ContractSupplierController
     private final TeamService teamService;
     private final GameCalendar gameCalendar;
     private final ContractManager contractManager;
+    private final TransportManager transportManager;
     private final Gson gson = new Gson();
 
     public void newContractSupplier(ProcessedRequest request, NewContractSupplierRequest newContractSupplierRequest)
@@ -41,6 +43,8 @@ public class ContractSupplierController
         NewContractSupplierResponse newContractSupplierResponse;
         try
         {
+            TeamDto teamDto = teamService.loadById(request.teamId);
+
             Integer supplierId = newContractSupplierRequest.getSupplierId();
             Integer materialId = newContractSupplierRequest.getMaterialId();
             Enums.VehicleType vehicleType = ReadJsonFilesManager.findVehicleById(newContractSupplierRequest.getVehicleId()).getVehicleType();
@@ -50,61 +54,58 @@ public class ContractSupplierController
 
             int currentWeek = gameCalendar.getCurrentWeek();
             Supplier supplier = contractSupplierService.SupplierIdValidation(newContractSupplierRequest.getSupplierId());
-            if (supplier == null)
+            if (!supplier.getMaterials().contains(newContractSupplierRequest.getMaterialId()))
             {
-                System.out.println("supp null");
+                System.out.println("supplier does not have what you want");
                 throw new Exception();
             }
-            else
+
+            WeekSupplyDto weekSupplyDto = weekSupplyService.findSpecificWeekSupply(supplierId, materialId, currentWeek);
+            ContractSupplierDto contractSupplierDto = createNewContract(teamDto, supplierId, materialId, vehicleType, hasInsurance, amount, 0);
+
+            boolean result = contractManager.finalizeTheContractWithSupplier(contractSupplierDto, teamDto, weekSupplyDto, true);
+            if (!result)
             {
-                if (!supplier.getMaterials().contains(newContractSupplierRequest.getMaterialId()))
-                {
-                    System.out.println("supp not got what you want");
-                    throw new Exception();
-                }
-
-                List<ContractSupplierDto> contractSupplierDtos = new ArrayList<>();
-                float teamCredit = teamService.findTeamById(userService.loadById(request.playerId).getTeamId()).getCredit();
-                System.out.println(teamCredit);
-                Float materialPrice = weekSupplyService.findSpecificWeekSupply(supplierId, materialId, currentWeek).getPrice();
-
-                if(materialPrice < teamCredit) {
-                    for (int i = 0; i < weeks; i++)
-                    {
-                            // Got enough money for at least this week's purchase
-                            System.out.println("I GOT MONEY BABY");
-                            ContractSupplierDto contractSupplierDto = new ContractSupplierDto();
-                            contractSupplierDto.setContractDate(gameCalendar.getCurrentDate().plusDays(i * 7L));
-                            contractSupplierDto.setBoughtAmount(newContractSupplierRequest.getAmount());
-                            contractSupplierDto.setSupplierId(supplierId);
-                            contractSupplierDto.setMaterialId(materialId);
-                            contractSupplierDto.setTeamId(userService.loadById(request.playerId).getTeamId());
-                            contractSupplierDto.setTerminated(false);
-                            contractSupplierDto.setTerminatePenalty(100); //TODO
-                            contractSupplierDto.setHasInsurance(hasInsurance);
-                            contractSupplierDto.setTransportType(vehicleType);
-                            contractSupplierDto.setNoMoneyPenalty(100); //TODO
-                            System.out.println(contractSupplierDto);
-                            // TODO compute cost for transportation?
-                            ContractSupplierDto savedContractSupplierDto = contractSupplierService.saveOrUpdate(contractSupplierDto);
-                            contractSupplierDtos.add(savedContractSupplierDto);
-
-                    }
-                    contractManager.updateContracts();
-                    newContractSupplierResponse = new NewContractSupplierResponse(ResponseTypeConstant.NEW_CONTRACT_WITH_SUPPLIER, contractSupplierDtos, "Successful");
-                    pushMessageManager.sendMessageByTeamId(request.teamId.toString(), gson.toJson(newContractSupplierResponse));
-
-                }else{
-                    System.out.println("get some money");
-                    throw new Exception();
-                }
+                System.out.println("get some money");
+                throw new Exception();
             }
+
+            List<ContractSupplierDto> contractSupplierDtos = new ArrayList<>();
+            contractSupplierDtos.add(contractSupplierDto);
+            for (int i = 1; i < weeks; i++)
+            {
+                ContractSupplierDto newContractSupplierDto = createNewContract(teamDto, supplierId, materialId, vehicleType, hasInsurance, amount, i * 7);
+
+                ContractSupplierDto savedContractSupplierDto = contractSupplierService.saveOrUpdate(newContractSupplierDto);
+                contractSupplierDtos.add(savedContractSupplierDto);
+            }
+
+            newContractSupplierResponse = new NewContractSupplierResponse(ResponseTypeConstant.NEW_CONTRACT_WITH_SUPPLIER, contractSupplierDtos, "Successful");
+            pushMessageManager.sendMessageByTeamId(request.teamId.toString(), gson.toJson(newContractSupplierResponse));
+
         }
         catch (Exception e)
         {
             newContractSupplierResponse = new NewContractSupplierResponse(ResponseTypeConstant.NEW_CONTRACT_WITH_SUPPLIER, null, "Failed");
             pushMessageManager.sendMessageByUserId(request.playerId.toString(), gson.toJson(newContractSupplierResponse));
         }
+    }
+
+    private ContractSupplierDto createNewContract(TeamDto teamDto, Integer supplierId, Integer materialId, Enums.VehicleType vehicleType, Boolean hasInsurance, Integer amount, Integer daysToAdd)
+    {
+        ContractSupplierDto newContractSupplierDto = new ContractSupplierDto();
+        newContractSupplierDto.setContractDate(gameCalendar.getCurrentDate().plusDays(daysToAdd));
+        newContractSupplierDto.setBoughtAmount(amount);
+        newContractSupplierDto.setSupplierId(supplierId);
+        newContractSupplierDto.setMaterialId(materialId);
+        newContractSupplierDto.setTeamId(teamDto.getId());
+        newContractSupplierDto.setTerminated(false);
+        newContractSupplierDto.setHasInsurance(hasInsurance);
+        newContractSupplierDto.setTransportType(vehicleType);
+        newContractSupplierDto.setTerminatePenalty(100); //TODO
+        newContractSupplierDto.setNoMoneyPenalty(100); //TODO
+
+        return newContractSupplierDto;
     }
 
     public void terminateLongtermContractSupplier(ProcessedRequest request, TerminateLongtermContractSupplierRequest terminateLongtermContractSupplierRequest)

@@ -83,6 +83,15 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
         return storages;
     }
 
+    @Transactional(readOnly = true)
+    public boolean storageBelongsToTeam(Integer storageId, TeamDto teamDto) {
+        List<StorageDto> allTeamStorage = findAllStorageForTeam(teamDto);
+        for (StorageDto storageDto : allTeamStorage) {
+            if (storageDto.getId().equals(storageId))
+                return true;
+        }
+        return false;
+    }
 
     @Transactional
     public StorageDto deleteProducts(Integer buildingId, boolean isDc, Integer productId, int amount)

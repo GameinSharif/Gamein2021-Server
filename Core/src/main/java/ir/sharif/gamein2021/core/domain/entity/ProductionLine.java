@@ -23,7 +23,7 @@ public class ProductionLine {
     private Integer productionLineTemplateId;
 
     @JoinColumn(name = "production_line_id")
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<ProductionLineProduct> products;
 
     @ManyToOne

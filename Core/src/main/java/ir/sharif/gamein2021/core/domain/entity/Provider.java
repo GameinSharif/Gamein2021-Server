@@ -33,6 +33,9 @@ public class Provider implements BaseEntity {
     @Column(name = "state", nullable = false)
     private Enums.ProviderState state;
 
+    @ManyToOne
+    private Storage storage;
+
     @Override
     public Integer getId() {
         return id;

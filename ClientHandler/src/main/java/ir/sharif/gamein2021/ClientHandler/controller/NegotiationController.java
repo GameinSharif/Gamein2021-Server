@@ -17,8 +17,10 @@ import ir.sharif.gamein2021.core.util.GameConstants;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import ir.sharif.gamein2021.core.domain.entity.Team;
 import ir.sharif.gamein2021.core.util.Enums.NegotiationState;
+import ir.sharif.gamein2021.core.util.models.Product;
 import lombok.AllArgsConstructor;
 import org.apache.log4j.Logger;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -42,6 +44,7 @@ public class NegotiationController
     private final StorageService storageService;
     private final GameCalendar gameCalendar;
     private final TeamManager teamManager;
+    private final ModelMapper modelMapper;
     private final Gson gson = new Gson();
 
     public void getNegotiations(ProcessedRequest request, GetNegotiationsRequest getNegotiationsRequest)
@@ -55,8 +58,7 @@ public class NegotiationController
 
             ArrayList<NegotiationDto> negotiations = negotiationService.findByTeam(userTeam);
             getNegotiationsResponse = new GetNegotiationsResponse(ResponseTypeConstant.GET_NEGOTIATIONS, negotiations);
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             getNegotiationsResponse = new GetNegotiationsResponse(ResponseTypeConstant.GET_NEGOTIATIONS, null);
         }
@@ -78,7 +80,7 @@ public class NegotiationController
             {
                 newProviderNegotiationResponse = new NewProviderNegotiationResponse(ResponseTypeConstant.NEW_PROVIDER_NEGOTIATION, null);
             }
-            else if (!isCostInRange(newProviderNegotiationRequest.getProviderId(), newProviderNegotiationRequest.getCostPerUnitDemander()))
+            else if (!isCostInRange(provider.getProductId(), newProviderNegotiationRequest.getCostPerUnitDemander()))
             {
                 newProviderNegotiationResponse = new NewProviderNegotiationResponse(ResponseTypeConstant.NEW_PROVIDER_NEGOTIATION, null);
             }
@@ -96,6 +98,7 @@ public class NegotiationController
                 newNegotiation.setProductId(provider.getProductId());
                 newNegotiation.setAmount(newProviderNegotiationRequest.getAmount());
                 newNegotiation.setState(NegotiationState.IN_PROGRESS);
+                newNegotiation.setSourceStorageId(provider.getStorageId());
 
                 CheckNegotiationDeal(newNegotiation);
 
@@ -106,8 +109,7 @@ public class NegotiationController
                 newProviderNegotiationResponse = new NewProviderNegotiationResponse(ResponseTypeConstant.NEW_PROVIDER_NEGOTIATION, savedNegotiation);
             }
 
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             newProviderNegotiationResponse = new NewProviderNegotiationResponse(ResponseTypeConstant.NEW_PROVIDER_NEGOTIATION, null);
         }
@@ -135,8 +137,17 @@ public class NegotiationController
             {
                 editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, null);
             }
+            else if (!isCostInRange(negotiationDto.getProductId(), editRequest.getNewCostPerUnit()))
+            {
+                editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, null);
+            }
             else
             {
+                if (!negotiationDto.getState().equals(NegotiationState.IN_PROGRESS))
+                {
+                    throw new Exception();
+                }
+
                 if (userTeam.getId().equals(negotiationDto.getDemanderId()))
                 {
                     negotiationDto.setCostPerUnitDemander(editRequest.getNewCostPerUnit());
@@ -158,10 +169,10 @@ public class NegotiationController
                     editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, null);
                 }
             }
-
         }
         catch (Exception e)
         {
+            e.printStackTrace();
             editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, null);
         }
 
@@ -176,19 +187,55 @@ public class NegotiationController
         }
     }
 
+    public void rejectNegotiation(ProcessedRequest request, RejectNegotiationRequest rejectNegotiationRequest)
+    {
+        UserDto user = userService.loadById(request.playerId);
+        RejectNegotiationResponse response;
+        try
+        {
+            NegotiationDto negotiationDto = negotiationService.findById(rejectNegotiationRequest.getNegotiationId());
+            Team userTeam = teamService.findTeamById(user.getTeamId());
+            if (userTeam.getId().equals(negotiationDto.getDemanderId()) || userTeam.getId().equals(negotiationDto.getSupplierId()))
+            {
+                negotiationDto.setState(NegotiationState.CLOSED);
+                negotiationService.saveOrUpdate(negotiationDto);
+                response = new RejectNegotiationResponse(ResponseTypeConstant.REJECT_NEGOTIATION, negotiationDto);
+            }
+            else
+            {
+                response = new RejectNegotiationResponse(ResponseTypeConstant.REJECT_NEGOTIATION, null);
+            }
+
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+            response = new RejectNegotiationResponse(ResponseTypeConstant.REJECT_NEGOTIATION, null);
+        }
+
+        if (response.getNegotiation() == null)
+        {
+            pushMessageManager.sendMessageByUserId(request.playerId.toString(), gson.toJson(response));
+        }
+        else
+        {
+            pushMessageManager.sendMessageByTeamId(negotiationService.findById(rejectNegotiationRequest.getNegotiationId()).getDemanderId().toString(), gson.toJson(response));
+            pushMessageManager.sendMessageByTeamId(negotiationService.findById(rejectNegotiationRequest.getNegotiationId()).getSupplierId().toString(), gson.toJson(response));
+        }
+    }
+
     private void CheckNegotiationDeal(NegotiationDto negotiationDto) throws Exception
     {
         if (negotiationDto.getCostPerUnitDemander().equals(negotiationDto.getCostPerUnitSupplier()))
         {
+            TeamDto demanderDto = teamService.loadById(negotiationDto.getDemanderId());
+            TeamDto supplierDto = teamService.loadById(negotiationDto.getSupplierId());
+
             float totalPayment = calculateTotalPayment(
-                    teamService.findTeamById(negotiationDto.getSupplierId()).getFactoryId(),
-                    teamService.findTeamById(negotiationDto.getDemanderId()).getFactoryId(),
+                    negotiationDto.getSourceStorageId(),
+                    demanderDto.getFactoryId(),
                     negotiationDto.getAmount(),
                     negotiationDto.getCostPerUnitDemander(),
                     negotiationDto.getProductId());
-
-            TeamDto demanderDto = teamService.loadById(negotiationDto.getDemanderId());
-            TeamDto supplierDto = teamService.loadById(negotiationDto.getSupplierId());
 
             if (totalPayment > demanderDto.getCredit())
             {
@@ -200,8 +247,19 @@ public class NegotiationController
                 throw new Exception();
             }
 
-            demanderDto.setCredit(demanderDto.getCredit() - totalPayment);
-            supplierDto.setCredit(supplierDto.getCredit() + negotiationDto.getAmount() * negotiationDto.getCostPerUnitSupplier());
+            float demanderNewCredit = demanderDto.getCredit() - totalPayment;
+            float demanderNewWealth = demanderDto.getWealth() - totalPayment;
+            float negotiationPrice = negotiationDto.getAmount() * negotiationDto.getCostPerUnitSupplier();
+
+            demanderDto.setCredit(demanderNewCredit);
+            demanderDto.setWealth(demanderNewWealth);
+            demanderDto.setOutFlow(demanderDto.getOutFlow() + negotiationPrice);
+            demanderDto.setTransportationCost(demanderDto.getTransportationCost() + totalPayment - negotiationPrice);
+
+            supplierDto.setCredit(supplierDto.getCredit() + negotiationPrice);
+            supplierDto.setWealth(supplierDto.getWealth() + negotiationPrice);
+            supplierDto.setInFlow(supplierDto.getInFlow() + negotiationPrice);
+
             storageService.deleteProducts(supplierDto.getFactoryId(), false, negotiationDto.getProductId(), negotiationDto.getAmount());
 
             teamService.saveOrUpdate(demanderDto);
@@ -215,15 +273,17 @@ public class NegotiationController
         }
     }
 
-    private float calculateTotalPayment(int sourceId, int destinationId, int amount, float costPerUnit, int productId)
+    private float calculateTotalPayment(int sourceStorageId, int destinationId, int amount, float costPerUnit, int productId)
     {
+        StorageDto storageDto = storageService.loadById(sourceStorageId);
+
         return amount * costPerUnit + transportManager.calculateTransportCost(
                 Enums.VehicleType.TRUCK,
                 transportManager.getTransportDistance(
-                        Enums.TransportNodeType.FACTORY, //TODO this can be DC too
-                        teamService.findTeamById(sourceId).getFactoryId(),
+                        storageDto.getDc() ? Enums.TransportNodeType.DC : Enums.TransportNodeType.FACTORY,
+                        storageDto.getBuildingId(),
                         Enums.TransportNodeType.FACTORY,
-                        teamService.findTeamById(destinationId).getFactoryId(),
+                        destinationId,
                         Enums.VehicleType.TRUCK),
                 productId,
                 amount
@@ -232,10 +292,16 @@ public class NegotiationController
 
     private void startTransport(NegotiationDto negotiationDto)
     {
+        StorageDto sourceStorageDto = modelMapper.map(storageService.findStorageById(negotiationDto.getSourceStorageId()), StorageDto.class);
+
+        Enums.TransportNodeType sourceStorageType = Enums.TransportNodeType.FACTORY;
+        if (sourceStorageDto.getDc())
+            sourceStorageType = Enums.TransportNodeType.DC;
+
         transportManager.createTransport(
                 Enums.VehicleType.TRUCK,
-                Enums.TransportNodeType.FACTORY,
-                teamService.findTeamById(negotiationDto.getSupplierId()).getFactoryId(),
+                sourceStorageType,
+                sourceStorageDto.getBuildingId(),
                 Enums.TransportNodeType.FACTORY,
                 teamService.findTeamById(negotiationDto.getDemanderId()).getFactoryId(),
                 gameCalendar.getCurrentDate(),
@@ -245,11 +311,11 @@ public class NegotiationController
         );
     }
 
-    private boolean isCostInRange(Integer providerId, Float cost)
+    private boolean isCostInRange(int productId, Float cost)
     {
-        ProviderDto providerDto = providerService.findProviderById(providerId);
-        int minPrice = ReadJsonFilesManager.findProductById(providerDto.getProductId()).getMinPrice();
-        int maxPrice = ReadJsonFilesManager.findProductById(providerDto.getProductId()).getMaxPrice();
+        Product product = ReadJsonFilesManager.findProductById(productId);
+        int minPrice = product.getMinPrice();
+        int maxPrice = product.getMaxPrice();
         return cost >= minPrice && cost <= maxPrice;
     }
 

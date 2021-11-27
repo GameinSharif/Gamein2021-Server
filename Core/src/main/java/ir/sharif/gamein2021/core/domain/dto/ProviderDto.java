@@ -19,5 +19,5 @@ public class ProviderDto implements BaseDto<Integer>
     private Integer capacity;
     private Float price;
     private Enums.ProviderState state;
-
+    private Integer storageId;
 }

@@ -8,10 +8,8 @@ import java.io.Serializable;
 
 @AllArgsConstructor
 @Getter
-public class NewProviderRequest extends RequestObject implements Serializable
-{
-    private Integer productId;
-    private Integer capacity;
-    private Float price;
-    private Integer storageId;
+public class EditProviderRequest extends RequestObject implements Serializable {
+    private final Integer providerId;
+    private final Integer newCapacity;
+    private final Float newPrice;
 }

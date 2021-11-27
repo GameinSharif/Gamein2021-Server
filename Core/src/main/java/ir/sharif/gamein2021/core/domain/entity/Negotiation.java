@@ -41,6 +41,8 @@ public class Negotiation implements BaseEntity{
     @Column(name = "state", nullable = false)
     private NegotiationState state;
 
+    @ManyToOne
+    private Storage sourceStorage;
 
     @Override
     public Integer getId() {

@@ -5,24 +5,18 @@ import ir.sharif.gamein2021.ClientHandler.domain.RFQ.*;
 
 import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.domain.RFQ.NewProviderResponse;
-import ir.sharif.gamein2021.ClientHandler.manager.LocalPushMessageManager;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
-import ir.sharif.gamein2021.core.domain.dto.ProductionLineDto;
-import ir.sharif.gamein2021.core.domain.entity.ProductionLineProduct;
+import ir.sharif.gamein2021.core.domain.dto.*;
 import ir.sharif.gamein2021.core.manager.PushMessageManagerInterface;
 import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
-import ir.sharif.gamein2021.core.service.ProductionLineService;
-import ir.sharif.gamein2021.core.service.TeamService;
+import ir.sharif.gamein2021.core.service.*;
 import ir.sharif.gamein2021.core.util.Enums;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
-import ir.sharif.gamein2021.core.service.ProviderService;
-import ir.sharif.gamein2021.core.service.UserService;
-import ir.sharif.gamein2021.core.domain.dto.ProviderDto;
-import ir.sharif.gamein2021.core.domain.dto.UserDto;
 import ir.sharif.gamein2021.core.domain.entity.Team;
 import ir.sharif.gamein2021.core.util.models.Product;
 import lombok.AllArgsConstructor;
 import org.apache.log4j.Logger;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -39,6 +33,8 @@ public class ProviderController
     private final TeamService teamService;
     private final ProductionLineService productionLineService;
     private final ProviderService providerService;
+    private final StorageService storageService;
+    private final ModelMapper modelMapper;
     private final Gson gson = new Gson();
 
     public void newProvider(ProcessedRequest processedRequest, NewProviderRequest newProviderRequest)
@@ -70,9 +66,13 @@ public class ProviderController
             {
                 newProviderResponse = new NewProviderResponse(ResponseTypeConstant.NEW_PROVIDER, null, "The price is not in its range!");
             }
-            else if (isAlreadyProviderOfThisProduct(userTeam, newProviderRequest.getProductId()))
+            else if (isAlreadyProviderOfThisProduct(userTeam, newProviderRequest.getProductId(), newProviderRequest.getStorageId()))
             {
                 newProviderResponse = new NewProviderResponse(ResponseTypeConstant.NEW_PROVIDER, null, "You already are a provider of this product.");
+            }
+            else if (!storageBelongsToTeam(userTeam, newProviderRequest.getStorageId()))
+            {
+                newProviderResponse = new NewProviderResponse(ResponseTypeConstant.NEW_PROVIDER, null, "Provided storage does not belong to you!");
             }
             else
             {
@@ -82,11 +82,11 @@ public class ProviderController
                 providerDto.setCapacity(newProviderRequest.getCapacity());
                 providerDto.setPrice(newProviderRequest.getPrice());
                 providerDto.setState(Enums.ProviderState.ACTIVE);
+                providerDto.setStorageId(newProviderRequest.getStorageId());
                 ProviderDto savedProviderDto = providerService.save(providerDto);
                 newProviderResponse = new NewProviderResponse(ResponseTypeConstant.NEW_PROVIDER, savedProviderDto, "Provider Created!");
             }
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             newProviderResponse = new NewProviderResponse(ResponseTypeConstant.NEW_PROVIDER, null, "An Internal Server Error Occurred!");
         }
@@ -101,6 +101,12 @@ public class ProviderController
         }
     }
 
+    private boolean storageBelongsToTeam(Team userTeam, Integer storageId)
+    {
+        TeamDto userTeamDto = modelMapper.map(userTeam, TeamDto.class);
+        return storageService.storageBelongsToTeam(storageId, userTeamDto);
+    }
+
     public void getProviders(ProcessedRequest processedRequest, GetProvidersRequest getProvidersRequest)
     {
         GetProvidersResponse getProvidersResponse;
@@ -113,8 +119,7 @@ public class ProviderController
             ArrayList<ProviderDto> teamProviders = providerService.findProvidersByTeam(userTeam);
             ArrayList<ProviderDto> otherProviders = providerService.findProvidersExceptTeam(userTeam);
             getProvidersResponse = new GetProvidersResponse(ResponseTypeConstant.GET_PROVIDERS, teamProviders, otherProviders);
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             getProvidersResponse = new GetProvidersResponse(ResponseTypeConstant.GET_PROVIDERS, null, null);
         }
@@ -171,16 +176,73 @@ public class ProviderController
         return false;
     }
 
-    private boolean isAlreadyProviderOfThisProduct(Team team, Integer productId)
+    private boolean isAlreadyProviderOfThisProduct(Team team, Integer productId, Integer storageId)
     {
         List<ProviderDto> providerDtos = providerService.findProvidersByTeam(team);
         for (ProviderDto providerDto : providerDtos)
         {
-            if (providerDto.getProductId().equals(productId)) //TODO storages should be equal too
+            if (providerDto.getProductId().equals(productId) && providerDto.getStorageId().equals(storageId) && providerDto.getState() == Enums.ProviderState.ACTIVE)
             {
                 return true;
             }
         }
         return false;
+    }
+
+    public void editProvider(ProcessedRequest processedRequest, EditProviderRequest editRequest)
+    {
+        UserDto user = userService.loadById(processedRequest.playerId);
+        EditProviderResponse editResponse;
+        try
+        {
+            ProviderDto providerDto = providerService.findProviderById(editRequest.getProviderId());
+            Team userTeam = teamService.findTeamById(user.getTeamId());
+
+            int minPrice = ReadJsonFilesManager.findProductById(providerDto.getProductId()).getMinPrice();
+            int maxPrice = ReadJsonFilesManager.findProductById(providerDto.getProductId()).getMaxPrice();
+
+            if (editRequest.getNewPrice() > maxPrice || editRequest.getNewPrice() < minPrice)
+            {
+                editResponse = new EditProviderResponse(ResponseTypeConstant.EDIT_PROVIDER_RESPONSE, "The price is not in its range!", null);
+            }
+            else if (editRequest.getNewCapacity() <= 0)
+            {
+                editResponse = new EditProviderResponse(ResponseTypeConstant.EDIT_PROVIDER_RESPONSE, "Product Amount is not valid!", null);
+            }
+            else
+            {
+                if (providerDto.getState().equals(Enums.ProviderState.TERMINATED))
+                {
+                    throw new Exception();
+                }
+
+                if (userTeam.getId().equals(providerDto.getTeamId()))
+                {
+                    providerDto.setPrice(editRequest.getNewPrice());
+                    providerDto.setCapacity(editRequest.getNewCapacity());
+
+                    ProviderDto savedProvider = providerService.saveOrUpdate(providerDto);
+                    editResponse = new EditProviderResponse(ResponseTypeConstant.EDIT_PROVIDER_RESPONSE, "successful!", savedProvider);
+                }
+                else
+                {
+                    editResponse = new EditProviderResponse(ResponseTypeConstant.EDIT_PROVIDER_RESPONSE, "this provider does not belong to this team!", null);
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            editResponse = new EditProviderResponse(ResponseTypeConstant.EDIT_PROVIDER_RESPONSE, "some error has happened!", null);
+        }
+
+        if (editResponse.getEditedProvider() == null)
+        {
+            pushMessageManager.sendMessageByUserId(processedRequest.playerId.toString(), gson.toJson(editResponse));
+        }
+        else
+        {
+            pushMessageManager.sendMessageByTeamId(processedRequest.teamId.toString(), gson.toJson(editResponse));
+        }
     }
 }

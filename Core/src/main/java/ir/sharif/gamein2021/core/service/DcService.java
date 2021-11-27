@@ -19,7 +19,8 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-public class DcService extends AbstractCrudService<DcDto, Dc, Integer> {
+public class DcService extends AbstractCrudService<DcDto, Dc, Integer>
+{
     private final DcRepository repository;
     private final ModelMapper modelMapper;
     private final TeamService teamService;
@@ -29,7 +30,8 @@ public class DcService extends AbstractCrudService<DcDto, Dc, Integer> {
 
     public DcService(DcRepository repository, ModelMapper modelMapper,
                      TeamService teamService, TransportService transportService,
-                     StorageService storageService, GameCalendar gameCalendar) {
+                     StorageService storageService, GameCalendar gameCalendar)
+    {
         this.repository = repository;
         this.teamService = teamService;
         this.modelMapper = modelMapper;
@@ -40,14 +42,18 @@ public class DcService extends AbstractCrudService<DcDto, Dc, Integer> {
     }
 
     @Transactional(readOnly = true)
-    public DcDto loadById(Integer id) {
+    public DcDto loadById(Integer id)
+    {
         Assert.notNull(id, "The id must not be null!");
 
         return repository.findById(id)
-                .map(e -> {
+                .map(e ->
+                {
                     DcDto dcDto = modelMapper.map(e, getDtoClass());
                     if (e.getOwner() != null)
+                    {
                         dcDto.setOwnerId(e.getOwner().getId());
+                    }
                     return dcDto;
                 })
                 .orElseThrow(() -> new EntityNotFoundException("can not find entity " + getEntityClass().getSimpleName() + "by id: " + id + " "));
@@ -55,30 +61,39 @@ public class DcService extends AbstractCrudService<DcDto, Dc, Integer> {
 
 
     @Override
-    public List<DcDto> list() {
+    public List<DcDto> list()
+    {
         return repository.findAll()
                 .stream()
-                .map(e -> {
+                .map(e ->
+                {
                     DcDto dcDto = modelMapper.map(e, getDtoClass());
                     if (e.getOwner() != null)
+                    {
                         dcDto.setOwnerId(e.getOwner().getId());
+                    }
                     return dcDto;
                 })
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public DcDto buyDc(DcDto dc, TeamDto teamDto) {
+    public DcDto buyDc(DcDto dc, TeamDto teamDto)
+    {
         teamDto = teamService.loadById(teamDto.getId());
         dc = loadById(dc.getId());
         if (!isActive(dc))
+        {
             throw new InactiveDcException("Dc with id " + dc.getId() + " is not active yet");
+        }
         //TODO check if dc need to be in the same country
         //TODO check if we need any more additional if
-        if (dc.getOwnerId() != null) {
+        if (dc.getOwnerId() != null)
+        {
             throw new DcHasOwnerException("Dc with id " + dc.getId() + " has been bought by " + dc.getOwnerId());
         }
-        if (teamDto.getCredit() < dc.getBuyingPrice()) {
+        if (teamDto.getCredit() < dc.getBuyingPrice())
+        {
             throw new InvalidRequestException("Not enough money for buying dc with id " + dc.getId());
         }
         float credit = teamDto.getCredit() - dc.getBuyingPrice();
@@ -90,21 +105,30 @@ public class DcService extends AbstractCrudService<DcDto, Dc, Integer> {
     }
 
     @Transactional
-    public DcDto sellDc(DcDto dc, TeamDto teamDto) {
+    public DcDto sellDc(DcDto dc, TeamDto teamDto)
+    {
         teamDto = teamService.loadById(teamDto.getId());
         dc = loadById(dc.getId());
-        if (!dc.getOwnerId().equals(teamDto.getId())) {
+
+        if (!dc.getOwnerId().equals(teamDto.getId()))
+        {
             throw new DcHasOwnerException("Dc with id " + dc.getId() + " is not yours to sell ");
         }
         if (!isActive(dc))
+        {
             throw new InactiveDcException("Dc with id " + dc.getId() + " is not active yet");
-        if (transportService.getTransportsByDestinationIdForDc(dc.getId()).size() != 0)
+        }
+        if (transportService.getActiveTransportsByDestinationIdForDc(dc.getId()).size() != 0)
+        {
             throw new DcHasActiveTransportException("Can not sell dc with id " + dc.getId() + " because it has active transport.");
+        }
         //This line will empty the dc storage
-        storageService.emptyStorage(dc.getId() , true);
+        storageService.emptyStorage(dc.getId(), true);
 
         float credit = teamDto.getCredit() + dc.getSellingPrice();
         teamDto.setCredit(credit);
+        teamDto.setWealth(teamDto.getWealth() - dc.getBuyingPrice() + dc.getSellingPrice());
+
         dc.setOwnerId(null);
         saveOrUpdate(dc);
         teamService.saveOrUpdate(teamDto);
@@ -112,12 +136,16 @@ public class DcService extends AbstractCrudService<DcDto, Dc, Integer> {
     }
 
     @Override
-    public DcDto saveOrUpdate(DcDto dcDto) {
+    public DcDto saveOrUpdate(DcDto dcDto)
+    {
         Assert.notNull(dcDto, "The dc must not be null!");
         if (!isActive(dcDto))
+        {
             throw new InactiveDcException("Dc with id " + dcDto.getId() + " is not active yet");
+        }
         Dc dc = modelMapper.map(dcDto, getEntityClass());
-        if (dcDto.getOwnerId() != null) {
+        if (dcDto.getOwnerId() != null)
+        {
             dc.setOwner(teamService.findTeamById(dcDto.getOwnerId()));
         }
         Dc result = repository.save(dc);
@@ -128,16 +156,15 @@ public class DcService extends AbstractCrudService<DcDto, Dc, Integer> {
     }
 
     @Transactional(readOnly = true)
-    public boolean isActive(DcDto dc) {
+    public boolean isActive(DcDto dc)
+    {
         Assert.notNull(dc, "This dc must not be null!");
-        dc = loadById(dc.getId());
-        if (dc.getStartingWeek() <= gameCalendar.getCurrentWeek())
-            return true;
-        return false;
+        return dc.getStartingWeek() <= gameCalendar.getCurrentWeek();
     }
 
     @Transactional(readOnly = true)
-    public List<DcDto> getAllActiveDc() {
+    public List<DcDto> getAllActiveDc()
+    {
         return repository.findAllByStartingWeekIsLessThanEqual(gameCalendar.getCurrentWeek())
                 .stream()
                 .map(e -> modelMapper.map(e, DcDto.class))
@@ -146,7 +173,8 @@ public class DcService extends AbstractCrudService<DcDto, Dc, Integer> {
     }
 
     @Transactional(readOnly = true)
-    public List<DcDto> getAllDcForTeam(TeamDto teamDto) {
+    public List<DcDto> getAllDcForTeam(TeamDto teamDto)
+    {
         Team team = teamService.findTeamById(teamDto.getId());
         return repository.findAllByOwner(team).stream()
                 .map(e -> modelMapper.map(e, DcDto.class))

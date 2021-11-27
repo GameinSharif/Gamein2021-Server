@@ -34,19 +34,19 @@ public class Team implements BaseEntity {
     private Float brand;
 
     @Column
-    private Long wealth;
+    private Float wealth;
 
     @Column(name = "in_flow")
-    private Long inFlow;
+    private Float inFlow;
 
     @Column(name = "out_flow")
-    private Long outFlow;
+    private Float outFlow;
 
     @Column(name = "transportation_cost")
-    private Long transportationCost;
+    private Float transportationCost;
 
     @Column(name = "production_cost")
-    private Long productionCost;
+    private Float productionCost;
 
     @Override
     public Integer getId() {

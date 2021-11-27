@@ -32,6 +32,7 @@ public class GameStatusController {
 
     private boolean validatePausedGame(ProcessedRequest request, RequestTypeConstant requestType) {
         switch (requestType) {
+            case LOGIN:
             case GET_OFFERS:
             case GET_GAME_DATA:
             case GET_CONTRACTS:
@@ -43,16 +44,15 @@ public class GameStatusController {
             case GET_CONTRACTS_WITH_SUPPLIER:
             case GET_STORAGES:
             case GET_GAME_STATUS:
+            case BID_FOR_AUCTION:
                 return true;
 
-            case LOGIN:
             case NEW_OFFER:
             case ACCEPT_OFFER:
             case EDIT_NEGOTIATION_COST_PER_UNIT:
             case NEW_PROVIDER:
             case REMOVE_PROVIDER:
             case NEW_PROVIDER_NEGOTIATION:
-            case BID_FOR_AUCTION:
             case TERMINATE_OFFER:
             case NEW_MESSAGE:
             case CONSTRUCT_PRODUCTION_LINE:

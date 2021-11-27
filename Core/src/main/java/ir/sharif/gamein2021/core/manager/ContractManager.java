@@ -42,65 +42,88 @@ public class ContractManager
     public void updateTodayContractCosts(LocalDate today)
     {
         List<ContractSupplierDto> contractSupplierDtos = contractSupplierService.findTodaysContractSupplier(today);
-        System.out.println(contractSupplierDtos.size());
+
         for (ContractSupplierDto contractSupplierDto : contractSupplierDtos)
         {
-            if (!contractSupplierDto.isTerminated())
+            if (contractSupplierDto.isTerminated() || contractSupplierDto.getTransportationCost() != null)
             {
-                try {
-                    float teamCredit = teamService.findTeamById(contractSupplierDto.getTeamId()).getCredit();
-                    WeekSupplyDto weekSupplyDto = weekSupplyService.findSpecificWeekSupply(contractSupplierDto.getSupplierId(), contractSupplierDto.getMaterialId(), gameCalendar.getCurrentWeek());
-                    Float price = weekSupplyDto.getPrice();
-                    TeamDto team = teamService.loadById(contractSupplierDto.getTeamId());
-                    if(price > teamCredit){
-                        team.setCredit(teamCredit - contractSupplierDto.getNoMoneyPenalty());
-                        teamService.saveOrUpdate(team);
-                        continue;
-                    }
-                    contractSupplierDto.setPricePerUnit(price);
-                    teamCredit -= price;
-                    team.setCredit(teamCredit);
-                    teamService.saveOrUpdate(team);
-                    Enums.VehicleType vehicleType = contractSupplierDto.getTransportType();
-                    Integer supplierId = contractSupplierDto.getSupplierId();
-                    boolean hasInsurance = contractSupplierDto.isHasInsurance();
-                    Integer materialId = contractSupplierDto.getMaterialId();
-                    Integer amount = contractSupplierDto.getBoughtAmount();
+                continue;
+            }
+            try
+            {
+                TeamDto team = teamService.loadById(contractSupplierDto.getTeamId());
+                WeekSupplyDto weekSupplyDto = weekSupplyService.findSpecificWeekSupply(contractSupplierDto.getSupplierId(), contractSupplierDto.getMaterialId(), gameCalendar.getCurrentWeek());
 
-                    weekSupplyDto.setSales(weekSupplyDto.getSales() + contractSupplierDto.getBoughtAmount());
-                    weekSupplyService.saveOrUpdate(weekSupplyDto);
-                    contractSupplierService.saveOrUpdate(contractSupplierDto);
-                    Integer distance = transportManager.getTransportDistance(Enums.TransportNodeType.SUPPLIER, supplierId,
-                            Enums.TransportNodeType.FACTORY, teamService.loadById(contractSupplierDto.getTeamId()).getFactoryId(), vehicleType);
-                    contractSupplierDto.setTransportationCost(transportManager.calculateTransportCost(vehicleType,
-                            distance, materialId, amount, hasInsurance));
-                    if(contractSupplierDto.getTransportationCost() > teamCredit){
-                        team.setCredit(teamCredit - contractSupplierDto.getTerminatePenalty());
-                        teamService.saveOrUpdate(team);
-                        continue;
-                    }
-                    // Creating transport for this contract
-                    transportManager.createTransport(
-                            vehicleType,
-                            Enums.TransportNodeType.SUPPLIER,
-                            supplierId,
-                            Enums.TransportNodeType.FACTORY,
-                            teamService.loadById(contractSupplierDto.getTeamId()).getFactoryId(),
-                            gameCalendar.getCurrentDate(),
-                            hasInsurance,
-                            materialId,
-                            amount);
-                    teamCredit -= contractSupplierDto.getTransportationCost();
-                    team.setCredit(teamCredit);
-                    teamService.saveOrUpdate(team);
-                    System.out.println("transport on its way");
-                }
-                catch (Exception e)
-                {
-                    System.out.println("no week supply");
-                }
+                finalizeTheContractWithSupplier(contractSupplierDto, team, weekSupplyDto, false);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
             }
         }
+    }
+
+    public boolean finalizeTheContractWithSupplier(ContractSupplierDto contractSupplierDto, TeamDto team, WeekSupplyDto weekSupplyDto, boolean isCreating)
+    {
+        float price = weekSupplyDto.getPrice();
+        contractSupplierDto.setPricePerUnit(price);
+
+        Enums.VehicleType vehicleType = contractSupplierDto.getTransportType();
+        Integer supplierId = contractSupplierDto.getSupplierId();
+        boolean hasInsurance = contractSupplierDto.isHasInsurance();
+        Integer materialId = contractSupplierDto.getMaterialId();
+        Integer amount = contractSupplierDto.getBoughtAmount();
+
+        float transportCost = transportManager.calculateTransportCost(
+                vehicleType,
+                transportManager.getTransportDistance(
+                        Enums.TransportNodeType.SUPPLIER,
+                        supplierId,
+                        Enums.TransportNodeType.FACTORY,
+                        team.getFactoryId(),
+                        vehicleType),
+                materialId,
+                amount,
+                hasInsurance);
+
+        float totalPrice = price * contractSupplierDto.getBoughtAmount() + transportCost;
+
+        float teamCredit = team.getCredit();
+        if (totalPrice > teamCredit)
+        {
+            if (!isCreating)
+            {
+                team.setCredit(teamCredit - contractSupplierDto.getNoMoneyPenalty());
+                team.setWealth(team.getWealth() - contractSupplierDto.getNoMoneyPenalty());
+                teamService.saveOrUpdate(team);
+            }
+            return false;
+        }
+
+        transportManager.createTransport(
+                vehicleType,
+                Enums.TransportNodeType.SUPPLIER,
+                supplierId,
+                Enums.TransportNodeType.FACTORY,
+                team.getFactoryId(),
+                gameCalendar.getCurrentDate(),
+                hasInsurance,
+                materialId,
+                amount);
+
+        team.setCredit(teamCredit - totalPrice);
+        team.setWealth(team.getWealth() - totalPrice);
+        team.setOutFlow(team.getOutFlow() + totalPrice);
+        team.setTransportationCost(team.getTransportationCost() + transportCost);
+        teamService.saveOrUpdate(team);
+
+        weekSupplyDto.setSales(weekSupplyDto.getSales() + contractSupplierDto.getBoughtAmount());
+        weekSupplyService.saveOrUpdate(weekSupplyDto);
+
+        contractSupplierDto.setTransportationCost(transportCost);
+        contractSupplierService.saveOrUpdate(contractSupplierDto);
+
+        return true;
     }
 
     public void buyFromContractsWithGameinCustomers(LocalDate today)
@@ -109,9 +132,15 @@ public class ContractManager
 
         for (WeekDemandDto weekDemandDto : weekDemands)
         {
-            GameinCustomerDto gameinCustomerDto =gameinCustomerService.loadById(weekDemandDto.getGameinCustomerId());
+            GameinCustomerDto gameinCustomerDto = gameinCustomerService.loadById(weekDemandDto.getGameinCustomerId());
             Product product = ReadJsonFilesManager.findProductById(weekDemandDto.getProductId());
             List<ContractDto> contractDtos = contractService.findValidContracts(today, gameinCustomerDto, product);
+            if (contractDtos == null || contractDtos.size() == 0)
+            {
+                weekDemandDto.setRemainedAmount(weekDemandDto.getAmount());
+                weekDemandService.saveOrUpdate(weekDemandDto);
+                continue;
+            }
             FinalizeTheContracts(weekDemandDto, contractDtos);
         }
     }
@@ -163,6 +192,8 @@ public class ContractManager
                 float income = sale * contractDto.getPricePerUnit();
                 totalIncome += income;
                 teamDto.setCredit(teamDto.getCredit() + income);
+                teamDto.setWealth(teamDto.getWealth() + income);
+                teamDto.setInFlow(teamDto.getInFlow() + income);
                 teamService.saveOrUpdate(teamDto);
             }
             else

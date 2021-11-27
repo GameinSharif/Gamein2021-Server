@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 
 @AllArgsConstructor
@@ -36,7 +37,8 @@ public class DailySchedule {
 
     //Second, Minute, Hour, DayOfMonth, Month, WeekDays
     @Scheduled(cron = "0 49 22 13 11 ?")
-    public void startGame() {
+    public void startGame()
+    {
         GameConstants.gameStatus = GameStatus.RUNNING;
         dynamicConfigService.setGameStatus(GameConstants.gameStatus);
         UpdateGameStatusRequest request = new UpdateGameStatusRequest("Done", GameConstants.gameStatus);
@@ -56,32 +58,35 @@ public class DailySchedule {
         updateConfigs();
     }
 
-    private void DoRunningStateTasks() {
-        System.out.println(gameCalendar.getCurrentDate());
+    private void DoRunningStateTasks()
+    {
         gameCalendar.increaseOneDay();
+        System.out.println(gameCalendar.getCurrentDate());
 
         doDailyTasks();
-        switch (gameCalendar.getCurrentDate().getDayOfWeek()) {
-            case SATURDAY:
-                doWeeklyTasks();
-                break;
+        if (gameCalendar.getCurrentDate().getDayOfWeek() == DayOfWeek.SATURDAY)
+        {
+            doWeeklyTasks();
         }
     }
 
-    private void doDailyTasks() {
+    private void doDailyTasks()
+    {
         gameDateManager.SendGameDateToAllUsers();
         productionLineService.enableProductionLines();
         productService.finishProductCreation(gameCalendar.getCurrentDate());
         transportManager.updateTransports();
         contractManager.updateContracts();
+        teamManager.updateAllTeamsMoneyOnClient();
     }
 
-    private void doWeeklyTasks() {
+    private void doWeeklyTasks()
+    {
         contractManager.updateGameinCustomerContracts();
-        demandAndSupplyManager.SendCurrentWeekSupplyAndDemandsToAllUsers();
         productionLineService.decreaseWeeklyMaintenanceCost();
         teamManager.updateTeamsBrands(GameConstants.brandDailyDecrease);
         weekSupplyManager.updateWeekSupplyPrices(gameCalendar.getCurrentWeek());
+        demandAndSupplyManager.SendCurrentWeekSupplyAndDemandsToAllUsers();
         businessIntelligenceService.prepareWeeklyReport();
     }
 

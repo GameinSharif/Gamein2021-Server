@@ -99,7 +99,10 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
         ProductionLineTemplate template = ReadJsonFilesManager.ProductionLineTemplateHashMap.getOrDefault(productionLine.getProductionLineTemplateId(), null);
         Team teamObject = teamRepository.getById(team.getId());
         int scrapPrice = template.getScrapPrice();
+
         teamObject.setCredit(teamObject.getCredit() + scrapPrice);
+        teamObject.setWealth(teamObject.getWealth() - template.getConstructionCost() + scrapPrice);
+
         teamRepository.saveAndFlush(teamObject);
 
         productionLine.setStatus(Enums.ProductionLineStatus.SCRAPPED);
@@ -141,7 +144,9 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
 
         amount = amount * productLineTemplate.getBatchSize();
 
-        float newCredit = team.getCredit() - productLineTemplate.getSetupCost() - amount * productLineTemplate.getProductionCostPerOneProduct();
+        float productionCost = productLineTemplate.getSetupCost() + amount * productLineTemplate.getProductionCostPerOneProduct();
+
+        float newCredit = team.getCredit() - productionCost;
         if (newCredit < 0) {
             throw new InvalidProductionLineIdException("Invalid Operation. You don't have enough money to produce new production.");
         }
@@ -169,15 +174,18 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
         }
 
         team.setCredit(newCredit);
+        team.setWealth(team.getWealth() - productionCost);
+        team.setProductionCost(team.getProductionCost() + productionCost);
+
         teamRepository.saveAndFlush(team);
 
-        int productionDuration = (amount / productLineTemplate.getDailyProductionRate()) + 1;
+        int productionDuration = (int) Math.ceil(1f * amount / productLineTemplate.getDailyProductionRate());
 
         ProductionLineProduct newProduct = new ProductionLineProduct();
         newProduct.setProductId(productId);
-        newProduct.setStartDate(currentDate.plusDays(1));
+        newProduct.setStartDate(currentDate);
         newProduct.setAmount(amount);
-        newProduct.setEndDate(currentDate.plusDays(1 + productionDuration));
+        newProduct.setEndDate(currentDate.plusDays(productionDuration));
         newProduct.setProductionLineId(productionLineId);
 
         ProductionLineProduct savedProduct = productRepository.saveAndFlush(newProduct);
@@ -204,11 +212,15 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
             throw new ProductionLineMaximumQualityLevelReachedException("Maximum quality level reached. Cannot upgrade quality level.");
         }
 
-        float newCredit = team.getCredit() - template.getQualityLevels().get(currentQualityLevel + 1).getUpgradeCost();
+        float upgradeCost = template.getQualityLevels().get(currentQualityLevel + 1).getUpgradeCost();
+        float newCredit = team.getCredit() - upgradeCost;
         if (newCredit < 0) {
             throw new InvalidProductionLineIdException("Invalid Operation. You don't have enough money to upgrade quality level.");
         }
+
         team.setCredit(newCredit);
+        team.setWealth(team.getWealth() - upgradeCost);
+
         teamRepository.saveAndFlush(team);
 
         productionLine.setQualityLevel(currentQualityLevel + 1);
@@ -231,11 +243,14 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
             throw new ProductionLineMaximumEfficiencyLevelReachedException("Maximum efficiency level reached. Cannot upgrade efficiency level.");
         }
 
-        float newCredit = team.getCredit() - template.getEfficiencyLevels().get(currentEfficiencyLevel + 1).getUpgradeCost();
+        float upgradeCost = template.getEfficiencyLevels().get(currentEfficiencyLevel + 1).getUpgradeCost();
+        float newCredit = team.getCredit() - upgradeCost;
         if (newCredit < 0) {
             throw new InvalidProductionLineIdException("Invalid Operation. You don't have enough money to upgrade efficiency level.");
         }
         team.setCredit(newCredit);
+        team.setWealth(team.getWealth() - upgradeCost);
+
         teamRepository.saveAndFlush(team);
 
         productionLine.setEfficiencyLevel(currentEfficiencyLevel + 1);
@@ -276,6 +291,7 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
             Team team = productionLine.getTeam();
             ProductionLineTemplate template = ReadJsonFilesManager.ProductionLineTemplateHashMap.get(productionLine.getProductionLineTemplateId());
             team.setCredit(team.getCredit() - template.getWeeklyMaintenanceCost());
+            team.setWealth(team.getWealth() - template.getWeeklyMaintenanceCost());
         }
 
         productionLineRepository.saveAllAndFlush(productionLines);

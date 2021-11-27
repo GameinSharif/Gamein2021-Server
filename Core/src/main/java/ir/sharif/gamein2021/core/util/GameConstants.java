@@ -12,7 +12,8 @@ public class GameConstants {
 
     public static final LocalDate startDate = LocalDate.of(2000,1, 1);
 
-    public final int ConstantWeekSupplyPrice = 2000;
+    public static final int ConstantOneWeekSupplyPrice = 2000;
+    public static final float ConstantTwoWeekSupplyPrice = 0.05f;
 
     public static final float ShareAllocationAlpha = 1f;
     public static final float ShareAllocationBeta = 0.01f;
@@ -38,6 +39,5 @@ public class GameConstants {
 
     public static final float CrushProbability = 0.01f;
 
-    public static boolean IsGameStarted = true;
-    public static GameStatus gameStatus = GameStatus.RUNNING;
+    public static GameStatus gameStatus = GameStatus.PAUSED;
 }

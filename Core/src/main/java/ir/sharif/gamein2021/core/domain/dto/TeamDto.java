@@ -16,9 +16,9 @@ public class TeamDto
     private Integer factoryId;
     private float credit;
     private Float brand;
-    private Long wealth;
-    private Long inFlow;
-    private Long outFlow;
-    private Long transportationCost;
-    private Long productionCost;
+    private Float wealth;
+    private Float inFlow;
+    private Float outFlow;
+    private Float transportationCost;
+    private Float productionCost;
 }

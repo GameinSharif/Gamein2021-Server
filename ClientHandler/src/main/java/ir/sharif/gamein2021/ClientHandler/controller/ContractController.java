@@ -65,7 +65,7 @@ public class ContractController
             for (int i = 0; i < newContractRequest.getWeeks(); i++)
             {
                 GameinCustomerDto gameinCustomerDto = gameinCustomerService.loadById(newContractRequest.getGameinCustomerId());
-                LocalDate startDate = gameCalendar.getCurrentDate().with(TemporalAdjusters.next(DayOfWeek.FRIDAY)).plusDays(i * 7L);
+                LocalDate startDate = gameCalendar.getCurrentDate().with(TemporalAdjusters.next(DayOfWeek.SATURDAY)).plusDays(i * 7L);
                 Product product = ReadJsonFilesManager.findProductById(newContractRequest.getProductId());
 
                 ContractDto existedContract = contractService.findByTeamAndDateAndGameinCustomerAndProduct(userTeam, startDate, gameinCustomerDto, product);

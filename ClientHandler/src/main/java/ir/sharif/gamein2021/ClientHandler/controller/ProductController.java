@@ -23,7 +23,8 @@ import java.util.List;
 
 @AllArgsConstructor
 @Component
-public class ProductController {
+public class ProductController
+{
     static Logger logger = Logger.getLogger(ExecutorThread.class.getName());
 
     private final Gson gson;
@@ -33,10 +34,12 @@ public class ProductController {
     private final StorageService storageService;
     private final DcService dcService;
 
-    public void addProduct(ProcessedRequest request, AddProductRequest addProductRequest) {
+    public void addProduct(ProcessedRequest request, AddProductRequest addProductRequest)
+    {
         Integer id = request.playerId;
         AddProductResponse response;
-        try {
+        try
+        {
             UserDto userDto = userService.loadById(id);
             Integer teamId = userDto.getTeamId();
             TeamDto teamDto = teamService.loadById(teamId);
@@ -48,7 +51,8 @@ public class ProductController {
                     addProductRequest.getProductId(),
                     addProductRequest.getAmount());
             response = new AddProductResponse(ResponseTypeConstant.ADD_PRODUCT, storageDto, "success");
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             System.out.println(e.getMessage());
             logger.debug(e.getMessage());
             response = new AddProductResponse(ResponseTypeConstant.ADD_PRODUCT, null, e.getMessage());
@@ -56,10 +60,12 @@ public class ProductController {
         pushMessageManager.sendMessageBySession(request.session, gson.toJson(response));
     }
 
-    public void removeProduct(ProcessedRequest request, RemoveProductRequest removeProductRequest) {
+    public void removeProduct(ProcessedRequest request, RemoveProductRequest removeProductRequest)
+    {
         Integer id = request.playerId;
         RemoveProductResponse response;
-        try {
+        try
+        {
             UserDto userDto = userService.loadById(id);
             Integer teamId = userDto.getTeamId();
             TeamDto teamDto = teamService.loadById(teamId);
@@ -71,7 +77,8 @@ public class ProductController {
                     removeProductRequest.getProductId(),
                     removeProductRequest.getAmount());
             response = new RemoveProductResponse(ResponseTypeConstant.REMOVE_PRODUCT, storageDto, "success");
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             System.out.println(e.getMessage());
             logger.debug(e.getMessage());
             response = new RemoveProductResponse(ResponseTypeConstant.REMOVE_PRODUCT, null, e.getMessage());
@@ -79,16 +86,19 @@ public class ProductController {
         pushMessageManager.sendMessageBySession(request.session, gson.toJson(response));
     }
 
-    public void getStorages(ProcessedRequest request, GetStorageProductsRequest getStorageProductsRequest) {
+    public void getStorages(ProcessedRequest request, GetStorageProductsRequest getStorageProductsRequest)
+    {
         Integer id = request.playerId;
         GetStorageProductsResponse response;
-        try {
+        try
+        {
             UserDto userDto = userService.loadById(id);
             Integer teamId = userDto.getTeamId();
             TeamDto teamDto = teamService.loadById(teamId);
             List<StorageDto> storages = storageService.findAllStorageForTeam(teamDto);
             response = new GetStorageProductsResponse(ResponseTypeConstant.GET_STORAGES, storages, "success");
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             System.out.println(e.getMessage());
             logger.debug(e.getMessage());
             response = new GetStorageProductsResponse(ResponseTypeConstant.GET_STORAGES, null, e.getMessage());
@@ -96,14 +106,22 @@ public class ProductController {
         pushMessageManager.sendMessageBySession(request.session, gson.toJson(response));
     }
 
-    private void checkTeamAndStorage(Integer buildingId, boolean isDc, TeamDto teamDto) {
-        if (isDc) {
+    private void checkTeamAndStorage(Integer buildingId, boolean isDc, TeamDto teamDto)
+    {
+        if (isDc)
+        {
             DcDto dc = dcService.loadById(buildingId);
-            if (dc.getOwnerId() != teamDto.getId())
+            if (!dc.getOwnerId().equals(teamDto.getId()))
+            {
                 throw new InvalidRequestException("You don't have access to this dc.");
-        } else {
-            if (teamDto.getFactoryId() != buildingId)
+            }
+        }
+        else
+        {
+            if (!teamDto.getFactoryId().equals(buildingId))
+            {
                 throw new InvalidRequestException("You don't have access to this factory.");
+            }
         }
     }
 }

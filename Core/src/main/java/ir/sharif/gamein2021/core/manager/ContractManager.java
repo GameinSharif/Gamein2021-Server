@@ -147,10 +147,16 @@ public class ContractManager
 
     private void FinalizeTheContracts(WeekDemandDto weekDemandDto, List<ContractDto> contractDtos)
     {
+        if (contractDtos == null || contractDtos.size() == 0)
+        {
+            return;
+        }
+
         TreeMap<Float, ContractDto> treeMap = new TreeMap<>(Collections.reverseOrder());
         float totalShares = 0f;
-        float maxPrice = contractDtos.get(0).getMaxPrice();
-        float minPrice = contractDtos.get(0).getMinPrice();
+
+        float maxPrice = contractDtos.get(0).getPricePerUnit();
+        float minPrice = contractDtos.get(0).getPricePerUnit();
 
         for (ContractDto contractDto : contractDtos)
         {
@@ -185,7 +191,7 @@ public class ContractManager
 
             TeamDto teamDto = teamService.loadById(contractDto.getTeamId());
             StorageProductDto storageProductDto = storageService.getStorageProductWithBuildingId(teamDto.getFactoryId(), false, contractDto.getProductId());
-            if (storageProductDto.getAmount() >= sale)
+            if (storageProductDto != null && storageProductDto.getAmount() >= sale)
             {
                 remainedDemand -= sale;
                 contractDto.setBoughtAmount(sale);
@@ -194,12 +200,14 @@ public class ContractManager
                 teamDto.setCredit(teamDto.getCredit() + income);
                 teamDto.setWealth(teamDto.getWealth() + income);
                 teamDto.setInFlow(teamDto.getInFlow() + income);
-                teamService.saveOrUpdate(teamDto);
             }
             else
             {
                 contractDto.setBoughtAmount(0);
+                teamDto.setCredit(teamDto.getCredit() - contractDto.getLostSalePenalty());
+                teamDto.setWealth(teamDto.getWealth() - contractDto.getLostSalePenalty());
             }
+            teamService.saveOrUpdate(teamDto);
 
             if (remainedDemand == 0)
             {
@@ -216,8 +224,16 @@ public class ContractManager
 
             contractDto.setMaxPrice(maxPrice);
             contractDto.setMinPrice(minPrice);
-            contractDto.setValueShare(income / totalIncome);
-            contractDto.setDemandShare(1f * contractDto.getBoughtAmount() / (weekDemandDto.getAmount() - remainedDemand));
+            if (weekDemandDto.getAmount() == remainedDemand || totalIncome == 0)
+            {
+                contractDto.setDemandShare(0f);
+                contractDto.setValueShare(0f);
+            }
+            else
+            {
+                contractDto.setDemandShare(1f * contractDto.getBoughtAmount() / (weekDemandDto.getAmount() - remainedDemand));
+                contractDto.setValueShare(income / totalIncome);
+            }
             contractService.saveOrUpdate(contractDto);
 
             transportManager.createTransport(

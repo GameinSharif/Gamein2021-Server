@@ -196,7 +196,7 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
         {
             return storageProduct;
         }
-        throw new ProductNotFoundException("Product with id : " + productId + " does not exist in this dc!");
+        throw new ProductNotFoundException("Product with id : " + productId + " does not exist in this storage!");
     }
 
     @Transactional(readOnly = true)

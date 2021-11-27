@@ -69,9 +69,6 @@ public class ProductController
             UserDto userDto = userService.loadById(id);
             Integer teamId = userDto.getTeamId();
             TeamDto teamDto = teamService.loadById(teamId);
-            System.out.println(teamDto.getId());
-            System.out.println(teamDto.getFactoryId());
-            System.out.println(removeProductRequest.getBuildingId());
             checkTeamAndStorage(removeProductRequest.getBuildingId(), removeProductRequest.isDc(), teamDto);
             StorageDto storageDto;
             storageDto = storageService.deleteProducts(

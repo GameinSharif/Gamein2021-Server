@@ -169,7 +169,7 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
                     continue;
                 }
 
-                storageService.deleteProducts(team.getFactoryId(), false, productId, amount * productIngredient.getAmount());
+                storageService.deleteProducts(team.getFactoryId(), false, productIngredient.getProductId(), amount * productIngredient.getAmount());
             }
         }
 

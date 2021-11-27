@@ -2,6 +2,7 @@ package ir.sharif.gamein2021.core.domain.dto;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Getter
@@ -9,7 +10,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ProductionLineProductDto {
+public class ProductionLineProductDto implements Serializable {
     private Integer id;
     private Integer productId;
     private Integer productionLineId;

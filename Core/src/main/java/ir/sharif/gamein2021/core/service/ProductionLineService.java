@@ -279,7 +279,7 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
             productionLine.setStatus(Enums.ProductionLineStatus.ACTIVE);
         }
 
-        List<ProductionLine> savedProductionLines = productionLineRepository.saveAllAndFlush(productionLines);
+        List<ProductionLineDto> savedProductionLines = saveAll(productionLines);
 
         clientHandlerRequestSender.send(new ProductionLinesConstructionCompletedRequest(savedProductionLines, "Done"));
     }

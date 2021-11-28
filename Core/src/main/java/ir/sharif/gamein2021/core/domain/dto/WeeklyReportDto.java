@@ -7,15 +7,16 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class WeeklyReportDto extends BaseWeeklyReport {
-    private int rawMaterialPercentage;
-    private int intermediateMaterialPercentage;
-    private int finalProductPercentage;
-    private long totalCapital;
-    private long inFlow;
-    private long outFlow;
-    private long transportationCosts;
-    private long productionCosts;
+public class WeeklyReportDto extends BaseWeeklyReport
+{
     private int ranking;
     private Float brand;
+    private Float rawMaterialPercentage;
+    private Float intermediateMaterialPercentage;
+    private Float finalProductPercentage;
+    private Float totalCapital;
+    private Float inFlow;
+    private Float outFlow;
+    private Float transportationCosts;
+    private Float productionCosts;
 }

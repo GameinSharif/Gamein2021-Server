@@ -10,8 +10,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
 
-import java.util.Arrays;
-
 @ComponentScan("ir.sharif.gamein2021")
 @SpringBootApplication
 public class ClientHandlerApplication extends SpringBootServletInitializer

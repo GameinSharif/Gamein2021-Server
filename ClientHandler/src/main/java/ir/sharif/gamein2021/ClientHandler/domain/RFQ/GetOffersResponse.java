@@ -1,7 +1,6 @@
 package ir.sharif.gamein2021.ClientHandler.domain.RFQ;
 
 import ir.sharif.gamein2021.core.domain.dto.OfferDto;
-import ir.sharif.gamein2021.core.domain.dto.ProviderDto;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import ir.sharif.gamein2021.core.view.ResponseObject;
 import lombok.AllArgsConstructor;

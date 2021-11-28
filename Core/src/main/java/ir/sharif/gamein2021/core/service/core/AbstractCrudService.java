@@ -1,6 +1,5 @@
 package ir.sharif.gamein2021.core.service.core;
 
-import ir.sharif.gamein2021.core.domain.entity.Chat;
 import ir.sharif.gamein2021.core.exception.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;

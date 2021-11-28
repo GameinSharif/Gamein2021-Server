@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 @Getter
 @AllArgsConstructor

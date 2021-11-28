@@ -1,11 +1,9 @@
 package ir.sharif.gamein2021.core.domain.entity;
 
-import ir.sharif.gamein2021.core.util.Enums.ContractType;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @Getter

@@ -1,10 +1,8 @@
 package ir.sharif.gamein2021.core.domain.dto;
 
-import ir.sharif.gamein2021.core.domain.entity.Transport;
 import ir.sharif.gamein2021.core.util.Enums;
 import lombok.*;
 
-import javax.persistence.*;
 import java.time.LocalDate;
 
 @Getter

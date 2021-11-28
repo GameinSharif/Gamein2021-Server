@@ -3,7 +3,6 @@ package ir.sharif.gamein2021.ClientHandler.domain.Product;
 import ir.sharif.gamein2021.core.view.RequestObject;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 

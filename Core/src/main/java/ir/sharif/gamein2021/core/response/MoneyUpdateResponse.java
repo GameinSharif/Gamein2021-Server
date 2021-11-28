@@ -4,7 +4,6 @@ import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import ir.sharif.gamein2021.core.view.ResponseObject;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 public class MoneyUpdateResponse extends ResponseObject implements Serializable
 {

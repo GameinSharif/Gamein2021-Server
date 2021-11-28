@@ -4,6 +4,7 @@ import ir.sharif.gamein2021.core.dao.AuctionRepository;
 import ir.sharif.gamein2021.core.domain.dto.AuctionDto;
 import ir.sharif.gamein2021.core.domain.dto.TeamDto;
 import ir.sharif.gamein2021.core.domain.entity.Auction;
+import ir.sharif.gamein2021.core.domain.entity.Team;
 import ir.sharif.gamein2021.core.exception.EntityNotFoundException;
 import ir.sharif.gamein2021.core.exception.InvalidCountryException;
 import ir.sharif.gamein2021.core.exception.InvalidOfferForAuction;
@@ -18,9 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,8 +27,6 @@ public class AuctionService extends AbstractCrudService<AuctionDto, Auction, Int
     private final AuctionRepository repository;
     private final TeamService teamService;
     private final ModelMapper modelMapper;
-
-    public static List<Factory> RemainedFactories;
 
     public AuctionService(AuctionRepository repository, ModelMapper modelMapper, TeamService teamService) {
         this.repository = repository;
@@ -116,8 +113,6 @@ public class AuctionService extends AbstractCrudService<AuctionDto, Auction, Int
         }
         if (ReadJsonFilesManager.Factories[factoryId - 1].getCountry() == teamDto.getCountry())
         {
-            RemainedFactories.removeIf(f -> f.getId() == factoryId);
-
             auctionDto.setFactoryId(factoryId);
             auctionDto.setHighestBidTeamId(teamDto.getId());
             auctionDto.setHighestBid(raiseAmount);
@@ -162,23 +157,28 @@ public class AuctionService extends AbstractCrudService<AuctionDto, Auction, Int
 
     @Transactional
     public void assignRemainedFactoriesRandomly() {
+        Set<Integer> usedFactoryIds = teamService.findTeamsByFactoryIdIsNotNull().stream()
+                .map(TeamDto::getFactoryId)
+                .collect(Collectors.toSet());
+
         for (Enums.Country country : Enums.Country.values()) {
             List<Factory> thisCountryFactories = new ArrayList<>();
-            for (Factory factory : RemainedFactories) {
-                if (factory.getCountry() == country) {
+            for (Factory factory : ReadJsonFilesManager.Factories) {
+                if (factory.getCountry() == country && !usedFactoryIds.contains(factory.getId())) {
                     thisCountryFactories.add(factory);
                 }
             }
 
-            List<TeamDto> emptyTeams = teamService.findAllEmptyTeamWithCountry(country);
+            List<Team> emptyTeams = teamService.findAllEmptyTeamWithCountry(country);
             Collections.shuffle(emptyTeams);
 
             for (int i = 0; i < emptyTeams.size(); i++) {
-                TeamDto emptyTeam = emptyTeams.get(i);
+                Team emptyTeam = emptyTeams.get(i);
                 emptyTeam.setFactoryId(thisCountryFactories.get(i).getId());
                 emptyTeam.setCredit(emptyTeam.getCredit() - GameConstants.Instance.AuctionStartValue);
-                teamService.saveOrUpdate(emptyTeam);
             }
+
+            teamService.saveAll(emptyTeams);
         }
     }
 

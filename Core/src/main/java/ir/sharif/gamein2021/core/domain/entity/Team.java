@@ -21,7 +21,7 @@ public class Team implements BaseEntity {
     @Column(name = "team_name", nullable = false, unique = true, updatable = false)
     private String teamName;
 
-    @Column(name = "factory_id")
+    @Column(name = "factory_id", unique = true)
     private Integer factoryId;
 
     @Column(updatable = false)

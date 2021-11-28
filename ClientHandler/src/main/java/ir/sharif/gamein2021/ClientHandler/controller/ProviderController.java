@@ -4,7 +4,6 @@ import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.RFQ.*;
 
 import com.google.gson.Gson;
-import ir.sharif.gamein2021.ClientHandler.domain.RFQ.NewProviderResponse;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
 import ir.sharif.gamein2021.core.domain.dto.*;
 import ir.sharif.gamein2021.core.manager.PushMessageManagerInterface;

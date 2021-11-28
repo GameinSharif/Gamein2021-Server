@@ -1,6 +1,5 @@
 package ir.sharif.gamein2021.core.dao;
 
-import ir.sharif.gamein2021.core.domain.entity.WeekDemand;
 import ir.sharif.gamein2021.core.domain.entity.WeekSupply;
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,7 +1,5 @@
 package ir.sharif.gamein2021.core.service;
 
-import ir.sharif.gamein2021.core.domain.dto.MessageDto;
-import ir.sharif.gamein2021.core.domain.entity.Message;
 import ir.sharif.gamein2021.core.domain.entity.Team;
 import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
 import ir.sharif.gamein2021.core.dao.ChatRepository;
@@ -9,13 +7,10 @@ import ir.sharif.gamein2021.core.domain.dto.ChatDto;
 import ir.sharif.gamein2021.core.domain.entity.Chat;
 import ir.sharif.gamein2021.core.exception.ChatNotFoundException;
 import ir.sharif.gamein2021.core.util.AssertionUtil;
-import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.spi.MappingContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;

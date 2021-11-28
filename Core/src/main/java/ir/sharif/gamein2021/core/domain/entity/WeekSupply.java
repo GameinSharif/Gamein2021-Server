@@ -1,6 +1,5 @@
 package ir.sharif.gamein2021.core.domain.entity;
 
-import ir.sharif.gamein2021.core.util.models.Supplier;
 import lombok.*;
 
 import javax.persistence.*;

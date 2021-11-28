@@ -2,7 +2,6 @@ package ir.sharif.gamein2021.core.service;
 
 import ir.sharif.gamein2021.core.dao.StorageProductRepository;
 import ir.sharif.gamein2021.core.domain.dto.StorageProductDto;
-import ir.sharif.gamein2021.core.domain.entity.Storage;
 import ir.sharif.gamein2021.core.domain.entity.StorageProduct;
 import ir.sharif.gamein2021.core.exception.EntityNotFoundException;
 import ir.sharif.gamein2021.core.service.core.AbstractCrudService;

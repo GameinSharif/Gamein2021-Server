@@ -1,6 +1,5 @@
 package ir.sharif.gamein2021.core.domain.dto;
 
-import ir.sharif.gamein2021.core.domain.entity.GameinCustomer;
 import lombok.*;
 
 @Getter

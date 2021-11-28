@@ -45,7 +45,6 @@ public class ReadJsonFilesManager {
 
             Resource factoriesJsonFile = new ClassPathResource("JsonFiles/Factories.json");
             Factories = objectMapper.readValue(factoriesJsonFile.getInputStream(), Factory[].class);
-            AuctionService.RemainedFactories = new ArrayList<>(Arrays.asList(Arrays.copyOf(Factories, Factories.length)));
 
             Resource productionLineTemplateJsonFile = new ClassPathResource("JsonFiles/ProductionLineTemplates.json");
             ProductionLineTemplates = objectMapper.readValue(productionLineTemplateJsonFile.getInputStream(), ProductionLineTemplate[].class);

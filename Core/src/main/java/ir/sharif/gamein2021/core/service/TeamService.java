@@ -33,9 +33,8 @@ public class TeamService extends AbstractCrudService<TeamDto, Team, Integer> {
     }
 
     @Transactional
-    public List<TeamDto> findAllEmptyTeamWithCountry(Country country) {
-        return repository.findAllByFactoryIdIsNullAndCountry(country).stream().
-                map(e -> modelMapper.map(e, TeamDto.class)).collect(Collectors.toList());
+    public List<Team> findAllEmptyTeamWithCountry(Country country) {
+        return repository.findAllByFactoryIdIsNullAndCountry(country);
     }
 
     public Integer findTeamIdByFactoryId(Integer factoryId) {
@@ -44,6 +43,11 @@ public class TeamService extends AbstractCrudService<TeamDto, Team, Integer> {
 
     public List<TeamDto> getTeamsOrderByWealthDesc() {
         return repository.findAllByOrderByWealthDesc().stream()
+                .map(e -> modelMapper.map(e, TeamDto.class)).collect(Collectors.toList());
+    }
+
+    public List<TeamDto> findTeamsByFactoryIdIsNotNull(){
+        return repository.findTeamsByFactoryIdIsNotNull().stream()
                 .map(e -> modelMapper.map(e, TeamDto.class)).collect(Collectors.toList());
     }
 }

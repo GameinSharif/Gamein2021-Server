@@ -1,18 +1,19 @@
 package ir.sharif.gamein2021.core.manager.clientHandlerConnection.requests;
 
+import ir.sharif.gamein2021.core.domain.dto.ProductionLineDto;
 import ir.sharif.gamein2021.core.domain.entity.ProductionLine;
 
 import java.util.List;
 
 public class ProductionLinesConstructionCompletedRequest extends BaseClientHandlerRequest{
-    private List<ProductionLine> savedProductionLines;
+    private List<ProductionLineDto> savedProductionLines;
 
-    public ProductionLinesConstructionCompletedRequest(List<ProductionLine> savedProductionLines, String message) {
+    public ProductionLinesConstructionCompletedRequest(List<ProductionLineDto> savedProductionLines, String message) {
         super(message);
         this.savedProductionLines = savedProductionLines;
     }
 
-    public List<ProductionLine> getSavedProductionLines() {
+    public List<ProductionLineDto> getSavedProductionLines() {
         return savedProductionLines;
     }
 }

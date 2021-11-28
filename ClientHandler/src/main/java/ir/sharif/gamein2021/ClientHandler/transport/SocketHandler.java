@@ -56,8 +56,8 @@ public class SocketHandler extends TextWebSocketHandler {
     @Override
     public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
         logger.log(Level.DEBUG, "handleTransportError");
-        socketSessionManager.removeSession(session.getId());
         System.out.println("session " + session.getId() + " error");
+        socketSessionManager.removeSession(session.getId());
         logger.error("session " + session.getId() + " error");
         logger.error("exception socket", exception);
         super.handleTransportError(session, exception);

@@ -6,11 +6,13 @@ import ir.sharif.gamein2021.core.domain.entity.News;
 import ir.sharif.gamein2021.core.exception.EntityNotFoundException;
 import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class NewsService extends AbstractCrudService<NewsDto, News, Integer> {
     private final NewsRepository newsRepository;
     private final ModelMapper modelMapper;

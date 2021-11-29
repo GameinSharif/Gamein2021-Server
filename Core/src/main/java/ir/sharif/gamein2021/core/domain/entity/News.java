@@ -31,8 +31,14 @@ public class News implements BaseEntity{
     @Column(name = "main_text_eng", nullable = false)
     private String mainTextEng;
 
-    @Column(name = "sub_texts_eng")
-    private List<String> subTextsEng;
+    @Column(name = "sub_texts_eng_1")
+    private String subTextsEng1;
+
+    @Column(name = "sub_texts_eng_2")
+    private String subTextsEng2;
+
+    @Column(name = "sub_texts_eng_3")
+    private String subTextsEng3;
 
     @Column(name = "main_title_fa", nullable = false)
     private String mainTitleFa;
@@ -40,8 +46,14 @@ public class News implements BaseEntity{
     @Column(name = "main_text_fa", nullable = false)
     private String mainTextFa;
 
-    @Column(name = "sub_texts_fa")
-    private List<String> subTextsFa;
+    @Column(name = "sub_texts_fa_1")
+    private String subTextsFa1;
+
+    @Column(name = "sub_texts_fa_2")
+    private String subTextsFa2;
+
+    @Column(name = "sub_texts_fa_3")
+    private String subTextsFa3;
 
     @Column(name = "image_index", nullable = false)
     private Integer imageIndex;

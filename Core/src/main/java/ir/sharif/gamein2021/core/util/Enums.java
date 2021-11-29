@@ -76,4 +76,9 @@ public class Enums
     {
         DC, FACTORY
     }
+
+    public enum NewsType
+    {
+        COMMON, SERIOUS
+    }
 }

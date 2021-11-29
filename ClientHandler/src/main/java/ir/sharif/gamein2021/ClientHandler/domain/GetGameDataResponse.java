@@ -1,5 +1,6 @@
 package ir.sharif.gamein2021.ClientHandler.domain;
 
+import ir.sharif.gamein2021.core.domain.dto.NewsDto;
 import ir.sharif.gamein2021.core.domain.dto.TeamDto;
 import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
 import ir.sharif.gamein2021.core.util.GameConstants;
@@ -15,6 +16,7 @@ public class GetGameDataResponse extends ResponseObject implements Serializable
 {
     private List<TeamDto> teams;
     private List<GameinCustomerDto> gameinCustomers;
+    private List<NewsDto> newsDtos;
 
     private Product[] products;
     private Factory[] factories;
@@ -24,11 +26,12 @@ public class GetGameDataResponse extends ResponseObject implements Serializable
 
     public GameConstants gameConstants;
 
-    public GetGameDataResponse(ResponseTypeConstant responseTypeConstant, List<TeamDto> teams, List<GameinCustomerDto> gameinCustomers)
+    public GetGameDataResponse(ResponseTypeConstant responseTypeConstant, List<TeamDto> teams, List<GameinCustomerDto> gameinCustomers, List<NewsDto> newsDtos)
     {
         this.teams = teams;
         this.responseTypeConstant = responseTypeConstant.ordinal();
         this.gameinCustomers = gameinCustomers;
+        this.newsDtos = newsDtos;
 
         products = ReadJsonFilesManager.Products;
         factories = ReadJsonFilesManager.Factories;

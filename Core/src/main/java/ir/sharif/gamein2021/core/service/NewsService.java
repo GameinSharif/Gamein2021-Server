@@ -27,7 +27,7 @@ public class NewsService extends AbstractCrudService<NewsDto, News, Integer> {
         return modelMapper.map(getRepository().findById(id).orElseThrow(EntityNotFoundException::new), NewsDto.class);
     }
 
-    public List<NewsDto> findAllLessThanCurrentWeek(Integer week){
+    public List<NewsDto> findAllLessThanEqualCurrentWeek(Integer week){
         List<News> news = newsRepository.findAllByWeekLessThanEqual(week);
         return news.stream()
                 .map(e -> modelMapper.map(e, NewsDto.class))

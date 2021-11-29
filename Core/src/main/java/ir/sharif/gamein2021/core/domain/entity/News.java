@@ -23,16 +23,25 @@ public class News implements BaseEntity{
 
     @Enumerated(EnumType.STRING)
     @Column(name = "state", nullable = false)
-    private Enums.NewsType newsType;
+    private Enums.NewsType newsTypeEng;
 
-    @Column(name = "main_title", nullable = false)
-    private String mainTitle;
+    @Column(name = "main_title_eng", nullable = false)
+    private String mainTitleEng;
 
-    @Column(name = "main_text", nullable = false)
-    private String mainText;
+    @Column(name = "main_text_eng", nullable = false)
+    private String mainTextEng;
 
-    @Column(name = "sub_texts")
-    private List<String> subTexts;
+    @Column(name = "sub_texts_eng")
+    private List<String> subTextsEng;
+
+    @Column(name = "main_title_fa", nullable = false)
+    private String mainTitleFa;
+
+    @Column(name = "main_text_fa", nullable = false)
+    private String mainTextFa;
+
+    @Column(name = "sub_texts_fa")
+    private List<String> subTextsFa;
 
     @Column(name = "image_index", nullable = false)
     private Integer imageIndex;

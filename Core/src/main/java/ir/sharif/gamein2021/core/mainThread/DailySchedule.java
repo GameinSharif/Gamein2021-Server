@@ -30,6 +30,7 @@ public class DailySchedule {
     private final GameDateManager gameDateManager;
     private final WeekSupplyManager weekSupplyManager;
     private final TeamManager teamManager;
+    private final NewsManager newsManager;
     private final DynamicConfigService dynamicConfigService;
     private final BusinessIntelligenceService businessIntelligenceService;
 
@@ -88,6 +89,7 @@ public class DailySchedule {
         weekSupplyManager.updateWeekSupplyPrices(gameCalendar.getCurrentWeek());
         demandAndSupplyManager.SendCurrentWeekSupplyAndDemandsToAllUsers();
         businessIntelligenceService.prepareWeeklyReport();
+        newsManager.SendNews();
     }
 
     private void updateConfigs() {

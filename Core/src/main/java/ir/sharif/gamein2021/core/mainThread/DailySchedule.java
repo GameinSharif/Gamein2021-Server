@@ -88,8 +88,9 @@ public class DailySchedule {
         teamManager.updateTeamsBrands(GameConstants.brandDailyDecrease);
         weekSupplyManager.updateWeekSupplyPrices(gameCalendar.getCurrentWeek());
         demandAndSupplyManager.SendCurrentWeekSupplyAndDemandsToAllUsers();
-        businessIntelligenceService.prepareWeeklyReport();
         newsManager.SendNews();
+        businessIntelligenceService.prepareWeeklyReport();
+
     }
 
     private void updateConfigs() {

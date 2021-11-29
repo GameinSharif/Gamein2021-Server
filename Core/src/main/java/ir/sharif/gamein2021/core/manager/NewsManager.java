@@ -24,7 +24,6 @@ public class NewsManager {
         Integer week = gameCalendar.getCurrentWeek();
         List<NewsDto> newsDtos = newsService.findByWeek(week);
         SendNewsResponse sendNewsResponse = new SendNewsResponse(ResponseTypeConstant.GET_NEWS, newsDtos);
-
         pushMessageManager.sendMessageToAll(gson.toJson(sendNewsResponse));
     }
 

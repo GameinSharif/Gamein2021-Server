@@ -11,27 +11,30 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Message implements BaseEntity
-{
+public class Report implements BaseEntity{
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne
-    private Team senderTeam;
+    @Column(name = "message_text", nullable = false)
+    private String messageText;
 
     @OneToOne
-    private Team receiverTeam;
+    private Team reporterTeam;
 
-    @Column(name = "text", nullable = false)
-    private String text;
+    @OneToOne
+    private Team reportedTeam;
+
+    @OneToOne
+    private Chat chat;
 
     @Column(nullable = false)
-    private LocalDateTime insertedAt;
+    private LocalDateTime reportedAt;
 
     @Override
-    public Integer getId()
-    {
+    public Integer getId() {
         return id;
     }
+
 }

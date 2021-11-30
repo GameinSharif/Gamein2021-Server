@@ -1,5 +1,6 @@
 package ir.sharif.gamein2021.ClientHandler.domain.Messenger;
 
+import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import ir.sharif.gamein2021.core.view.ResponseObject;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,4 +13,8 @@ public class ReportMessageResponse extends ResponseObject implements Serializabl
 
     private final String result;
 
+    public ReportMessageResponse(ResponseTypeConstant responseTypeConstant, String result) {
+        this.responseTypeConstant = responseTypeConstant.ordinal();
+        this.result = result;
+    }
 }

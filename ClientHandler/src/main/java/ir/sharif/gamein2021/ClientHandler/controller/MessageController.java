@@ -46,9 +46,9 @@ public class MessageController
         try {
             ChatDto chatDto = chatService.loadById(reportMessageRequest.getChatId());
             if (!isMessageInChat(chatDto, reportMessageRequest.getMessageText())) {
-                reportMessageResponse = new ReportMessageResponse("NOT Successful");
+                reportMessageResponse = new ReportMessageResponse(ResponseTypeConstant.REPORT_MESSAGE, "NOT Successful");
             } else if (!isChatAndTeamIdsValid(reportMessageRequest.getChatId(), request.playerId, reportMessageRequest.getReportedTeamId())) {
-                reportMessageResponse = new ReportMessageResponse("NOT Successful");
+                reportMessageResponse = new ReportMessageResponse(ResponseTypeConstant.REPORT_MESSAGE, "NOT Successful");
             } else {
                 ReportDto reportDto = ReportDto.builder()
                         .messageText(reportMessageRequest.getMessageText())
@@ -58,11 +58,11 @@ public class MessageController
                         .reportedAt(LocalDateTime.now())
                         .build();
                 reportService.saveOrUpdate(reportDto);
-                reportMessageResponse = new ReportMessageResponse("Message Reported!");
+                reportMessageResponse = new ReportMessageResponse(ResponseTypeConstant.REPORT_MESSAGE, "Message Reported!");
             }
         } catch (Exception e) {
             System.out.println(e.toString());
-            reportMessageResponse = new ReportMessageResponse("An Error Occurred!");
+            reportMessageResponse = new ReportMessageResponse(ResponseTypeConstant.REPORT_MESSAGE, "An Error Occurred!");
         }
         pushMessageManager.sendMessageByTeamId(request.teamId.toString(), gson.toJson(reportMessageResponse));
     }

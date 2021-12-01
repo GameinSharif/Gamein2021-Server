@@ -15,12 +15,12 @@ public class GameStatusController {
     private final LocalPushMessageManager pushMessageManager;
     private final Gson gson = new Gson();
 
-    public boolean validateGameStatus(ProcessedRequest processedRequest, RequestTypeConstant requestType) {
+    public boolean validateGameStatus(ProcessedRequest processedRequest) {
         switch (GameConstants.gameStatus) {
             case RUNNING:
                 return true;
             case PAUSED:
-                return validatePausedGame(processedRequest, requestType);
+                return validatePausedGame(processedRequest, processedRequest.requestType);
             case STOPPED:
                 UpdateGameStatusResponse response = new UpdateGameStatusResponse(GameConstants.gameStatus);
                 pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(response));

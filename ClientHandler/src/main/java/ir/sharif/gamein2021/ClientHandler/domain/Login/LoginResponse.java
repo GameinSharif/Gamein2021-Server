@@ -13,10 +13,12 @@ public class LoginResponse extends ResponseObject implements Serializable
     private long playerId;
     private String result;
     private TeamDto team;
+    private String token;
 
-    public LoginResponse(ResponseTypeConstant responseTypeConstant, int playerId, String result, TeamDto team)
+    public LoginResponse(int playerId, String result, TeamDto team, String token)
     {
-        this.responseTypeConstant = responseTypeConstant.ordinal();
+        this.token = token;
+        this.responseTypeConstant = ResponseTypeConstant.LOGIN.ordinal();
         this.playerId = playerId;
         this.result = result;
         this.team = team;

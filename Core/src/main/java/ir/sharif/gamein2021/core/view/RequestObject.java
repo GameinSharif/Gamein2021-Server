@@ -5,4 +5,5 @@ import java.io.Serializable;
 public class RequestObject implements Serializable
 {
     public int requestTypeConstant;
+    public String token;
 }

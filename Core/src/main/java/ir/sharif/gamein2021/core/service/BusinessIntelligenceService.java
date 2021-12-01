@@ -88,9 +88,9 @@ public class BusinessIntelligenceService {
             TeamDto teamDto = teamsByFactoryId.get(storageDto.getBuildingId());
             WeeklyReport weeklyReport = weeklyReportByTeamId.get(teamDto.getId());
 
-            weeklyReport.setRawMaterialPercentage(1f * rawMaterialUsedVolume / GameConstants.Instance.rawMaterialCapacity);
-            weeklyReport.setIntermediateMaterialPercentage(1f * semiFinishedUsedVolume / GameConstants.Instance.semiFinishedProductCapacity);
-            weeklyReport.setFinalProductPercentage(1f * finishedUsedVolume / GameConstants.Instance.finishedProductCapacity);
+            weeklyReport.setRawMaterialPercentage(100f * rawMaterialUsedVolume / GameConstants.Instance.rawMaterialCapacity);
+            weeklyReport.setIntermediateMaterialPercentage(100f * semiFinishedUsedVolume / GameConstants.Instance.semiFinishedProductCapacity);
+            weeklyReport.setFinalProductPercentage(100f * finishedUsedVolume / GameConstants.Instance.finishedProductCapacity);
         }
     }
 

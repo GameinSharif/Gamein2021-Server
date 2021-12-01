@@ -104,8 +104,8 @@ public class BusinessIntelligenceService {
             weeklyReport.setInFlow(team.getInFlow() != null ? team.getInFlow() : 0);
             weeklyReport.setOutFlow(team.getOutFlow() != null ? team.getOutFlow() : 0);
             weeklyReport.setTotalCapital(team.getCredit());
-            weeklyReport.setProductionCosts(team.getProductionCost() != null ? team.getOutFlow() : 0);
-            weeklyReport.setTransportationCosts(team.getTransportationCost() != null ? team.getOutFlow() : 0);
+            weeklyReport.setProductionCosts(team.getProductionCost() != null ? team.getProductionCost() : 0);
+            weeklyReport.setTransportationCosts(team.getTransportationCost() != null ? team.getTransportationCost() : 0);
 
             ranking++;
         }

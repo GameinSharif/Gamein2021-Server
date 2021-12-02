@@ -43,6 +43,7 @@ public class GameDataController {
         List<TeamDto> teams = teamService.findAllTeams();
         List<GameinCustomerDto> gameinCustomers = gameinCustomerService.list();
         List<NewsDto> newsDtos = newsService.findAllLessThanEqualCurrentWeek(gameCalendar.getCurrentWeek());
+
         GetGameDataResponse getGameDataResponse = new GetGameDataResponse(
                 ResponseTypeConstant.GET_GAME_DATA,
                 teams, gameinCustomers, newsDtos);

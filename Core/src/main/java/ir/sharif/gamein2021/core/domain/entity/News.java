@@ -22,7 +22,7 @@ public class News implements BaseEntity{
     private Integer week;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "state", nullable = false)
+    @Column(name = "type", nullable = false)
     private Enums.NewsType newsTypeEng;
 
     @Column(name = "main_title_eng", nullable = false)

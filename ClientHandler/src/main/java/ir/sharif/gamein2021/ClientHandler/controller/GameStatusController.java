@@ -45,6 +45,7 @@ public class GameStatusController {
             case GET_STORAGES:
             case GET_GAME_STATUS:
             case BID_FOR_AUCTION:
+            case GET_ALL_WEEKLY_REPORTS:
                 return true;
 
             case NEW_OFFER:
@@ -68,6 +69,9 @@ public class GameStatusController {
             case REMOVE_PRODUCT:
             case NEW_CONTRACT:
             case TERMINATE_CONTRACT:
+            case TRANSPORT_TO_STORAGE:
+            case REJECT_NEGOTIATION:
+            case EDIT_PROVIDER:
             default:
                 UpdateGameStatusResponse response = new UpdateGameStatusResponse(GameConstants.gameStatus);
                 pushMessageManager.sendMessageBySession(request.session, gson.toJson(response));

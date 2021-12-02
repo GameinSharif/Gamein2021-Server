@@ -15,13 +15,17 @@ public class CoronaInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @Column(nullable = false, unique = true, updatable = false)
     @Enumerated(EnumType.STRING)
     private Enums.Country country;
+
     @Column(nullable = false, updatable = false)
-    private Float amountToBeCollect = 10000F;
+    private Float amountToBeCollect;
+
     @Column(nullable = false)
-    private Float currentCollectedAmount = 0F;
+    private Float currentCollectedAmount;
+
     @Column(nullable = false)
     boolean isCoronaOver = true;
 

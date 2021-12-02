@@ -44,14 +44,11 @@ public class GameDataController {
         List<TeamDto> teams = teamService.findAllTeams();
         List<GameinCustomerDto> gameinCustomers = gameinCustomerService.list();
         List<NewsDto> newsDtos = newsService.findAllLessThanEqualCurrentWeek(gameCalendar.getCurrentWeek());
+        List<CoronaInfoDto> coronaInfo = coronaService.getCoronasInfoIfCoronaIsStarted();
 
         GetGameDataResponse getGameDataResponse = new GetGameDataResponse(
                 ResponseTypeConstant.GET_GAME_DATA,
-                teams, gameinCustomers, newsDtos);
-        List<CoronaInfoDto> coronaInfo = coronaService.getCoronasInfoIfCoronaIsStarted();
-        GetGameDataResponse getGameDataResponse = new GetGameDataResponse(
-                ResponseTypeConstant.GET_GAME_DATA,
-                teams, gameinCustomers , coronaInfo);
+                teams, gameinCustomers, newsDtos, coronaInfo);
 
         pushMessageManager.sendMessageBySession(request.session, gson.toJson(getGameDataResponse));
     }

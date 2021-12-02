@@ -19,6 +19,7 @@ public class CoronaManager {
 
     public void SendCoronaInfoToAllUsers() {
         List<CoronaInfoDto> coronaInfos = coronaService.getCoronasInfoIfCoronaIsStarted();
+
         CoronaInfoResponse response = new CoronaInfoResponse(ResponseTypeConstant.CORONA_INFO, coronaInfos);
         pushMessageManager.sendMessageToAll(gson.toJson(response));
     }

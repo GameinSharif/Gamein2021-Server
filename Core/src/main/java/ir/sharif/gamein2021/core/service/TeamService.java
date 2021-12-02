@@ -72,26 +72,35 @@ public class TeamService extends AbstractCrudService<TeamDto, Team, Integer> {
                 .map(e -> modelMapper.map(e, TeamDto.class)).collect(Collectors.toList());
     }
 
-    public List<TeamDto> findTeamsByFactoryIdIsNotNull(){
+    @Transactional(readOnly = true)
+    public List<TeamDto> findTeamsByFactoryIdIsNotNull()
+    {
         return repository.findTeamsByFactoryIdIsNotNull().stream()
                 .map(e -> modelMapper.map(e, TeamDto.class)).collect(Collectors.toList());
+    }
+
     @Transactional
-    public List<CoronaInfoDto> donate(TeamDto team , Float donatedAmount){
+    public List<CoronaInfoDto> donate(TeamDto team , Float donatedAmount)
+    {
         team = loadById(team.getId());
         if(!coronaService.isCoronaStarted())
             throw new InvalidRequestException();
         if(donatedAmount < team.getCredit())
             throw new NotEnoughMoneyException("You don't have this much money to donate!");
+
         var coronaInfo = coronaService.findCoronaInfoWithCountry(team.getCountry());
         if(coronaInfo.isCoronaOver())
             throw new InvalidRequestException("Corona is over in your country!");
+
         var maximumMoneyToDonate = coronaService.calculateAvailableMoneyForDonate(team.getCountry());
+
         donatedAmount = checkMaximumAvailableAmountToDonate(donatedAmount, maximumMoneyToDonate);
         reduceTeamCredit(team, donatedAmount);
         addDonatedMoneyToCoronaInfo(donatedAmount, coronaInfo);
         addDonatedMoneyToTeam(team, donatedAmount);
         saveOrUpdate(team);
         coronaService.changeAndSaveCoronaStatusForCountry(team.getCountry());
+
         return coronaService.getCoronasInfoIfCoronaIsStarted();
     }
 

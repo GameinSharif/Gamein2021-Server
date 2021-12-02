@@ -30,8 +30,9 @@ public class Team implements BaseEntity {
     @Column(updatable = false)
     @Enumerated(value = EnumType.STRING)
     private Country country;
-    //TODO this field should be initialize
-    private float credit;
+
+    @Column
+    private Float credit;
 
     @Column(name = "brand", nullable = false)
     private Float brand;
@@ -52,7 +53,7 @@ public class Team implements BaseEntity {
     private Float productionCost;
 
     @Column(name = "donated_money")
-    private Float donatedAmount = 0F;
+    private Float donatedAmount;
 
     @Override
     public Integer getId() {

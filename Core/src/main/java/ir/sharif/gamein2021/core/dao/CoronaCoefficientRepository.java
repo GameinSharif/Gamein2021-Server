@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CoronaCoefficientRepository extends JpaRepository<CoronaCoefficient, Integer> {
 
-    public CoronaCoefficient findByWeek(Integer week);
+    CoronaCoefficient findByWeek(Integer week);
 }

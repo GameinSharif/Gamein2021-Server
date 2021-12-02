@@ -27,14 +27,13 @@ public class GetGameDataResponse extends ResponseObject implements Serializable 
 
     public GameConstants gameConstants;
 
-    public GetGameDataResponse(ResponseTypeConstant responseTypeConstant, List<TeamDto> teams, List<GameinCustomerDto> gameinCustomers, List<NewsDto> newsDtos)
+    public GetGameDataResponse(ResponseTypeConstant responseTypeConstant, List<TeamDto> teams, List<GameinCustomerDto> gameinCustomers, List<NewsDto> newsDtos, List<CoronaInfoDto> coronaInfos)
     {
         this.teams = teams;
         this.responseTypeConstant = responseTypeConstant.ordinal();
         this.gameinCustomers = gameinCustomers;
         this.newsDtos = newsDtos;
         this.coronaInfos = coronaInfos;
-                               List<CoronaInfoDto> coronaInfos) {
 
         products = ReadJsonFilesManager.Products;
         factories = ReadJsonFilesManager.Factories;

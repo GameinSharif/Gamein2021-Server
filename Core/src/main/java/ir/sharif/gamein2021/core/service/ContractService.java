@@ -77,6 +77,10 @@ public class ContractService extends AbstractCrudService<ContractDto, Contract, 
 
             if (transportDurationDays > 7)
             {
+                contracts.get(i).setBoughtAmount(0);
+                contracts.get(i).setDemandShare(0f);
+                contracts.get(i).setValueShare(0f);
+                saveOrUpdate(modelMapper.map(contracts.get(i), ContractDto.class));
                 contracts.remove(i);
             }
         }

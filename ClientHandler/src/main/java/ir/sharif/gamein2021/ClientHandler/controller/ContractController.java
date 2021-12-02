@@ -43,7 +43,7 @@ public class ContractController
         int playerId = request.playerId;
         UserDto user = userService.loadById(playerId);
         Team userTeam = teamService.findTeamById(user.getTeamId());
-        //TODO check user and his team is not null
+
         List<ContractDto> contracts = contractService.findByTeamAndTerminatedIsFalse(userTeam);
         GetContractsResponse getContractsResponse = new GetContractsResponse(
                 ResponseTypeConstant.GET_CONTRACTS,

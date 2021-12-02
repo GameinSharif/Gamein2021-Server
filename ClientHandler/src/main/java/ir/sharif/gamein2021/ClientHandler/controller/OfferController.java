@@ -144,7 +144,7 @@ public class OfferController {
 
             if (acceptedTeam.getId().equals(accepterTeam.getId())) {
                 acceptOfferResponse = new AcceptOfferResponse(ResponseTypeConstant.ACCEPT_OFFER, null, "Come on!");
-            } else if (acceptedOffer.getOfferStatus() != OfferStatus.ACTIVE || acceptedOffer.getOfferDeadline().isBefore(gameCalendar.getCurrentDate())) {
+            } else if (acceptedOffer.getOfferStatus() != OfferStatus.ACTIVE) {
                 acceptOfferResponse = new AcceptOfferResponse(ResponseTypeConstant.ACCEPT_OFFER, null, "The Offer is not valid");
             } else if (totalPayment > acceptedTeam.getCredit()) {
                 acceptOfferResponse = new AcceptOfferResponse(ResponseTypeConstant.ACCEPT_OFFER, null, "The Offer Placer Team doesn't have enough money!");
@@ -154,6 +154,7 @@ public class OfferController {
             //TODO need to check capacity of accepted team? i think not...
             else {
                 acceptedOffer.setOfferStatus(OfferStatus.ACCEPTED);
+                acceptedOffer.setAcceptDate(gameCalendar.getCurrentDate());
                 acceptedOffer.setAccepterTeamId(accepterTeam.getId());
                 offerService.saveOrUpdate(acceptedOffer);
 

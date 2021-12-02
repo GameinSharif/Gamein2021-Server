@@ -63,11 +63,16 @@ public class SocketSessionManager {
             WebSocketSession session = sessionBySessionId.remove(sessionId);
 
             String teamId = teamIdBySessionId.remove(sessionId);
-            HashSet<String> teamSessionIds = sessionIdsByTeamId.get(teamId);
-            teamSessionIds.remove(sessionId);
+            try {
+                HashSet<String> teamSessionIds = sessionIdsByTeamId.get(teamId);
+                teamSessionIds.remove(sessionId);
 
-            if (teamSessionIds.isEmpty()) {
-                sessionIdsByTeamId.remove(teamId);
+                if (teamSessionIds.isEmpty()) {
+                    sessionIdsByTeamId.remove(teamId);
+                }
+            }
+            catch (Exception e){
+                System.out.println(e.getMessage());
             }
 
             String userId = userIdBySessionId.remove(sessionId);

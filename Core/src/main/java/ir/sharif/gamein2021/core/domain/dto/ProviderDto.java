@@ -1,10 +1,7 @@
 package ir.sharif.gamein2021.core.domain.dto;
 
-import ir.sharif.gamein2021.core.domain.entity.Team;
 import ir.sharif.gamein2021.core.util.Enums;
 import lombok.*;
-
-import javax.persistence.Column;
 
 @Getter
 @Setter
@@ -19,5 +16,5 @@ public class ProviderDto implements BaseDto<Integer>
     private Integer capacity;
     private Float price;
     private Enums.ProviderState state;
-
+    private Integer storageId;
 }

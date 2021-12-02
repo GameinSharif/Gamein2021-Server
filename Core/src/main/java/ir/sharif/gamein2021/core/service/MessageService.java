@@ -1,15 +1,11 @@
 package ir.sharif.gamein2021.core.service;
 
-import ir.sharif.gamein2021.core.domain.dto.ChatDto;
-import ir.sharif.gamein2021.core.domain.entity.Chat;
 import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
 import ir.sharif.gamein2021.core.dao.MessageRepository;
 import ir.sharif.gamein2021.core.domain.dto.MessageDto;
 import ir.sharif.gamein2021.core.domain.entity.Message;
 import ir.sharif.gamein2021.core.util.AssertionUtil;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 
 @Service
 public class MessageService extends AbstractCrudService<MessageDto, Message, Integer>

@@ -38,6 +38,8 @@ public enum RequestTypeConstant
     GET_GAME_STATUS(33),
     TRANSPORT_TO_STORAGE(34),
     GET_ALL_WEEKLY_REPORTS(35),
+    REJECT_NEGOTIATION(36),
+    EDIT_PROVIDER(37);
     DONATE(36);
 
     private int value;

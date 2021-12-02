@@ -1,11 +1,9 @@
 package ir.sharif.gamein2021.core.domain.dto;
 
-import ir.sharif.gamein2021.core.domain.entity.ProductionLineProduct;
-import ir.sharif.gamein2021.core.domain.entity.Team;
 import ir.sharif.gamein2021.core.util.Enums;
 import lombok.*;
 
-import javax.persistence.criteria.CriteriaBuilder;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -14,11 +12,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ProductionLineDto {
+public class ProductionLineDto implements Serializable {
     private Integer id;
     private Integer productionLineTemplateId;
     private Integer teamId;
-    private List<ProductionLineProduct> products;
+    private List<ProductionLineProductDto> products;
     private Integer qualityLevel;
     private Integer efficiencyLevel;
     private Enums.ProductionLineStatus status;

@@ -1,10 +1,7 @@
 package ir.sharif.gamein2021.core.domain.dto;
 
 import ir.sharif.gamein2021.core.util.Enums.NegotiationState;
-import ir.sharif.gamein2021.core.domain.entity.Team;
 import lombok.*;
-
-import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -21,5 +18,6 @@ public class NegotiationDto implements BaseDto<Integer> {
     private Float costPerUnitDemander;
     private Float costPerUnitSupplier;
     private NegotiationState state;
+    private Integer sourceStorageId;
 
 }

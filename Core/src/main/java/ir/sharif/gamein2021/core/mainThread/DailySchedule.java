@@ -30,6 +30,7 @@ public class DailySchedule {
     private final GameDateManager gameDateManager;
     private final WeekSupplyManager weekSupplyManager;
     private final TeamManager teamManager;
+    private final NewsManager newsManager;
     private final DynamicConfigService dynamicConfigService;
     private final BusinessIntelligenceService businessIntelligenceService;
     private final CoronaManager coronaManager;
@@ -37,8 +38,9 @@ public class DailySchedule {
     private final ClientHandlerRequestSenderInterface clientRequestSender;
 
     //Second, Minute, Hour, DayOfMonth, Month, WeekDays
-    @Scheduled(cron = "0 49 22 13 11 ?")
-    public void startGame() {
+    @Scheduled(cron = "0 24 19 27 11 ?")
+    public void startGame()
+    {
         GameConstants.gameStatus = GameStatus.RUNNING;
         dynamicConfigService.setGameStatus(GameConstants.gameStatus);
         UpdateGameStatusRequest request = new UpdateGameStatusRequest("Done", GameConstants.gameStatus);
@@ -68,21 +70,24 @@ public class DailySchedule {
         }
     }
 
-    private void doDailyTasks() {
+    private void doDailyTasks()
+    {
         gameDateManager.SendGameDateToAllUsers();
         productionLineService.enableProductionLines();
         productService.finishProductCreation(gameCalendar.getCurrentDate());
         transportManager.updateTransports();
         contractManager.updateContracts();
+        teamManager.updateAllTeamsMoneyOnClient();
     }
 
-
-    private void doWeeklyTasks() {
+    private void doWeeklyTasks()
+    {
         contractManager.updateGameinCustomerContracts();
-        demandAndSupplyManager.SendCurrentWeekSupplyAndDemandsToAllUsers();
         productionLineService.decreaseWeeklyMaintenanceCost();
         teamManager.updateTeamsBrands(GameConstants.brandDailyDecrease);
         weekSupplyManager.updateWeekSupplyPrices(gameCalendar.getCurrentWeek());
+        demandAndSupplyManager.SendCurrentWeekSupplyAndDemandsToAllUsers();
+        newsManager.SendNews();
         businessIntelligenceService.prepareWeeklyReport();
         coronaManager.SendCoronaInfoToAllUsers();
     }

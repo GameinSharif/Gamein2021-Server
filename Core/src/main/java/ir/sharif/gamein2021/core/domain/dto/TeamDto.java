@@ -14,7 +14,7 @@ public class TeamDto
     private String teamName;
     private Country country;
     private Integer factoryId;
-    private float credit;
+    private Float credit;
     private Float brand;
     private Float wealth;
     private Float inFlow;

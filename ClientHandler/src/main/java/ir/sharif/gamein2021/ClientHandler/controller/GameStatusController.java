@@ -15,12 +15,12 @@ public class GameStatusController {
     private final LocalPushMessageManager pushMessageManager;
     private final Gson gson = new Gson();
 
-    public boolean validateGameStatus(ProcessedRequest processedRequest, RequestTypeConstant requestType) {
+    public boolean validateGameStatus(ProcessedRequest processedRequest) {
         switch (GameConstants.gameStatus) {
             case RUNNING:
                 return true;
             case PAUSED:
-                return validatePausedGame(processedRequest, requestType);
+                return validatePausedGame(processedRequest, processedRequest.requestType);
             case STOPPED:
                 UpdateGameStatusResponse response = new UpdateGameStatusResponse(GameConstants.gameStatus);
                 pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(response));
@@ -32,6 +32,7 @@ public class GameStatusController {
 
     private boolean validatePausedGame(ProcessedRequest request, RequestTypeConstant requestType) {
         switch (requestType) {
+            case LOGIN:
             case GET_OFFERS:
             case GET_GAME_DATA:
             case GET_CONTRACTS:
@@ -43,16 +44,16 @@ public class GameStatusController {
             case GET_CONTRACTS_WITH_SUPPLIER:
             case GET_STORAGES:
             case GET_GAME_STATUS:
+            case BID_FOR_AUCTION:
+            case GET_ALL_WEEKLY_REPORTS:
                 return true;
 
-            case LOGIN:
             case NEW_OFFER:
             case ACCEPT_OFFER:
             case EDIT_NEGOTIATION_COST_PER_UNIT:
             case NEW_PROVIDER:
             case REMOVE_PROVIDER:
             case NEW_PROVIDER_NEGOTIATION:
-            case BID_FOR_AUCTION:
             case TERMINATE_OFFER:
             case NEW_MESSAGE:
             case CONSTRUCT_PRODUCTION_LINE:
@@ -68,6 +69,9 @@ public class GameStatusController {
             case REMOVE_PRODUCT:
             case NEW_CONTRACT:
             case TERMINATE_CONTRACT:
+            case TRANSPORT_TO_STORAGE:
+            case REJECT_NEGOTIATION:
+            case EDIT_PROVIDER:
             default:
                 UpdateGameStatusResponse response = new UpdateGameStatusResponse(GameConstants.gameStatus);
                 pushMessageManager.sendMessageBySession(request.session, gson.toJson(response));

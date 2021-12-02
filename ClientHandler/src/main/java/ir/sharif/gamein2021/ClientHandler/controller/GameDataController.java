@@ -35,13 +35,19 @@ public class GameDataController {
     private final WeekSupplyService weekSupplyService;
     private final AuctionService auctionService;
     private final DcService dcService;
+    private final NewsService newsService;
     private final GameCalendar gameCalendar;
     private final CoronaService coronaService;
     private final Gson gson = new Gson();
 
     public void getGameData(ProcessedRequest request) {
-        List<TeamDto> teams = teamService.list();
+        List<TeamDto> teams = teamService.findAllTeams();
         List<GameinCustomerDto> gameinCustomers = gameinCustomerService.list();
+        List<NewsDto> newsDtos = newsService.findAllLessThanEqualCurrentWeek(gameCalendar.getCurrentWeek());
+
+        GetGameDataResponse getGameDataResponse = new GetGameDataResponse(
+                ResponseTypeConstant.GET_GAME_DATA,
+                teams, gameinCustomers, newsDtos);
         List<CoronaInfoDto> coronaInfo = coronaService.getCoronasInfoIfCoronaIsStarted();
         GetGameDataResponse getGameDataResponse = new GetGameDataResponse(
                 ResponseTypeConstant.GET_GAME_DATA,

@@ -22,7 +22,6 @@ import org.springframework.util.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Slf4j
@@ -83,6 +82,15 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
         return storages;
     }
 
+    @Transactional(readOnly = true)
+    public boolean storageBelongsToTeam(Integer storageId, TeamDto teamDto) {
+        List<StorageDto> allTeamStorage = findAllStorageForTeam(teamDto);
+        for (StorageDto storageDto : allTeamStorage) {
+            if (storageDto.getId().equals(storageId))
+                return true;
+        }
+        return false;
+    }
 
     @Transactional
     public StorageDto deleteProducts(Integer buildingId, boolean isDc, Integer productId, int amount)
@@ -187,7 +195,7 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
         {
             return storageProduct;
         }
-        throw new ProductNotFoundException("Product with id : " + productId + " does not exist in this dc!");
+        throw new ProductNotFoundException("Product with id : " + productId + " does not exist in this storage!");
     }
 
     @Transactional(readOnly = true)

@@ -53,14 +53,11 @@ public class MainController {
     private final Gson gson;
 
     public void HandleMessage(ProcessedRequest processedRequest) {
+        if (!gameStatusController.validateGameStatus(processedRequest)) return;
+        if (!accessManagementController.validateAccess(processedRequest)) return;
+
         String requestData = processedRequest.requestData;
-        JSONObject obj = new JSONObject(requestData);
-        RequestTypeConstant requestType = RequestTypeConstant.values()[obj.getInt("requestTypeConstant")];
-
-        if (!gameStatusController.validateGameStatus(processedRequest, requestType)) return;
-        if (!accessManagementController.validateAccess(processedRequest, requestType)) return;
-
-        switch (requestType) {
+        switch (processedRequest.requestType) {
             case LOGIN:
                 LoginRequest loginRequest = gson.fromJson(requestData, LoginRequest.class);
                 userController.authenticate(processedRequest, loginRequest);
@@ -94,6 +91,10 @@ public class MainController {
             case EDIT_NEGOTIATION_COST_PER_UNIT:
                 EditNegotiationCostPerUnitRequest editRequest = gson.fromJson(requestData, EditNegotiationCostPerUnitRequest.class);
                 negotiationController.editNegotiationCostPerUnit(processedRequest, editRequest);
+                break;
+            case REJECT_NEGOTIATION:
+                RejectNegotiationRequest rejectNegotiationRequest = gson.fromJson(requestData, RejectNegotiationRequest.class);
+                negotiationController.rejectNegotiation(processedRequest, rejectNegotiationRequest);
                 break;
             case NEW_PROVIDER:
                 NewProviderRequest newProviderRequest = gson.fromJson(requestData, NewProviderRequest.class);
@@ -208,6 +209,10 @@ public class MainController {
                 break;
             case GET_ALL_WEEKLY_REPORTS:
                 weeklyReportController.getWeeklyReport(processedRequest);
+                break;
+            case EDIT_PROVIDER:
+                EditProviderRequest editProviderRequest = gson.fromJson(requestData, EditProviderRequest.class);
+                providerController.editProvider(processedRequest, editProviderRequest);
                 break;
             case DONATE:
                 DonateRequest donateRequest = gson.fromJson(requestData , DonateRequest.class);

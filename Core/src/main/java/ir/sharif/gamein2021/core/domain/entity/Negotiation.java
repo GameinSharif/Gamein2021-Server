@@ -2,10 +2,8 @@ package ir.sharif.gamein2021.core.domain.entity;
 
 import ir.sharif.gamein2021.core.util.Enums.NegotiationState;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -41,6 +39,8 @@ public class Negotiation implements BaseEntity{
     @Column(name = "state", nullable = false)
     private NegotiationState state;
 
+    @ManyToOne
+    private Storage sourceStorage;
 
     @Override
     public Integer getId() {

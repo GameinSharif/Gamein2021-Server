@@ -2,6 +2,7 @@ package ir.sharif.gamein2021.core.service;
 
 import ir.sharif.gamein2021.core.dao.ProductionLineProductRepository;
 import ir.sharif.gamein2021.core.dao.ProductionLineRepository;
+import ir.sharif.gamein2021.core.domain.dto.ProductionLineDto;
 import ir.sharif.gamein2021.core.domain.dto.ProductionLineProductDto;
 import ir.sharif.gamein2021.core.domain.entity.ProductionLine;
 import ir.sharif.gamein2021.core.domain.entity.ProductionLineProduct;
@@ -12,6 +13,7 @@ import ir.sharif.gamein2021.core.manager.clientHandlerConnection.requests.Produc
 import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
 import ir.sharif.gamein2021.core.util.models.ProductionLineTemplate;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -30,6 +32,7 @@ public class ProductionLineProductService extends AbstractCrudService<Production
     private final TeamService teamService;
     private final CoronaService coronaService;
     private final TeamManager teamManager;
+    private final ModelMapper modelMapper;
 
     public void finishProductCreation(LocalDate currentDate) {
         List<ProductionLineProduct> products = productionLineProductRepository.findProductionLineProductsByEndDateEquals(currentDate);
@@ -57,9 +60,12 @@ public class ProductionLineProductService extends AbstractCrudService<Production
             teamManager.updateTeamBrand(teamService.loadById(productionLine.getTeam().getId()),  amount * brandCoefficient);
 
             storageService.addProduct(productionLine.getTeam().getFactoryId(), false, product.getProductId(), amount);
-            
             product.setAmount(amount);
-            clientHandlerRequestSender.send(new ProductCreationCompletedRequest(productionLine, product, "Done"));
+
+            ProductionLineDto productionLineDto = modelMapper.map(productionLine, ProductionLineDto.class);
+            ProductionLineProductDto productionLineProductDto = modelMapper.map(product, ProductionLineProductDto.class);
+
+            clientHandlerRequestSender.send(new ProductCreationCompletedRequest(productionLineDto, productionLineProductDto, "Done"));
         }
     }
 }

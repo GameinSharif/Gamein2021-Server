@@ -59,7 +59,7 @@ public class Enums
 
     public enum TransportState
     {
-        SUCCESSFUL, IN_WAY, CRUSHED, PENDING, TERMINATED
+        SUCCESSFUL, IN_WAY, CRUSHED
     }
 
     public enum ProviderState
@@ -75,5 +75,10 @@ public class Enums
     public enum StorageType
     {
         DC, FACTORY
+    }
+
+    public enum NewsType
+    {
+        COMMON, SERIOUS
     }
 }

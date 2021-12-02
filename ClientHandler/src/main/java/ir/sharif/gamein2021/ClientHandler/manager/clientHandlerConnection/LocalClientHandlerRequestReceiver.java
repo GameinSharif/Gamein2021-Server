@@ -6,8 +6,8 @@ import ir.sharif.gamein2021.ClientHandler.domain.productionLine.ProductCreationC
 import ir.sharif.gamein2021.ClientHandler.domain.productionLine.ProductionLineConstructionCompletedResponse;
 import ir.sharif.gamein2021.ClientHandler.domain.weeklyReport.UpdateWeeklyReportResponse;
 import ir.sharif.gamein2021.ClientHandler.manager.LocalPushMessageManager;
+import ir.sharif.gamein2021.core.domain.dto.ProductionLineDto;
 import ir.sharif.gamein2021.core.domain.dto.WeeklyReportDto;
-import ir.sharif.gamein2021.core.domain.entity.ProductionLine;
 import ir.sharif.gamein2021.core.manager.clientHandlerConnection.ClientHandlerRequestReceiverInterface;
 import ir.sharif.gamein2021.core.manager.clientHandlerConnection.requests.*;
 import ir.sharif.gamein2021.core.util.GameConstants;
@@ -37,9 +37,9 @@ public class LocalClientHandlerRequestReceiver implements ClientHandlerRequestRe
             pushMessageManager.sendMessageByUserId(userId, request.getMessage());
         } else if (request instanceof ProductionLinesConstructionCompletedRequest) {
             ProductionLinesConstructionCompletedRequest constructionCompletedRequest = (ProductionLinesConstructionCompletedRequest) request;
-            for (ProductionLine productionLine : constructionCompletedRequest.getSavedProductionLines()) {
+            for (ProductionLineDto productionLine : constructionCompletedRequest.getSavedProductionLines()) {
                 ProductionLineConstructionCompletedResponse response = new ProductionLineConstructionCompletedResponse(productionLine);
-                pushMessageManager.sendMessageByTeamId(productionLine.getTeam().getId().toString(), gson.toJson(response));
+                pushMessageManager.sendMessageByTeamId(productionLine.getTeamId().toString(), gson.toJson(response));
             }
         } else if (request instanceof ProductCreationCompletedRequest) {
             ProductCreationCompletedRequest productCreationCompletedRequest = (ProductCreationCompletedRequest) request;
@@ -58,6 +58,5 @@ public class LocalClientHandlerRequestReceiver implements ClientHandlerRequestRe
                 pushMessageManager.sendMessageByTeamId(String.valueOf(weeklyReport.getTeamId()), gson.toJson(response));
             }
         }
-
     }
 }

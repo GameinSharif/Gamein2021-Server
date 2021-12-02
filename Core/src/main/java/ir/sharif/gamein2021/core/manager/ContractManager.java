@@ -26,6 +26,7 @@ public class ContractManager
     private final WeekDemandService weekDemandService;
     private final TransportManager transportManager;
     private final GameCalendar gameCalendar;
+    private final TeamManager teamManager;
 
     public void updateContracts()
     {
@@ -180,6 +181,7 @@ public class ContractManager
             }
         }
 
+        float equalShareAmount = 1f / contractDtos.size();
         float totalIncome = 0f;
         int remainedDemand = weekDemandDto.getAmount();
         for (Map.Entry<Float, ContractDto> entry : treeMap.entrySet())
@@ -200,6 +202,11 @@ public class ContractManager
                 teamDto.setCredit(teamDto.getCredit() + income);
                 teamDto.setWealth(teamDto.getWealth() + income);
                 teamDto.setInFlow(teamDto.getInFlow() + income);
+
+                if (sharePercent >= equalShareAmount)
+                {
+                    teamManager.updateTeamBrand(teamDto, sharePercent - equalShareAmount + GameConstants.brandIncreaseAfterFinalizeContractWithCustomer);
+                }
             }
             else
             {
@@ -231,10 +238,15 @@ public class ContractManager
             }
             else
             {
-                contractDto.setDemandShare(1f * contractDto.getBoughtAmount() / (weekDemandDto.getAmount() - remainedDemand));
-                contractDto.setValueShare(income / totalIncome);
+                contractDto.setDemandShare(100f * contractDto.getBoughtAmount() / (weekDemandDto.getAmount() - remainedDemand));
+                contractDto.setValueShare(100f * income / totalIncome);
             }
             contractService.saveOrUpdate(contractDto);
+
+            if (contractDto.getBoughtAmount() == 0)
+            {
+                continue;
+            }
 
             transportManager.createTransport(
                     Enums.VehicleType.TRUCK,

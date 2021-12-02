@@ -167,6 +167,12 @@ public class TransportManager
         return (int) Math.ceil((float) transportDistance / ReadJsonFilesManager.findVehicleByType(transportDto.getVehicleType()).getSpeed());
     }
 
+    public int calculateTransportDuration(Enums.TransportNodeType sourceType, int sourceId, Enums.TransportNodeType destinationType, int destinationId, Enums.VehicleType vehicleType)
+    {
+        int transportDistance = getTransportDistance(sourceType, sourceId, destinationType, destinationId, vehicleType);
+        return (int) Math.ceil((float) transportDistance / ReadJsonFilesManager.findVehicleByType(vehicleType).getSpeed());
+    }
+
     public void removeProductWhenTransportStart(TransportDto transportDto)
     {
         if (transportDto.getSourceType().equals(Enums.TransportNodeType.DC))

@@ -49,7 +49,7 @@ public class GameDataController {
     private final Gson gson = new Gson();
 
     public void getGameData(ProcessedRequest request) {
-        List<TeamDto> teams = teamService.list();
+        List<TeamDto> teams = teamService.findAllTeams();
         List<GameinCustomerDto> gameinCustomers = gameinCustomerService.list();
 
         GetGameDataResponse getGameDataResponse = new GetGameDataResponse(

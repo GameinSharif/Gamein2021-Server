@@ -11,6 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,15 +33,33 @@ public class TeamService extends AbstractCrudService<TeamDto, Team, Integer> {
         return getRepository().findById(id).orElseThrow(TeamNotFoundException::new);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
+    public List<TeamDto> findAllTeams()
+    {
+        List<TeamDto> teams = new ArrayList<>();
+        for(TeamDto teamDto : list())
+        {
+            teams.add(TeamDto.builder()
+            .id(teamDto.getId())
+            .teamName(teamDto.getTeamName())
+            .factoryId(teamDto.getFactoryId())
+            .country(teamDto.getCountry())
+            .build());
+        }
+        return teams;
+    }
+
+    @Transactional(readOnly = true)
     public List<Team> findAllEmptyTeamWithCountry(Country country) {
         return repository.findAllByFactoryIdIsNullAndCountry(country);
     }
 
+    @Transactional(readOnly = true)
     public Integer findTeamIdByFactoryId(Integer factoryId) {
         return repository.findTeamByFactoryId(factoryId).getId();
     }
 
+    @Transactional(readOnly = true)
     public List<TeamDto> getTeamsOrderByWealthDesc() {
         return repository.findAllByOrderByWealthDesc().stream()
                 .map(e -> modelMapper.map(e, TeamDto.class)).collect(Collectors.toList());

@@ -4,11 +4,16 @@ import com.google.gson.Gson;
 import ir.sharif.gamein2021.core.domain.dto.AuctionDto;
 import ir.sharif.gamein2021.core.domain.dto.TeamDto;
 import ir.sharif.gamein2021.core.manager.PushMessageManagerInterface;
+import ir.sharif.gamein2021.core.manager.clientHandlerConnection.ClientHandlerRequestSenderInterface;
+import ir.sharif.gamein2021.core.manager.clientHandlerConnection.requests.UpdateGameStatusRequest;
 import ir.sharif.gamein2021.core.response.GetAllAuctionsResponse;
 import ir.sharif.gamein2021.core.response.AuctionFinishedResponse;
 import ir.sharif.gamein2021.core.service.AuctionService;
+import ir.sharif.gamein2021.core.service.DynamicConfigService;
 import ir.sharif.gamein2021.core.service.TeamService;
+import ir.sharif.gamein2021.core.util.GameConstants;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
+import ir.sharif.gamein2021.core.util.models.GameStatus;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -25,6 +30,16 @@ public class AuctionSchedule
     private final AuctionService auctionService;
     private final TeamService teamService;
     private final Gson gson;
+    private final DynamicConfigService configService;
+    private final ClientHandlerRequestSenderInterface clientRequestSender;
+
+    @Scheduled(cron = "0 15 19 27 11 ?")
+    public void startAuction(){
+        GameConstants.gameStatus = GameStatus.AUCTION;
+        configService.setGameStatus(GameConstants.gameStatus);
+        UpdateGameStatusRequest request = new UpdateGameStatusRequest("Done", GameConstants.gameStatus);
+        clientRequestSender.send(request);
+    }
 
     //Second, Minute, Hour, DayOfMonth, Month, WeekDays
     @Scheduled(cron = "0 18,21,24 19 27 11 ?")

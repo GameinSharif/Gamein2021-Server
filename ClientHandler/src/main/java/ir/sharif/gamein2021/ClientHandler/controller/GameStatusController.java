@@ -5,7 +5,6 @@ import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.UpdateGameStatusResponse;
 import ir.sharif.gamein2021.ClientHandler.manager.LocalPushMessageManager;
 import ir.sharif.gamein2021.core.util.GameConstants;
-import ir.sharif.gamein2021.core.util.RequestTypeConstant;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -18,9 +17,11 @@ public class GameStatusController {
     public boolean validateGameStatus(ProcessedRequest processedRequest) {
         switch (GameConstants.gameStatus) {
             case RUNNING:
-                return true;
+                return validateRunningStatus(processedRequest);
             case PAUSED:
-                return validatePausedGame(processedRequest, processedRequest.requestType);
+                return validatePausedStatus(processedRequest);
+            case AUCTION:
+                return validateAuctionStatus(processedRequest);
             case STOPPED:
                 UpdateGameStatusResponse response = new UpdateGameStatusResponse(GameConstants.gameStatus);
                 pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(response));
@@ -30,8 +31,8 @@ public class GameStatusController {
         return false;
     }
 
-    private boolean validatePausedGame(ProcessedRequest request, RequestTypeConstant requestType) {
-        switch (requestType) {
+    private boolean validateAuctionStatus(ProcessedRequest request) {
+        switch (request.requestType) {
             case LOGIN:
             case GET_OFFERS:
             case GET_GAME_DATA:
@@ -47,35 +48,45 @@ public class GameStatusController {
             case BID_FOR_AUCTION:
             case GET_ALL_WEEKLY_REPORTS:
                 return true;
-
-            case NEW_OFFER:
-            case ACCEPT_OFFER:
-            case EDIT_NEGOTIATION_COST_PER_UNIT:
-            case NEW_PROVIDER:
-            case REMOVE_PROVIDER:
-            case NEW_PROVIDER_NEGOTIATION:
-            case TERMINATE_OFFER:
-            case NEW_MESSAGE:
-            case CONSTRUCT_PRODUCTION_LINE:
-            case SCRAP_PRODUCTION_LINE:
-            case START_PRODUCTION:
-            case UPGRADE_PRODUCTION_LINE_QUALITY:
-            case UPGRADE_PRODUCTION_LINE_EFFICIENCY:
-            case NEW_CONTRACT_WITH_SUPPLIER:
-            case TERMINATE_LONGTERM_CONTRACT_WITH_SUPPLIER:
-            case BUY_DC:
-            case SELL_DC:
-            case ADD_PRODUCT:
-            case REMOVE_PRODUCT:
-            case NEW_CONTRACT:
-            case TERMINATE_CONTRACT:
-            case TRANSPORT_TO_STORAGE:
-            case REJECT_NEGOTIATION:
-            case EDIT_PROVIDER:
             default:
                 UpdateGameStatusResponse response = new UpdateGameStatusResponse(GameConstants.gameStatus);
                 pushMessageManager.sendMessageBySession(request.session, gson.toJson(response));
                 return false;
         }
     }
-}
+
+        private boolean validateRunningStatus (ProcessedRequest request){
+            switch (request.requestType) {
+                case BID_FOR_AUCTION:
+                    UpdateGameStatusResponse response = new UpdateGameStatusResponse(GameConstants.gameStatus);
+                    pushMessageManager.sendMessageBySession(request.session, gson.toJson(response));
+                    return false;
+                default:
+                    return true;
+            }
+        }
+
+        private boolean validatePausedStatus (ProcessedRequest request){
+            switch (request.requestType) {
+                case LOGIN:
+                case GET_OFFERS:
+                case GET_GAME_DATA:
+                case GET_CONTRACTS:
+                case GET_NEGOTIATIONS:
+                case GET_PROVIDERS:
+                case GET_ALL_CHATS:
+                case GET_PRODUCTION_LINES:
+                case GET_TEAM_TRANSPORTS:
+                case GET_CONTRACTS_WITH_SUPPLIER:
+                case GET_STORAGES:
+                case GET_GAME_STATUS:
+                case GET_ALL_WEEKLY_REPORTS:
+                    return true;
+
+                default:
+                    UpdateGameStatusResponse response = new UpdateGameStatusResponse(GameConstants.gameStatus);
+                    pushMessageManager.sendMessageBySession(request.session, gson.toJson(response));
+                    return false;
+            }
+        }
+    }

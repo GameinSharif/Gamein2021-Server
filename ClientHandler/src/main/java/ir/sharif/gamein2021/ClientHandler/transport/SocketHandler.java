@@ -50,7 +50,8 @@ public class SocketHandler extends TextWebSocketHandler {
             //String encryptedMessage = message.getPayload();
             //String decryptedMessage = encryptDecryptService.decryptMessage(encryptedMessage);
             ProcessedRequest processedRequest = new ProcessedRequest(session, message.getPayload(), socketSessionManager);
-            mainController.HandleMessage(processedRequest, transaction);
+            transaction.setName(processedRequest.requestType.name());
+            mainController.HandleMessage(processedRequest);
         } catch (Exception exception) {
             transaction.captureException(exception);
             exception.printStackTrace();

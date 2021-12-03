@@ -22,6 +22,7 @@ public class GameConstants {
     public static final int brandMin = 1;
     public static final float brandDailyDecrease = -0.2f;
     public static final float brandIncreaseAfterDeal = 0.05f;
+    public static final float brandIncreaseAfterFinalizeContractWithCustomer = 0.05f;
 
     public final int AuctionStartValue = 1000;
     public final int AuctionInitialStepValue = 100;
@@ -39,5 +40,5 @@ public class GameConstants {
 
     public static final float CrushProbability = 0.01f;
 
-    public static GameStatus gameStatus = GameStatus.PAUSED;
+    public static GameStatus gameStatus = GameStatus.RUNNING;
 }

@@ -88,9 +88,9 @@ public class BusinessIntelligenceService {
             TeamDto teamDto = teamsByFactoryId.get(storageDto.getBuildingId());
             WeeklyReport weeklyReport = weeklyReportByTeamId.get(teamDto.getId());
 
-            weeklyReport.setRawMaterialPercentage(1f * rawMaterialUsedVolume / GameConstants.Instance.rawMaterialCapacity);
-            weeklyReport.setIntermediateMaterialPercentage(1f * semiFinishedUsedVolume / GameConstants.Instance.semiFinishedProductCapacity);
-            weeklyReport.setFinalProductPercentage(1f * finishedUsedVolume / GameConstants.Instance.finishedProductCapacity);
+            weeklyReport.setRawMaterialPercentage(100f * rawMaterialUsedVolume / GameConstants.Instance.rawMaterialCapacity);
+            weeklyReport.setIntermediateMaterialPercentage(100f * semiFinishedUsedVolume / GameConstants.Instance.semiFinishedProductCapacity);
+            weeklyReport.setFinalProductPercentage(100f * finishedUsedVolume / GameConstants.Instance.finishedProductCapacity);
         }
     }
 
@@ -104,8 +104,8 @@ public class BusinessIntelligenceService {
             weeklyReport.setInFlow(team.getInFlow() != null ? team.getInFlow() : 0);
             weeklyReport.setOutFlow(team.getOutFlow() != null ? team.getOutFlow() : 0);
             weeklyReport.setTotalCapital(team.getCredit());
-            weeklyReport.setProductionCosts(team.getProductionCost() != null ? team.getOutFlow() : 0);
-            weeklyReport.setTransportationCosts(team.getTransportationCost() != null ? team.getOutFlow() : 0);
+            weeklyReport.setProductionCosts(team.getProductionCost() != null ? team.getProductionCost() : 0);
+            weeklyReport.setTransportationCosts(team.getTransportationCost() != null ? team.getTransportationCost() : 0);
 
             ranking++;
         }

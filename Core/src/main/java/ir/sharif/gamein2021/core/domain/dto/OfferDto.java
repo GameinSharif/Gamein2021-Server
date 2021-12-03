@@ -19,7 +19,8 @@ public class OfferDto implements BaseDto<Integer>
     private OfferStatus offerStatus;
     private Integer accepterTeamId;
     private Float costPerUnit;
-    private LocalDate offerDeadline;
+    private LocalDate acceptDate;
+    private LocalDate insertedAt;
 
     @Override
     public String toString()
@@ -30,7 +31,8 @@ public class OfferDto implements BaseDto<Integer>
                 ", productId='" + productId + '\'' +
                 ", volume=" + volume +
                 ", costPerUnit=" + costPerUnit +
-                ", offerDeadline=" + offerDeadline +
+                ", acceptDate=" + acceptDate +
+                ", insertedAt=" + insertedAt +
                 '}';
     }
 }

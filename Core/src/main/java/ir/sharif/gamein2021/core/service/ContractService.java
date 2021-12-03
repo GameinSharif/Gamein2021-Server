@@ -2,11 +2,13 @@ package ir.sharif.gamein2021.core.service;
 
 import ir.sharif.gamein2021.core.domain.dto.GameinCustomerDto;
 import ir.sharif.gamein2021.core.domain.entity.GameinCustomer;
+import ir.sharif.gamein2021.core.manager.TransportManager;
 import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
 import ir.sharif.gamein2021.core.dao.ContractRepository;
 import ir.sharif.gamein2021.core.domain.dto.ContractDto;
 import ir.sharif.gamein2021.core.domain.entity.Contract;
 import ir.sharif.gamein2021.core.domain.entity.Team;
+import ir.sharif.gamein2021.core.util.Enums;
 import ir.sharif.gamein2021.core.util.models.Product;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +24,14 @@ public class ContractService extends AbstractCrudService<ContractDto, Contract, 
 {
     private final ContractRepository contractRepository;
     private final ModelMapper modelMapper;
+    private final TransportManager transportManager;
 
     @Autowired
-    public ContractService(ContractRepository contractRepository, ModelMapper modelMapper)
+    public ContractService(ContractRepository contractRepository, ModelMapper modelMapper, TransportManager transportManager)
     {
         this.contractRepository = contractRepository;
         this.modelMapper = modelMapper;
+        this.transportManager = transportManager;
         setRepository(contractRepository);
     }
 
@@ -60,6 +64,27 @@ public class ContractService extends AbstractCrudService<ContractDto, Contract, 
     {
         GameinCustomer gameinCustomer = modelMapper.map(gameinCustomerDto, GameinCustomer.class);
         List<Contract> contracts = contractRepository.findContractsByGameinCustomerAndProductIdAndContractDateAndIsTerminatedIsFalse(gameinCustomer, product.getId(), date);
+
+        for(int i = contracts.size() - 1; i >= 0; i--)
+        {
+            int transportDurationDays = transportManager.calculateTransportDuration(
+                    Enums.TransportNodeType.FACTORY,
+                    contracts.get(i).getTeam().getId(), //TODO use storage
+                    Enums.TransportNodeType.GAMEIN_CUSTOMER,
+                    gameinCustomer.getId(),
+                    Enums.VehicleType.TRUCK
+            );
+
+            if (transportDurationDays > 7)
+            {
+                contracts.get(i).setBoughtAmount(0);
+                contracts.get(i).setDemandShare(0f);
+                contracts.get(i).setValueShare(0f);
+                saveOrUpdate(modelMapper.map(contracts.get(i), ContractDto.class));
+                contracts.remove(i);
+            }
+        }
+
         return contracts.stream()
                 .map(e -> modelMapper.map(e, ContractDto.class))
                 .collect(Collectors.toList());

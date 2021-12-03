@@ -51,16 +51,12 @@ public class MainController {
     private final WeeklyReportController weeklyReportController;
     private final Gson gson;
 
-    public void HandleMessage(ProcessedRequest processedRequest, Transaction transaction) {
+    public void HandleMessage(ProcessedRequest processedRequest) {
+        if (!gameStatusController.validateGameStatus(processedRequest)) return;
+        if (!accessManagementController.validateAccess(processedRequest)) return;
+
         String requestData = processedRequest.requestData;
-        JSONObject obj = new JSONObject(requestData);
-        RequestTypeConstant requestType = RequestTypeConstant.values()[obj.getInt("requestTypeConstant")];
-        transaction.setName(requestType.name());
-
-        if (!gameStatusController.validateGameStatus(processedRequest, requestType)) return;
-        if (!accessManagementController.validateAccess(processedRequest, requestType)) return;
-
-        switch (requestType) {
+        switch (processedRequest.requestType) {
             case LOGIN:
                 LoginRequest loginRequest = gson.fromJson(requestData, LoginRequest.class);
                 userController.authenticate(processedRequest, loginRequest);

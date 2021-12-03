@@ -166,6 +166,7 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
 
             for (ProductIngredient productIngredient : productTemplate.getIngredientsPerUnit()) {
                 if (isWater(productIngredient.getProductId())) {
+                    newCredit -= getWaterCost(amount);
                     continue;
                 }
 
@@ -191,6 +192,15 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
         ProductionLineProduct savedProduct = productRepository.saveAndFlush(newProduct);
         productionLine.getProducts().add(savedProduct);
         return modelMapper.map(productionLine, ProductionLineDto.class);
+    }
+
+    private float getWaterCost(Integer amount) {
+        Product water = ReadJsonFilesManager.ProductHashMap.get(4);
+        if (gameCalendar.getCurrentWeek() < 51) {
+            return water.getMinPrice() * amount;
+        }
+
+        return water.getMaxPrice() * amount;
     }
 
     private boolean isWater(int productId) {

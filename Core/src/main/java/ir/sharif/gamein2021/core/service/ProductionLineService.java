@@ -166,7 +166,9 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
 
             for (ProductIngredient productIngredient : productTemplate.getIngredientsPerUnit()) {
                 if (isWater(productIngredient.getProductId())) {
+                    Product water = ReadJsonFilesManager.ProductHashMap.get(4);
                     newCredit -= getWaterCost(amount);
+                    team.setUsedWater(team.getUsedWater() + (long) amount * water.getVolumetricUnit());
                     continue;
                 }
 

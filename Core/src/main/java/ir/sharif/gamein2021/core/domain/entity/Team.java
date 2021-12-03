@@ -48,6 +48,9 @@ public class Team implements BaseEntity {
     @Column(name = "production_cost")
     private Float productionCost;
 
+    @Column(name = "used_water")
+    private Long usedWater;
+
     @Override
     public Integer getId() {
         return id;

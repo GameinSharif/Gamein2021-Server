@@ -11,6 +11,7 @@ import java.io.Serializable;
 public class NewContractRequest extends RequestObject implements Serializable
 {
     private Integer gameinCustomerId;
+    private Integer storageId;
     private Integer productId;
     private Integer amount;
     private Float pricePerUnit;

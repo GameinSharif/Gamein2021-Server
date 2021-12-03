@@ -3,16 +3,14 @@ package ir.sharif.gamein2021.ClientHandler.controller;
 import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Contract.*;
+import ir.sharif.gamein2021.ClientHandler.domain.RFQ.NewProviderResponse;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
 import ir.sharif.gamein2021.core.domain.dto.*;
 import ir.sharif.gamein2021.core.mainThread.GameCalendar;
 import ir.sharif.gamein2021.core.manager.PushMessageManagerInterface;
 import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
-import ir.sharif.gamein2021.core.service.GameinCustomerService;
-import ir.sharif.gamein2021.core.service.TeamService;
+import ir.sharif.gamein2021.core.service.*;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
-import ir.sharif.gamein2021.core.service.ContractService;
-import ir.sharif.gamein2021.core.service.UserService;
 import ir.sharif.gamein2021.core.domain.entity.Team;
 import ir.sharif.gamein2021.core.util.models.Product;
 import lombok.AllArgsConstructor;
@@ -34,6 +32,7 @@ public class ContractController
     private final ContractService contractService;
     private final UserService userService;
     private final TeamService teamService;
+    private final StorageService storageService;
     private final GameinCustomerService gameinCustomerService;
     private final GameCalendar gameCalendar;
     private final Gson gson = new Gson();
@@ -57,11 +56,16 @@ public class ContractController
     {
         int playerId = request.playerId;
         UserDto user = userService.loadById(playerId);
-        Team userTeam = teamService.findTeamById(user.getTeamId());
+        TeamDto userTeam = teamService.loadById(user.getTeamId());
 
         NewContractResponse newContractResponse;
         try
         {
+            if (!storageService.storageBelongsToTeam(newContractRequest.getStorageId(), userTeam))
+            {
+                throw new Exception();
+            }
+
             for (int i = 0; i < newContractRequest.getWeeks(); i++)
             {
                 GameinCustomerDto gameinCustomerDto = gameinCustomerService.loadById(newContractRequest.getGameinCustomerId());
@@ -81,6 +85,7 @@ public class ContractController
 
                 ContractDto contractDto = new ContractDto();
                 contractDto.setTeamId(userTeam.getId());
+                contractDto.setStorageId(newContractRequest.getStorageId());
                 contractDto.setGameinCustomerId(gameinCustomerDto.getId());
                 contractDto.setProductId(product.getId());
                 contractDto.setTerminatePenalty(1000); //TODO set this penalty

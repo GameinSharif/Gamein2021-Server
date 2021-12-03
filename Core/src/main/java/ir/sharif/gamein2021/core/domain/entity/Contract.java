@@ -22,6 +22,9 @@ public class Contract implements BaseEntity
     private Team team;
 
     @ManyToOne
+    private Storage storage;
+
+    @ManyToOne
     private GameinCustomer gameinCustomer;
 
     @Column(name = "product_id", nullable = false)

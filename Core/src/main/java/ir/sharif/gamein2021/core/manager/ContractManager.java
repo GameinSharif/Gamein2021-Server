@@ -161,11 +161,16 @@ public class ContractManager
 
         for (ContractDto contractDto : contractDtos)
         {
-            TeamDto teamDto = teamService.loadById(contractDto.getTeamId());
+            StorageDto storageDto = storageService.loadById(contractDto.getStorageId());
 
             float B = contractDto.getCurrentBrand();
             float P = contractDto.getPricePerUnit();
-            int d = transportManager.getTransportDistance(Enums.TransportNodeType.FACTORY, teamDto.getFactoryId(), Enums.TransportNodeType.GAMEIN_CUSTOMER, weekDemandDto.getGameinCustomerId(), Enums.VehicleType.TRUCK);
+            int d = transportManager.getTransportDistance(
+                    storageDto.getDc() ? Enums.TransportNodeType.DC : Enums.TransportNodeType.FACTORY,
+                    storageDto.getBuildingId(),
+                    Enums.TransportNodeType.GAMEIN_CUSTOMER,
+                    weekDemandDto.getGameinCustomerId(),
+                    Enums.VehicleType.TRUCK);
 
             float share = B / (GameConstants.ShareAllocationAlpha * P + GameConstants.ShareAllocationBeta * d);
             treeMap.put(share, contractDto);
@@ -188,11 +193,17 @@ public class ContractManager
         {
             float sharePercent = entry.getKey() / totalShares;
             ContractDto contractDto = entry.getValue();
+            StorageDto storageDto = storageService.loadById(contractDto.getStorageId());
 
             int sale = (int) Math.floor(Math.min(contractDto.getSupplyAmount(), weekDemandDto.getAmount() * sharePercent));
 
             TeamDto teamDto = teamService.loadById(contractDto.getTeamId());
-            StorageProductDto storageProductDto = storageService.getStorageProductWithBuildingId(teamDto.getFactoryId(), false, contractDto.getProductId());
+
+            StorageProductDto storageProductDto = storageService.getStorageProductWithBuildingId(
+                    storageDto.getBuildingId(),
+                    storageDto.getDc(),
+                    contractDto.getProductId());
+
             if (storageProductDto != null && storageProductDto.getAmount() >= sale)
             {
                 remainedDemand -= sale;
@@ -248,10 +259,12 @@ public class ContractManager
                 continue;
             }
 
+            StorageDto storageDto = storageService.loadById(contractDto.getStorageId());
+
             transportManager.createTransport(
                     Enums.VehicleType.TRUCK,
-                    Enums.TransportNodeType.FACTORY,
-                    teamService.findTeamById(contractDto.getTeamId()).getFactoryId(),
+                    storageDto.getDc() ? Enums.TransportNodeType.DC : Enums.TransportNodeType.FACTORY,
+                    storageDto.getBuildingId(),
                     Enums.TransportNodeType.GAMEIN_CUSTOMER,
                     contractDto.getGameinCustomerId(),
                     gameCalendar.getCurrentDate(),

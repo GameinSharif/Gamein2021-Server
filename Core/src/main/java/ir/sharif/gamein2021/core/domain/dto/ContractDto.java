@@ -13,6 +13,7 @@ public class ContractDto implements BaseDto<Integer>
 {
     private Integer id;
     private Integer teamId;
+    private Integer storageId;
     private Integer gameinCustomerId;
     private Integer productId;
     private LocalDate contractDate;

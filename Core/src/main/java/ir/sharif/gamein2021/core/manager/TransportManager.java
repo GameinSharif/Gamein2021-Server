@@ -164,13 +164,13 @@ public class TransportManager
     private int calculateTransportDuration(TransportDto transportDto)
     {
         int transportDistance = getTransportDistance(transportDto);
-        return (int) Math.ceil((float) transportDistance / ReadJsonFilesManager.findVehicleByType(transportDto.getVehicleType()).getSpeed());
+        return (int) Math.ceil(1f * transportDistance / ReadJsonFilesManager.findVehicleByType(transportDto.getVehicleType()).getSpeed());
     }
 
     public int calculateTransportDuration(Enums.TransportNodeType sourceType, int sourceId, Enums.TransportNodeType destinationType, int destinationId, Enums.VehicleType vehicleType)
     {
         int transportDistance = getTransportDistance(sourceType, sourceId, destinationType, destinationId, vehicleType);
-        return (int) Math.ceil((float) transportDistance / ReadJsonFilesManager.findVehicleByType(vehicleType).getSpeed());
+        return (int) Math.ceil(1f * transportDistance / ReadJsonFilesManager.findVehicleByType(vehicleType).getSpeed());
     }
 
     public void removeProductWhenTransportStart(TransportDto transportDto)
@@ -244,7 +244,7 @@ public class TransportManager
         Vehicle transportVehicle = ReadJsonFilesManager.findVehicleByType(vehicleType);
         float vehicleCost = transportVehicle.getCostPerKilometer() * distance * insuranceFactor;
         int productVolume = ReadJsonFilesManager.findProductById(productId).getVolumetricUnit() * productAmount;
-        int vehicleCount = (int) Math.ceil((float) productVolume / transportVehicle.getCapacity());
+        int vehicleCount = (int) Math.ceil(1f * productVolume / transportVehicle.getCapacity());
         return vehicleCost * vehicleCount;
     }
 
@@ -253,7 +253,7 @@ public class TransportManager
         Vehicle transportVehicle = ReadJsonFilesManager.findVehicleByType(vehicleType);
         float vehicleCost = transportVehicle.getCostPerKilometer() * distance;
         int productVolume = ReadJsonFilesManager.findProductById(productId).getVolumetricUnit() * productAmount;
-        int vehicleCount = (int) Math.ceil((float) productVolume / transportVehicle.getCapacity());
+        int vehicleCount = (int) Math.ceil(1f * productVolume / transportVehicle.getCapacity());
         return vehicleCost * vehicleCount;
     }
 

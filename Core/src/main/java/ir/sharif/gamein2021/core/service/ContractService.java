@@ -1,7 +1,9 @@
 package ir.sharif.gamein2021.core.service;
 
 import ir.sharif.gamein2021.core.domain.dto.GameinCustomerDto;
+import ir.sharif.gamein2021.core.domain.dto.TeamDto;
 import ir.sharif.gamein2021.core.domain.entity.GameinCustomer;
+import ir.sharif.gamein2021.core.domain.entity.Storage;
 import ir.sharif.gamein2021.core.manager.TransportManager;
 import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
 import ir.sharif.gamein2021.core.dao.ContractRepository;
@@ -67,9 +69,11 @@ public class ContractService extends AbstractCrudService<ContractDto, Contract, 
 
         for(int i = contracts.size() - 1; i >= 0; i--)
         {
+            Storage storage = contracts.get(i).getStorage();
+
             int transportDurationDays = transportManager.calculateTransportDuration(
-                    Enums.TransportNodeType.FACTORY,
-                    contracts.get(i).getTeam().getId(), //TODO use storage
+                    storage.getDc() ? Enums.TransportNodeType.DC : Enums.TransportNodeType.FACTORY,
+                    storage.getBuildingId(),
                     Enums.TransportNodeType.GAMEIN_CUSTOMER,
                     gameinCustomer.getId(),
                     Enums.VehicleType.TRUCK
@@ -91,9 +95,10 @@ public class ContractService extends AbstractCrudService<ContractDto, Contract, 
     }
 
     @Transactional(readOnly = true)
-    public ContractDto findByTeamAndDateAndGameinCustomerAndProduct(Team team, LocalDate date, GameinCustomerDto gameinCustomerDto, Product product)
+    public ContractDto findByTeamAndDateAndGameinCustomerAndProduct(TeamDto teamDto, LocalDate date, GameinCustomerDto gameinCustomerDto, Product product)
     {
         GameinCustomer gameinCustomer = modelMapper.map(gameinCustomerDto, GameinCustomer.class);
+        Team team = modelMapper.map(teamDto, Team.class);
         Contract contract = contractRepository.findContractByTeamAndGameinCustomerAndProductIdAndContractDate(team, gameinCustomer, product.getId(), date);
         if (contract == null)
         {

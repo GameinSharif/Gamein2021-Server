@@ -112,7 +112,7 @@ public class ContractSupplierController
     {
         ContractSupplierDto contractSupplierDto = contractSupplierService.findById(terminateLongtermContractSupplierRequest.getContractId());
         TerminateLongtermContractSupplierResponse terminateLongtermContractSupplierResponse;
-        if (contractSupplierDto.getTeamId().equals(request.teamId) && contractSupplierDto.getContractDate().isAfter(gameCalendar.getCurrentDate()))
+        if (contractSupplierDto.getTeamId().equals(request.teamId) && contractSupplierDto.getContractDate().isAfter(gameCalendar.getCurrentDate()) && !contractSupplierDto.getIsTerminated())
         {
             Integer penalty = contractSupplierDto.getTerminatePenalty();
             float teamCredit = teamService.findTeamById(request.teamId).getCredit();

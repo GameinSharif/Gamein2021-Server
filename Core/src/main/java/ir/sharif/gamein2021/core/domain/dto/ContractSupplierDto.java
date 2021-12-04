@@ -12,7 +12,6 @@ import java.time.LocalDate;
 @Builder
 public class ContractSupplierDto
 {
-
     private Integer id;
     private LocalDate contractDate;
     private Integer supplierId;
@@ -26,5 +25,4 @@ public class ContractSupplierDto
     private Integer terminatePenalty;
     private Boolean isTerminated;
     private Integer noMoneyPenalty;
-
 }

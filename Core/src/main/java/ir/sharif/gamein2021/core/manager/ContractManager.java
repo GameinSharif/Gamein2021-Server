@@ -46,7 +46,7 @@ public class ContractManager
 
         for (ContractSupplierDto contractSupplierDto : contractSupplierDtos)
         {
-            if (contractSupplierDto.isTerminated() || contractSupplierDto.getTransportationCost() != null)
+            if (contractSupplierDto.getIsTerminated() || contractSupplierDto.getTransportationCost() != null)
             {
                 continue;
             }
@@ -71,7 +71,7 @@ public class ContractManager
 
         Enums.VehicleType vehicleType = contractSupplierDto.getTransportType();
         Integer supplierId = contractSupplierDto.getSupplierId();
-        boolean hasInsurance = contractSupplierDto.isHasInsurance();
+        Boolean hasInsurance = contractSupplierDto.getHasInsurance();
         Integer materialId = contractSupplierDto.getMaterialId();
         Integer amount = contractSupplierDto.getBoughtAmount();
 

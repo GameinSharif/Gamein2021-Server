@@ -21,10 +21,10 @@ public class ContractSupplierDto
     private Float pricePerUnit;
     private Integer boughtAmount;
     private Enums.VehicleType transportType;
-    private boolean hasInsurance;
+    private Boolean hasInsurance;
     private Float transportationCost;
     private Integer terminatePenalty;
-    private boolean isTerminated;
+    private Boolean isTerminated;
     private Integer noMoneyPenalty;
 
 }

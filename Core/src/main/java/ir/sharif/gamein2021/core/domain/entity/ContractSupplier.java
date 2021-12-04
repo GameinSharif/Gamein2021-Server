@@ -41,7 +41,7 @@ public class ContractSupplier implements BaseEntity
     private Enums.VehicleType transportType;
 
     @Column(name = "has_insurance", nullable = false, columnDefinition = "TINYINT(1)")
-    private boolean hasInsurance;
+    private Boolean hasInsurance;
 
     @Column(name = "transportation_cost")
     private Float transportationCost;
@@ -50,7 +50,7 @@ public class ContractSupplier implements BaseEntity
     private Integer terminatePenalty;
 
     @Column(name = "is_terminated", nullable = false, columnDefinition = "TINYINT(1)")
-    private boolean isTerminated;
+    private Boolean isTerminated;
 
     @Column(name = "no_money_penalty", nullable = false)
     private Integer noMoneyPenalty;

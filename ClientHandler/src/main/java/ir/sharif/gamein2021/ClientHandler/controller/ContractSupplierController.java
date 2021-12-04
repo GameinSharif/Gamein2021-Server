@@ -99,7 +99,7 @@ public class ContractSupplierController
         newContractSupplierDto.setSupplierId(supplierId);
         newContractSupplierDto.setMaterialId(materialId);
         newContractSupplierDto.setTeamId(teamDto.getId());
-        newContractSupplierDto.setTerminated(false);
+        newContractSupplierDto.setIsTerminated(false);
         newContractSupplierDto.setHasInsurance(hasInsurance);
         newContractSupplierDto.setTransportType(vehicleType);
         newContractSupplierDto.setTerminatePenalty(100); //TODO
@@ -122,7 +122,7 @@ public class ContractSupplierController
             }
             else
             {
-                contractSupplierDto.setTerminated(true);
+                contractSupplierDto.setIsTerminated(true);
                 TeamDto team = teamService.loadById(request.teamId);
                 team.setCredit(teamCredit - penalty);
                 team.setWealth(team.getWealth() - penalty);
@@ -152,7 +152,7 @@ public class ContractSupplierController
         }
         else
         {
-            List<ContractSupplierDto> contractSupplierDtos = contractSupplierService.findByTeam(userTeam);
+            List<ContractSupplierDto> contractSupplierDtos = contractSupplierService.findByTeamAndNotTerminated(userTeam);
             getContractsSupplierResponse = new GetContractsSupplierResponse(ResponseTypeConstant.GET_CONTRACTS_WITH_SUPPLIER, contractSupplierDtos);
         }
 

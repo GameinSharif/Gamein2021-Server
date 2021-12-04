@@ -12,6 +12,6 @@ import java.util.List;
 public interface ContractSupplierRepository extends JpaRepository<ContractSupplier, Integer>
 {
     ContractSupplier findContractSupplierById(Integer id);
-    List<ContractSupplier> findByTeam(Team team);
+    List<ContractSupplier> findByTeamAndIsTerminatedFalse(Team team);
     List<ContractSupplier> findAllByContractDate(LocalDate date);
 }

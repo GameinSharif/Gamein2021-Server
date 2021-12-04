@@ -92,7 +92,6 @@ public class DailySchedule {
         demandAndSupplyManager.SendCurrentWeekSupplyAndDemandsToAllUsers();
         newsManager.SendNews();
         businessIntelligenceService.prepareWeeklyReport();
-
     }
 
     private void updateConfigs() {

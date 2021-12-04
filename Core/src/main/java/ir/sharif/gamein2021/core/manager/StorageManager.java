@@ -16,24 +16,30 @@ import java.util.List;
 
 @AllArgsConstructor
 @Component
-public class StorageManager {
-    private final DcService dcService;
+public class StorageManager
+{
     private final TeamService teamService;
     private final StorageService storageService;
 
-    public void MaintenanceCost(){
-        List<TeamDto> teamDtos = teamService.findAllTeams();
-        for(TeamDto teamDto : teamDtos){
+    public void MaintenanceCost()
+    {
+        List<TeamDto> teamDtos = teamService.list();
+        for (TeamDto teamDto : teamDtos)
+        {
             List<StorageDto> storageDtos = storageService.findAllStorageForTeam(teamDto);
-            Float cost = (float)(0);
-            for(StorageDto storageDto: storageDtos){
+            Float cost = 0f;
+            for (StorageDto storageDto : storageDtos)
+            {
                 List<StorageProductDto> storageProductDtos = storageDto.getProducts();
-                for (StorageProductDto storageProductDto: storageProductDtos){
+                for (StorageProductDto storageProductDto : storageProductDtos)
+                {
                     Product product = ReadJsonFilesManager.findProductById(storageProductDto.getProductId());
-                    cost += product.getMaintenanceCostPerDay();
+                    cost += (product.getMaintenanceCostPerDay() * storageProductDto.getAmount());
                 }
             }
+
             teamDto.setCredit(teamDto.getCredit() - cost);
+            teamDto.setWealth(teamDto.getWealth() - cost);
             teamService.saveOrUpdate(teamDto);
         }
     }

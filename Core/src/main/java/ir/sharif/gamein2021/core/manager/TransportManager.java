@@ -10,6 +10,8 @@ import ir.sharif.gamein2021.core.service.*;
 import ir.sharif.gamein2021.core.util.Enums;
 import ir.sharif.gamein2021.core.util.GameConstants;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
+import ir.sharif.gamein2021.core.util.models.Factory;
+import ir.sharif.gamein2021.core.util.models.Supplier;
 import ir.sharif.gamein2021.core.util.models.Vehicle;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -203,12 +205,14 @@ public class TransportManager
         switch (type)
         {
             case FACTORY:
-                return new double[]{ReadJsonFilesManager.Factories[id].getLatitude(), ReadJsonFilesManager.Factories[id].getLongitude()};
+                Factory factory = ReadJsonFilesManager.findFactoryById(id);
+                return new double[]{factory.getLatitude(), factory.getLongitude()};
             case DC:
                 DcDto dcDto = dcService.loadById(id);
                 return new double[]{dcDto.getLatitude(), dcDto.getLongitude()};
             case SUPPLIER:
-                return new double[]{ReadJsonFilesManager.Suppliers[id].getLatitude(), ReadJsonFilesManager.Suppliers[id].getLongitude()};
+                Supplier supplier = ReadJsonFilesManager.findSupplierById(id);
+                return new double[]{supplier.getLatitude(), supplier.getLongitude()};
             case GAMEIN_CUSTOMER:
                 GameinCustomerDto customerDto = gameinCustomerService.loadById(id);
                 return new double[]{customerDto.getLatitude(), customerDto.getLongitude()};

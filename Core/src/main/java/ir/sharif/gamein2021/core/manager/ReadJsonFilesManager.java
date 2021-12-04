@@ -101,4 +101,12 @@ public class ReadJsonFilesManager {
         }
         throw new FactoryNotFoundException("Factory with id : " + id + " does not exist");
     }
+
+    public static Supplier findSupplierById(Integer id) {
+        for (Supplier supplier : Suppliers) {
+            if (supplier.getId() == id)
+                return supplier;
+        }
+        throw new FactoryNotFoundException("Supplier with id : " + id + " does not exist");
+    }
 }

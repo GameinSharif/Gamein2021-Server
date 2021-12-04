@@ -31,6 +31,7 @@ public class DailySchedule {
     private final WeekSupplyManager weekSupplyManager;
     private final TeamManager teamManager;
     private final NewsManager newsManager;
+    private final StorageManager storageManager;
     private final DynamicConfigService dynamicConfigService;
     private final BusinessIntelligenceService businessIntelligenceService;
 
@@ -79,6 +80,7 @@ public class DailySchedule {
         transportManager.updateTransports();
         contractManager.updateContracts();
         teamManager.updateAllTeamsMoneyOnClient();
+        storageManager.MaintenanceCost();
     }
 
     private void doWeeklyTasks()

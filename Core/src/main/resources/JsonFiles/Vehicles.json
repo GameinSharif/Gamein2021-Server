@@ -3,32 +3,32 @@
     "id": 1,
     "vehicleType": "AIRPLANE",
     "speed": 800,
-    "capacity": 5000,
-    "costPerKilometer": 10,
+    "capacity": 500000,
+    "costPerKilometer": 40000,
     "coefficient": 1
   },
   {
     "id": 2,
     "vehicleType": "TRUCK",
-    "speed": 40,
-    "capacity": 2000,
-    "costPerKilometer": 3,
-    "coefficient": 1.2
+    "speed": 80,
+    "capacity": 250000,
+    "costPerKilometer": 4000,
+    "coefficient": 1.35
   },
   {
     "id": 3,
     "vehicleType": "TRAIN",
-    "speed": 80,
-    "capacity": 20000,
-    "costPerKilometer": 5,
+    "speed": 70,
+    "capacity": 1000000,
+    "costPerKilometer": 5000,
     "coefficient": 1.1
   },
   {
     "id": 4,
     "vehicleType": "VANET",
-    "speed": 1000,
-    "capacity": 4,
-    "costPerKilometer": 1,
-    "coefficient": 1.2
+    "speed": 90,
+    "capacity": 200000,
+    "costPerKilometer": 3000,
+    "coefficient": 1.3
   }
 ]

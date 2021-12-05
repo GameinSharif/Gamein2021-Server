@@ -1,5 +1,7 @@
 package ir.sharif.gamein2021.ClientHandler.transport;
 
+import co.elastic.apm.api.ElasticApm;
+import co.elastic.apm.api.Transaction;
 import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.controller.MainController;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
@@ -42,14 +44,21 @@ public class SocketHandler extends TextWebSocketHandler {
 
     @Override
     public void handleTextMessage(WebSocketSession session, TextMessage message) {
+        Transaction transaction = ElasticApm.startTransaction();
+
         try {
             //String encryptedMessage = message.getPayload();
             //String decryptedMessage = encryptDecryptService.decryptMessage(encryptedMessage);
             ProcessedRequest processedRequest = new ProcessedRequest(session, message.getPayload(), socketSessionManager);
+            transaction.setName(processedRequest.requestType.name());
             mainController.HandleMessage(processedRequest);
         } catch (Exception exception) {
+            transaction.captureException(exception);
             exception.printStackTrace();
             logger.debug(exception);
+        }
+        finally {
+            transaction.end();
         }
     }
 

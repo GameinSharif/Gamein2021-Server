@@ -8,4 +8,6 @@ COPY ${JAR_FILE} app.jar
 
 COPY src/main/resources/application-production.properties application.properties
 
-ENTRYPOINT ["java","-jar","app.jar"]
+COPY agent/ .
+
+ENTRYPOINT ["java","-javaagent:./elastic-apm-agent-1.27.0.jar","-jar","app.jar"]

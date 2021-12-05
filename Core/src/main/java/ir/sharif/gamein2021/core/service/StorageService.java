@@ -72,13 +72,14 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
     @Transactional(readOnly = true)
     public List<StorageDto> findAllStorageForTeam(TeamDto teamDto)
     {
-        List<DcDto> dcs = dcService.getAllDcForTeam(teamDto);
         List<StorageDto> storages = new ArrayList<>();
+        storages.add(findStorageWithBuildingIdAndDc(teamDto.getFactoryId(), false));
+
+        List<DcDto> dcs = dcService.getAllDcForTeam(teamDto);
         for (DcDto dcDto : dcs)
         {
             storages.add(findStorageWithBuildingIdAndDc(dcDto.getId(), true));
         }
-        storages.add(findStorageWithBuildingIdAndDc(teamDto.getFactoryId(), false));
         return storages;
     }
 

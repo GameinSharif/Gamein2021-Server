@@ -106,7 +106,7 @@ public class ContractController
         }
         catch (Exception e)
         {
-            System.out.println("Repetitive Contract");
+            e.printStackTrace();
             newContractResponse = new NewContractResponse(ResponseTypeConstant.NEW_CONTRACT, null);
             pushMessageManager.sendMessageByUserId(user.getId().toString(), gson.toJson(newContractResponse));
         }

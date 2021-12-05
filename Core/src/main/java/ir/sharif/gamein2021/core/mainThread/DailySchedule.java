@@ -38,7 +38,7 @@ public class DailySchedule {
     private final ClientHandlerRequestSenderInterface clientRequestSender;
 
     //Second, Minute, Hour, DayOfMonth, Month, WeekDays
-    @Scheduled(cron = "0 24 19 27 11 ?")
+    @Scheduled(cron = "2 54 19 5 12 ?")
     public void startGame()
     {
         GameConstants.gameStatus = GameStatus.RUNNING;

@@ -80,7 +80,11 @@ public class DailySchedule {
         transportManager.updateTransports();
         contractManager.updateContracts();
         teamManager.updateAllTeamsMoneyOnClient();
-        storageManager.MaintenanceCost();
+        try {
+            storageManager.MaintenanceCost();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private void doWeeklyTasks()

@@ -28,9 +28,9 @@ public class GameConstants {
     public final int AuctionInitialStepValue = 100;
     public final int AuctionRoundDurationSeconds = 180;
     public final LocalDateTime[] AuctionRoundsStartTime = new LocalDateTime[]{
-            LocalDateTime.of(2021, 11, 27, 19, 15, 0),
-            LocalDateTime.of(2021, 11, 27, 19, 18, 0),
-            LocalDateTime.of(2021, 11, 27, 19, 21, 0),
+            LocalDateTime.of(2021, 12, 5, 19, 45, 0),
+            LocalDateTime.of(2021, 12, 5, 19, 48, 0),
+            LocalDateTime.of(2021, 12, 5, 19, 51, 0),
     };
     public final int rawMaterialCapacity = 2000000;
     public final int semiFinishedProductCapacity = 2000000;

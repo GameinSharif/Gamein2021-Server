@@ -33,7 +33,7 @@ public class AuctionSchedule
     private final DynamicConfigService configService;
     private final ClientHandlerRequestSenderInterface clientRequestSender;
 
-    @Scheduled(cron = "0 15 19 27 11 ?")
+    @Scheduled(cron = "0 45 19 5 12 ?")
     public void startAuction(){
         GameConstants.gameStatus = GameStatus.AUCTION;
         configService.setGameStatus(GameConstants.gameStatus);
@@ -42,7 +42,7 @@ public class AuctionSchedule
     }
 
     //Second, Minute, Hour, DayOfMonth, Month, WeekDays
-    @Scheduled(cron = "0 18,21,24 19 27 11 ?")
+    @Scheduled(cron = "0 48,51,54 19 5 12 ?")
     public void endAuctionCurrentRound()
     {
         System.out.println("Complete auction this round.");
@@ -51,7 +51,7 @@ public class AuctionSchedule
         sendAllAuctionsDataToAllClients();
     }
 
-    @Scheduled(cron = "2 24 19 27 11 ?")
+    @Scheduled(cron = "2 54 19 5 12 ?")
     public void endAuctionPhase()
     {
         System.out.println("Auction is Over!");

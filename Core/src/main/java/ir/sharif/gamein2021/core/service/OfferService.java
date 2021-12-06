@@ -37,16 +37,16 @@ public class OfferService extends AbstractCrudService<OfferDto, Offer, Integer>
     }
 
     @Transactional(readOnly = true)
-    public List<OfferDto> findByTeam(Team team)
+    public List<OfferDto> findActiveOffersByTeam(Team team)
     {
-        List<Offer> offers = offerRepository.findOffersByTeam(team);
+        List<Offer> offers = offerRepository.findOffersByTeamAndOfferStatus(team, OfferStatus.ACTIVE);
         return offers.stream()
                 .map(e -> modelMapper.map(e, OfferDto.class))
                 .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
-    public List<OfferDto> findOffersExceptTeam(Team team)
+    public List<OfferDto> findActiveOffersExceptTeam(Team team)
     {
         List<Offer> offers = offerRepository.findAllByTeamIsNotAndOfferStatusIs(team, OfferStatus.ACTIVE);
         return offers.stream()
@@ -62,7 +62,8 @@ public class OfferService extends AbstractCrudService<OfferDto, Offer, Integer>
     }
 
     @Transactional
-    public List<OfferDto> findAcceptedOffers(Integer teamId) {
+    public List<OfferDto> findAcceptedOffersByTeam(Integer teamId)
+    {
         List<Offer> offers = offerRepository.findAllByAccepterTeamIs(teamService.findTeamById(teamId));
         return offers.stream()
                 .map(e -> modelMapper.map(e, OfferDto.class))

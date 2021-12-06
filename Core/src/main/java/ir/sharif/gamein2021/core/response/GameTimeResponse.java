@@ -9,11 +9,13 @@ import java.time.LocalDate;
 public class GameTimeResponse extends ResponseObject implements Serializable
 {
     private LocalDate gameDate;
+    private int week;
 
-    public GameTimeResponse(ResponseTypeConstant responseTypeConstant, LocalDate gameDate)
+    public GameTimeResponse(ResponseTypeConstant responseTypeConstant, LocalDate gameDate, int week)
     {
         this.responseTypeConstant = responseTypeConstant.ordinal();
         this.gameDate = gameDate;
+        this.week = week;
     }
 
 }

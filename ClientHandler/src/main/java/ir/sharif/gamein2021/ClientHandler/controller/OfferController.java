@@ -51,12 +51,13 @@ public class OfferController
         GetOffersResponse getOffersResponse;
         try
         {
-            List<OfferDto> myTeamOffers = offerService.findByTeam(teamService.findTeamById(userService.loadById(request.playerId).getTeamId()));
-            List<OfferDto> otherTeamsOffers = offerService.findOffersExceptTeam(teamService.findTeamById(userService.loadById(request.playerId).getTeamId()));
-            List<OfferDto> acceptedOffersByMyTeam = offerService.findAcceptedOffers(userService.loadById(request.playerId).getTeamId());
+            List<OfferDto> myTeamOffers = offerService.findActiveOffersByTeam(teamService.findTeamById(userService.loadById(request.playerId).getTeamId()));
+            List<OfferDto> otherTeamsOffers = offerService.findActiveOffersExceptTeam(teamService.findTeamById(userService.loadById(request.playerId).getTeamId()));
+            List<OfferDto> acceptedOffersByMyTeam = offerService.findAcceptedOffersByTeam(userService.loadById(request.playerId).getTeamId());
 
             getOffersResponse = new GetOffersResponse(ResponseTypeConstant.GET_OFFERS, myTeamOffers, otherTeamsOffers, acceptedOffersByMyTeam);
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             logger.debug(e);
             getOffersResponse = new GetOffersResponse(ResponseTypeConstant.GET_OFFERS, null, null, null);

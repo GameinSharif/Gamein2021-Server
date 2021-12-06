@@ -115,10 +115,11 @@ public class ProviderController
             UserDto user = userService.loadById(playerId);
             Team userTeam = teamService.findTeamById(user.getTeamId());
 
-            ArrayList<ProviderDto> teamProviders = providerService.findProvidersByTeam(userTeam);
-            ArrayList<ProviderDto> otherProviders = providerService.findProvidersExceptTeam(userTeam);
+            ArrayList<ProviderDto> teamProviders = providerService.findActiveProvidersByTeam(userTeam);
+            ArrayList<ProviderDto> otherProviders = providerService.findActiveProvidersExceptTeam(userTeam);
             getProvidersResponse = new GetProvidersResponse(ResponseTypeConstant.GET_PROVIDERS, teamProviders, otherProviders);
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             getProvidersResponse = new GetProvidersResponse(ResponseTypeConstant.GET_PROVIDERS, null, null);
         }
@@ -146,7 +147,8 @@ public class ProviderController
             {
                 removeProviderResponse = new RemoveProviderResponse(ResponseTypeConstant.REMOVE_PROVIDER, null, "Provider couldn't be removed!");
             }
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             removeProviderResponse = new RemoveProviderResponse(ResponseTypeConstant.REMOVE_PROVIDER, null, "An internal error occurred!");
         }
@@ -177,10 +179,10 @@ public class ProviderController
 
     private boolean isAlreadyProviderOfThisProduct(Team team, Integer productId, Integer storageId)
     {
-        List<ProviderDto> providerDtos = providerService.findProvidersByTeam(team);
+        List<ProviderDto> providerDtos = providerService.findActiveProvidersByTeam(team);
         for (ProviderDto providerDto : providerDtos)
         {
-            if (providerDto.getProductId().equals(productId) && providerDto.getStorageId().equals(storageId) && providerDto.getState() == Enums.ProviderState.ACTIVE)
+            if (providerDto.getProductId().equals(productId) && providerDto.getStorageId().equals(storageId))
             {
                 return true;
             }

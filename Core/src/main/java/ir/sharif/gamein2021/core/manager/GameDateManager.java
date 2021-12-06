@@ -17,16 +17,20 @@ public class GameDateManager
 
     public void SendGameDateToAllUsers()
     {
-        GameTimeResponse gameTimeResponse = new GameTimeResponse(ResponseTypeConstant.GAME_TIME,
-                gameCalendar.getCurrentDate());
+        GameTimeResponse gameTimeResponse = new GameTimeResponse(
+                ResponseTypeConstant.GAME_TIME,
+                gameCalendar.getCurrentDate(),
+                gameCalendar.getCurrentWeek());
 
         pushMessageManager.sendMessageToAll(gson.toJson(gameTimeResponse));
     }
 
     public void SendGameDateToThisUser(Integer userId)
     {
-        GameTimeResponse gameTimeResponse = new GameTimeResponse(ResponseTypeConstant.GAME_TIME,
-                gameCalendar.getCurrentDate());
+        GameTimeResponse gameTimeResponse = new GameTimeResponse(
+                ResponseTypeConstant.GAME_TIME,
+                gameCalendar.getCurrentDate(),
+                gameCalendar.getCurrentWeek());
 
         pushMessageManager.sendMessageByUserId(userId.toString(), gson.toJson(gameTimeResponse));
     }

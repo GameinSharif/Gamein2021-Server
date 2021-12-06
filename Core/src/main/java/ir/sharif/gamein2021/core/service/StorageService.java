@@ -99,7 +99,7 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
         StorageDto storage = findStorageWithBuildingIdAndDc(buildingId, isDc);
         Product product = ReadJsonFilesManager.findProductById(productId);
 
-        StorageProductDto storageProductDto = findProductStorageById(storage.getId(), product.getId());
+        StorageProductDto storageProductDto = findProductStorageById(storage, product.getId());
         if (amount <= 0)
         {
             throw new InvalidRequestException("Amount should be positive bro.");
@@ -163,14 +163,14 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
     public StorageDto addProduct(Integer buildingId, boolean isDc, Integer productId, int amount)
     {
         Product product = ReadJsonFilesManager.findProductById(productId);
-        StorageDto storage = findStorageWithBuildingIdAndDc(buildingId, isDc);
         int availableCapacity = calculateAvailableCapacityInStorage(buildingId, isDc, product.getProductType());
-
         if (availableCapacity < amount * product.getVolumetricUnit())
         {
-            amount = availableCapacity;
+            amount = availableCapacity / product.getVolumetricUnit();
         }
-        StorageProductDto storageProductDto = findProductStorageByIdNull(storage.getId(), product.getId());
+
+        StorageDto storage = findStorageWithBuildingIdAndDc(buildingId, isDc);
+        StorageProductDto storageProductDto = findProductStorageByIdNull(storage, product.getId());
         if (storageProductDto != null)
         {
             int index = storage.getProducts().indexOf(storageProductDto);
@@ -183,15 +183,15 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
             storageProductDto = StorageProductDto.builder().productId(product.getId()).amount(amount).build();
             storage.getProducts().add(storageProductDto);
         }
+
         saveOrUpdate(storage);
         return loadById(storage.getId());
     }
 
-
     @Transactional(readOnly = true)
-    public StorageProductDto findProductStorageById(Integer storageId, Integer productId)
+    public StorageProductDto findProductStorageById(StorageDto storage, Integer productId)
     {
-        StorageProductDto storageProduct = getStorageProductDto(storageId, productId);
+        StorageProductDto storageProduct = getStorageProductDto(storage, productId);
         if (storageProduct != null)
         {
             return storageProduct;
@@ -200,14 +200,13 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
     }
 
     @Transactional(readOnly = true)
-    public StorageProductDto findProductStorageByIdNull(Integer storageId, Integer productId)
+    public StorageProductDto findProductStorageByIdNull(StorageDto storage, Integer productId)
     {
-        return getStorageProductDto(storageId, productId);
+        return getStorageProductDto(storage, productId);
     }
 
-    private StorageProductDto getStorageProductDto(Integer storageId, Integer productId)
+    private StorageProductDto getStorageProductDto(StorageDto storage, Integer productId)
     {
-        StorageDto storage = loadById(storageId);
         Product product = ReadJsonFilesManager.findProductById(productId);
 
         List<StorageProductDto> storageProductDtos = storage.getProducts();
@@ -242,7 +241,7 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
     public StorageProductDto getStorageProductWithBuildingId(Integer buildingId, boolean isDc ,Integer productId){
         StorageDto storageDto = findStorageWithBuildingIdAndDc(buildingId , isDc );
         Assert.notNull(storageDto , "Storage with id "  + buildingId + "does not exist !");
-        return getStorageProductDto(storageDto.getId() , productId);
+        return getStorageProductDto(storageDto , productId);
     }
 
 

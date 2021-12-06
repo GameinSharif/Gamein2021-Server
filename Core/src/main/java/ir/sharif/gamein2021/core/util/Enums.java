@@ -15,8 +15,7 @@ public class Enums
     public enum OfferStatus {
         ACTIVE,
         ACCEPTED,
-        TERMINATED,
-        PASSED_DEADLINE
+        TERMINATED
     }
 
     public enum ProductType

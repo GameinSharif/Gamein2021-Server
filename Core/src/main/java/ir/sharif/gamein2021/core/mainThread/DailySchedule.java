@@ -114,6 +114,9 @@ public class DailySchedule {
         GameStatus newGameStatus = dynamicConfigService.getGameStatus();
         if (newGameStatus != null) {
             GameConstants.gameStatus = newGameStatus;
+            UpdateGameStatusRequest request = new UpdateGameStatusRequest("Done", GameConstants.gameStatus);
+            clientRequestSender.send(request);
+            System.out.println("GameStatus: " + GameConstants.gameStatus);
         }
     }
 }

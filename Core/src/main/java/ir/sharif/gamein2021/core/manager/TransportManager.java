@@ -169,6 +169,11 @@ public class TransportManager
         return (int) Math.ceil(1f * transportDistance / ReadJsonFilesManager.findVehicleByType(transportDto.getVehicleType()).getSpeed());
     }
 
+    public int calculateTransportDuration(int distance, Enums.VehicleType vehicleType)
+    {
+        return (int) Math.ceil(1f * distance / ReadJsonFilesManager.findVehicleByType(vehicleType).getSpeed());
+    }
+
     public int calculateTransportDuration(Enums.TransportNodeType sourceType, int sourceId, Enums.TransportNodeType destinationType, int destinationId, Enums.VehicleType vehicleType)
     {
         int transportDistance = getTransportDistance(sourceType, sourceId, destinationType, destinationId, vehicleType);

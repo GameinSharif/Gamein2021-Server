@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface OfferRepository extends JpaRepository<Offer, Integer>
 {
-    List<Offer> findOffersByTeam(Team team);
+    List<Offer> findOffersByTeamAndOfferStatus(Team team, OfferStatus offerStatus);
     List<Offer> findAllByTeamIsNotAndOfferStatusIs(Team team, OfferStatus offerStatus);
     List<Offer> findAllByAccepterTeamIs(Team team);
 }

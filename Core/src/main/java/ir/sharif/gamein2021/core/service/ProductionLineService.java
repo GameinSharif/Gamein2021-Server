@@ -158,7 +158,7 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
                     continue;
                 }
 
-                StorageProductDto storageDto = storageService.findProductStorageByIdNull(storageService.findStorageWithBuildingIdAndDc(team.getFactoryId(), false).getId(), productIngredient.getProductId());
+                StorageProductDto storageDto = storageService.findProductStorageByIdNull(storageService.findStorageWithBuildingIdAndDc(team.getFactoryId(), false), productIngredient.getProductId());
                 if (storageDto == null || storageDto.getAmount() < amount * productIngredient.getAmount()) {
                     throw new InvalidProductionLineIdException("Production requirements are not available in storage.");
                 }

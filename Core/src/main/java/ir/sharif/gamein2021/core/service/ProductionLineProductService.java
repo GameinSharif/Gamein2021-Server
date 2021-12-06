@@ -24,7 +24,8 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
-public class ProductionLineProductService extends AbstractCrudService<ProductionLineProductDto, ProductionLineProduct, Integer> {
+public class ProductionLineProductService extends AbstractCrudService<ProductionLineProductDto, ProductionLineProduct, Integer>
+{
     private final ProductionLineProductRepository productionLineProductRepository;
     private final ProductionLineRepository productionLineRepository;
     private final StorageService storageService;
@@ -33,23 +34,26 @@ public class ProductionLineProductService extends AbstractCrudService<Production
     private final TeamManager teamManager;
     private final ModelMapper modelMapper;
 
-    public void finishProductCreation(LocalDate currentDate) {
+    public void finishProductCreation(LocalDate currentDate)
+    {
         List<ProductionLineProduct> products = productionLineProductRepository.findProductionLineProductsByEndDateEquals(currentDate);
         Set<Integer> productLineIds = products.stream().map(ProductionLineProduct::getProductionLineId).collect(Collectors.toSet());
         Map<Integer, ProductionLine> productionLineHashMap = productionLineRepository.findAllById(productLineIds).stream().collect(Collectors.toMap(ProductionLine::getId, x -> x));
 
-        for (ProductionLineProduct product : products) {
+        for (ProductionLineProduct product : products)
+        {
             ProductionLine productionLine = productionLineHashMap.getOrDefault(product.getProductionLineId(), null);
 
-            if (productionLine == null) {
+            if (productionLine == null)
+            {
                 continue;
             }
 
             ProductionLineTemplate template = ReadJsonFilesManager.ProductionLineTemplateHashMap.get(productionLine.getProductionLineTemplateId());
             int amount = (int) Math.floor(product.getAmount() * (1f * template.getEfficiencyLevels().get(productionLine.getEfficiencyLevel()).getEfficiencyPercentage() / 100));
 
-            float brandCoefficient = (float)(template.getQualityLevels().get(productionLine.getQualityLevel()).getBrandIncreaseRatioPerProduct());
-            teamManager.updateTeamBrand(teamService.loadById(productionLine.getTeam().getId()),  amount * brandCoefficient);
+            float brandCoefficient = (float) (template.getQualityLevels().get(productionLine.getQualityLevel()).getBrandIncreaseRatioPerProduct());
+            teamManager.updateTeamBrand(teamService.loadById(productionLine.getTeam().getId()), amount * brandCoefficient);
 
             storageService.addProduct(productionLine.getTeam().getFactoryId(), false, product.getProductId(), amount);
             product.setAmount(amount);

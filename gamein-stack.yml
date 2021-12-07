@@ -111,11 +111,11 @@ services:
 
 networks:
   rabbitmq_net:
-    driver: bridge
+    driver: overlay
   db_net:
-    driver: bridge
-  lb_net:
-    driver: bridge
+    driver: overlay
+#  lb_net:
+#    driver: overlay
 
 volumes:
   mysql-datavolume:

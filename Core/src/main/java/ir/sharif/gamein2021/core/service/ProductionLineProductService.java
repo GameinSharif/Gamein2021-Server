@@ -31,6 +31,7 @@ public class ProductionLineProductService extends AbstractCrudService<Production
     private final StorageService storageService;
     private final ClientHandlerRequestSenderInterface clientHandlerRequestSender;
     private final TeamService teamService;
+    private final CoronaService coronaService;
     private final TeamManager teamManager;
     private final ModelMapper modelMapper;
 
@@ -52,8 +53,16 @@ public class ProductionLineProductService extends AbstractCrudService<Production
             ProductionLineTemplate template = ReadJsonFilesManager.ProductionLineTemplateHashMap.get(productionLine.getProductionLineTemplateId());
             int amount = (int) Math.floor(product.getAmount() * (1f * template.getEfficiencyLevels().get(productionLine.getEfficiencyLevel()).getEfficiencyPercentage() / 100));
 
-            float brandCoefficient = (float) (template.getQualityLevels().get(productionLine.getQualityLevel()).getBrandIncreaseRatioPerProduct());
-            teamManager.updateTeamBrand(teamService.loadById(productionLine.getTeam().getId()), amount * brandCoefficient);
+            if(coronaService.isCoronaStarted()){
+                var team = productionLine.getTeam();
+                var country = team.getCountry();
+                if(coronaService.checkCoronaForCountry(country)){
+                    Float coronaCoefficient = coronaService.getCoronaCoefficient();
+                    amount *= coronaCoefficient;
+                }
+            }
+            float brandCoefficient = (float)(template.getQualityLevels().get(productionLine.getQualityLevel()).getBrandIncreaseRatioPerProduct());
+            teamManager.updateTeamBrand(teamService.loadById(productionLine.getTeam().getId()),  amount * brandCoefficient);
 
             storageService.addProduct(productionLine.getTeam().getFactoryId(), false, product.getProductId(), amount);
             product.setAmount(amount);

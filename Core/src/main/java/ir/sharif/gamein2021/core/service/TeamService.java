@@ -1,6 +1,9 @@
 package ir.sharif.gamein2021.core.service;
 
 
+import ir.sharif.gamein2021.core.domain.dto.CoronaInfoDto;
+import ir.sharif.gamein2021.core.exception.InvalidRequestException;
+import ir.sharif.gamein2021.core.exception.NotEnoughMoneyException;
 import ir.sharif.gamein2021.core.exception.TeamNotFoundException;
 import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
 import ir.sharif.gamein2021.core.dao.TeamRepository;
@@ -20,10 +23,14 @@ public class TeamService extends AbstractCrudService<TeamDto, Team, Integer> {
 
     private final TeamRepository repository;
     private final ModelMapper modelMapper;
+    private final CoronaService coronaService;
 
-    public TeamService(TeamRepository repository, ModelMapper modelMapper) {
+    public TeamService(TeamRepository repository,
+                       ModelMapper modelMapper,
+                       CoronaService coronaService) {
         this.repository = repository;
         this.modelMapper = modelMapper;
+        this.coronaService = coronaService;
         setRepository(repository);
     }
 
@@ -65,8 +72,50 @@ public class TeamService extends AbstractCrudService<TeamDto, Team, Integer> {
                 .map(e -> modelMapper.map(e, TeamDto.class)).collect(Collectors.toList());
     }
 
-    public List<TeamDto> findTeamsByFactoryIdIsNotNull(){
+    @Transactional(readOnly = true)
+    public List<TeamDto> findTeamsByFactoryIdIsNotNull()
+    {
         return repository.findTeamsByFactoryIdIsNotNull().stream()
                 .map(e -> modelMapper.map(e, TeamDto.class)).collect(Collectors.toList());
+    }
+
+    @Transactional
+    public List<CoronaInfoDto> donate(TeamDto team , Float donatedAmount)
+    {
+        team = loadById(team.getId());
+        if(!coronaService.isCoronaStarted())
+            throw new InvalidRequestException();
+        if(donatedAmount > team.getCredit())
+            throw new NotEnoughMoneyException("You don't have this much money to donate!");
+
+        var coronaInfo = coronaService.findCoronaInfoWithCountry(team.getCountry());
+        if(coronaInfo.isCoronaOver())
+            throw new InvalidRequestException("Corona is over in your country!");
+
+        var maximumMoneyToDonate = coronaService.calculateAvailableMoneyForDonate(team.getCountry());
+
+        donatedAmount = checkMaximumAvailableAmountToDonate(donatedAmount, maximumMoneyToDonate);
+        reduceTeamCredit(team, donatedAmount);
+        coronaService.addDonatedMoneyToCoronaInfo(donatedAmount, coronaInfo);
+        addDonatedMoneyToTeam(team, donatedAmount);
+        saveOrUpdate(team);
+        coronaService.changeAndSaveCoronaStatusForCountry(team.getCountry());
+
+        return coronaService.getCoronasInfoIfCoronaIsStarted();
+    }
+
+    private void addDonatedMoneyToTeam(TeamDto team, Float donatedAmount) {
+        team.setDonatedAmount(team.getDonatedAmount() + donatedAmount);
+    }
+
+
+    private void reduceTeamCredit(TeamDto team, Float donatedAmount) {
+        team.setCredit(team.getCredit() - donatedAmount);
+    }
+
+    private Float checkMaximumAvailableAmountToDonate(Float donatedAmount, Float maximumMoneyToDonate) {
+        if(donatedAmount > maximumMoneyToDonate)
+            donatedAmount = maximumMoneyToDonate;
+        return donatedAmount;
     }
 }

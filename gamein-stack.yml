@@ -65,7 +65,7 @@ services:
     networks:
       - rabbitmq_net
       - db_net
-      - lb_net
+#      - lb_net
     volumes:
       - ./Core/src/main/resources/JsonFiles:/opt/app/JsonFiles
       - ./Core/src/main/resources/CSVFiles:/opt/app/CSVFiles
@@ -83,7 +83,7 @@ services:
     networks:
       - rabbitmq_net
       - db_net
-      - lb_net
+#      - lb_net
     depends_on:
       - db
       - rabbitmq

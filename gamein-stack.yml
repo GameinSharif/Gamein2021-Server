@@ -25,10 +25,11 @@ services:
       - mysql-datavolume:/var/lib/mysql
     deploy:
       replicas: 1
-      resources:
-        reservations:
-          cpus: '2'
-          memory: 5GB
+#      resources:
+#        reservations:
+#          cpus: '2'
+#          memory: 5GB
+
   rabbitmq:
     image: rabbitmq
     ports:
@@ -38,10 +39,10 @@ services:
       - rabbitmq_net
     deploy:
       replicas: 1
-      resources:
-        reservations:
-          cpus: '1'
-          memory: 2GB
+#      resources:
+#        reservations:
+#          cpus: '1'
+#          memory: 2GB
 
   client-handler:
     image: 127.0.0.1:5000/client-handler

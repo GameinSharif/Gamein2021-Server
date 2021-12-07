@@ -32,6 +32,6 @@ public class Message implements BaseEntity
     @Override
     public Integer getId()
     {
-        return null;
+        return id;
     }
 }

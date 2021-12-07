@@ -41,6 +41,7 @@ public enum RequestTypeConstant
     REJECT_NEGOTIATION(36),
     EDIT_PROVIDER(37),
     DONATE(38);
+    REPORT_MESSAGE(38);
 
     private int value;
 

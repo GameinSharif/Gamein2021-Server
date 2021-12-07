@@ -19,11 +19,13 @@ import java.util.stream.Collectors;
 public class ChatService extends AbstractCrudService<ChatDto, Chat, Integer>
 {
     private final ChatRepository chatRepository;
+    private final TeamService teamService;
     private final ModelMapper modelMapper;
 
-    public ChatService(ChatRepository chatRepository, ModelMapper modelMapper)
+    public ChatService(ChatRepository chatRepository, TeamService teamService, ModelMapper modelMapper)
     {
         this.chatRepository = chatRepository;
+        this.teamService = teamService;
         this.modelMapper = modelMapper;
 
         setRepository(chatRepository);
@@ -43,12 +45,12 @@ public class ChatService extends AbstractCrudService<ChatDto, Chat, Integer>
     }
 
     @Transactional(readOnly = true)
-    public ChatDto getChatByTeamId(Team team1, Team team2)
+    public ChatDto getChatByTeamId(Integer team1Id, Integer team2Id)
     {
-        Chat chat = chatRepository.findByTeam1AndTeam2(team1, team2);
+        Chat chat = chatRepository.findByTeam1AndTeam2(teamService.findTeamById(team1Id), teamService.findTeamById(team2Id));
         if (chat == null)
         {
-            chat = chatRepository.findByTeam1AndTeam2(team2, team1);
+            chat = chatRepository.findByTeam1AndTeam2(teamService.findTeamById(team2Id), teamService.findTeamById(team1Id));
             if (chat == null)
             {
                 return null;

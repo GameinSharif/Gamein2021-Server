@@ -2,19 +2,15 @@ package ir.sharif.gamein2021.ClientHandler.controller;
 
 import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.Messenger.GetAllChatsRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.Messenger.GetAllChatsResponse;
-import ir.sharif.gamein2021.ClientHandler.domain.Messenger.NewMessageRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.Messenger.NewMessageResponse;
+import ir.sharif.gamein2021.ClientHandler.domain.Messenger.*;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
+import ir.sharif.gamein2021.core.domain.dto.ReportDto;
 import ir.sharif.gamein2021.core.domain.dto.UserDto;
+import ir.sharif.gamein2021.core.domain.entity.Report;
 import ir.sharif.gamein2021.core.manager.PushMessageManagerInterface;
-import ir.sharif.gamein2021.core.service.ChatService;
-import ir.sharif.gamein2021.core.service.MessageService;
-import ir.sharif.gamein2021.core.service.TeamService;
+import ir.sharif.gamein2021.core.service.*;
 import ir.sharif.gamein2021.core.domain.dto.ChatDto;
 import ir.sharif.gamein2021.core.domain.dto.MessageDto;
-import ir.sharif.gamein2021.core.service.UserService;
 import ir.sharif.gamein2021.core.util.GameConstants;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import org.apache.log4j.Logger;
@@ -31,22 +27,60 @@ public class MessageController
 
     private final PushMessageManagerInterface pushMessageManager;
     private final ChatService chatService;
-    private final MessageService messageService;
+    private final ReportService reportService;
     private final UserService userService;
+    private final MessageService messageService;
     private final TeamService teamService;
     private final Gson gson = new Gson();
 
-    public MessageController(PushMessageManagerInterface pushMessageManager, TeamService teamService, MessageService messageService, ChatService chatService, UserService userService)
+    public MessageController(PushMessageManagerInterface pushMessageManager, ReportService reportService, TeamService teamService, ChatService chatService, UserService userService, MessageService messageService)
     {
         this.chatService = chatService;
-        this.messageService = messageService;
         this.teamService = teamService;
+        this.reportService = reportService;
+        this.messageService = messageService;
         this.pushMessageManager = pushMessageManager;
         this.userService = userService;
     }
 
-    public void addNewChatMessage(ProcessedRequest request, NewMessageRequest newMessageRequest)
-    {
+    public void reportMessage(ProcessedRequest request, ReportMessageRequest reportMessageRequest) {
+        ReportMessageResponse reportMessageResponse;
+        try {
+            ChatDto chatDto = chatService.loadById(reportMessageRequest.getChatId());
+            if (!isMessageInChat(chatDto, reportMessageRequest.getMessageText())) {
+                reportMessageResponse = new ReportMessageResponse(ResponseTypeConstant.REPORT_MESSAGE, "NOT Successful");
+            } else if (!isChatAndTeamIdsValid(reportMessageRequest.getChatId(), request.playerId, reportMessageRequest.getReportedTeamId())) {
+                reportMessageResponse = new ReportMessageResponse(ResponseTypeConstant.REPORT_MESSAGE, "NOT Successful");
+            } else if (isReportDuplicated(
+                    messageService.getMessageByTextAndChatId(reportMessageRequest.getChatId(), reportMessageRequest.getMessageText()),
+                    reportMessageRequest,
+                    request.teamId
+            )) {
+                reportMessageResponse = new ReportMessageResponse(ResponseTypeConstant.REPORT_MESSAGE, "NOT Successful");
+            } else {
+                ReportDto reportDto = ReportDto.builder()
+                        .messageText(reportMessageRequest.getMessageText())
+                        .chatId(reportMessageRequest.getChatId())
+                        .reportedTeamId(reportMessageRequest.getReportedTeamId())
+                        .reporterTeamId(request.teamId)
+                        .reportedAt(LocalDateTime.now())
+                        .sentAt(
+                                messageService.getMessageByTextAndChatId(
+                                        reportMessageRequest.getChatId(), reportMessageRequest.getMessageText()
+                                ).getInsertedAt()
+                        )
+                        .build();
+                reportService.saveOrUpdate(reportDto);
+                reportMessageResponse = new ReportMessageResponse(ResponseTypeConstant.REPORT_MESSAGE, "Message Reported!");
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            reportMessageResponse = new ReportMessageResponse(ResponseTypeConstant.REPORT_MESSAGE, "An Error Occurred!");
+        }
+        pushMessageManager.sendMessageByTeamId(request.teamId.toString(), gson.toJson(reportMessageResponse));
+    }
+
+    public void addNewChatMessage(ProcessedRequest request, NewMessageRequest newMessageRequest) {
         Integer id = request.playerId;
         UserDto userDto = userService.loadById(id);
         Integer senderTeamId = userDto.getTeamId();
@@ -61,8 +95,8 @@ public class MessageController
         NewMessageResponse newMessageResponse;
 
         ChatDto chatDto = chatService.getChatByTeamId(
-                teamService.findTeamById(senderTeamId),
-                teamService.findTeamById(newMessageRequest.getReceiverTeamId())
+                senderTeamId,
+                newMessageRequest.getReceiverTeamId()
         );
 
         try
@@ -138,4 +172,29 @@ public class MessageController
         }
         pushMessageManager.sendMessageByUserId(request.playerId.toString(), gson.toJson(getAllChatsResponse));
     }
+
+    private boolean isChatAndTeamIdsValid(Integer chatId, Integer reporterTeamId, Integer reportedTeamId) {
+        return chatService.getChatByTeamId(reportedTeamId, reporterTeamId).getId().equals(chatId);
+    }
+
+    private boolean isMessageInChat(ChatDto chatDto, String messageText) {
+        for (MessageDto messageDto : chatDto.getMessages()) {
+            if (messageDto.getText().equals(messageText)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isReportDuplicated(MessageDto messageDto, ReportMessageRequest reportMessageRequest, Integer reporterTeamId) {
+        List<Report> reports = reportService.getReports(reportMessageRequest.getMessageText(), reporterTeamId, reportMessageRequest.getReportedTeamId());
+        if (reports.size() == 0) return false;
+        for (Report report : reports) {
+            if (report.getSentAt().equals(messageDto.getInsertedAt())){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

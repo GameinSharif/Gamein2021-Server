@@ -14,6 +14,7 @@ import ir.sharif.gamein2021.ClientHandler.domain.GetGameDataRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Messenger.GetAllChatsRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Messenger.NewMessageRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.Messenger.ReportMessageRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.NewContractSupplierRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Product.AddProductRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Product.GetStorageProductsRequest;
@@ -217,6 +218,10 @@ public class MainController {
             case DONATE:
                 DonateRequest donateRequest = gson.fromJson(requestData , DonateRequest.class);
                 coronaController.donate(processedRequest , donateRequest);
+            case REPORT_MESSAGE:
+                ReportMessageRequest reportMessageRequest = gson.fromJson(requestData, ReportMessageRequest.class);
+                messageController.reportMessage(processedRequest, reportMessageRequest);
+                break;
             default:
                 System.out.println("Request type is invalid.");
         }

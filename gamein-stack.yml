@@ -172,3 +172,5 @@ networks:
 
 volumes:
   mysql-datavolume:
+  es-data:
+    driver: local

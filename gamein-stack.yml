@@ -110,6 +110,55 @@ services:
 #          cpus: 2
 #          memory: 5GB
 
+  es:
+    image: elasticsearch:7.14.2
+    environment:
+      - bootstrap.memory_lock=true
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - es-data:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+    networks:
+      - elastic
+
+  kibana:
+    image: kibana:7.14.2
+    environment:
+      ELASTICSEARCH_URL: http://es:9200
+      ELASTICSEARCH_HOSTS: '["http://es:9200"]'
+    depends_on:
+      - es
+    networks:
+      - elastic
+    ports:
+      - "5601:5601"
+
+  apm-server:
+    image: store/elastic/apm-server:7.14.2
+    depends_on:
+      - es
+      - kibana
+    cap_add: [ "CHOWN", "DAC_OVERRIDE", "SETGID", "SETUID" ]
+    cap_drop: [ "ALL" ]
+    ports:
+      - "8200:8200"
+    networks:
+      - elastic
+    command: >
+      apm-server -e
+        -E apm-server.rum.enabled=true
+        -E setup.kibana.host=kibana:5601
+        -E setup.template.settings.index.number_of_replicas=0
+        -E apm-server.kibana.enabled=true
+        -E apm-server.kibana.host=kibana:5601
+        -E output.elasticsearch.hosts=["es:9200"]
+
 networks:
   rabbitmq_net:
     driver: overlay
@@ -117,6 +166,9 @@ networks:
     driver: overlay
 #  lb_net:
 #    driver: overlay
+  elastic:
+    driver: overlay
+
 
 volumes:
   mysql-datavolume:

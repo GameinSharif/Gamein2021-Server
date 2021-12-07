@@ -1,5 +1,7 @@
 package ir.sharif.gamein2021.core.service;
 
+import ir.sharif.gamein2021.core.domain.dto.ChatDto;
+import ir.sharif.gamein2021.core.exception.MessageNotFoundInChatException;
 import ir.sharif.gamein2021.core.service.core.AbstractCrudService;
 import ir.sharif.gamein2021.core.dao.MessageRepository;
 import ir.sharif.gamein2021.core.domain.dto.MessageDto;
@@ -10,14 +12,26 @@ import org.springframework.stereotype.Service;
 @Service
 public class MessageService extends AbstractCrudService<MessageDto, Message, Integer>
 {
-    MessageRepository messageRepository;
-    TeamService teamService;
+    private final MessageRepository messageRepository;
+    private final ChatService chatService;
+    private final TeamService teamService;
 
-    public MessageService(MessageRepository messageRepository, TeamService teamService)
+    public MessageService(MessageRepository messageRepository, TeamService teamService, ChatService chatService)
     {
         this.messageRepository = messageRepository;
         this.teamService = teamService;
+        this.chatService = chatService;
         setRepository(messageRepository);
+    }
+
+    public MessageDto getMessageByTextAndChatId(Integer chatId, String messageText) {
+        ChatDto chatDto = chatService.loadById(chatId);
+        for (MessageDto messageDto : chatDto.getMessages()) {
+            if(messageDto.getText().equals(messageText)) {
+                return messageDto;
+            }
+        }
+        return null;
     }
 
     public MessageDto addNewMessage(MessageDto messageDto)

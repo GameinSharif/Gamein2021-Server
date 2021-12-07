@@ -29,14 +29,16 @@ public class MessageController
     private final ChatService chatService;
     private final ReportService reportService;
     private final UserService userService;
+    private final MessageService messageService;
     private final TeamService teamService;
     private final Gson gson = new Gson();
 
-    public MessageController(PushMessageManagerInterface pushMessageManager, ReportService reportService, TeamService teamService, MessageService messageService, ChatService chatService, UserService userService)
+    public MessageController(PushMessageManagerInterface pushMessageManager, ReportService reportService, TeamService teamService, ChatService chatService, UserService userService, MessageService messageService)
     {
         this.chatService = chatService;
         this.teamService = teamService;
         this.reportService = reportService;
+        this.messageService = messageService;
         this.pushMessageManager = pushMessageManager;
         this.userService = userService;
     }
@@ -49,6 +51,12 @@ public class MessageController
                 reportMessageResponse = new ReportMessageResponse(ResponseTypeConstant.REPORT_MESSAGE, "NOT Successful");
             } else if (!isChatAndTeamIdsValid(reportMessageRequest.getChatId(), request.playerId, reportMessageRequest.getReportedTeamId())) {
                 reportMessageResponse = new ReportMessageResponse(ResponseTypeConstant.REPORT_MESSAGE, "NOT Successful");
+            } else if (isReportDuplicated(
+                    messageService.getMessageByTextAndChatId(reportMessageRequest.getChatId(), reportMessageRequest.getMessageText()),
+                    reportMessageRequest,
+                    request.teamId
+            )) {
+                reportMessageResponse = new ReportMessageResponse(ResponseTypeConstant.REPORT_MESSAGE, "NOT Successful");
             } else {
                 ReportDto reportDto = ReportDto.builder()
                         .messageText(reportMessageRequest.getMessageText())
@@ -56,6 +64,11 @@ public class MessageController
                         .reportedTeamId(reportMessageRequest.getReportedTeamId())
                         .reporterTeamId(request.teamId)
                         .reportedAt(LocalDateTime.now())
+                        .sentAt(
+                                messageService.getMessageByTextAndChatId(
+                                        reportMessageRequest.getChatId(), reportMessageRequest.getMessageText()
+                                ).getInsertedAt()
+                        )
                         .build();
                 reportService.saveOrUpdate(reportDto);
                 reportMessageResponse = new ReportMessageResponse(ResponseTypeConstant.REPORT_MESSAGE, "Message Reported!");
@@ -67,8 +80,7 @@ public class MessageController
         pushMessageManager.sendMessageByTeamId(request.teamId.toString(), gson.toJson(reportMessageResponse));
     }
 
-    public void addNewChatMessage(ProcessedRequest request, NewMessageRequest newMessageRequest)
-    {
+    public void addNewChatMessage(ProcessedRequest request, NewMessageRequest newMessageRequest) {
         Integer id = request.playerId;
         UserDto userDto = userService.loadById(id);
         Integer senderTeamId = userDto.getTeamId();
@@ -168,6 +180,17 @@ public class MessageController
     private boolean isMessageInChat(ChatDto chatDto, String messageText) {
         for (MessageDto messageDto : chatDto.getMessages()) {
             if (messageDto.getText().equals(messageText)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isReportDuplicated(MessageDto messageDto, ReportMessageRequest reportMessageRequest, Integer reporterTeamId) {
+        List<Report> reports = reportService.getReports(reportMessageRequest.getMessageText(), reporterTeamId, reportMessageRequest.getReportedTeamId());
+        if (reports.size() == 0) return false;
+        for (Report report : reports) {
+            if (report.getSentAt().equals(messageDto.getInsertedAt())){
                 return true;
             }
         }

@@ -20,17 +20,20 @@ public class Report implements BaseEntity{
     @Column(name = "message_text", nullable = false)
     private String messageText;
 
-    @OneToOne
+    @ManyToOne
     private Team reporterTeam;
 
-    @OneToOne
+    @ManyToOne
     private Team reportedTeam;
 
-    @OneToOne
+    @ManyToOne
     private Chat chat;
 
     @Column(nullable = false)
     private LocalDateTime reportedAt;
+
+    @Column(nullable = false)
+    private LocalDateTime sentAt;
 
     @Override
     public Integer getId() {

@@ -18,5 +18,6 @@ public class ReportDto {
     private Integer reporterTeamId;
     private Integer reportedTeamId;
     private LocalDateTime reportedAt;
+    private LocalDateTime sentAt;
 
 }

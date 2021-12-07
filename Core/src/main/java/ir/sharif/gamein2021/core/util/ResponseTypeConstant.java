@@ -55,8 +55,8 @@ public enum ResponseTypeConstant {
     EDIT_PROVIDER_RESPONSE(51),
     GET_NEWS(52),
     CORONA_INFO(53),
-    DONATE(54);
-    REPORT_MESSAGE(53);
+    DONATE(54),
+    REPORT_MESSAGE(55);
 
     private int value;
 

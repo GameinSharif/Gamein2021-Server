@@ -218,6 +218,7 @@ public class MainController {
             case DONATE:
                 DonateRequest donateRequest = gson.fromJson(requestData , DonateRequest.class);
                 coronaController.donate(processedRequest , donateRequest);
+                break;
             case REPORT_MESSAGE:
                 ReportMessageRequest reportMessageRequest = gson.fromJson(requestData, ReportMessageRequest.class);
                 messageController.reportMessage(processedRequest, reportMessageRequest);

@@ -30,7 +30,6 @@ public class CoronaController
     private final Gson gson;
     private final PushMessageManagerInterface pushMessageManager;
     private final TeamService teamService;
-    private final CoronaService coronaService;
     private final UserService userService;
 
     public void donate(ProcessedRequest request, DonateRequest donateRequest)

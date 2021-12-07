@@ -85,7 +85,7 @@ public class TeamService extends AbstractCrudService<TeamDto, Team, Integer> {
         team = loadById(team.getId());
         if(!coronaService.isCoronaStarted())
             throw new InvalidRequestException();
-        if(donatedAmount < team.getCredit())
+        if(donatedAmount > team.getCredit())
             throw new NotEnoughMoneyException("You don't have this much money to donate!");
 
         var coronaInfo = coronaService.findCoronaInfoWithCountry(team.getCountry());
@@ -96,7 +96,7 @@ public class TeamService extends AbstractCrudService<TeamDto, Team, Integer> {
 
         donatedAmount = checkMaximumAvailableAmountToDonate(donatedAmount, maximumMoneyToDonate);
         reduceTeamCredit(team, donatedAmount);
-        addDonatedMoneyToCoronaInfo(donatedAmount, coronaInfo);
+        coronaService.addDonatedMoneyToCoronaInfo(donatedAmount, coronaInfo);
         addDonatedMoneyToTeam(team, donatedAmount);
         saveOrUpdate(team);
         coronaService.changeAndSaveCoronaStatusForCountry(team.getCountry());
@@ -108,9 +108,6 @@ public class TeamService extends AbstractCrudService<TeamDto, Team, Integer> {
         team.setDonatedAmount(team.getDonatedAmount() + donatedAmount);
     }
 
-    private void addDonatedMoneyToCoronaInfo(Float donatedAmount, CoronaInfoDto coronaInfo) {
-        coronaInfo.setCurrentCollectedAmount(coronaInfo.getCurrentCollectedAmount() + donatedAmount);
-    }
 
     private void reduceTeamCredit(TeamDto team, Float donatedAmount) {
         team.setCredit(team.getCredit() - donatedAmount);

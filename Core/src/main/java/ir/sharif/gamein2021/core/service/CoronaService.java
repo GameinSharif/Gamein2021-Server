@@ -43,9 +43,14 @@ public class CoronaService extends AbstractCrudService<CoronaInfoDto, CoronaInfo
         Integer currentWeek = gameCalendar.getCurrentWeek();
         Assert.notNull(currentWeek, "Current week is null!");
         Integer coronaStartingWeek = dynamicConfigService.getCoronaStartingWeek();
-        Assert.notNull(currentWeek, "Corona week is null!");
-
+        Assert.notNull(coronaStartingWeek, "Corona week is null!");
         return coronaStartingWeek <= currentWeek;
+    }
+
+    @Transactional
+    public void addDonatedMoneyToCoronaInfo(Float donatedAmount, CoronaInfoDto coronaInfo) {
+        coronaInfo.setCurrentCollectedAmount(coronaInfo.getCurrentCollectedAmount() + donatedAmount);
+        saveOrUpdate(coronaInfo);
     }
 
     @Transactional

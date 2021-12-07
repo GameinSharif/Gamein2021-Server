@@ -37,8 +37,11 @@ public class Offer implements BaseEntity{
     @Column(name = "cost_per_unit", nullable = false)
     private Float costPerUnit;
 
-    @Column(name = "offer_deadline", nullable = false)
-    private LocalDate offerDeadline;
+    @Column(name = "accept_date")
+    private LocalDate acceptDate;
+
+    @Column(name = "inserted_at", nullable = false)
+    private LocalDate insertedAt;
 
     @Override
     public Integer getId() {
@@ -53,7 +56,7 @@ public class Offer implements BaseEntity{
                 ", productId='" + productId + '\'' +
                 ", volume=" + volume +
                 ", costPerUnit=" + costPerUnit +
-                ", offerDeadline=" + offerDeadline +
+                ", acceptDate=" + acceptDate +
                 '}';
     }
 }

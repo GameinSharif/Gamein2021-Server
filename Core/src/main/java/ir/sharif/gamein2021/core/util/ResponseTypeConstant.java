@@ -53,7 +53,8 @@ public enum ResponseTypeConstant {
     UPDATE_WEEKLY_REPORT(49),
     REJECT_NEGOTIATION(50),
     EDIT_PROVIDER_RESPONSE(51),
-    REPORT_MESSAGE(52);
+    GET_NEWS(52),
+    REPORT_MESSAGE(53);
 
     private int value;
 

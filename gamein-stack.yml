@@ -27,8 +27,8 @@ services:
       replicas: 1
       resources:
         reservations:
-          cpus: 2
-          memory: '5GB'
+          cpus: '2'
+          memory: 5GB
   rabbitmq:
     image: rabbitmq
     ports:
@@ -40,8 +40,8 @@ services:
       replicas: 1
       resources:
         reservations:
-          cpus: 1
-          memory: '2GB'
+          cpus: '1'
+          memory: 2GB
 
   client-handler:
     image: 127.0.0.1:5000/client-handler

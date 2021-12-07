@@ -44,7 +44,7 @@ services:
           memory: 2GB
 
   client-handler:
-    image: 127.0.0.1:5000/central-engine
+    image: 127.0.0.1:5000/client-handler
     build: ./ClientHandler
     ports:
       - "8081:8081"

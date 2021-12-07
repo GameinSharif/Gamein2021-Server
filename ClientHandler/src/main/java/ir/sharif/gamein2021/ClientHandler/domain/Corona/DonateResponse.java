@@ -12,11 +12,13 @@ import java.util.List;
 
 @AllArgsConstructor
 @Getter
-public class DonateResponse  extends ResponseObject implements Serializable {
-    List<CoronaInfoDto> infos;
+public class DonateResponse extends ResponseObject implements Serializable
+{
+    private List<CoronaInfoDto> infos;
     private String result;
 
-    public DonateResponse(ResponseTypeConstant responseTypeConstant,List<CoronaInfoDto> infos, String result) {
+    public DonateResponse(ResponseTypeConstant responseTypeConstant, List<CoronaInfoDto> infos, String result)
+    {
         this.responseTypeConstant = responseTypeConstant.ordinal();
         this.infos = infos;
         this.result = result;

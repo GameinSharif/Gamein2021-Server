@@ -54,6 +54,7 @@ public class Team implements BaseEntity {
 
     @Column(name = "donated_money")
     private Float donatedAmount;
+
     @Column(name = "used_water")
     private Long usedWater;
 

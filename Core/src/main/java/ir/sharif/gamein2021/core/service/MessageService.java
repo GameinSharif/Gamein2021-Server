@@ -9,6 +9,8 @@ import ir.sharif.gamein2021.core.domain.entity.Message;
 import ir.sharif.gamein2021.core.util.AssertionUtil;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class MessageService extends AbstractCrudService<MessageDto, Message, Integer>
 {
@@ -24,10 +26,13 @@ public class MessageService extends AbstractCrudService<MessageDto, Message, Int
         setRepository(messageRepository);
     }
 
-    public MessageDto getMessageByTextAndChatId(Integer chatId, String messageText) {
+    public MessageDto getMessageByTextAndChatId(Integer chatId, Integer reportedTeamId, String messageText, LocalDateTime insertedAt)
+    {
         ChatDto chatDto = chatService.loadById(chatId);
-        for (MessageDto messageDto : chatDto.getMessages()) {
-            if(messageDto.getText().equals(messageText)) {
+        for (MessageDto messageDto : chatDto.getMessages())
+        {
+            if (messageDto.getSenderTeamId().equals(reportedTeamId) && messageDto.getText().equals(messageText) && messageDto.getInsertedAt() == insertedAt)
+            {
                 return messageDto;
             }
         }

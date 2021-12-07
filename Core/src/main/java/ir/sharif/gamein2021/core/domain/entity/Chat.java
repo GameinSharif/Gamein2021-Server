@@ -28,7 +28,7 @@ public class Chat implements BaseEntity {
     @OneToOne
     private Team team2;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "chat_id")
     private List<Message> messages;
 }

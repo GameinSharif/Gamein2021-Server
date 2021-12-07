@@ -22,6 +22,7 @@ public class Contract implements BaseEntity
     private Team team;
 
     @ManyToOne
+    @JoinColumn(name = "storage_id")
     private Storage storage;
 
     @ManyToOne

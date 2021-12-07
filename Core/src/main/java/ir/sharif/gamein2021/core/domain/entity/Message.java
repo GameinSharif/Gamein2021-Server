@@ -18,6 +18,10 @@ public class Message implements BaseEntity
     private Integer id;
 
     @OneToOne
+    @JoinColumn(name = "chat_id")
+    private Chat chat;
+
+    @OneToOne
     private Team senderTeam;
 
     @OneToOne
@@ -28,10 +32,4 @@ public class Message implements BaseEntity
 
     @Column(nullable = false)
     private LocalDateTime insertedAt;
-
-    @Override
-    public Integer getId()
-    {
-        return null;
-    }
 }

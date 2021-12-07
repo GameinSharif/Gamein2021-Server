@@ -1,7 +1,10 @@
 package ir.sharif.gamein2021.core.domain.entity;
 
 import ir.sharif.gamein2021.core.util.Enums.Country;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
@@ -27,8 +30,9 @@ public class Team implements BaseEntity {
     @Column(updatable = false)
     @Enumerated(value = EnumType.STRING)
     private Country country;
-    //TODO this field should be initialize
-    private float credit;
+
+    @Column
+    private Float credit;
 
     @Column(name = "brand", nullable = false)
     private Float brand;
@@ -47,6 +51,9 @@ public class Team implements BaseEntity {
 
     @Column(name = "production_cost")
     private Float productionCost;
+
+    @Column(name = "donated_money")
+    private Float donatedAmount;
 
     @Column(name = "used_water")
     private Long usedWater;

@@ -1,0 +1,121 @@
+version: "3.9"
+
+services:
+#  lb:
+#    image: haproxy
+#    ports:
+#      - "8080:8080"
+#    networks:
+#      - lb_net
+#    volumes:
+#      - ./haproxy:/usr/local/etc/haproxy
+  db:
+    image: mysql
+    command:
+      - --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345
+      MYSQL_DATABASE: gamein_test
+    networks:
+      - db_net
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-datavolume:/var/lib/mysql
+    deploy:
+      replicas: 1
+      resources:
+        reservations:
+          cpus: 2
+          memory: 5GB
+  rabbitmq:
+    image: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - rabbitmq_net
+    deploy:
+      replicas: 1
+      resources:
+        reservations:
+          cpus: 1
+          memory: 2GB
+
+  client-handler:
+    image: 127.0.0.1:5000/central-engine
+    build: ./ClientHandler
+    ports:
+      - "8081:8081"
+    depends_on:
+      - db
+      - rabbitmq
+    restart: on-failure
+    environment:
+      DB_HOSTNAME: db
+      DB_PORT: 3306
+      DB_DATABASE: gamein_test
+      DB_USER: root
+      DB_PASS: 12345
+      APP_PORT: 8081
+      APP_PROFILES: "production,microservice"
+      RABBIT_HOSTNAME: rabbitmq
+      SPRING_PROFILES_ACTIVE: production,microservice
+    networks:
+      - rabbitmq_net
+      - db_net
+      - lb_net
+    volumes:
+      - ./Core/src/main/resources/JsonFiles:/opt/app/JsonFiles
+      - ./Core/src/main/resources/CSVFiles:/opt/app/CSVFiles
+      - ./Core/src/main/resources:/opt/app/resources
+    deploy:
+      replicas: 3
+#      resources:
+#        reservations:
+#          cpus: 2
+#          memory: 5GB
+
+  central-engine:
+    image: 127.0.0.1:5000/central-engine
+    build: ./CentralEngine
+    networks:
+      - rabbitmq_net
+      - db_net
+      - lb_net
+    depends_on:
+      - db
+      - rabbitmq
+    environment:
+      DB_HOSTNAME: db
+      DB_PORT: 3306
+      DB_DATABASE: gamein_test
+      DB_USER: root
+      DB_PASS: 12345
+      APP_PORT: 8081
+      APP_PROFILES: "microservice,scheduled,production"
+      SPRING_PROFILES_ACTIVE: production,microservice,scheduled
+      RABBIT_HOSTNAME: rabbitmq
+    restart: on-failure
+    volumes:
+      - ./Core/src/main/resources/JsonFiles:/opt/app/JsonFiles
+      - ./Core/src/main/resources/CSVFiles:/opt/app/CSVFiles
+      - ./Core/src/main/resources:/opt/app/resources
+    deploy:
+      replicas: 1
+#      resources:
+#        reservations:
+#          cpus: 2
+#          memory: 5GB
+
+networks:
+  rabbitmq_net:
+    driver: bridge
+  db_net:
+    driver: bridge
+  lb_net:
+    driver: bridge
+
+volumes:
+  mysql-datavolume:

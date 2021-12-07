@@ -7,6 +7,7 @@ import ir.sharif.gamein2021.ClientHandler.domain.Auction.BidForAuctionRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Contract.GetContractsRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Contract.NewContractRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Contract.TerminateLongtermContractRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.Corona.DonateRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Dc.BuyingDcRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Dc.SellingDcRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.GetContractsSupplierRequest;
@@ -14,6 +15,7 @@ import ir.sharif.gamein2021.ClientHandler.domain.GetGameDataRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Messenger.GetAllChatsRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Messenger.NewMessageRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.Messenger.ReportMessageRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.NewContractSupplierRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Product.AddProductRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Product.GetStorageProductsRequest;
@@ -49,6 +51,7 @@ public class MainController {
     private final AccessManagementController accessManagementController;
     private final GameDateManager gameDateManager;
     private final WeeklyReportController weeklyReportController;
+    private final CoronaController coronaController;
     private final Gson gson;
 
     public void HandleMessage(ProcessedRequest processedRequest) {
@@ -212,6 +215,14 @@ public class MainController {
             case EDIT_PROVIDER:
                 EditProviderRequest editProviderRequest = gson.fromJson(requestData, EditProviderRequest.class);
                 providerController.editProvider(processedRequest, editProviderRequest);
+                break;
+            case DONATE:
+                DonateRequest donateRequest = gson.fromJson(requestData , DonateRequest.class);
+                coronaController.donate(processedRequest , donateRequest);
+                break;
+            case REPORT_MESSAGE:
+                ReportMessageRequest reportMessageRequest = gson.fromJson(requestData, ReportMessageRequest.class);
+                messageController.reportMessage(processedRequest, reportMessageRequest);
                 break;
             default:
                 System.out.println("Request type is invalid.");

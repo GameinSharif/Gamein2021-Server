@@ -34,6 +34,7 @@ public class DailySchedule {
     private final StorageManager storageManager;
     private final DynamicConfigService dynamicConfigService;
     private final BusinessIntelligenceService businessIntelligenceService;
+    private final CoronaManager coronaManager;
 
     private final ClientHandlerRequestSenderInterface clientRequestSender;
 
@@ -60,14 +61,12 @@ public class DailySchedule {
         updateConfigs();
     }
 
-    private void DoRunningStateTasks()
-    {
+    private void DoRunningStateTasks() {
         gameCalendar.increaseOneDay();
         System.out.println(gameCalendar.getCurrentDate());
 
         doDailyTasks();
-        if (gameCalendar.getCurrentDate().getDayOfWeek() == DayOfWeek.SATURDAY)
-        {
+        if (gameCalendar.getCurrentDate().getDayOfWeek() == DayOfWeek.SATURDAY) {
             doWeeklyTasks();
         }
     }
@@ -96,6 +95,7 @@ public class DailySchedule {
         demandAndSupplyManager.SendCurrentWeekSupplyAndDemandsToAllUsers();
         newsManager.SendNews();
         businessIntelligenceService.prepareWeeklyReport();
+        coronaManager.SendCoronaInfoToAllUsers();
     }
 
     private void updateConfigs() {

@@ -20,8 +20,10 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Component
 @Profile(value = {"scheduled"})
-public class DailySchedule {
+public class DailySchedule
+{
     private final GameCalendar gameCalendar;
+    private final GameStatusSchedule gameStatusSchedule;
     private final ProductionLineProductService productService;
     private final TransportManager transportManager;
     private final ContractManager contractManager;
@@ -38,22 +40,17 @@ public class DailySchedule {
 
     private final ClientHandlerRequestSenderInterface clientRequestSender;
 
-    //Second, Minute, Hour, DayOfMonth, Month, WeekDays
-    @Scheduled(cron = "0 24 19 27 11 ?")
-    public void startGame()
-    {
-        GameConstants.gameStatus = GameStatus.RUNNING;
-        dynamicConfigService.setGameStatus(GameConstants.gameStatus);
-        UpdateGameStatusRequest request = new UpdateGameStatusRequest("Done", GameConstants.gameStatus);
-        clientRequestSender.send(request);
-    }
-
     @Scheduled(fixedRateString = "${dayLengthMilliSecond}")
-    public void scheduledTask() {
-        if (GameConstants.gameStatus == GameStatus.RUNNING) {
-            try {
+    public void scheduledTask()
+    {
+        if (GameConstants.gameStatus == GameStatus.RUNNING)
+        {
+            try
+            {
                 DoRunningStateTasks();
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 e.printStackTrace();
             }
         }
@@ -61,12 +58,14 @@ public class DailySchedule {
         updateConfigs();
     }
 
-    private void DoRunningStateTasks() {
+    private void DoRunningStateTasks()
+    {
         gameCalendar.increaseOneDay();
         System.out.println(gameCalendar.getCurrentDate());
 
         doDailyTasks();
-        if (gameCalendar.getCurrentDate().getDayOfWeek() == DayOfWeek.SATURDAY) {
+        if (gameCalendar.getCurrentDate().getDayOfWeek() == DayOfWeek.SATURDAY)
+        {
             doWeeklyTasks();
         }
     }
@@ -79,9 +78,11 @@ public class DailySchedule {
         transportManager.updateTransports();
         contractManager.updateContracts();
         teamManager.updateAllTeamsMoneyOnClient();
-        try {
+        try
+        {
             storageManager.MaintenanceCost();
-        }catch (Exception e){
+        } catch (Exception e)
+        {
             e.printStackTrace();
         }
     }
@@ -98,25 +99,27 @@ public class DailySchedule {
         coronaManager.SendCoronaInfoToAllUsers();
     }
 
-    private void updateConfigs() {
-        if (GameConstants.gameStatus != GameStatus.RUNNING) {
+    private void updateConfigs()
+    {
+        if (GameConstants.gameStatus != GameStatus.RUNNING)
+        {
             LocalDate newCurrentDate = dynamicConfigService.getCurrentDate();
-            if (newCurrentDate != null) {
+            if (newCurrentDate != null)
+            {
                 gameCalendar.setCurrentDate(newCurrentDate);
             }
 
             Integer newCurrentWeek = dynamicConfigService.getCurrentWeek();
-            if (newCurrentWeek != null) {
+            if (newCurrentWeek != null)
+            {
                 gameCalendar.setCurrentWeek(newCurrentWeek);
             }
         }
 
         GameStatus newGameStatus = dynamicConfigService.getGameStatus();
-        if (newGameStatus != null) {
-            GameConstants.gameStatus = newGameStatus;
-            UpdateGameStatusRequest request = new UpdateGameStatusRequest("Done", GameConstants.gameStatus);
-            clientRequestSender.send(request);
-            System.out.println("GameStatus: " + GameConstants.gameStatus);
+        if (newGameStatus != null)
+        {
+            gameStatusSchedule.setGameStatus(newGameStatus);
         }
     }
 }

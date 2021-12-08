@@ -99,7 +99,7 @@ public class TeamService extends AbstractCrudService<TeamDto, Team, Integer>
         }
 
         var coronaInfo = coronaService.findCoronaInfoWithCountry(team.getCountry());
-        if (coronaInfo.isCoronaOver())
+        if (coronaInfo.getIsCoronaOver())
         {
             throw new InvalidRequestException("Corona is over in your country!");
         }

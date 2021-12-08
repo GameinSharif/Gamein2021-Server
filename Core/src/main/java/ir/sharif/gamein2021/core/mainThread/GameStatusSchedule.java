@@ -19,21 +19,7 @@ import org.springframework.stereotype.Component;
 @Profile(value = {"scheduled"})
 public class GameStatusSchedule
 {
-    private final GameCalendar gameCalendar;
-    private final ProductionLineProductService productService;
-    private final TransportManager transportManager;
-    private final ContractManager contractManager;
-    private final ProductionLineService productionLineService;
-    private final DemandAndSupplyManager demandAndSupplyManager;
-    private final GameDateManager gameDateManager;
-    private final WeekSupplyManager weekSupplyManager;
-    private final TeamManager teamManager;
-    private final NewsManager newsManager;
-    private final StorageManager storageManager;
     private final DynamicConfigService dynamicConfigService;
-    private final BusinessIntelligenceService businessIntelligenceService;
-    private final CoronaManager coronaManager;
-
     private final ClientHandlerRequestSenderInterface clientRequestSender;
 
     //Second, Minute, Hour, DayOfMonth, Month, WeekDays

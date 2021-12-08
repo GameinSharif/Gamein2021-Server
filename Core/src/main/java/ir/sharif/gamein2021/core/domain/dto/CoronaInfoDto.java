@@ -13,5 +13,5 @@ public class CoronaInfoDto {
     private Enums.Country country;
     private Float amountToBeCollect = 10000F;
     private Float currentCollectedAmount = 0F;
-    boolean isCoronaOver = true;
+    private Boolean isCoronaOver = true;
 }

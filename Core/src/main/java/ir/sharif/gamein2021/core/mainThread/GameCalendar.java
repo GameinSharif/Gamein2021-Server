@@ -19,13 +19,11 @@ public class GameCalendar
     private LocalDate currentDate;
     private final ClientHandlerRequestSenderInterface requestSender;
     private final DynamicConfigService dynamicConfigService;
-    private final GameStatusSchedule gameStatusSchedule;
 
-    public GameCalendar(ClientHandlerRequestSenderInterface requestSender, DynamicConfigService dynamicConfigService, GameStatusSchedule gameStatusSchedule)
+    public GameCalendar(ClientHandlerRequestSenderInterface requestSender, DynamicConfigService dynamicConfigService)
     {
         this.requestSender = requestSender;
         this.dynamicConfigService = dynamicConfigService;
-        this.gameStatusSchedule = gameStatusSchedule;
 
         currentDate = dynamicConfigService.getCurrentDate();
         if (currentDate == null)
@@ -67,10 +65,10 @@ public class GameCalendar
                 case 26:
                 case 51:
                 case 76:
-                    gameStatusSchedule.setGameStatus(GameStatus.PAUSED);
+                    dynamicConfigService.setGameStatus(GameStatus.PAUSED);
                     break;
                 case 100:
-                    gameStatusSchedule.setGameStatus(GameStatus.FINISHED);
+                    dynamicConfigService.setGameStatus(GameStatus.FINISHED);
             }
         }
 

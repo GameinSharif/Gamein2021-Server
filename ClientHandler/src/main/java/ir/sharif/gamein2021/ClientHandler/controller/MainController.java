@@ -213,11 +213,14 @@ public class MainController {
                 break;
             case DONATE:
                 DonateRequest donateRequest = gson.fromJson(requestData , DonateRequest.class);
-                coronaController.donate(processedRequest , donateRequest);
+                coronaController.donate(processedRequest, donateRequest);
                 break;
             case REPORT_MESSAGE:
                 ReportMessageRequest reportMessageRequest = gson.fromJson(requestData, ReportMessageRequest.class);
                 messageController.reportMessage(processedRequest, reportMessageRequest);
+                break;
+            case GET_LEADERBOARD:
+                gameDataController.getLeaderboard(processedRequest);
                 break;
             default:
                 System.out.println("Request type is invalid.");

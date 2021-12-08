@@ -70,7 +70,7 @@ public class CoronaService extends AbstractCrudService<CoronaInfoDto, CoronaInfo
     @Transactional(readOnly = true)
     public boolean checkCoronaForCountry(Enums.Country country)
     {
-        return !findCoronaInfoWithCountry(country).isCoronaOver();
+        return !findCoronaInfoWithCountry(country).getIsCoronaOver();
     }
 
     @Transactional(readOnly = true)
@@ -113,14 +113,14 @@ public class CoronaService extends AbstractCrudService<CoronaInfoDto, CoronaInfo
 
     private boolean checkIfCoronaStillExist(CoronaInfo coronaInfo)
     {
-        return !coronaInfo.isCoronaOver() && isCoronaStarted();
+        return !coronaInfo.getIsCoronaOver() && isCoronaStarted();
     }
 
     private void checkDonatedMoney(CoronaInfo coronaInfo)
     {
         if (coronaInfo.getAmountToBeCollect().equals(coronaInfo.getCurrentCollectedAmount()))
         {
-            coronaInfo.setCoronaOver(true);
+            coronaInfo.setIsCoronaOver(true);
         }
     }
 }

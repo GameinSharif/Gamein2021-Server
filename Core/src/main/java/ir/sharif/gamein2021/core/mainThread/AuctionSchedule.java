@@ -30,15 +30,12 @@ public class AuctionSchedule
     private final AuctionService auctionService;
     private final TeamService teamService;
     private final Gson gson;
-    private final DynamicConfigService configService;
-    private final ClientHandlerRequestSenderInterface clientRequestSender;
+    private final GameStatusSchedule gameStatusSchedule;
 
     @Scheduled(cron = "0 15 19 27 11 ?")
-    public void startAuction(){
-        GameConstants.gameStatus = GameStatus.AUCTION;
-        configService.setGameStatus(GameConstants.gameStatus);
-        UpdateGameStatusRequest request = new UpdateGameStatusRequest("Done", GameConstants.gameStatus);
-        clientRequestSender.send(request);
+    public void startAuction()
+    {
+        gameStatusSchedule.setGameStatus(GameStatus.AUCTION);
     }
 
     //Second, Minute, Hour, DayOfMonth, Month, WeekDays
@@ -58,7 +55,6 @@ public class AuctionSchedule
 
         auctionService.assignRemainedFactoriesRandomly();
         sendAllTeamsDataToAllClients();
-        //TODO not allow auction requests anymore
     }
 
     private void sendAllAuctionsDataToAllClients()

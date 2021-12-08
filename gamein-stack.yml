@@ -22,7 +22,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - mysql-datavolume:/var/lib/mysql
+      - /home/ubuntu/mysql-data:/var/lib/mysql
     deploy:
       replicas: 1
 #      resources:
@@ -117,6 +117,3 @@ networks:
     driver: overlay
 #  lb_net:
 #    driver: overlay
-
-volumes:
-  mysql-datavolume:

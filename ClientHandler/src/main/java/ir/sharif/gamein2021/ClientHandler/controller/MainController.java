@@ -177,10 +177,6 @@ public class MainController {
                 SellingDcRequest sellingDcRequest = gson.fromJson(requestData, SellingDcRequest.class);
                 dcController.sellDc(processedRequest, sellingDcRequest);
                 break;
-            case ADD_PRODUCT:
-                AddProductRequest addProductRequest = gson.fromJson(requestData, AddProductRequest.class);
-                productController.addProduct(processedRequest, addProductRequest);
-                break;
             case REMOVE_PRODUCT:
                 RemoveProductRequest removeProductRequest = gson.fromJson(requestData, RemoveProductRequest.class);
                 productController.removeProduct(processedRequest, removeProductRequest);

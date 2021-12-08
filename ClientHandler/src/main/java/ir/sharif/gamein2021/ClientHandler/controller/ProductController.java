@@ -34,32 +34,6 @@ public class ProductController
     private final StorageService storageService;
     private final DcService dcService;
 
-    public void addProduct(ProcessedRequest request, AddProductRequest addProductRequest)
-    {
-        Integer id = request.playerId;
-        AddProductResponse response;
-        try
-        {
-            UserDto userDto = userService.loadById(id);
-            Integer teamId = userDto.getTeamId();
-            TeamDto teamDto = teamService.loadById(teamId);
-            checkTeamAndStorage(addProductRequest.getBuildingId(), addProductRequest.isDc(), teamDto);
-            StorageDto storageDto;
-            storageDto = storageService.addProduct(
-                    addProductRequest.getBuildingId(),
-                    addProductRequest.isDc(),
-                    addProductRequest.getProductId(),
-                    addProductRequest.getAmount());
-            response = new AddProductResponse(ResponseTypeConstant.ADD_PRODUCT, storageDto, "success");
-        } catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            logger.debug(e.getMessage());
-            response = new AddProductResponse(ResponseTypeConstant.ADD_PRODUCT, null, e.getMessage());
-        }
-        pushMessageManager.sendMessageBySession(request.session, gson.toJson(response));
-    }
-
     public void removeProduct(ProcessedRequest request, RemoveProductRequest removeProductRequest)
     {
         Integer id = request.playerId;

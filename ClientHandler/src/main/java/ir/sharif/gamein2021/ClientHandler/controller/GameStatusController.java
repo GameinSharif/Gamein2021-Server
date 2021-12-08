@@ -53,6 +53,7 @@ public class GameStatusController
             case GET_GAME_STATUS:
             case BID_FOR_AUCTION:
             case GET_ALL_WEEKLY_REPORTS:
+            case GET_LEADERBOARD:
                 return true;
             default:
                 UpdateGameStatusResponse response = new UpdateGameStatusResponse(GameConstants.gameStatus);
@@ -91,6 +92,7 @@ public class GameStatusController
             case GET_STORAGES:
             case GET_GAME_STATUS:
             case GET_ALL_WEEKLY_REPORTS:
+            case GET_LEADERBOARD:
                 return true;
             default:
                 UpdateGameStatusResponse response = new UpdateGameStatusResponse(GameConstants.gameStatus);

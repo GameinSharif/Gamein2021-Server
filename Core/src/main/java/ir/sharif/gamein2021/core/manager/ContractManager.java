@@ -172,12 +172,17 @@ public class ContractManager
                     weekDemandDto.getGameinCustomerId(),
                     Enums.VehicleType.TRUCK);
 
-            float share = 0f;
+            /*float share = 0f;
             if (d <= 1000)
             {
                 share = B / (GameConstants.getAlpha(contractDto.getProductId()) * P + GameConstants.ShareAllocationBeta * d);
                 treeMap.put(share, contractDto);
-            }
+            }*/
+
+            float share = B / (GameConstants.getAlpha(contractDto.getProductId()) * P + GameConstants.ShareAllocationBeta * d);
+            System.out.println(share);
+            System.out.println(d);
+            treeMap.put(share, contractDto);
 
             totalShares += share;
 
@@ -202,10 +207,12 @@ public class ContractManager
         for (Map.Entry<Float, ContractDto> entry : treeMap.entrySet())
         {
             float sharePercent = entry.getKey() / totalShares;
+            //System.out.println(sharePercent);
             ContractDto contractDto = entry.getValue();
             StorageDto storageDto = storageService.loadById(contractDto.getStorageId());
 
             int sale = (int) Math.floor(Math.min(contractDto.getSupplyAmount(), weekDemandDto.getAmount() * sharePercent));
+            //System.out.println(sale);
 
             TeamDto teamDto = teamService.loadById(contractDto.getTeamId());
 
@@ -213,6 +220,7 @@ public class ContractManager
                     storageDto.getBuildingId(),
                     storageDto.getDc(),
                     contractDto.getProductId());
+            //System.out.println(storageProductDto.getAmount());
 
             if (storageProductDto != null && storageProductDto.getAmount() >= sale)
             {
@@ -224,6 +232,8 @@ public class ContractManager
                 teamDto.setWealth(teamDto.getWealth() + income);
                 teamDto.setInFlow(teamDto.getInFlow() + income);
 
+                //System.out.println(income);
+
                 if (sharePercent >= equalShareAmount)
                 {
                     teamManager.updateTeamBrand(teamDto, sharePercent - equalShareAmount + GameConstants.brandIncreaseAfterFinalizeContractWithCustomer);
@@ -231,6 +241,7 @@ public class ContractManager
             }
             else
             {
+                System.out.println("Not enough product");
                 contractDto.setBoughtAmount(0);
                 teamDto.setCredit(teamDto.getCredit() - contractDto.getLostSalePenalty());
                 teamDto.setWealth(teamDto.getWealth() - contractDto.getLostSalePenalty());
@@ -262,6 +273,7 @@ public class ContractManager
                 contractDto.setDemandShare(100f * contractDto.getBoughtAmount() / (weekDemandDto.getAmount() - remainedDemand));
                 contractDto.setValueShare(100f * income / totalIncome);
             }
+            //System.out.println(contractDto.getDemandShare());
             contractService.saveOrUpdate(contractDto);
 
             if (contractDto.getBoughtAmount() == 0)
@@ -270,6 +282,7 @@ public class ContractManager
             }
 
             StorageDto storageDto = storageService.loadById(contractDto.getStorageId());
+            storageService.deleteProducts(storageDto.getBuildingId(), storageDto.getDc(), contractDto.getProductId(), contractDto.getBoughtAmount());
 
             transportManager.createTransport(
                     Enums.VehicleType.TRUCK,

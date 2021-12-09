@@ -341,7 +341,7 @@ public class NegotiationController
         StorageDto storageDto = storageService.findStorageWithBuildingIdAndDc(teamService.loadById(team.getId()).getFactoryId(), false);
         for (StorageProductDto product : storageDto.getProducts())
         {
-            if (product.getId().equals(productId))
+            if (product.getProductId().equals(productId))
             {
                 if (product.getAmount() >= amount)
                 {

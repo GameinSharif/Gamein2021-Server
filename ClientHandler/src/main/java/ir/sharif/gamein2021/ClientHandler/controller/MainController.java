@@ -178,10 +178,6 @@ public class MainController {
                 SellingDcRequest sellingDcRequest = gson.fromJson(requestData, SellingDcRequest.class);
                 dcController.sellDc(processedRequest, sellingDcRequest);
                 break;
-            case ADD_PRODUCT:
-                AddProductRequest addProductRequest = gson.fromJson(requestData, AddProductRequest.class);
-                productController.addProduct(processedRequest, addProductRequest);
-                break;
             case REMOVE_PRODUCT:
                 RemoveProductRequest removeProductRequest = gson.fromJson(requestData, RemoveProductRequest.class);
                 productController.removeProduct(processedRequest, removeProductRequest);
@@ -218,11 +214,14 @@ public class MainController {
                 break;
             case DONATE:
                 DonateRequest donateRequest = gson.fromJson(requestData , DonateRequest.class);
-                coronaController.donate(processedRequest , donateRequest);
+                coronaController.donate(processedRequest, donateRequest);
                 break;
             case REPORT_MESSAGE:
                 ReportMessageRequest reportMessageRequest = gson.fromJson(requestData, ReportMessageRequest.class);
                 messageController.reportMessage(processedRequest, reportMessageRequest);
+                break;
+            case GET_LEADERBOARD:
+                gameDataController.getLeaderboard(processedRequest);
                 break;
             default:
                 System.out.println("Request type is invalid.");

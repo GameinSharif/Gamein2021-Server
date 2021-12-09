@@ -46,11 +46,17 @@ public class AccessManagementController {
             case SELL_DC:
             case GET_TEAM_TRANSPORTS:
             case GET_CONTRACTS_WITH_SUPPLIER:
-            case ADD_PRODUCT:
             case REMOVE_PRODUCT:
             case GET_STORAGES:
             case NEW_CONTRACT:
             case TERMINATE_CONTRACT:
+            case GET_LEADERBOARD:
+            case TRANSPORT_TO_STORAGE:
+            case GET_ALL_WEEKLY_REPORTS:
+            case REJECT_NEGOTIATION:
+            case EDIT_PROVIDER:
+            case DONATE:
+            case REPORT_MESSAGE:
             default:
                 if (request.playerId != null) {
                     return true;

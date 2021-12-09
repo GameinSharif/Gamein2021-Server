@@ -67,28 +67,6 @@ public class ContractService extends AbstractCrudService<ContractDto, Contract, 
         GameinCustomer gameinCustomer = modelMapper.map(gameinCustomerDto, GameinCustomer.class);
         List<Contract> contracts = contractRepository.findContractsByGameinCustomerAndProductIdAndContractDateAndIsTerminatedIsFalse(gameinCustomer, product.getId(), date);
 
-        for(int i = contracts.size() - 1; i >= 0; i--)
-        {
-            Storage storage = contracts.get(i).getStorage();
-
-            int transportDurationDays = transportManager.calculateTransportDuration(
-                    storage.getDc() ? Enums.TransportNodeType.DC : Enums.TransportNodeType.FACTORY,
-                    storage.getBuildingId(),
-                    Enums.TransportNodeType.GAMEIN_CUSTOMER,
-                    gameinCustomer.getId(),
-                    Enums.VehicleType.TRUCK
-            );
-
-            if (transportDurationDays > 7)
-            {
-                contracts.get(i).setBoughtAmount(0);
-                contracts.get(i).setDemandShare(0f);
-                contracts.get(i).setValueShare(0f);
-                saveOrUpdate(modelMapper.map(contracts.get(i), ContractDto.class));
-                contracts.remove(i);
-            }
-        }
-
         return contracts.stream()
                 .map(e -> modelMapper.map(e, ContractDto.class))
                 .collect(Collectors.toList());

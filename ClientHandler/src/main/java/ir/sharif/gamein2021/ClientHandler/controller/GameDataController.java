@@ -131,7 +131,7 @@ public class GameDataController {
         {
             if (teamDto.getId().equals(request.teamId))
             {
-                rank = teamsOrderedByWealthDesc.indexOf(teamDto);
+                rank = teamsOrderedByWealthDesc.indexOf(teamDto) + 1;
                 myTeam = teamDto;
             }
         }

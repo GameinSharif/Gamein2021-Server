@@ -23,7 +23,7 @@ public class GameStatusSchedule
     private final ClientHandlerRequestSenderInterface clientRequestSender;
 
     //Second, Minute, Hour, DayOfMonth, Month, WeekDays
-    @Scheduled(cron = "2 54 9 9 12 ?")
+    @Scheduled(cron = "2 9 10 9 12 ?")
     public void startFirstPart()
     {
         setGameStatus(GameStatus.RUNNING);

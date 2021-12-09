@@ -67,7 +67,7 @@ public class GameCalendar
                 case 76:
                     dynamicConfigService.setGameStatus(GameStatus.PAUSED);
                     break;
-                case 100:
+                case 101:
                     dynamicConfigService.setGameStatus(GameStatus.FINISHED);
             }
         }

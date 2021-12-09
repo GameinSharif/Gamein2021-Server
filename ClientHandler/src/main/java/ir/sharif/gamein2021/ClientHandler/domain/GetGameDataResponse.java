@@ -16,7 +16,7 @@ import java.util.List;
 public class GetGameDataResponse extends ResponseObject implements Serializable {
     private List<TeamDto> teams;
     private List<GameinCustomerDto> gameinCustomers;
-    private List<NewsDto> newsDtos;
+    private List<NewsDto> news;
     private List<CoronaInfoDto> coronaInfos;
 
     private Product[] products;
@@ -27,12 +27,12 @@ public class GetGameDataResponse extends ResponseObject implements Serializable 
 
     public GameConstants gameConstants;
 
-    public GetGameDataResponse(ResponseTypeConstant responseTypeConstant, List<TeamDto> teams, List<GameinCustomerDto> gameinCustomers, List<NewsDto> newsDtos, List<CoronaInfoDto> coronaInfos)
+    public GetGameDataResponse(ResponseTypeConstant responseTypeConstant, List<TeamDto> teams, List<GameinCustomerDto> gameinCustomers, List<NewsDto> news, List<CoronaInfoDto> coronaInfos)
     {
         this.teams = teams;
         this.responseTypeConstant = responseTypeConstant.ordinal();
         this.gameinCustomers = gameinCustomers;
-        this.newsDtos = newsDtos;
+        this.news = news;
         this.coronaInfos = coronaInfos;
 
         products = ReadJsonFilesManager.Products;

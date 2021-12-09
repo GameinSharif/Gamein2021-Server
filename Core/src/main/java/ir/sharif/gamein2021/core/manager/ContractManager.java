@@ -172,8 +172,13 @@ public class ContractManager
                     weekDemandDto.getGameinCustomerId(),
                     Enums.VehicleType.TRUCK);
 
-            float share = B / (GameConstants.ShareAllocationAlpha * P + GameConstants.ShareAllocationBeta * d);
-            treeMap.put(share, contractDto);
+            float share = 0f;
+            if (d <= 1000)
+            {
+                share = B / (GameConstants.getAlpha(contractDto.getProductId()) * P + GameConstants.ShareAllocationBeta * d);
+                treeMap.put(share, contractDto);
+            }
+
             totalShares += share;
 
             if (P > maxPrice)
@@ -184,6 +189,11 @@ public class ContractManager
             {
                 minPrice = P;
             }
+        }
+
+        if (totalShares == 0)
+        {
+            return;
         }
 
         float equalShareAmount = 1f / contractDtos.size();

@@ -5,7 +5,6 @@ services:
     image: mysql
     command:
       - --default-authentication-plugin=mysql_native_password
-    restart: on-failure
     environment:
       MYSQL_ROOT_PASSWORD: 12345
       MYSQL_DATABASE: gamein_test
@@ -44,7 +43,6 @@ services:
     depends_on:
       - db
       - rabbitmq
-    restart: on-failure
     environment:
       DB_HOSTNAME: db
       DB_PORT: 3306
@@ -88,7 +86,6 @@ services:
       APP_PROFILES: "microservice,scheduled,production"
       SPRING_PROFILES_ACTIVE: production,microservice,scheduled
       RABBIT_HOSTNAME: rabbitmq
-    restart: on-failure
     volumes:
       - ./Core/src/main/resources/JsonFiles:/opt/app/JsonFiles
       - ./Core/src/main/resources/CSVFiles:/opt/app/CSVFiles

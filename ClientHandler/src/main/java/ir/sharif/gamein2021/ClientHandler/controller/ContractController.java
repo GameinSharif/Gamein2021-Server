@@ -8,6 +8,7 @@ import ir.sharif.gamein2021.core.domain.dto.*;
 import ir.sharif.gamein2021.core.mainThread.GameCalendar;
 import ir.sharif.gamein2021.core.manager.PushMessageManagerInterface;
 import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
+import ir.sharif.gamein2021.core.manager.TeamManager;
 import ir.sharif.gamein2021.core.service.*;
 import ir.sharif.gamein2021.core.util.GameConstants;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
@@ -29,6 +30,7 @@ public class ContractController
     private static Logger logger = Logger.getLogger(ExecutorThread.class.getName());
 
     private final PushMessageManagerInterface pushMessageManager;
+    private final TeamManager teamManager;
     private final ContractService contractService;
     private final UserService userService;
     private final TeamService teamService;
@@ -139,6 +141,8 @@ public class ContractController
             userTeam.setCredit(userTeam.getCredit() - terminatePenalty);
             userTeam.setWealth(userTeam.getWealth() - terminatePenalty);
             teamService.saveOrUpdate(userTeam);
+
+            teamManager.updateTeamBrand(userTeam, GameConstants.brandTerminateContractPenaltyDecrease);
 
             terminateLongtermContractResponse = new TerminateLongtermContractResponse(ResponseTypeConstant.TERMINATE_CONTRACT, savedContractDto);
             pushMessageManager.sendMessageByTeamId(userTeam.getId().toString(), gson.toJson(terminateLongtermContractResponse));

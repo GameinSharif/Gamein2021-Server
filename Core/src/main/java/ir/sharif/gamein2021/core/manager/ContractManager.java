@@ -270,6 +270,7 @@ public class ContractManager
                     contractDto.setBoughtAmount(0);
                     contractDto.setLostSalePenalty(GameConstants.lostSalePenalty * sale * contractDto.getPricePerUnit());
 
+                    teamManager.updateTeamBrand(teamDto, GameConstants.brandLostSaleContractPenaltyDecrease);
                     teamDto.setCredit(teamDto.getCredit() - contractDto.getLostSalePenalty());
                     teamDto.setWealth(teamDto.getWealth() - contractDto.getLostSalePenalty());
                 }

@@ -23,7 +23,9 @@ public class GameConstants {
 
     public static final int brandMax = 100;
     public static final int brandMin = 1;
-    public static final float brandDailyDecrease = -0.2f;
+    public static final float brandWeeklyDecrease = -0.2f;
+    public static final float brandTerminateContractPenaltyDecrease = -0.2f;
+    public static final float brandLostSaleContractPenaltyDecrease = -0.2f;
     public static final float brandIncreaseAfterDeal = 0.05f;
     public static final float brandIncreaseAfterFinalizeContractWithCustomer = 0.05f;
 

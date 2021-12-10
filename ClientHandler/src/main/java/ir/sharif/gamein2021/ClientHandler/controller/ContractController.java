@@ -51,7 +51,7 @@ public class ContractController
                 contracts
         );
 
-        pushMessageManager.sendMessageByUserId(userTeam.getId().toString(), gson.toJson(getContractsResponse));
+        pushMessageManager.sendMessageByUserId(user.getId().toString(), gson.toJson(getContractsResponse));
     }
 
     public void newContract(ProcessedRequest request, NewContractRequest newContractRequest)

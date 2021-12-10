@@ -22,7 +22,7 @@ public class ContractSupplierDto
     private Enums.VehicleType transportType;
     private Boolean hasInsurance;
     private Float transportationCost;
-    private Integer terminatePenalty;
+    private Float terminatePenalty;
     private Boolean isTerminated;
-    private Integer noMoneyPenalty;
+    private Float noMoneyPenalty;
 }

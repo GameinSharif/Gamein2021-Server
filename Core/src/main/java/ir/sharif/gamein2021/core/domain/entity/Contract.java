@@ -59,10 +59,10 @@ public class Contract implements BaseEntity
     private Float maxPrice;
 
     @Column(name = "lost_sale_penalty")
-    private Integer lostSalePenalty;
+    private Float lostSalePenalty;
 
     @Column(name = "terminate_penalty", nullable = false)
-    private Integer terminatePenalty;
+    private Float terminatePenalty;
 
     @Column(name = "is_terminated", nullable = false, columnDefinition = "TINYINT(1)")
     private Boolean isTerminated;

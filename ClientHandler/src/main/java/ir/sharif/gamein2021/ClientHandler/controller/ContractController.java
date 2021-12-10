@@ -3,13 +3,14 @@ package ir.sharif.gamein2021.ClientHandler.controller;
 import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Contract.*;
-import ir.sharif.gamein2021.ClientHandler.domain.RFQ.NewProviderResponse;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
 import ir.sharif.gamein2021.core.domain.dto.*;
 import ir.sharif.gamein2021.core.mainThread.GameCalendar;
 import ir.sharif.gamein2021.core.manager.PushMessageManagerInterface;
 import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
+import ir.sharif.gamein2021.core.manager.TeamManager;
 import ir.sharif.gamein2021.core.service.*;
+import ir.sharif.gamein2021.core.util.GameConstants;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import ir.sharif.gamein2021.core.domain.entity.Team;
 import ir.sharif.gamein2021.core.util.models.Product;
@@ -29,6 +30,7 @@ public class ContractController
     private static Logger logger = Logger.getLogger(ExecutorThread.class.getName());
 
     private final PushMessageManagerInterface pushMessageManager;
+    private final TeamManager teamManager;
     private final ContractService contractService;
     private final UserService userService;
     private final TeamService teamService;
@@ -49,7 +51,7 @@ public class ContractController
                 contracts
         );
 
-        pushMessageManager.sendMessageByUserId(userTeam.getId().toString(), gson.toJson(getContractsResponse));
+        pushMessageManager.sendMessageByUserId(user.getId().toString(), gson.toJson(getContractsResponse));
     }
 
     public void newContract(ProcessedRequest request, NewContractRequest newContractRequest)
@@ -88,8 +90,6 @@ public class ContractController
                 contractDto.setStorageId(newContractRequest.getStorageId());
                 contractDto.setGameinCustomerId(gameinCustomerDto.getId());
                 contractDto.setProductId(product.getId());
-                contractDto.setTerminatePenalty(1000); //TODO set this penalty
-                contractDto.setLostSalePenalty(1500); //TODO set this penalty
                 contractDto.setIsTerminated(false);
 
                 TeamDto teamDto = teamService.loadById(request.teamId);
@@ -98,6 +98,8 @@ public class ContractController
                 contractDto.setContractDate(startDate);
                 contractDto.setSupplyAmount(newContractRequest.getAmount());
                 contractDto.setPricePerUnit(newContractRequest.getPricePerUnit());
+                contractDto.setTerminatePenalty(GameConstants.terminatePenalty * contractDto.getSupplyAmount() * contractDto.getPricePerUnit());
+                contractDto.setLostSalePenalty(0f);
 
                 ContractDto savedContractDto = contractService.saveOrUpdate(contractDto);
                 newContractResponse = new NewContractResponse(ResponseTypeConstant.NEW_CONTRACT, savedContractDto);
@@ -127,12 +129,20 @@ public class ContractController
                 throw new Exception();
             }
 
+            Float terminatePenalty = contractDto.getTerminatePenalty();
+            if (terminatePenalty > userTeam.getCredit())
+            {
+                throw new Exception();
+            }
+
             contractDto.setIsTerminated(true);
             ContractDto savedContractDto = contractService.saveOrUpdate(contractDto);
 
-            userTeam.setCredit(userTeam.getCredit() - contractDto.getTerminatePenalty());
-            userTeam.setWealth(userTeam.getWealth() - contractDto.getTerminatePenalty());
+            userTeam.setCredit(userTeam.getCredit() - terminatePenalty);
+            userTeam.setWealth(userTeam.getWealth() - terminatePenalty);
             teamService.saveOrUpdate(userTeam);
+
+            teamManager.updateTeamBrand(userTeam, GameConstants.brandTerminateContractPenaltyDecrease);
 
             terminateLongtermContractResponse = new TerminateLongtermContractResponse(ResponseTypeConstant.TERMINATE_CONTRACT, savedContractDto);
             pushMessageManager.sendMessageByTeamId(userTeam.getId().toString(), gson.toJson(terminateLongtermContractResponse));

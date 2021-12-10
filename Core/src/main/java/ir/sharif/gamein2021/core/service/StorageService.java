@@ -239,9 +239,9 @@ public class StorageService extends AbstractCrudService<StorageDto, Storage, Int
     }
 
     public StorageProductDto getStorageProductWithBuildingId(Integer buildingId, boolean isDc ,Integer productId){
-        StorageDto storageDto = findStorageWithBuildingIdAndDc(buildingId , isDc );
-        Assert.notNull(storageDto , "Storage with id "  + buildingId + "does not exist !");
-        return getStorageProductDto(storageDto , productId);
+        StorageDto storageDto = findStorageWithBuildingIdAndDc(buildingId, isDc);
+        Assert.notNull(storageDto, "Storage with id "  + buildingId + "does not exist !");
+        return getStorageProductDto(storageDto, productId);
     }
 
 

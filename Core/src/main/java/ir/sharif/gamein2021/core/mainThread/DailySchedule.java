@@ -2,7 +2,6 @@ package ir.sharif.gamein2021.core.mainThread;
 
 import ir.sharif.gamein2021.core.manager.*;
 import ir.sharif.gamein2021.core.manager.clientHandlerConnection.ClientHandlerRequestSenderInterface;
-import ir.sharif.gamein2021.core.manager.clientHandlerConnection.requests.UpdateGameStatusRequest;
 import ir.sharif.gamein2021.core.service.BusinessIntelligenceService;
 import ir.sharif.gamein2021.core.service.DynamicConfigService;
 import ir.sharif.gamein2021.core.service.ProductionLineProductService;
@@ -91,7 +90,7 @@ public class DailySchedule
     {
         contractManager.updateGameinCustomerContracts();
         productionLineService.decreaseWeeklyMaintenanceCost();
-        teamManager.updateTeamsBrands(GameConstants.brandDailyDecrease);
+        teamManager.updateTeamsBrands(GameConstants.brandWeeklyDecrease);
         weekSupplyManager.updateWeekSupplyPrices(gameCalendar.getCurrentWeek());
         demandAndSupplyManager.SendCurrentWeekSupplyAndDemandsToAllUsers();
         newsManager.SendNews();

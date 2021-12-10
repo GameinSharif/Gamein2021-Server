@@ -27,6 +27,10 @@ public class GameConstants {
     public static final float brandIncreaseAfterDeal = 0.05f;
     public static final float brandIncreaseAfterFinalizeContractWithCustomer = 0.05f;
 
+    public static final float terminatePenalty = 0.49f;
+    public static final float lostSalePenalty = 0.51f;
+    public static final float noMoneyPenalty = 0.51f;
+
     public final int AuctionStartValue = 1000;
     public final int AuctionInitialStepValue = 100;
     public final int AuctionRoundDurationSeconds = 180;

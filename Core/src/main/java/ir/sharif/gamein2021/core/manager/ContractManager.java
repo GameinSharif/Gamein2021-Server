@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import ir.sharif.gamein2021.core.domain.dto.*;
 import ir.sharif.gamein2021.core.mainThread.GameCalendar;
 import ir.sharif.gamein2021.core.response.ContractFinalizedResponse;
+import ir.sharif.gamein2021.core.response.ContractSupplierFinalizedResponse;
 import ir.sharif.gamein2021.core.service.*;
 import ir.sharif.gamein2021.core.util.Enums;
 
@@ -61,8 +62,7 @@ public class ContractManager
                 WeekSupplyDto weekSupplyDto = weekSupplyService.findSpecificWeekSupply(contractSupplierDto.getSupplierId(), contractSupplierDto.getMaterialId(), gameCalendar.getCurrentWeek());
 
                 finalizeTheContractWithSupplier(contractSupplierDto, team, weekSupplyDto, false);
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
                 e.printStackTrace();
             }
@@ -99,6 +99,15 @@ public class ContractManager
         {
             if (!isCreating)
             {
+                contractSupplierDto.setNoMoneyPenalty(GameConstants.noMoneyPenalty * price * contractSupplierDto.getBoughtAmount());
+                contractSupplierService.saveOrUpdate(contractSupplierDto);
+
+                ContractSupplierFinalizedResponse contractSupplierFinalizedResponse = new ContractSupplierFinalizedResponse(
+                        ResponseTypeConstant.CONTRACT_SUPPLIER_FINALIZED,
+                        contractSupplierDto
+                );
+                pushMessageManager.sendMessageByTeamId(contractSupplierDto.getTeamId().toString(), gson.toJson(contractSupplierFinalizedResponse));
+
                 team.setCredit(teamCredit - contractSupplierDto.getNoMoneyPenalty());
                 team.setWealth(team.getWealth() - contractSupplierDto.getNoMoneyPenalty());
                 teamService.saveOrUpdate(team);
@@ -129,6 +138,15 @@ public class ContractManager
         contractSupplierDto.setTransportationCost(transportCost);
         contractSupplierService.saveOrUpdate(contractSupplierDto);
 
+        if (!isCreating)
+        {
+            ContractSupplierFinalizedResponse contractSupplierFinalizedResponse = new ContractSupplierFinalizedResponse(
+                    ResponseTypeConstant.CONTRACT_SUPPLIER_FINALIZED,
+                    contractSupplierDto
+            );
+            pushMessageManager.sendMessageByTeamId(contractSupplierDto.getTeamId().toString(), gson.toJson(contractSupplierFinalizedResponse));
+        }
+
         return true;
     }
 
@@ -150,8 +168,7 @@ public class ContractManager
             try
             {
                 FinalizeTheContracts(weekDemandDto, contractDtos);
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
                 e.printStackTrace();
             }
@@ -251,6 +268,8 @@ public class ContractManager
                 {
                     System.out.println("Not enough product");
                     contractDto.setBoughtAmount(0);
+                    contractDto.setLostSalePenalty(GameConstants.lostSalePenalty * sale * contractDto.getPricePerUnit());
+
                     teamDto.setCredit(teamDto.getCredit() - contractDto.getLostSalePenalty());
                     teamDto.setWealth(teamDto.getWealth() - contractDto.getLostSalePenalty());
                 }

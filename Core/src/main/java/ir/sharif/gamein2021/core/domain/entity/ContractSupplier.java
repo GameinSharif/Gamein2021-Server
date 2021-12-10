@@ -47,13 +47,13 @@ public class ContractSupplier implements BaseEntity
     private Float transportationCost;
 
     @Column(name = "terminate_penalty", nullable = false)
-    private Integer terminatePenalty;
+    private Float terminatePenalty;
 
     @Column(name = "is_terminated", nullable = false, columnDefinition = "TINYINT(1)")
     private Boolean isTerminated;
 
     @Column(name = "no_money_penalty", nullable = false)
-    private Integer noMoneyPenalty;
+    private Float noMoneyPenalty;
 
     @Override
     public Integer getId() {

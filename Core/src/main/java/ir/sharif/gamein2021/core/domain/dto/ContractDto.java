@@ -27,7 +27,7 @@ public class ContractDto implements BaseDto<Integer>
     private Float minPrice;
     private Float maxPrice;
 
-    private Integer lostSalePenalty;
-    private Integer terminatePenalty;
+    private Float lostSalePenalty;
+    private Float terminatePenalty;
     private Boolean isTerminated;
 }

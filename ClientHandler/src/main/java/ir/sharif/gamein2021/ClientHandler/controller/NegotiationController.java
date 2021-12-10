@@ -6,6 +6,8 @@ import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.RFQ.*;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
 import ir.sharif.gamein2021.core.domain.dto.*;
+import ir.sharif.gamein2021.core.exception.NotEnoughMoneyException;
+import ir.sharif.gamein2021.core.exception.NotEnoughProductException;
 import ir.sharif.gamein2021.core.mainThread.GameCalendar;
 import ir.sharif.gamein2021.core.manager.PushMessageManagerInterface;
 import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
@@ -78,15 +80,15 @@ public class NegotiationController
 
             if (newProviderNegotiationRequest.getAmount() <= 0)
             {
-                newProviderNegotiationResponse = new NewProviderNegotiationResponse(ResponseTypeConstant.NEW_PROVIDER_NEGOTIATION, null);
+                newProviderNegotiationResponse = new NewProviderNegotiationResponse(ResponseTypeConstant.NEW_PROVIDER_NEGOTIATION, null, "Amount is not positive");
             }
             else if (!isCostInRange(provider.getProductId(), newProviderNegotiationRequest.getCostPerUnitDemander()))
             {
-                newProviderNegotiationResponse = new NewProviderNegotiationResponse(ResponseTypeConstant.NEW_PROVIDER_NEGOTIATION, null);
+                newProviderNegotiationResponse = new NewProviderNegotiationResponse(ResponseTypeConstant.NEW_PROVIDER_NEGOTIATION, null, "Not in range");
             }
             else if (!isProductionLineValid(team, provider.getProductId()))
             {
-                newProviderNegotiationResponse = new NewProviderNegotiationResponse(ResponseTypeConstant.NEW_PROVIDER_NEGOTIATION, null);
+                newProviderNegotiationResponse = new NewProviderNegotiationResponse(ResponseTypeConstant.NEW_PROVIDER_NEGOTIATION, null, "You don't have production line for this");
             }
             else
             {
@@ -106,12 +108,21 @@ public class NegotiationController
                 demanderId = savedNegotiation.getDemanderId();
                 supplierId = savedNegotiation.getSupplierId();
 
-                newProviderNegotiationResponse = new NewProviderNegotiationResponse(ResponseTypeConstant.NEW_PROVIDER_NEGOTIATION, savedNegotiation);
+                newProviderNegotiationResponse = new NewProviderNegotiationResponse(ResponseTypeConstant.NEW_PROVIDER_NEGOTIATION, savedNegotiation, "Success");
             }
 
-        } catch (Exception e)
+        }
+        catch (NotEnoughMoneyException e)
         {
-            newProviderNegotiationResponse = new NewProviderNegotiationResponse(ResponseTypeConstant.NEW_PROVIDER_NEGOTIATION, null);
+            newProviderNegotiationResponse = new NewProviderNegotiationResponse(ResponseTypeConstant.NEW_PROVIDER_NEGOTIATION, null, "Demander error");
+        }
+        catch (NotEnoughProductException e)
+        {
+            newProviderNegotiationResponse = new NewProviderNegotiationResponse(ResponseTypeConstant.NEW_PROVIDER_NEGOTIATION, null, "Supplier error");
+        }
+        catch (Exception e)
+        {
+            newProviderNegotiationResponse = new NewProviderNegotiationResponse(ResponseTypeConstant.NEW_PROVIDER_NEGOTIATION, null, "Error");
         }
 
         if (newProviderNegotiationResponse.getNegotiation() == null)
@@ -135,11 +146,11 @@ public class NegotiationController
             Team userTeam = teamService.findTeamById(user.getTeamId());
             if (editRequest.getNewCostPerUnit() < 0)
             {
-                editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, null);
+                editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, null, "Price in negative");
             }
             else if (!isCostInRange(negotiationDto.getProductId(), editRequest.getNewCostPerUnit()))
             {
-                editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, null);
+                editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, null, "Not in range");
             }
             else
             {
@@ -154,7 +165,7 @@ public class NegotiationController
                     CheckNegotiationDeal(negotiationDto);
 
                     negotiationService.saveOrUpdate(negotiationDto);
-                    editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, negotiationDto);
+                    editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, negotiationDto, "Success");
                 }
                 else if (userTeam.getId().equals(negotiationDto.getSupplierId()))
                 {
@@ -162,18 +173,26 @@ public class NegotiationController
                     CheckNegotiationDeal(negotiationDto);
 
                     negotiationService.saveOrUpdate(negotiationDto);
-                    editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, negotiationDto);
+                    editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, negotiationDto, "Success");
                 }
                 else
                 {
-                    editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, null);
+                    editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, null, "You the hell are you?");
                 }
             }
+        }
+        catch (NotEnoughMoneyException e)
+        {
+            editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, null, "Demander error");
+        }
+        catch (NotEnoughProductException e)
+        {
+            editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, null, "Supplier error");
         }
         catch (Exception e)
         {
             e.printStackTrace();
-            editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, null);
+            editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, null, "Error");
         }
 
         if (editResponse.getNegotiation() == null)
@@ -239,12 +258,12 @@ public class NegotiationController
 
             if (totalPayment > demanderDto.getCredit())
             {
-                throw new Exception();
+                throw new NotEnoughMoneyException("Demander Error");
             }
 
             if (!hasRequiredAmount(supplierDto, negotiationDto.getProductId(), negotiationDto.getAmount()))
             {
-                throw new Exception();
+                throw new NotEnoughProductException("Supplier Error");
             }
 
             float demanderNewCredit = demanderDto.getCredit() - totalPayment;

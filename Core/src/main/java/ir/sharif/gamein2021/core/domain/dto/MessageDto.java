@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 public class MessageDto implements BaseDto<Integer>
 {
     private Integer id;
+    private Integer chatId;
     private Integer senderTeamId;
     private Integer receiverTeamId;
     private String text;

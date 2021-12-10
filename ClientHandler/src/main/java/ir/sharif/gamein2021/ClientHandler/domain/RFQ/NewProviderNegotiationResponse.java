@@ -14,10 +14,12 @@ import java.io.Serializable;
 public class NewProviderNegotiationResponse extends ResponseObject implements Serializable
 {
     private NegotiationDto negotiation;
+    private String message;
 
-    public NewProviderNegotiationResponse(ResponseTypeConstant responseTypeConstant, NegotiationDto negotiation)
+    public NewProviderNegotiationResponse(ResponseTypeConstant responseTypeConstant, NegotiationDto negotiation, String message)
     {
         this.responseTypeConstant = responseTypeConstant.ordinal();
         this.negotiation = negotiation;
+        this.message = message;
     }
 }

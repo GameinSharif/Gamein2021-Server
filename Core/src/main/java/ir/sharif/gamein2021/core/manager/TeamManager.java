@@ -57,7 +57,8 @@ public class TeamManager
                     ResponseTypeConstant.MONEY_UPDATE,
                     team.getCredit(),
                     team.getWealth(),
-                    team.getBrand());
+                    team.getBrand(),
+                    team.getDonatedAmount());
 
             pushMessageManager.sendMessageByTeamId(team.getId().toString(), gson.toJson(moneyUpdateResponse));
         }

@@ -40,6 +40,7 @@ public class Negotiation implements BaseEntity{
     private NegotiationState state;
 
     @ManyToOne
+    @JoinColumn(name = "storage_id")
     private Storage sourceStorage;
 
     @Override

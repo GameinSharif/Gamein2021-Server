@@ -2,6 +2,7 @@ package ir.sharif.gamein2021.ClientHandler.controller;
 
 import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.Leaderboard.GetLeaderboardResponse;
 import ir.sharif.gamein2021.ClientHandler.domain.UpdateGameStatusResponse;
 import ir.sharif.gamein2021.core.domain.dto.*;
 import ir.sharif.gamein2021.core.mainThread.GameCalendar;
@@ -16,11 +17,13 @@ import ir.sharif.gamein2021.core.service.*;
 import ir.sharif.gamein2021.core.util.GameConstants;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import ir.sharif.gamein2021.core.response.GetAllActiveDcResponse;
+import ir.sharif.gamein2021.core.util.models.Ranking;
 import lombok.AllArgsConstructor;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -37,16 +40,18 @@ public class GameDataController {
     private final DcService dcService;
     private final NewsService newsService;
     private final GameCalendar gameCalendar;
+    private final CoronaService coronaService;
     private final Gson gson = new Gson();
 
     public void getGameData(ProcessedRequest request) {
         List<TeamDto> teams = teamService.findAllTeams();
         List<GameinCustomerDto> gameinCustomers = gameinCustomerService.list();
         List<NewsDto> newsDtos = newsService.findAllLessThanEqualCurrentWeek(gameCalendar.getCurrentWeek());
+        List<CoronaInfoDto> coronaInfo = coronaService.getCoronasInfoIfCoronaIsStarted();
 
         GetGameDataResponse getGameDataResponse = new GetGameDataResponse(
                 ResponseTypeConstant.GET_GAME_DATA,
-                teams, gameinCustomers, newsDtos);
+                teams, gameinCustomers, newsDtos, coronaInfo);
 
         pushMessageManager.sendMessageBySession(request.session, gson.toJson(getGameDataResponse));
     }
@@ -108,5 +113,35 @@ public class GameDataController {
     public void getGameStatus(ProcessedRequest processedRequest) {
         UpdateGameStatusResponse response = new UpdateGameStatusResponse(GameConstants.gameStatus);
         pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(response));
+    }
+
+    public void getLeaderboard(ProcessedRequest request)
+    {
+        List<TeamDto> teamsOrderedByWealthDesc = teamService.getTeamsOrderByWealthDesc();
+        List<Ranking> ranks = new ArrayList<>();
+        for (int i=0;i < 20; i++)
+        {
+            TeamDto teamDto = teamsOrderedByWealthDesc.get(i);
+            ranks.add(new Ranking(teamDto.getId(), teamDto.getWealth()));
+        }
+
+        int rank = 0;
+        TeamDto myTeam = null;
+        for (TeamDto teamDto : teamsOrderedByWealthDesc)
+        {
+            if (teamDto.getId().equals(request.teamId))
+            {
+                rank = teamsOrderedByWealthDesc.indexOf(teamDto) + 1;
+                myTeam = teamDto;
+            }
+        }
+
+        GetLeaderboardResponse getLeaderboardResponse = new GetLeaderboardResponse(
+                ResponseTypeConstant.GET_LEADERBOARD,
+                ranks,
+                rank,
+                myTeam.getWealth()
+        );
+        pushMessageManager.sendMessageBySession(request.session, gson.toJson(getLeaderboardResponse));
     }
 }

@@ -256,7 +256,7 @@ public class OfferController
         StorageDto storageDto = storageService.findStorageWithBuildingIdAndDc(teamService.loadById(team.getId()).getFactoryId(), false);
         for (StorageProductDto product : storageDto.getProducts())
         {
-            if (product.getId().equals(offer.getProductId()))
+            if (product.getProductId().equals(offer.getProductId()))
             {
                 if (product.getAmount() >= offer.getVolume())
                 {

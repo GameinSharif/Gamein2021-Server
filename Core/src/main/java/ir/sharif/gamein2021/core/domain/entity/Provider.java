@@ -34,6 +34,7 @@ public class Provider implements BaseEntity {
     private Enums.ProviderState state;
 
     @ManyToOne
+    @JoinColumn(name = "storage_id")
     private Storage storage;
 
     @Override

@@ -13,6 +13,7 @@ import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
 import ir.sharif.gamein2021.core.manager.TransportManager;
 import ir.sharif.gamein2021.core.service.*;
 import ir.sharif.gamein2021.core.util.Enums;
+import ir.sharif.gamein2021.core.util.GameConstants;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import ir.sharif.gamein2021.core.util.models.Supplier;
 import lombok.AllArgsConstructor;
@@ -61,7 +62,7 @@ public class ContractSupplierController
             }
 
             WeekSupplyDto weekSupplyDto = weekSupplyService.findSpecificWeekSupply(supplierId, materialId, currentWeek);
-            ContractSupplierDto contractSupplierDto = createNewContract(teamDto, supplierId, materialId, vehicleType, hasInsurance, amount, 0);
+            ContractSupplierDto contractSupplierDto = createNewContract(teamDto, supplierId, materialId, vehicleType, hasInsurance, amount, 0, weekSupplyDto.getPrice());
 
             boolean result = contractManager.finalizeTheContractWithSupplier(contractSupplierDto, teamDto, weekSupplyDto, true);
             if (!result)
@@ -74,7 +75,7 @@ public class ContractSupplierController
             contractSupplierDtos.add(contractSupplierDto);
             for (int i = 1; i < weeks; i++)
             {
-                ContractSupplierDto newContractSupplierDto = createNewContract(teamDto, supplierId, materialId, vehicleType, hasInsurance, amount, i * 7);
+                ContractSupplierDto newContractSupplierDto = createNewContract(teamDto, supplierId, materialId, vehicleType, hasInsurance, amount, i * 7, weekSupplyDto.getPrice());
 
                 ContractSupplierDto savedContractSupplierDto = contractSupplierService.saveOrUpdate(newContractSupplierDto);
                 contractSupplierDtos.add(savedContractSupplierDto);
@@ -91,7 +92,7 @@ public class ContractSupplierController
         }
     }
 
-    private ContractSupplierDto createNewContract(TeamDto teamDto, Integer supplierId, Integer materialId, Enums.VehicleType vehicleType, Boolean hasInsurance, Integer amount, Integer daysToAdd)
+    private ContractSupplierDto createNewContract(TeamDto teamDto, Integer supplierId, Integer materialId, Enums.VehicleType vehicleType, Boolean hasInsurance, Integer amount, Integer daysToAdd, Float price)
     {
         ContractSupplierDto newContractSupplierDto = new ContractSupplierDto();
         newContractSupplierDto.setContractDate(gameCalendar.getCurrentDate().plusDays(daysToAdd));
@@ -102,8 +103,8 @@ public class ContractSupplierController
         newContractSupplierDto.setIsTerminated(false);
         newContractSupplierDto.setHasInsurance(hasInsurance);
         newContractSupplierDto.setTransportType(vehicleType);
-        newContractSupplierDto.setTerminatePenalty(100); //TODO
-        newContractSupplierDto.setNoMoneyPenalty(100); //TODO
+        newContractSupplierDto.setTerminatePenalty(GameConstants.terminatePenalty * amount * price);
+        newContractSupplierDto.setNoMoneyPenalty(0f);
 
         return newContractSupplierDto;
     }
@@ -114,7 +115,7 @@ public class ContractSupplierController
         TerminateLongtermContractSupplierResponse terminateLongtermContractSupplierResponse;
         if (contractSupplierDto.getTeamId().equals(request.teamId) && contractSupplierDto.getContractDate().isAfter(gameCalendar.getCurrentDate()) && !contractSupplierDto.getIsTerminated())
         {
-            Integer penalty = contractSupplierDto.getTerminatePenalty();
+            Float penalty = contractSupplierDto.getTerminatePenalty();
             float teamCredit = teamService.findTeamById(request.teamId).getCredit();
             if (teamCredit < penalty)
             {

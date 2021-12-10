@@ -2,7 +2,6 @@ package ir.sharif.gamein2021.core.mainThread;
 
 import ir.sharif.gamein2021.core.manager.*;
 import ir.sharif.gamein2021.core.manager.clientHandlerConnection.ClientHandlerRequestSenderInterface;
-import ir.sharif.gamein2021.core.manager.clientHandlerConnection.requests.UpdateGameStatusRequest;
 import ir.sharif.gamein2021.core.service.BusinessIntelligenceService;
 import ir.sharif.gamein2021.core.service.DynamicConfigService;
 import ir.sharif.gamein2021.core.service.ProductionLineProductService;
@@ -20,8 +19,10 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Component
 @Profile(value = {"scheduled"})
-public class DailySchedule {
+public class DailySchedule
+{
     private final GameCalendar gameCalendar;
+    private final GameStatusSchedule gameStatusSchedule;
     private final ProductionLineProductService productService;
     private final TransportManager transportManager;
     private final ContractManager contractManager;
@@ -34,25 +35,21 @@ public class DailySchedule {
     private final StorageManager storageManager;
     private final DynamicConfigService dynamicConfigService;
     private final BusinessIntelligenceService businessIntelligenceService;
+    private final CoronaManager coronaManager;
 
     private final ClientHandlerRequestSenderInterface clientRequestSender;
 
-    //Second, Minute, Hour, DayOfMonth, Month, WeekDays
-    @Scheduled(cron = "0 24 19 27 11 ?")
-    public void startGame()
-    {
-        GameConstants.gameStatus = GameStatus.RUNNING;
-        dynamicConfigService.setGameStatus(GameConstants.gameStatus);
-        UpdateGameStatusRequest request = new UpdateGameStatusRequest("Done", GameConstants.gameStatus);
-        clientRequestSender.send(request);
-    }
-
     @Scheduled(fixedRateString = "${dayLengthMilliSecond}")
-    public void scheduledTask() {
-        if (GameConstants.gameStatus == GameStatus.RUNNING) {
-            try {
+    public void scheduledTask()
+    {
+        if (GameConstants.gameStatus == GameStatus.RUNNING)
+        {
+            try
+            {
                 DoRunningStateTasks();
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 e.printStackTrace();
             }
         }
@@ -80,9 +77,11 @@ public class DailySchedule {
         transportManager.updateTransports();
         contractManager.updateContracts();
         teamManager.updateAllTeamsMoneyOnClient();
-        try {
+        try
+        {
             storageManager.MaintenanceCost();
-        }catch (Exception e){
+        } catch (Exception e)
+        {
             e.printStackTrace();
         }
     }
@@ -91,32 +90,35 @@ public class DailySchedule {
     {
         contractManager.updateGameinCustomerContracts();
         productionLineService.decreaseWeeklyMaintenanceCost();
-        teamManager.updateTeamsBrands(GameConstants.brandDailyDecrease);
+        teamManager.updateTeamsBrands(GameConstants.brandWeeklyDecrease);
         weekSupplyManager.updateWeekSupplyPrices(gameCalendar.getCurrentWeek());
         demandAndSupplyManager.SendCurrentWeekSupplyAndDemandsToAllUsers();
         newsManager.SendNews();
         businessIntelligenceService.prepareWeeklyReport();
+        coronaManager.SendCoronaInfoToAllUsers();
     }
 
-    private void updateConfigs() {
-        if (GameConstants.gameStatus != GameStatus.RUNNING) {
+    private void updateConfigs()
+    {
+        if (GameConstants.gameStatus != GameStatus.RUNNING)
+        {
             LocalDate newCurrentDate = dynamicConfigService.getCurrentDate();
-            if (newCurrentDate != null) {
+            if (newCurrentDate != null)
+            {
                 gameCalendar.setCurrentDate(newCurrentDate);
             }
 
             Integer newCurrentWeek = dynamicConfigService.getCurrentWeek();
-            if (newCurrentWeek != null) {
+            if (newCurrentWeek != null)
+            {
                 gameCalendar.setCurrentWeek(newCurrentWeek);
             }
         }
 
         GameStatus newGameStatus = dynamicConfigService.getGameStatus();
-        if (newGameStatus != null) {
-            GameConstants.gameStatus = newGameStatus;
-            UpdateGameStatusRequest request = new UpdateGameStatusRequest("Done", GameConstants.gameStatus);
-            clientRequestSender.send(request);
-            System.out.println("GameStatus: " + GameConstants.gameStatus);
+        if (newGameStatus != null)
+        {
+            gameStatusSchedule.setGameStatus(newGameStatus);
         }
     }
 }

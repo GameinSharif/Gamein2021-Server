@@ -1,0 +1,24 @@
+docker stack deploy -c gamein-stack.yml demo
+docker stack rm demo
+docker stack services demo
+
+Create Service:
+    docker service create --name <SERVICE-NAME> --publish published=<PUBLISHED-PORT>,target=<CONTAINER-PORT> <IMAGE>
+Inspect Service:
+    docker service inspect --pretty <SERVICE-ID>
+    docker service ls : [Shows services running on current swarm]
+    docker service ps <SERVICE-ID> : [See which nodes are running the service]
+Scale Service:
+    docker service scale <SERVICE-ID>=<NUMBER-OF-TASKS>
+Delete Service:
+    docker service rm <SERVICE-ID>
+Update Service:
+    docker service update --image redis:3.0.7 <SERVICE-ID>
+    docker service update <SERVICE-ID> : [Restart a paused update]
+Drain a node:
+    docker node update --availability drain worker1
+    docker node update --availability active worker1 : [Active a drained node]
+
+docker swarm leave --force
+docker swarm init
+

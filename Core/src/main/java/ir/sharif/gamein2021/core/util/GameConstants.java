@@ -15,22 +15,31 @@ public class GameConstants {
     public static final int ConstantOneWeekSupplyPrice = 2000;
     public static final float ConstantTwoWeekSupplyPrice = 0.05f;
 
-    public static final float ShareAllocationAlpha = 1f;
-    public static final float ShareAllocationBeta = 0.01f;
+    public static final float ShareAllocationAlphaSoda = 0.001f;
+    public static final float ShareAllocationAlphaBeer = 0.002f;
+    public static final float ShareAllocationAlphaJuice = 0.002f;
+    public static final float ShareAllocationAlphaEnergy = 0.003f;
+    public static final float ShareAllocationBeta = 0.005f;
 
     public static final int brandMax = 100;
     public static final int brandMin = 1;
-    public static final float brandDailyDecrease = -0.2f;
+    public static final float brandWeeklyDecrease = -0.2f;
+    public static final float brandTerminateContractPenaltyDecrease = -0.2f;
+    public static final float brandLostSaleContractPenaltyDecrease = -0.2f;
     public static final float brandIncreaseAfterDeal = 0.05f;
     public static final float brandIncreaseAfterFinalizeContractWithCustomer = 0.05f;
+
+    public static final float terminatePenalty = 0.49f;
+    public static final float lostSalePenalty = 0.51f;
+    public static final float noMoneyPenalty = 0.51f;
 
     public final int AuctionStartValue = 1000;
     public final int AuctionInitialStepValue = 100;
     public final int AuctionRoundDurationSeconds = 180;
     public final LocalDateTime[] AuctionRoundsStartTime = new LocalDateTime[]{
-            LocalDateTime.of(2021, 11, 27, 19, 15, 0),
-            LocalDateTime.of(2021, 11, 27, 19, 18, 0),
-            LocalDateTime.of(2021, 11, 27, 19, 21, 0),
+            LocalDateTime.of(2021, 12, 9, 9, 45, 0),
+            LocalDateTime.of(2021, 12, 9, 9, 48, 0),
+            LocalDateTime.of(2021, 12, 9, 9, 51, 0),
     };
     public final int rawMaterialCapacity = 2000000;
     public final int semiFinishedProductCapacity = 2000000;
@@ -40,5 +49,27 @@ public class GameConstants {
 
     public static final float CrushProbability = 0.01f;
 
-    public static GameStatus gameStatus = GameStatus.STOPPED;
+    public static GameStatus gameStatus = GameStatus.NOT_STARTED;
+
+    public static float getAlpha(Integer productId)
+    {
+        switch (productId)
+        {
+            case 28:
+            case 29:
+            case 30:
+                return ShareAllocationAlphaSoda;
+            case 31:
+            case 32:
+                return ShareAllocationAlphaBeer;
+            case 33:
+            case 34:
+            case 35:
+            case 36:
+                return ShareAllocationAlphaJuice;
+            case 37:
+                return ShareAllocationAlphaEnergy;
+        }
+        return 0;
+    }
 }

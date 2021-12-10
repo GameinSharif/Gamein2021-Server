@@ -1,11 +1,15 @@
 package ir.sharif.gamein2021.core.manager;
 
+import com.google.gson.Gson;
 import ir.sharif.gamein2021.core.domain.dto.*;
 import ir.sharif.gamein2021.core.mainThread.GameCalendar;
+import ir.sharif.gamein2021.core.response.ContractFinalizedResponse;
+import ir.sharif.gamein2021.core.response.ContractSupplierFinalizedResponse;
 import ir.sharif.gamein2021.core.service.*;
 import ir.sharif.gamein2021.core.util.Enums;
 
 import ir.sharif.gamein2021.core.util.GameConstants;
+import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import ir.sharif.gamein2021.core.util.models.Product;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -17,6 +21,7 @@ import java.time.LocalDate;
 @Component
 public class ContractManager
 {
+    private final PushMessageManagerInterface pushMessageManager;
     private final ContractSupplierService contractSupplierService;
     private final ContractService contractService;
     private final TeamService teamService;
@@ -27,6 +32,7 @@ public class ContractManager
     private final TransportManager transportManager;
     private final GameCalendar gameCalendar;
     private final TeamManager teamManager;
+    private final Gson gson;
 
     public void updateContracts()
     {
@@ -56,8 +62,7 @@ public class ContractManager
                 WeekSupplyDto weekSupplyDto = weekSupplyService.findSpecificWeekSupply(contractSupplierDto.getSupplierId(), contractSupplierDto.getMaterialId(), gameCalendar.getCurrentWeek());
 
                 finalizeTheContractWithSupplier(contractSupplierDto, team, weekSupplyDto, false);
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
                 e.printStackTrace();
             }
@@ -94,6 +99,15 @@ public class ContractManager
         {
             if (!isCreating)
             {
+                contractSupplierDto.setNoMoneyPenalty(GameConstants.noMoneyPenalty * price * contractSupplierDto.getBoughtAmount());
+                contractSupplierService.saveOrUpdate(contractSupplierDto);
+
+                ContractSupplierFinalizedResponse contractSupplierFinalizedResponse = new ContractSupplierFinalizedResponse(
+                        ResponseTypeConstant.CONTRACT_SUPPLIER_FINALIZED,
+                        contractSupplierDto
+                );
+                pushMessageManager.sendMessageByTeamId(contractSupplierDto.getTeamId().toString(), gson.toJson(contractSupplierFinalizedResponse));
+
                 team.setCredit(teamCredit - contractSupplierDto.getNoMoneyPenalty());
                 team.setWealth(team.getWealth() - contractSupplierDto.getNoMoneyPenalty());
                 teamService.saveOrUpdate(team);
@@ -124,6 +138,15 @@ public class ContractManager
         contractSupplierDto.setTransportationCost(transportCost);
         contractSupplierService.saveOrUpdate(contractSupplierDto);
 
+        if (!isCreating)
+        {
+            ContractSupplierFinalizedResponse contractSupplierFinalizedResponse = new ContractSupplierFinalizedResponse(
+                    ResponseTypeConstant.CONTRACT_SUPPLIER_FINALIZED,
+                    contractSupplierDto
+            );
+            pushMessageManager.sendMessageByTeamId(contractSupplierDto.getTeamId().toString(), gson.toJson(contractSupplierFinalizedResponse));
+        }
+
         return true;
     }
 
@@ -142,7 +165,13 @@ public class ContractManager
                 weekDemandService.saveOrUpdate(weekDemandDto);
                 continue;
             }
-            FinalizeTheContracts(weekDemandDto, contractDtos);
+            try
+            {
+                FinalizeTheContracts(weekDemandDto, contractDtos);
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -153,7 +182,7 @@ public class ContractManager
             return;
         }
 
-        TreeMap<Float, ContractDto> treeMap = new TreeMap<>(Collections.reverseOrder());
+        TreeMap<Float, List<ContractDto>> treeMap = new TreeMap<>(Collections.reverseOrder());
         float totalShares = 0f;
 
         float maxPrice = contractDtos.get(0).getPricePerUnit();
@@ -172,8 +201,16 @@ public class ContractManager
                     weekDemandDto.getGameinCustomerId(),
                     Enums.VehicleType.TRUCK);
 
-            float share = B / (GameConstants.ShareAllocationAlpha * P + GameConstants.ShareAllocationBeta * d);
-            treeMap.put(share, contractDto);
+            float share = B / (GameConstants.getAlpha(contractDto.getProductId()) * P + GameConstants.ShareAllocationBeta * d);
+
+            List<ContractDto> currentContractsWithThisShare = treeMap.get(share);
+            if (currentContractsWithThisShare == null || currentContractsWithThisShare.size() == 0)
+            {
+                currentContractsWithThisShare = new ArrayList<>();
+            }
+            currentContractsWithThisShare.add(contractDto);
+            treeMap.put(share, currentContractsWithThisShare);
+
             totalShares += share;
 
             if (P > maxPrice)
@@ -186,91 +223,113 @@ public class ContractManager
             }
         }
 
+        if (totalShares == 0)
+        {
+            return;
+        }
+
         float equalShareAmount = 1f / contractDtos.size();
         float totalIncome = 0f;
         int remainedDemand = weekDemandDto.getAmount();
-        for (Map.Entry<Float, ContractDto> entry : treeMap.entrySet())
+
+        outer:
+        for (Map.Entry<Float, List<ContractDto>> entry : treeMap.entrySet())
         {
             float sharePercent = entry.getKey() / totalShares;
-            ContractDto contractDto = entry.getValue();
-            StorageDto storageDto = storageService.loadById(contractDto.getStorageId());
-
-            int sale = (int) Math.floor(Math.min(contractDto.getSupplyAmount(), weekDemandDto.getAmount() * sharePercent));
-
-            TeamDto teamDto = teamService.loadById(contractDto.getTeamId());
-
-            StorageProductDto storageProductDto = storageService.getStorageProductWithBuildingId(
-                    storageDto.getBuildingId(),
-                    storageDto.getDc(),
-                    contractDto.getProductId());
-
-            if (storageProductDto != null && storageProductDto.getAmount() >= sale)
+            for (ContractDto contractDto : entry.getValue())
             {
-                remainedDemand -= sale;
-                contractDto.setBoughtAmount(sale);
-                float income = sale * contractDto.getPricePerUnit();
-                totalIncome += income;
-                teamDto.setCredit(teamDto.getCredit() + income);
-                teamDto.setWealth(teamDto.getWealth() + income);
-                teamDto.setInFlow(teamDto.getInFlow() + income);
+                StorageDto storageDto = storageService.loadById(contractDto.getStorageId());
 
-                if (sharePercent >= equalShareAmount)
+                int sale = (int) Math.floor(Math.min(contractDto.getSupplyAmount(), weekDemandDto.getAmount() * sharePercent));
+
+                TeamDto teamDto = teamService.loadById(contractDto.getTeamId());
+
+                StorageProductDto storageProductDto = storageService.getStorageProductWithBuildingId(
+                        storageDto.getBuildingId(),
+                        storageDto.getDc(),
+                        contractDto.getProductId());
+
+                if (storageProductDto != null && storageProductDto.getAmount() >= sale)
                 {
-                    teamManager.updateTeamBrand(teamDto, sharePercent - equalShareAmount + GameConstants.brandIncreaseAfterFinalizeContractWithCustomer);
-                }
-            }
-            else
-            {
-                contractDto.setBoughtAmount(0);
-                teamDto.setCredit(teamDto.getCredit() - contractDto.getLostSalePenalty());
-                teamDto.setWealth(teamDto.getWealth() - contractDto.getLostSalePenalty());
-            }
-            teamService.saveOrUpdate(teamDto);
+                    remainedDemand -= sale;
+                    contractDto.setBoughtAmount(sale);
+                    float income = sale * contractDto.getPricePerUnit();
+                    totalIncome += income;
+                    teamDto.setCredit(teamDto.getCredit() + income);
+                    teamDto.setWealth(teamDto.getWealth() + income);
+                    teamDto.setInFlow(teamDto.getInFlow() + income);
 
-            if (remainedDemand == 0)
-            {
-                break;
+                    if (sharePercent >= equalShareAmount)
+                    {
+                        teamManager.updateTeamBrand(teamDto, sharePercent - equalShareAmount + GameConstants.brandIncreaseAfterFinalizeContractWithCustomer);
+                    }
+                }
+                else
+                {
+                    System.out.println("Not enough product");
+                    contractDto.setBoughtAmount(0);
+                    contractDto.setLostSalePenalty(GameConstants.lostSalePenalty * sale * contractDto.getPricePerUnit());
+
+                    teamManager.updateTeamBrand(teamDto, GameConstants.brandLostSaleContractPenaltyDecrease);
+                    teamDto.setCredit(teamDto.getCredit() - contractDto.getLostSalePenalty());
+                    teamDto.setWealth(teamDto.getWealth() - contractDto.getLostSalePenalty());
+                }
+                teamService.saveOrUpdate(teamDto);
+
+                if (remainedDemand == 0)
+                {
+                    break outer;
+                }
             }
         }
         weekDemandDto.setRemainedAmount(remainedDemand);
         weekDemandService.saveOrUpdate(weekDemandDto);
 
-        for (Map.Entry<Float, ContractDto> entry : treeMap.entrySet())
+        for (Map.Entry<Float, List<ContractDto>> entry : treeMap.entrySet())
         {
-            ContractDto contractDto = entry.getValue();
-            float income = contractDto.getBoughtAmount() * contractDto.getPricePerUnit();
-
-            contractDto.setMaxPrice(maxPrice);
-            contractDto.setMinPrice(minPrice);
-            if (weekDemandDto.getAmount() == remainedDemand || totalIncome == 0)
+            for (ContractDto contractDto : entry.getValue())
             {
-                contractDto.setDemandShare(0f);
-                contractDto.setValueShare(0f);
-            }
-            else
-            {
-                contractDto.setDemandShare(100f * contractDto.getBoughtAmount() / (weekDemandDto.getAmount() - remainedDemand));
-                contractDto.setValueShare(100f * income / totalIncome);
-            }
-            contractService.saveOrUpdate(contractDto);
+                float income = contractDto.getBoughtAmount() * contractDto.getPricePerUnit();
 
-            if (contractDto.getBoughtAmount() == 0)
-            {
-                continue;
+                contractDto.setMaxPrice(maxPrice);
+                contractDto.setMinPrice(minPrice);
+                if (weekDemandDto.getAmount() == remainedDemand || totalIncome == 0)
+                {
+                    contractDto.setDemandShare(0f);
+                    contractDto.setValueShare(0f);
+                }
+                else
+                {
+                    contractDto.setDemandShare(100f * contractDto.getBoughtAmount() / (weekDemandDto.getAmount() - remainedDemand));
+                    contractDto.setValueShare(100f * income / totalIncome);
+                }
+                contractService.saveOrUpdate(contractDto);
+
+                ContractFinalizedResponse contractFinalizedResponse = new ContractFinalizedResponse(
+                        ResponseTypeConstant.CONTRACT_FINALIZED,
+                        contractDto
+                );
+                pushMessageManager.sendMessageByTeamId(contractDto.getTeamId().toString(), gson.toJson(contractFinalizedResponse));
+
+                if (contractDto.getBoughtAmount() == 0)
+                {
+                    continue;
+                }
+
+                StorageDto storageDto = storageService.loadById(contractDto.getStorageId());
+                storageService.deleteProducts(storageDto.getBuildingId(), storageDto.getDc(), contractDto.getProductId(), contractDto.getBoughtAmount());
+
+                transportManager.createTransport(
+                        Enums.VehicleType.TRUCK,
+                        storageDto.getDc() ? Enums.TransportNodeType.DC : Enums.TransportNodeType.FACTORY,
+                        storageDto.getBuildingId(),
+                        Enums.TransportNodeType.GAMEIN_CUSTOMER,
+                        contractDto.getGameinCustomerId(),
+                        gameCalendar.getCurrentDate(),
+                        true,
+                        contractDto.getProductId(),
+                        contractDto.getBoughtAmount());
             }
-
-            StorageDto storageDto = storageService.loadById(contractDto.getStorageId());
-
-            transportManager.createTransport(
-                    Enums.VehicleType.TRUCK,
-                    storageDto.getDc() ? Enums.TransportNodeType.DC : Enums.TransportNodeType.FACTORY,
-                    storageDto.getBuildingId(),
-                    Enums.TransportNodeType.GAMEIN_CUSTOMER,
-                    contractDto.getGameinCustomerId(),
-                    gameCalendar.getCurrentDate(),
-                    true,
-                    contractDto.getProductId(),
-                    contractDto.getBoughtAmount());
         }
     }
 }

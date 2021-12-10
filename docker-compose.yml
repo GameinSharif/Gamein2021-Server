@@ -3,6 +3,7 @@ version: "3.9"
 services:
   lb:
     image: haproxy
+    restart: on-failure
     ports:
       - "8080:8080"
     networks:
@@ -22,10 +23,11 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - mysql-datavolume:/var/lib/mysql
+      - /home/ubuntu/mysql-data:/var/lib/mysql
 
   rabbitmq:
     image: rabbitmq
+    restart: always
     ports:
       - "5672:5672"
       - "15672:15672"
@@ -119,6 +121,3 @@ networks:
     driver: bridge
   lb_net:
     driver: bridge
-
-volumes:
-  mysql-datavolume:

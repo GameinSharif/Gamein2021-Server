@@ -1,19 +1,10 @@
 version: "3.9"
 
 services:
-#  lb:
-#    image: haproxy
-#    ports:
-#      - "8080:8080"
-#    networks:
-#      - lb_net
-#    volumes:
-#      - ./haproxy:/usr/local/etc/haproxy
   db:
     image: mysql
     command:
       - --default-authentication-plugin=mysql_native_password
-    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: 12345
       MYSQL_DATABASE: gamein_test
@@ -52,7 +43,6 @@ services:
     depends_on:
       - db
       - rabbitmq
-    restart: on-failure
     environment:
       DB_HOSTNAME: db
       DB_PORT: 3306
@@ -66,7 +56,6 @@ services:
     networks:
       - rabbitmq_net
       - db_net
-#      - lb_net
     volumes:
       - ./Core/src/main/resources/JsonFiles:/opt/app/JsonFiles
       - ./Core/src/main/resources/CSVFiles:/opt/app/CSVFiles
@@ -84,7 +73,6 @@ services:
     networks:
       - rabbitmq_net
       - db_net
-#      - lb_net
     depends_on:
       - db
       - rabbitmq
@@ -98,7 +86,6 @@ services:
       APP_PROFILES: "microservice,scheduled,production"
       SPRING_PROFILES_ACTIVE: production,microservice,scheduled
       RABBIT_HOSTNAME: rabbitmq
-    restart: on-failure
     volumes:
       - ./Core/src/main/resources/JsonFiles:/opt/app/JsonFiles
       - ./Core/src/main/resources/CSVFiles:/opt/app/CSVFiles
@@ -115,5 +102,3 @@ networks:
     driver: overlay
   db_net:
     driver: overlay
-#  lb_net:
-#    driver: overlay

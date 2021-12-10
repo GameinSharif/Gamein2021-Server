@@ -1,11 +1,14 @@
 package ir.sharif.gamein2021.core.manager;
 
+import com.google.gson.Gson;
 import ir.sharif.gamein2021.core.domain.dto.*;
 import ir.sharif.gamein2021.core.mainThread.GameCalendar;
+import ir.sharif.gamein2021.core.response.ContractFinalizedResponse;
 import ir.sharif.gamein2021.core.service.*;
 import ir.sharif.gamein2021.core.util.Enums;
 
 import ir.sharif.gamein2021.core.util.GameConstants;
+import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import ir.sharif.gamein2021.core.util.models.Product;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -17,6 +20,7 @@ import java.time.LocalDate;
 @Component
 public class ContractManager
 {
+    private final PushMessageManagerInterface pushMessageManager;
     private final ContractSupplierService contractSupplierService;
     private final ContractService contractService;
     private final TeamService teamService;
@@ -27,6 +31,7 @@ public class ContractManager
     private final TransportManager transportManager;
     private final GameCalendar gameCalendar;
     private final TeamManager teamManager;
+    private final Gson gson;
 
     public void updateContracts()
     {
@@ -179,16 +184,7 @@ public class ContractManager
                     weekDemandDto.getGameinCustomerId(),
                     Enums.VehicleType.TRUCK);
 
-            /*float share = 0f;
-            if (d <= 1000)
-            {
-                share = B / (GameConstants.getAlpha(contractDto.getProductId()) * P + GameConstants.ShareAllocationBeta * d);
-                treeMap.put(share, contractDto);
-            }*/
-
             float share = B / (GameConstants.getAlpha(contractDto.getProductId()) * P + GameConstants.ShareAllocationBeta * d);
-            //System.out.println(share);
-            //System.out.println(d);
 
             List<ContractDto> currentContractsWithThisShare = treeMap.get(share);
             if (currentContractsWithThisShare == null || currentContractsWithThisShare.size() == 0)
@@ -225,11 +221,9 @@ public class ContractManager
             float sharePercent = entry.getKey() / totalShares;
             for (ContractDto contractDto : entry.getValue())
             {
-                //System.out.println(sharePercent);
                 StorageDto storageDto = storageService.loadById(contractDto.getStorageId());
 
                 int sale = (int) Math.floor(Math.min(contractDto.getSupplyAmount(), weekDemandDto.getAmount() * sharePercent));
-                //System.out.println(sale);
 
                 TeamDto teamDto = teamService.loadById(contractDto.getTeamId());
 
@@ -237,7 +231,6 @@ public class ContractManager
                         storageDto.getBuildingId(),
                         storageDto.getDc(),
                         contractDto.getProductId());
-                //System.out.println(storageProductDto.getAmount());
 
                 if (storageProductDto != null && storageProductDto.getAmount() >= sale)
                 {
@@ -248,8 +241,6 @@ public class ContractManager
                     teamDto.setCredit(teamDto.getCredit() + income);
                     teamDto.setWealth(teamDto.getWealth() + income);
                     teamDto.setInFlow(teamDto.getInFlow() + income);
-
-                    //System.out.println(income);
 
                     if (sharePercent >= equalShareAmount)
                     {
@@ -292,8 +283,13 @@ public class ContractManager
                     contractDto.setDemandShare(100f * contractDto.getBoughtAmount() / (weekDemandDto.getAmount() - remainedDemand));
                     contractDto.setValueShare(100f * income / totalIncome);
                 }
-                //System.out.println(contractDto.getDemandShare());
                 contractService.saveOrUpdate(contractDto);
+
+                ContractFinalizedResponse contractFinalizedResponse = new ContractFinalizedResponse(
+                        ResponseTypeConstant.CONTRACT_FINALIZED,
+                        contractDto
+                );
+                pushMessageManager.sendMessageByTeamId(contractDto.getTeamId().toString(), gson.toJson(contractFinalizedResponse));
 
                 if (contractDto.getBoughtAmount() == 0)
                 {

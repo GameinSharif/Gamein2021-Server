@@ -11,6 +11,8 @@ import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
 import ir.sharif.gamein2021.ClientHandler.util.JWTUtil;
 import ir.sharif.gamein2021.core.domain.dto.TeamDto;
 import ir.sharif.gamein2021.core.domain.dto.UserDto;
+import ir.sharif.gamein2021.core.mainThread.GameCalendar;
+import ir.sharif.gamein2021.core.response.BanResponse;
 import ir.sharif.gamein2021.core.service.TeamService;
 import ir.sharif.gamein2021.core.service.UserService;
 import org.apache.log4j.Logger;
@@ -29,15 +31,18 @@ public class UserController
     private final EncryptDecryptManager encryptDecryptManager;
     private final UserService userService;
     private final TeamService teamService;
+    private final GameCalendar gameCalendar;
     private final Gson gson = new Gson();
 
-    public UserController(SocketSessionManager socketSessionManager, LocalPushMessageManager localPushMessageManager, EncryptDecryptManager encryptDecryptManager, UserService userService, TeamService teamService)
-    {
+    public UserController(SocketSessionManager socketSessionManager, LocalPushMessageManager localPushMessageManager,
+                          EncryptDecryptManager encryptDecryptManager, UserService userService, TeamService teamService,
+                          GameCalendar gameCalendar) {
         this.socketSessionManager = socketSessionManager;
         this.localPushMessageManager = localPushMessageManager;
         this.encryptDecryptManager = encryptDecryptManager;
         this.userService = userService;
         this.teamService = teamService;
+        this.gameCalendar = gameCalendar;
     }
 
     public void authenticate(ProcessedRequest request, LoginRequest loginRequest)
@@ -61,6 +66,11 @@ public class UserController
             int teamId = userDto.getTeamId();
             TeamDto teamDto = teamService.loadById(teamId); //TODO not send everything maybe?
 
+            if(teamDto.getBanEnd() != null && teamDto.getBanEnd().isAfter(gameCalendar.getCurrentDate())){
+                BanResponse banResponse = new BanResponse(ResponseTypeConstant.BAN, teamDto.getBanEnd());
+                localPushMessageManager.sendMessageBySession(request.session, gson.toJson(banResponse));
+                return;
+            }
 
             Map<String, String> payload = new HashMap<>();
             payload.put("userId", userDto.getId().toString());

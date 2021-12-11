@@ -3,6 +3,8 @@ package ir.sharif.gamein2021.core.domain.dto;
 import ir.sharif.gamein2021.core.util.Enums.Country;
 import lombok.*;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -23,4 +25,5 @@ public class TeamDto
     private Float productionCost;
     private Float donatedAmount;
     private Long usedWater;
+    private LocalDate banEnd;
 }

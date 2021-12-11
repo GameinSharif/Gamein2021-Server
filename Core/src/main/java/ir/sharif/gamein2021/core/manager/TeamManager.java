@@ -2,6 +2,7 @@ package ir.sharif.gamein2021.core.manager;
 
 import com.google.gson.Gson;
 import ir.sharif.gamein2021.core.domain.dto.TeamDto;
+import ir.sharif.gamein2021.core.mainThread.GameCalendar;
 import ir.sharif.gamein2021.core.response.MoneyUpdateResponse;
 import ir.sharif.gamein2021.core.service.TeamService;
 import ir.sharif.gamein2021.core.util.GameConstants;
@@ -17,6 +18,7 @@ public class TeamManager
 {
     private final PushMessageManagerInterface pushMessageManager;
     private final TeamService teamService;
+    private final GameCalendar gameCalendar;
     private final Gson gson = new Gson();
 
     private float checkBrandBoundary(float brand)

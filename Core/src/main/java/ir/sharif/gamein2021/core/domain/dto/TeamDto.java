@@ -25,6 +25,5 @@ public class TeamDto
     private Float productionCost;
     private Float donatedAmount;
     private Long usedWater;
-    private Boolean banned;
     private LocalDate banEnd;
 }

@@ -65,16 +65,4 @@ public class TeamManager
             pushMessageManager.sendMessageByTeamId(team.getId().toString(), gson.toJson(moneyUpdateResponse));
         }
     }
-
-    public void updateBanned(){
-        List<TeamDto> teams = teamService.list();
-        for(TeamDto teamDto : teams){
-            if(teamDto.getBanned()){
-                if (teamDto.getBanEnd().isBefore(gameCalendar.getCurrentDate())){
-                    teamDto.setBanned(false);
-                    teamService.saveOrUpdate(teamDto);
-                }
-            }
-        }
-    }
 }

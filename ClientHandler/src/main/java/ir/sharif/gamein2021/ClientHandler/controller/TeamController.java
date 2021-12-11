@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
 import ir.sharif.gamein2021.core.domain.dto.TeamDto;
+import ir.sharif.gamein2021.core.mainThread.GameCalendar;
 import ir.sharif.gamein2021.core.manager.PushMessageManagerInterface;
 import ir.sharif.gamein2021.core.response.BanResponse;
 import ir.sharif.gamein2021.core.service.TeamService;
@@ -20,11 +21,12 @@ public class TeamController {
 
     private final PushMessageManagerInterface pushMessageManager;
     private final TeamService teamService;
+    private final GameCalendar gameCalendar;
     private final Gson gson;
 
     public boolean validateTeamAccess(ProcessedRequest request){
         TeamDto team = teamService.loadById(request.teamId);
-        if(team.getBanned()){
+        if(team.getBanEnd().isAfter(gameCalendar.getCurrentDate())){
             BanResponse banResponse = new BanResponse(ResponseTypeConstant.BAN, team.getBanEnd());
             pushMessageManager.sendMessageByTeamId(request.teamId.toString(), gson.toJson(banResponse));
             return false;

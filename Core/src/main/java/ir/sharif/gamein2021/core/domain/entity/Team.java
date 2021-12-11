@@ -59,9 +59,6 @@ public class Team implements BaseEntity {
     @Column(name = "used_water")
     private Long usedWater;
 
-    @Column(name = "banned", columnDefinition = "boolean default false")
-    private Boolean banned;
-
     @Column(name = "ban_end")
     private LocalDate banEnd;
 

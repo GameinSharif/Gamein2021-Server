@@ -59,7 +59,7 @@ public enum ResponseTypeConstant {
     REPORT_MESSAGE(55),
     CONTRACT_FINALIZED(56),
     CONTRACT_SUPPLIER_FINALIZED(57),
-    ALREADY_LOGINED_RESPONSE(58);
+    BAN(58);
 
     private int value;
 

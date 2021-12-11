@@ -49,7 +49,7 @@ public class GameConstants {
 
     public static final float CrushProbability = 0.01f;
 
-    public static GameStatus gameStatus = GameStatus.NOT_STARTED;
+    public static GameStatus gameStatus = GameStatus.RUNNING;
 
     public static float getAlpha(Integer productId)
     {

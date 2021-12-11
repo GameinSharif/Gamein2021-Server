@@ -14,6 +14,7 @@ import ir.sharif.gamein2021.ClientHandler.manager.SocketSessionManager;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
 import ir.sharif.gamein2021.ClientHandler.util.JWTUtil;
 import ir.sharif.gamein2021.core.domain.dto.TeamDto;
+import ir.sharif.gamein2021.core.response.BanResponse;
 import ir.sharif.gamein2021.core.service.TeamService;
 import ir.sharif.gamein2021.core.service.UserService;
 import ir.sharif.gamein2021.core.domain.dto.UserDto;
@@ -62,6 +63,11 @@ public class UserController {
             int teamId = userDto.getTeamId();
             TeamDto teamDto = teamService.loadById(teamId); //TODO not send everything maybe?
 
+            if(teamDto.getBanned()){
+                BanResponse banResponse = new BanResponse(ResponseTypeConstant.BAN, teamDto.getBanEnd());
+                localPushMessageManager.sendMessageBySession(request.session, gson.toJson(banResponse));
+                return;
+            }
 
             Map<String, String> payload = new HashMap<>();
             payload.put("userId", userDto.getId().toString());

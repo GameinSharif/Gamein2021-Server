@@ -25,6 +25,12 @@ public class SocketSessionManager {
         }
     }
 
+    public boolean isAuthenticatedUser(String userId) {
+        synchronized (this) {
+            return sessionIdByUserId.containsKey(userId);
+        }
+    }
+
     public void addUnAuthenticatedSession(WebSocketSession session) {
         synchronized (this) {
             unAuthenticatedSessions.put(session.getId(), session);

@@ -5,6 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.AlreadyLoginedResponse;
 import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginResponse;
 import ir.sharif.gamein2021.ClientHandler.manager.EncryptDecryptManager;
@@ -44,8 +45,10 @@ public class UserController {
     }
 
     public void authenticate(ProcessedRequest request, LoginRequest loginRequest) {
-        if (socketSessionManager.isAuthenticated(request.session.getId())) {
-            //TODO Can send message to user.
+        if (request.playerId != null && socketSessionManager.isAuthenticatedUser(request.playerId.toString())) {
+            AlreadyLoginedResponse response = new AlreadyLoginedResponse();
+            localPushMessageManager.sendMessageBySession(request.session, gson.toJson(response));
+            return;
         }
 
         String username = loginRequest.getUsername();

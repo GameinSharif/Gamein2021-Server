@@ -51,11 +51,13 @@ public class MainController {
     private final GameDateManager gameDateManager;
     private final WeeklyReportController weeklyReportController;
     private final CoronaController coronaController;
+    private final TeamController teamController;
     private final Gson gson;
 
     public void HandleMessage(ProcessedRequest processedRequest) {
         if (!gameStatusController.validateGameStatus(processedRequest)) return;
         if (!accessManagementController.validateAccess(processedRequest)) return;
+        if (!teamController.validateTeamAccess(processedRequest)) return;
 
         String requestData = processedRequest.requestData;
         switch (processedRequest.requestType) {

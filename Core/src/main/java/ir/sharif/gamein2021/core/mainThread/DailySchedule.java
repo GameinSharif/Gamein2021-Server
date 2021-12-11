@@ -71,6 +71,7 @@ public class DailySchedule
 
     private void doDailyTasks()
     {
+        teamManager.updateBanned();
         gameDateManager.SendGameDateToAllUsers();
         productionLineService.enableProductionLines();
         productService.finishProductCreation(gameCalendar.getCurrentDate());

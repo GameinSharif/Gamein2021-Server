@@ -2,6 +2,7 @@ package ir.sharif.gamein2021.core.manager;
 
 import com.google.gson.Gson;
 import ir.sharif.gamein2021.core.domain.dto.TeamDto;
+import ir.sharif.gamein2021.core.mainThread.GameCalendar;
 import ir.sharif.gamein2021.core.response.MoneyUpdateResponse;
 import ir.sharif.gamein2021.core.service.TeamService;
 import ir.sharif.gamein2021.core.util.GameConstants;
@@ -17,6 +18,7 @@ public class TeamManager
 {
     private final PushMessageManagerInterface pushMessageManager;
     private final TeamService teamService;
+    private final GameCalendar gameCalendar;
     private final Gson gson = new Gson();
 
     private float checkBrandBoundary(float brand)
@@ -61,6 +63,18 @@ public class TeamManager
                     team.getDonatedAmount());
 
             pushMessageManager.sendMessageByTeamId(team.getId().toString(), gson.toJson(moneyUpdateResponse));
+        }
+    }
+
+    public void updateBanned(){
+        List<TeamDto> teams = teamService.list();
+        for(TeamDto teamDto : teams){
+            if(teamDto.getBanned()){
+                if (teamDto.getBanEnd().isBefore(gameCalendar.getCurrentDate())){
+                    teamDto.setBanned(false);
+                    teamService.saveOrUpdate(teamDto);
+                }
+            }
         }
     }
 }

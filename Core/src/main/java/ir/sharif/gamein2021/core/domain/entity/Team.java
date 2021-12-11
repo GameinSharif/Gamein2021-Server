@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Table(name = "Team")
 @DynamicUpdate
@@ -57,6 +58,14 @@ public class Team implements BaseEntity {
 
     @Column(name = "used_water")
     private Long usedWater;
+
+    @Column(name = "banned", columnDefinition = "boolean default false")
+    private Boolean banned;
+
+    @Column(name = "ban_end")
+    private LocalDate banEnd;
+
+
 
     @Override
     public Integer getId() {

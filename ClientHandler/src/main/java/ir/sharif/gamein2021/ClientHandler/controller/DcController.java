@@ -11,6 +11,7 @@ import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
 import ir.sharif.gamein2021.core.domain.dto.DcDto;
 import ir.sharif.gamein2021.core.domain.dto.TeamDto;
 import ir.sharif.gamein2021.core.domain.dto.UserDto;
+import ir.sharif.gamein2021.core.manager.PushMessageManagerInterface;
 import ir.sharif.gamein2021.core.service.DcService;
 import ir.sharif.gamein2021.core.service.TeamService;
 import ir.sharif.gamein2021.core.service.UserService;
@@ -21,19 +22,22 @@ import org.springframework.stereotype.Component;
 
 @AllArgsConstructor
 @Component
-public class DcController {
+public class DcController
+{
     static Logger logger = Logger.getLogger(ExecutorThread.class.getName());
 
     private final DcService dcService;
     private final Gson gson;
-    private final LocalPushMessageManager pushMessageManager;
+    private final PushMessageManagerInterface pushMessageManager;
     private final UserService userService;
     private final TeamService teamService;
 
-    public void buyDc(ProcessedRequest request, BuyingDcRequest buyingDcRequest) {
+    public void buyDc(ProcessedRequest request, BuyingDcRequest buyingDcRequest)
+    {
         Integer id = request.playerId;
         BuyingDcResponse response;
-        try {
+        try
+        {
             UserDto userDto = userService.loadById(id);
             Integer teamId = userDto.getTeamId();
             TeamDto teamDto = teamService.loadById(teamId);
@@ -41,17 +45,23 @@ public class DcController {
 
             dc = dcService.buyDc(dc, teamDto);
             response = new BuyingDcResponse(ResponseTypeConstant.BUY_DC, dc, "success");
-        } catch (Exception e) {
+            pushMessageManager.sendMessageByTeamId(request.teamId.toString(), gson.toJson(response));
+        }
+        catch (Exception e)
+        {
             System.out.println(e.getMessage());
             logger.debug(e.getMessage());
             response = new BuyingDcResponse(ResponseTypeConstant.BUY_DC, null, e.getMessage());
+            pushMessageManager.sendMessageByUserId(request.playerId.toString(), gson.toJson(response));
         }
-        pushMessageManager.sendMessageBySession(request.session, gson.toJson(response));
     }
-    public void sellDc(ProcessedRequest request, SellingDcRequest sellingDcRequest) {
+
+    public void sellDc(ProcessedRequest request, SellingDcRequest sellingDcRequest)
+    {
         Integer id = request.playerId;
         SellingDcResponse response;
-        try {
+        try
+        {
             UserDto userDto = userService.loadById(id);
             Integer teamId = userDto.getTeamId();
             TeamDto teamDto = teamService.loadById(teamId);
@@ -59,11 +69,14 @@ public class DcController {
 
             dc = dcService.sellDc(dc, teamDto);
             response = new SellingDcResponse(ResponseTypeConstant.SELL_DC, dc, "success");
-        } catch (Exception e) {
+            pushMessageManager.sendMessageByTeamId(request.teamId.toString(), gson.toJson(response));
+        }
+        catch (Exception e)
+        {
             System.out.println(e.getMessage());
             logger.debug(e.getMessage());
             response = new SellingDcResponse(ResponseTypeConstant.SELL_DC, null, e.getMessage());
+            pushMessageManager.sendMessageByUserId(request.playerId.toString(), gson.toJson(response));
         }
-        pushMessageManager.sendMessageBySession(request.session, gson.toJson(response));
     }
 }

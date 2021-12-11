@@ -10,6 +10,7 @@ import ir.sharif.gamein2021.core.domain.dto.StorageDto;
 import ir.sharif.gamein2021.core.domain.dto.TeamDto;
 import ir.sharif.gamein2021.core.domain.dto.UserDto;
 import ir.sharif.gamein2021.core.exception.InvalidRequestException;
+import ir.sharif.gamein2021.core.manager.PushMessageManagerInterface;
 import ir.sharif.gamein2021.core.service.DcService;
 import ir.sharif.gamein2021.core.service.StorageService;
 import ir.sharif.gamein2021.core.service.TeamService;
@@ -28,7 +29,7 @@ public class ProductController
     static Logger logger = Logger.getLogger(ExecutorThread.class.getName());
 
     private final Gson gson;
-    private final LocalPushMessageManager pushMessageManager;
+    private final PushMessageManagerInterface pushMessageManager;
     private final UserService userService;
     private final TeamService teamService;
     private final StorageService storageService;
@@ -51,13 +52,15 @@ public class ProductController
                     removeProductRequest.getProductId(),
                     removeProductRequest.getAmount());
             response = new RemoveProductResponse(ResponseTypeConstant.REMOVE_PRODUCT, storageDto, "success");
-        } catch (Exception e)
+            pushMessageManager.sendMessageByTeamId(request.teamId.toString(), gson.toJson(response));
+        }
+        catch (Exception e)
         {
             System.out.println(e.getMessage());
             logger.debug(e.getMessage());
             response = new RemoveProductResponse(ResponseTypeConstant.REMOVE_PRODUCT, null, e.getMessage());
+            pushMessageManager.sendMessageByUserId(request.playerId.toString(), gson.toJson(response));
         }
-        pushMessageManager.sendMessageBySession(request.session, gson.toJson(response));
     }
 
     public void getStorages(ProcessedRequest request, GetStorageProductsRequest getStorageProductsRequest)
@@ -71,13 +74,14 @@ public class ProductController
             TeamDto teamDto = teamService.loadById(teamId);
             List<StorageDto> storages = storageService.findAllStorageForTeam(teamDto);
             response = new GetStorageProductsResponse(ResponseTypeConstant.GET_STORAGES, storages, "success");
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             System.out.println(e.getMessage());
             logger.debug(e.getMessage());
             response = new GetStorageProductsResponse(ResponseTypeConstant.GET_STORAGES, null, e.getMessage());
         }
-        pushMessageManager.sendMessageBySession(request.session, gson.toJson(response));
+        pushMessageManager.sendMessageByUserId(request.playerId.toString(), gson.toJson(response));
     }
 
     private void checkTeamAndStorage(Integer buildingId, boolean isDc, TeamDto teamDto)

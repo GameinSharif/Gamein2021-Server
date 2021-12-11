@@ -10,12 +10,15 @@ import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
 @Service
-public class AccessManagementController {
+public class AccessManagementController
+{
     private final LocalPushMessageManager pushMessageManager;
     private final Gson gson = new Gson();
 
-    public boolean validateAccess(ProcessedRequest request) {
-        switch (request.requestType) {
+    public boolean validateAccess(ProcessedRequest request)
+    {
+        switch (request.requestType)
+        {
             case LOGIN:
             case GET_GAME_DATA:
             case GET_GAME_STATUS:
@@ -58,7 +61,8 @@ public class AccessManagementController {
             case DONATE:
             case REPORT_MESSAGE:
             default:
-                if (request.playerId != null) {
+                if (request.playerId != null)
+                {
                     return true;
                 }
 

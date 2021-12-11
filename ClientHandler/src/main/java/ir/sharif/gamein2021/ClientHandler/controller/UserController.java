@@ -20,7 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class UserController {
+public class UserController
+{
     static Logger logger = Logger.getLogger(ExecutorThread.class.getName());
 
     private final SocketSessionManager socketSessionManager;
@@ -30,7 +31,8 @@ public class UserController {
     private final TeamService teamService;
     private final Gson gson = new Gson();
 
-    public UserController(SocketSessionManager socketSessionManager, LocalPushMessageManager localPushMessageManager, EncryptDecryptManager encryptDecryptManager, UserService userService, TeamService teamService) {
+    public UserController(SocketSessionManager socketSessionManager, LocalPushMessageManager localPushMessageManager, EncryptDecryptManager encryptDecryptManager, UserService userService, TeamService teamService)
+    {
         this.socketSessionManager = socketSessionManager;
         this.localPushMessageManager = localPushMessageManager;
         this.encryptDecryptManager = encryptDecryptManager;
@@ -38,8 +40,10 @@ public class UserController {
         this.teamService = teamService;
     }
 
-    public void authenticate(ProcessedRequest request, LoginRequest loginRequest) {
-        if (request.playerId != null && socketSessionManager.isAuthenticatedUser(request.playerId.toString())) {
+    public void authenticate(ProcessedRequest request, LoginRequest loginRequest)
+    {
+        if (request.playerId != null && socketSessionManager.isAuthenticatedUser(request.playerId.toString()))
+        {
             LoginResponse response = new LoginResponse(request.playerId, "Can not login. Already logged in.");
             localPushMessageManager.sendMessageBySession(request.session, gson.toJson(response));
             return;
@@ -50,7 +54,8 @@ public class UserController {
         //password = encryptDecryptService.decryptMessage(password);
 
         LoginResponse loginResponse;
-        try {
+        try
+        {
             UserDto userDto = userService.read(username, password);
 
             int teamId = userDto.getTeamId();
@@ -65,7 +70,8 @@ public class UserController {
             socketSessionManager.addSession(String.valueOf(teamId), String.valueOf(userDto.getId()), request.session);
             loginResponse = new LoginResponse(userDto.getId(), "Successful", teamDto, token);
 
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             logger.debug(e);
             loginResponse = new LoginResponse(-1, "Username or Password in incorrect", null, null);
         }

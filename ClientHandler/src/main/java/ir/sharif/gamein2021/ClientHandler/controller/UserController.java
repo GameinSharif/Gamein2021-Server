@@ -15,6 +15,7 @@ import ir.sharif.gamein2021.core.mainThread.GameCalendar;
 import ir.sharif.gamein2021.core.response.BanResponse;
 import ir.sharif.gamein2021.core.service.TeamService;
 import ir.sharif.gamein2021.core.service.UserService;
+import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
@@ -36,7 +37,8 @@ public class UserController
 
     public UserController(SocketSessionManager socketSessionManager, LocalPushMessageManager localPushMessageManager,
                           EncryptDecryptManager encryptDecryptManager, UserService userService, TeamService teamService,
-                          GameCalendar gameCalendar) {
+                          GameCalendar gameCalendar)
+    {
         this.socketSessionManager = socketSessionManager;
         this.localPushMessageManager = localPushMessageManager;
         this.encryptDecryptManager = encryptDecryptManager;
@@ -66,7 +68,8 @@ public class UserController
             int teamId = userDto.getTeamId();
             TeamDto teamDto = teamService.loadById(teamId); //TODO not send everything maybe?
 
-            if(teamDto.getBanEnd() != null && teamDto.getBanEnd().isAfter(gameCalendar.getCurrentDate())){
+            if (teamDto.getBanEnd() != null && teamDto.getBanEnd().isAfter(gameCalendar.getCurrentDate()))
+            {
                 BanResponse banResponse = new BanResponse(ResponseTypeConstant.BAN, teamDto.getBanEnd());
                 localPushMessageManager.sendMessageBySession(request.session, gson.toJson(banResponse));
                 return;

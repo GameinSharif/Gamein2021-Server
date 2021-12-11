@@ -54,7 +54,8 @@ public class MainController {
     private final TeamController teamController;
     private final Gson gson;
 
-    public void HandleMessage(ProcessedRequest processedRequest) {
+    public void HandleMessage(ProcessedRequest processedRequest)
+    {
         if (!gameStatusController.validateGameStatus(processedRequest)) return;
         if (!accessManagementController.validateAccess(processedRequest)) return;
         if (processedRequest.requestType != RequestTypeConstant.LOGIN)

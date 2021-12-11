@@ -16,7 +16,8 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 
 @Component
-public class TeamController {
+public class TeamController
+{
     static Logger logger = Logger.getLogger(ExecutorThread.class.getName());
 
     private final PushMessageManagerInterface pushMessageManager;
@@ -24,12 +25,15 @@ public class TeamController {
     private final GameCalendar gameCalendar;
     private final Gson gson;
 
-    public boolean validateTeamAccess(ProcessedRequest request){
+    public boolean validateTeamAccess(ProcessedRequest request)
+    {
         TeamDto team = teamService.loadById(request.teamId);
-        if(team.getBanEnd() != null && team.getBanEnd().isAfter(gameCalendar.getCurrentDate())){
+        if (team.getBanEnd() != null && team.getBanEnd().isAfter(gameCalendar.getCurrentDate()))
+        {
             BanResponse banResponse = new BanResponse(ResponseTypeConstant.BAN, team.getBanEnd());
             pushMessageManager.sendMessageByTeamId(request.teamId.toString(), gson.toJson(banResponse));
             return false;
-        } else return true;
+        }
+        return true;
     }
 }

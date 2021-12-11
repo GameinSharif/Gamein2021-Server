@@ -24,4 +24,9 @@ public class LoginResponse extends ResponseObject implements Serializable
         this.team = team;
     }
 
+
+    public LoginResponse(long playerId, String result) {
+        this.playerId = playerId;
+        this.result = result;
+    }
 }

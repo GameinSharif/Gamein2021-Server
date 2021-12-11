@@ -1,11 +1,7 @@
 package ir.sharif.gamein2021.ClientHandler.controller;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTCreationException;
 import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.AlreadyLoginedResponse;
 import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Login.LoginResponse;
 import ir.sharif.gamein2021.ClientHandler.manager.EncryptDecryptManager;
@@ -14,14 +10,12 @@ import ir.sharif.gamein2021.ClientHandler.manager.SocketSessionManager;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
 import ir.sharif.gamein2021.ClientHandler.util.JWTUtil;
 import ir.sharif.gamein2021.core.domain.dto.TeamDto;
+import ir.sharif.gamein2021.core.domain.dto.UserDto;
 import ir.sharif.gamein2021.core.service.TeamService;
 import ir.sharif.gamein2021.core.service.UserService;
-import ir.sharif.gamein2021.core.domain.dto.UserDto;
-import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
-import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,7 +40,7 @@ public class UserController {
 
     public void authenticate(ProcessedRequest request, LoginRequest loginRequest) {
         if (request.playerId != null && socketSessionManager.isAuthenticatedUser(request.playerId.toString())) {
-            AlreadyLoginedResponse response = new AlreadyLoginedResponse();
+            LoginResponse response = new LoginResponse(request.playerId, "Can not login. Already logged in.");
             localPushMessageManager.sendMessageBySession(request.session, gson.toJson(response));
             return;
         }

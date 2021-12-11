@@ -26,7 +26,7 @@ public class TeamController {
 
     public boolean validateTeamAccess(ProcessedRequest request){
         TeamDto team = teamService.loadById(request.teamId);
-        if(team.getBanEnd().isAfter(gameCalendar.getCurrentDate())){
+        if(team.getBanEnd() != null && team.getBanEnd().isAfter(gameCalendar.getCurrentDate())){
             BanResponse banResponse = new BanResponse(ResponseTypeConstant.BAN, team.getBanEnd());
             pushMessageManager.sendMessageByTeamId(request.teamId.toString(), gson.toJson(banResponse));
             return false;

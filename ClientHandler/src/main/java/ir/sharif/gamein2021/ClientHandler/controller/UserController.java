@@ -68,7 +68,7 @@ public class UserController {
             int teamId = userDto.getTeamId();
             TeamDto teamDto = teamService.loadById(teamId); //TODO not send everything maybe?
 
-            if(teamDto.getBanEnd().isAfter(gameCalendar.getCurrentDate())){
+            if(teamDto.getBanEnd() != null && teamDto.getBanEnd().isAfter(gameCalendar.getCurrentDate())){
                 BanResponse banResponse = new BanResponse(ResponseTypeConstant.BAN, teamDto.getBanEnd());
                 localPushMessageManager.sendMessageBySession(request.session, gson.toJson(banResponse));
                 return;

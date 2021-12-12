@@ -19,6 +19,7 @@ import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
+import java.time.Period;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -70,7 +71,9 @@ public class UserController
 
             if (teamDto.getBanEnd() != null && teamDto.getBanEnd().isAfter(gameCalendar.getCurrentDate()))
             {
-                BanResponse banResponse = new BanResponse(ResponseTypeConstant.BAN, teamDto.getBanEnd());
+                Period period = Period.between(gameCalendar.getCurrentDate(), teamDto.getBanEnd());
+                int minutes = period.getYears() * 365 + period.getMonths() * 30 + period.getDays();
+                BanResponse banResponse = new BanResponse(ResponseTypeConstant.BAN, minutes);
                 localPushMessageManager.sendMessageBySession(request.session, gson.toJson(banResponse));
                 return;
             }

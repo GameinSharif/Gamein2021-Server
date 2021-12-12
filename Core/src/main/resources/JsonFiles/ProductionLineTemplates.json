@@ -5,7 +5,7 @@
     "constructionCost": 5000000,
     "constructRequiredDays": 7,
     "scrapPrice": 2500000,
-    "batchSize": 250,
+    "batchSize": 1,
     "dailyProductionRate": 500,
     "efficiencyLevels":
     [
@@ -47,8 +47,8 @@
     "constructionCost": 5000000,
     "constructRequiredDays": 7,
     "scrapPrice": 2500000,
-    "batchSize": 250,
-    "dailyProductionRate": 250,
+    "batchSize": 1,
+    "dailyProductionRate": 500,
     "efficiencyLevels":
     [
       {
@@ -89,7 +89,7 @@
     "constructionCost": 5000000,
     "constructRequiredDays": 7,
     "scrapPrice": 2500000,
-    "batchSize": 250,
+    "batchSize": 1,
     "dailyProductionRate": 500,
     "efficiencyLevels":
     [
@@ -131,7 +131,7 @@
     "constructionCost": 5000000,
     "constructRequiredDays": 7,
     "scrapPrice": 2500000,
-    "batchSize": 250,
+    "batchSize": 1,
     "dailyProductionRate": 500,
     "efficiencyLevels":
     [
@@ -173,7 +173,7 @@
     "constructionCost": 5000000,
     "constructRequiredDays": 5,
     "scrapPrice": 2500000,
-    "batchSize": 250,
+    "batchSize": 1,
     "dailyProductionRate": 500,
     "efficiencyLevels":
     [
@@ -215,7 +215,7 @@
     "constructionCost": 5000000,
     "constructRequiredDays": 5,
     "scrapPrice": 2500000,
-    "batchSize": 250,
+    "batchSize": 1,
     "dailyProductionRate": 500,
     "efficiencyLevels":
     [
@@ -257,7 +257,7 @@
     "constructionCost": 5000000,
     "constructRequiredDays": 5,
     "scrapPrice": 2500000,
-    "batchSize": 250,
+    "batchSize": 1,
     "dailyProductionRate": 500,
     "efficiencyLevels":
     [
@@ -299,7 +299,7 @@
     "constructionCost": 5000000,
     "constructRequiredDays": 3,
     "scrapPrice": 2500000,
-    "batchSize": 2500,
+    "batchSize": 1,
     "dailyProductionRate": 5000,
     "efficiencyLevels":
     [
@@ -341,7 +341,7 @@
     "constructionCost": 5000000,
     "constructRequiredDays": 3,
     "scrapPrice": 2500000,
-    "batchSize": 2500,
+    "batchSize": 1,
     "dailyProductionRate": 5000,
     "efficiencyLevels":
     [
@@ -383,7 +383,7 @@
     "constructionCost": 5000000,
     "constructRequiredDays": 3,
     "scrapPrice": 2500000,
-    "batchSize": 2500,
+    "batchSize": 1,
     "dailyProductionRate": 5000,
     "efficiencyLevels":
     [
@@ -425,7 +425,7 @@
     "constructionCost": 5000000,
     "constructRequiredDays": 3,
     "scrapPrice": 2500000,
-    "batchSize": 2500,
+    "batchSize": 1,
     "dailyProductionRate": 5000,
     "efficiencyLevels":
     [
@@ -467,7 +467,7 @@
     "constructionCost": 15000000,
     "constructRequiredDays": 3,
     "scrapPrice": 7500000,
-    "batchSize": 1500,
+    "batchSize": 1
     "dailyProductionRate": 3000,
     "efficiencyLevels":
     [

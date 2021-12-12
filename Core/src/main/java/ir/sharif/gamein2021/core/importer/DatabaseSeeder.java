@@ -4,6 +4,7 @@ import ir.sharif.gamein2021.core.domain.entity.Team;
 import org.springframework.stereotype.Component;
 
 import java.io.FileNotFoundException;
+import java.time.LocalDateTime;
 
 @Component
 public class DatabaseSeeder {
@@ -13,9 +14,12 @@ public class DatabaseSeeder {
         this.teamDataImporter = teamDataImporter;
     }
 
-    public void seed(){
+    public void seed() {
         try {
+            System.out.println("seed start " + LocalDateTime.now());
             teamDataImporter.importData("CSVFiles/team.csv");
+            System.out.println("seed finished " + LocalDateTime.now());
+
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

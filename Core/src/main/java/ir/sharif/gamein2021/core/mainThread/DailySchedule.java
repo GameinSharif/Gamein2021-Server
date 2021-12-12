@@ -1,5 +1,6 @@
 package ir.sharif.gamein2021.core.mainThread;
 
+import ir.sharif.gamein2021.core.importer.DatabaseSeeder;
 import ir.sharif.gamein2021.core.manager.*;
 import ir.sharif.gamein2021.core.manager.clientHandlerConnection.ClientHandlerRequestSenderInterface;
 import ir.sharif.gamein2021.core.service.BusinessIntelligenceService;
@@ -36,12 +37,14 @@ public class DailySchedule
     private final DynamicConfigService dynamicConfigService;
     private final BusinessIntelligenceService businessIntelligenceService;
     private final CoronaManager coronaManager;
+    private final DatabaseSeeder databaseSeeder;
 
     private final ClientHandlerRequestSenderInterface clientRequestSender;
 
     @Scheduled(fixedRateString = "${dayLengthMilliSecond}")
     public void scheduledTask()
     {
+//        databaseSeeder.seed();
         if (GameConstants.gameStatus == GameStatus.RUNNING)
         {
             try

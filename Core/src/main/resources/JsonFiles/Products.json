@@ -158,7 +158,7 @@
 		],
 		"minPrice": 250,
 		"maxPrice": 1000,
-		"maintenanceCostPerDay": 20
+		"maintenanceCostPerDay": 2
 	},
 	{
 		"id": 18,
@@ -175,7 +175,7 @@
 		],
 		"minPrice": 750,
 		"maxPrice": 3000,
-		"maintenanceCostPerDay": 20
+		"maintenanceCostPerDay": 2
 	},
 	{
 		"id": 19,
@@ -192,7 +192,7 @@
 		],
 		"minPrice": 500,
 		"maxPrice": 2000,
-		"maintenanceCostPerDay": 20
+		"maintenanceCostPerDay": 2
 	},
 	{
 		"id": 20,
@@ -221,7 +221,7 @@
 		],
 		"minPrice": 1000,
 		"maxPrice": 4000,
-		"maintenanceCostPerDay": 20
+		"maintenanceCostPerDay": 2
 	},
 	{
 		"id": 21,
@@ -254,7 +254,7 @@
 		],
 		"minPrice": 1000,
 		"maxPrice": 4000,
-		"maintenanceCostPerDay": 20
+		"maintenanceCostPerDay": 2
 	},
 	{
 		"id": 22,
@@ -287,7 +287,7 @@
 		],
 		"minPrice": 1000,
 		"maxPrice": 4000,
-		"maintenanceCostPerDay": 20
+		"maintenanceCostPerDay": 2
 	},
 	{
 		"id": 23,
@@ -320,7 +320,7 @@
 		],
 		"minPrice": 1000,
 		"maxPrice": 4000,
-		"maintenanceCostPerDay": 20
+		"maintenanceCostPerDay": 2
 	},
 	{
 		"id": 24,
@@ -353,7 +353,7 @@
 		],
 		"minPrice": 1000,
 		"maxPrice": 4000,
-		"maintenanceCostPerDay": 20
+		"maintenanceCostPerDay": 2
 	},
 	{
 		"id": 25,
@@ -386,7 +386,7 @@
 		],
 		"minPrice": 1000,
 		"maxPrice": 4000,
-		"maintenanceCostPerDay": 20
+		"maintenanceCostPerDay": 2
 	},
 	{
 		"id": 26,
@@ -419,7 +419,7 @@
 		],
 		"minPrice": 1000,
 		"maxPrice": 4000,
-		"maintenanceCostPerDay": 20
+		"maintenanceCostPerDay": 2
 	},
 	{
 		"id": 27,
@@ -430,7 +430,7 @@
 		"volumetricUnit": 1,
 		"minPrice": 1000,
 		"maxPrice": 4000,
-		"maintenanceCostPerDay": 20
+		"maintenanceCostPerDay": 2
 	},
 	{
 		"id": 28,
@@ -454,7 +454,7 @@
 		],
 		"minPrice": 2500,
 		"maxPrice": 10000,
-		"maintenanceCostPerDay": 50
+		"maintenanceCostPerDay": 5
 	},
 	{
 		"id": 29,
@@ -478,7 +478,7 @@
 		],
 		"minPrice": 5000,
 		"maxPrice": 20000,
-		"maintenanceCostPerDay": 50
+		"maintenanceCostPerDay": 5
 	},
 	{
 		"id": 30,
@@ -502,7 +502,7 @@
 		],
 		"minPrice": 10000,
 		"maxPrice": 40000,
-		"maintenanceCostPerDay": 50
+		"maintenanceCostPerDay": 5
 	},
 	{
 		"id": 31,
@@ -526,7 +526,7 @@
 		],
 		"minPrice": 10000,
 		"maxPrice": 40000,
-		"maintenanceCostPerDay": 50
+		"maintenanceCostPerDay": 5
 	},
 	{
 		"id": 32,
@@ -550,7 +550,7 @@
 		],
 		"minPrice": 5000,
 		"maxPrice": 20000,
-		"maintenanceCostPerDay": 50
+		"maintenanceCostPerDay": 5
 	},
 	{
 		"id": 33,
@@ -570,7 +570,7 @@
 		],
 		"minPrice": 2500,
 		"maxPrice": 10000,
-		"maintenanceCostPerDay": 50
+		"maintenanceCostPerDay": 5
 	},
 	{
 		"id": 34,
@@ -590,7 +590,7 @@
 		],
 		"minPrice": 2500,
 		"maxPrice": 10000,
-		"maintenanceCostPerDay": 0.2
+		"maintenanceCostPerDay": 5
 	},
 	{
 		"id": 35,
@@ -610,7 +610,7 @@
 		],
 		"minPrice": 2500,
 		"maxPrice": 10000,
-		"maintenanceCostPerDay": 50
+		"maintenanceCostPerDay": 5
 	},
 	{
 		"id": 36,
@@ -630,7 +630,7 @@
 		],
 		"minPrice": 2500,
 		"maxPrice": 10000,
-		"maintenanceCostPerDay": 50
+		"maintenanceCostPerDay": 5
 	},
 	{
 		"id": 37,
@@ -654,6 +654,6 @@
 		],
 		"minPrice": 5000,
 		"maxPrice": 20000,
-		"maintenanceCostPerDay": 50
+		"maintenanceCostPerDay": 5
 	}
 ]

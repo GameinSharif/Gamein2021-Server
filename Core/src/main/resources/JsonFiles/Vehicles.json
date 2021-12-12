@@ -4,7 +4,7 @@
     "vehicleType": "AIRPLANE",
     "speed": 800,
     "capacity": 500000,
-    "costPerKilometer": 40000,
+    "costPerKilometer": 20000,
     "coefficient": 1
   },
   {
@@ -12,7 +12,7 @@
     "vehicleType": "TRUCK",
     "speed": 80,
     "capacity": 250000,
-    "costPerKilometer": 4000,
+    "costPerKilometer": 2000,
     "coefficient": 1.35
   },
   {
@@ -20,7 +20,7 @@
     "vehicleType": "TRAIN",
     "speed": 70,
     "capacity": 1000000,
-    "costPerKilometer": 5000,
+    "costPerKilometer": 2500,
     "coefficient": 1.1
   },
   {
@@ -28,7 +28,7 @@
     "vehicleType": "VANET",
     "speed": 90,
     "capacity": 200000,
-    "costPerKilometer": 3000,
+    "costPerKilometer": 1500,
     "coefficient": 1.3
   }
 ]

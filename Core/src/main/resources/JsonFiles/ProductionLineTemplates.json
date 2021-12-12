@@ -467,7 +467,7 @@
     "constructionCost": 15000000,
     "constructRequiredDays": 3,
     "scrapPrice": 7500000,
-    "batchSize": 1
+    "batchSize": 1,
     "dailyProductionRate": 3000,
     "efficiencyLevels":
     [

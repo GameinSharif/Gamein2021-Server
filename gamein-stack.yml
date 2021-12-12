@@ -16,6 +16,8 @@ services:
       - /home/ubuntu/mysql-data:/var/lib/mysql
     deploy:
       replicas: 1
+    cap_add:
+      - SYS_NICE
 #      resources:
 #        reservations:
 #          cpus: '2'

@@ -22,7 +22,7 @@ public class User implements BaseEntity {
     private String password;
 
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "team_id")
     private Team team;
 
 

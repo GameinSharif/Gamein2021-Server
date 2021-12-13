@@ -19,7 +19,7 @@ public class GameConstants {
     public static final float ShareAllocationAlphaBeer = 0.002f;
     public static final float ShareAllocationAlphaJuice = 0.002f;
     public static final float ShareAllocationAlphaEnergy = 0.003f;
-    public static final float ShareAllocationBeta = 0.005f;
+    public static final float ShareAllocationBeta = 0.0025f;
 
     public static final int brandMax = 100;
     public static final int brandMin = 1;

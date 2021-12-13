@@ -15,11 +15,6 @@ public class ReceiverClientHandlerConnectionConfig {
         return new AnonymousQueue();
     }
 
-    @Bean(value = "engineQueue")
-    public Queue engineQueue() {
-        return new Queue("engineQueue");
-    }
-
     @Bean(value = "calendarQueue")
     public Queue calendarQueue() {
         return new AnonymousQueue();

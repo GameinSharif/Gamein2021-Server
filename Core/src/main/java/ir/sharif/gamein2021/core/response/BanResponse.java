@@ -8,11 +8,11 @@ import java.time.LocalDate;
 
 public class BanResponse extends ResponseObject implements Serializable
 {
-    LocalDate date;
+    private int minutes;
 
-    public BanResponse(ResponseTypeConstant responseTypeConstant, LocalDate date)
+    public BanResponse(ResponseTypeConstant responseTypeConstant, int minutes)
     {
         this.responseTypeConstant = responseTypeConstant.ordinal();
-        this.date = date;
+        this.minutes = minutes;
     }
 }

@@ -4,14 +4,14 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Table(name = "User")
+@Table(name = "Player")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Entity
-public class User implements BaseEntity {
+public class Player implements BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

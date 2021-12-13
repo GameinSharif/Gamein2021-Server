@@ -11,11 +11,7 @@ services:
     networks:
       - db_net
     ports:
-      - target: 3306
-        published: 36424
-        protocol: tcp
-        mode: ingress
-#      - "36424:3306"
+      - "36424:3306"
     volumes:
       - mysql-data:/var/lib/mysql
     deploy:
@@ -51,7 +47,7 @@ services:
       - rabbitmq
     environment:
       DB_HOSTNAME: db
-      DB_PORT: 36424
+      DB_PORT: 3306
       DB_DATABASE: gamein_test
       DB_USER: root
       DB_PASS: 12345
@@ -84,7 +80,7 @@ services:
       - rabbitmq
     environment:
       DB_HOSTNAME: db
-      DB_PORT: 36424
+      DB_PORT: 3306
       DB_DATABASE: gamein_test
       DB_USER: root
       DB_PASS: 12345

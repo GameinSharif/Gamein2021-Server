@@ -85,6 +85,11 @@ public class ContractController
                     throw new Exception();
                 }
 
+                if (newContractRequest.getWeeks() < 1 || newContractRequest.getWeeks() > 10)
+                {
+                    throw new Exception();
+                }
+
                 ContractDto contractDto = new ContractDto();
                 contractDto.setTeamId(userTeam.getId());
                 contractDto.setStorageId(newContractRequest.getStorageId());

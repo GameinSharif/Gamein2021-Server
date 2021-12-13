@@ -1,4 +1,4 @@
-package ir.sharif.gamein2021.CentralEngine.manager;
+package ir.sharif.gamein2021.core.manager.centralEngineConnection;
 
 import org.springframework.amqp.core.Queue;
 import org.springframework.context.annotation.Bean;

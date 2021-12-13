@@ -21,8 +21,8 @@ public class User implements BaseEntity {
     @Column(nullable = false, updatable = false)
     private String password;
 
-    @OneToOne
-//    @JoinColumn(name = "id")
+    @ManyToOne
+    @JoinColumn(name = "id")
     private Team team;
 
 

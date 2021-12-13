@@ -65,7 +65,7 @@ services:
       DB_HOSTNAME: db
       DB_PORT: 5432
       DB_DATABASE: gamein_test
-      DB_USER: root
+      DB_USER: gamein
       DB_PASS: 12345
       APP_PORT: 8081
       APP_PROFILES: "production,microservice"
@@ -98,7 +98,7 @@ services:
       DB_HOSTNAME: db
       DB_PORT: 5432
       DB_DATABASE: gamein_test
-      DB_USER: root
+      DB_USER: gamein
       DB_PASS: 12345
       APP_PORT: 8081
       APP_PROFILES: "microservice,scheduled,production"

@@ -26,7 +26,7 @@ public class CoronaInfo {
     @Column(nullable = false)
     private Float currentCollectedAmount;
 
-    @Column(nullable = false, columnDefinition = "TINYINT(1)")
+    @Column(nullable = false)
     private Boolean isCoronaOver;
 
 }

@@ -42,7 +42,7 @@ public class Transport implements BaseEntity {
     @Column(name = "end_date", nullable = false)
     private LocalDate endDate;
 
-    @Column(name = "has_insurance", nullable = false, columnDefinition = "TINYINT(1)")
+    @Column(name = "has_insurance", nullable = false)
     private Boolean hasInsurance;
 
     @Enumerated(EnumType.STRING)

@@ -79,7 +79,7 @@ services:
       - ./Core/src/main/resources/CSVFiles:/opt/app/CSVFiles
       - ./Core/src/main/resources:/opt/app/resources
     deploy:
-      replicas: 3
+      replicas: 0
 #      resources:
 #        reservations:
 #          cpus: 2

@@ -18,7 +18,7 @@ public class Storage implements BaseEntity
     @Column(name = "storage_id")
     private Integer id;
 
-    @Column(name = "is_dc", nullable = false, columnDefinition = "TINYINT(1)")
+    @Column(name = "is_dc", nullable = false)
     private Boolean dc;
 
     @Column(nullable = false)

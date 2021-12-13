@@ -64,6 +64,6 @@ public class Contract implements BaseEntity
     @Column(name = "terminate_penalty", nullable = false)
     private Float terminatePenalty;
 
-    @Column(name = "is_terminated", nullable = false, columnDefinition = "TINYINT(1)")
+    @Column(name = "is_terminated", nullable = false)
     private Boolean isTerminated;
 }

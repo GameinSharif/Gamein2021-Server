@@ -14,7 +14,6 @@ services:
       - "36424:3306"
     volumes:
       - mysql-data:/var/lib/mysql
-      - ./mysql-config/:/etc/mysql/
     deploy:
       replicas: 1
     cap_add:

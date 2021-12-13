@@ -1,7 +1,6 @@
 package ir.sharif.gamein2021.core.importer;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Component;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;

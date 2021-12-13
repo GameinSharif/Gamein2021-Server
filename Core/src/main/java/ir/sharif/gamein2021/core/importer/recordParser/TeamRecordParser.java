@@ -6,7 +6,6 @@ import org.apache.commons.csv.CSVRecord;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Component
 public class TeamRecordParser implements CSVRecordParser<Team> {
@@ -26,7 +25,7 @@ public class TeamRecordParser implements CSVRecordParser<Team> {
         team.setTransportationCost(Float.parseFloat(record.get("transportation_cost")));
         team.setUsedWater(Long.parseLong(record.get("used_water")));
         team.setDonatedAmount(Float.parseFloat(record.get("donated_money")));
-//        team.setBanEnd(LocalDateTime.(record.get("ban_end")).toLocalDate());
+        team.setBanEnd(LocalDate.parse(record.get("ban_end")));
 
         return team;
     }

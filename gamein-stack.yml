@@ -11,7 +11,11 @@ services:
     networks:
       - db_net
     ports:
-      - "36424:3306"
+      - target: 3306
+        published: 36424
+        protocol: tcp
+        mode: ingress
+#      - "36424:3306"
     volumes:
       - mysql-data:/var/lib/mysql
     deploy:

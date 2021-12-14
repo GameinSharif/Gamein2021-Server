@@ -2,19 +2,19 @@
   {
     "id": 1,
     "name": "Soda",
-    "constructionCost": 5000000,
+    "constructionCost": 10000000,
     "constructRequiredDays": 7,
-    "scrapPrice": 2500000,
+    "scrapPrice": 5000000,
     "batchSize": 1,
-    "dailyProductionRate": 500,
+    "dailyProductionRate": 400,
     "efficiencyLevels":
     [
       {
-        "efficiencyPercentage": 50,
+        "efficiencyPercentage": 70,
         "upgradeCost": 0
       },
       {
-        "efficiencyPercentage": 75,
+        "efficiencyPercentage": 85,
         "upgradeCost": 3000000
       },
       {
@@ -29,7 +29,7 @@
     [
       {
         "upgradeCost": 0,
-        "brandIncreaseRatioPerProduct": 0
+        "brandIncreaseRatioPerProduct": 0.0001
       },
       {
         "upgradeCost": 4000000,
@@ -44,19 +44,19 @@
   {
     "id": 2,
     "name": "NonAlcoholicBeer",
-    "constructionCost": 5000000,
+    "constructionCost": 8000000,
     "constructRequiredDays": 7,
-    "scrapPrice": 2500000,
+    "scrapPrice": 4000000,
     "batchSize": 1,
-    "dailyProductionRate": 500,
+    "dailyProductionRate": 400,
     "efficiencyLevels":
     [
       {
-        "efficiencyPercentage": 50,
+        "efficiencyPercentage": 70,
         "upgradeCost": 0
       },
       {
-        "efficiencyPercentage": 75,
+        "efficiencyPercentage": 85,
         "upgradeCost": 3000000
       },
       {
@@ -71,7 +71,7 @@
     [
       {
         "upgradeCost": 0,
-        "brandIncreaseRatioPerProduct": 0
+        "brandIncreaseRatioPerProduct": 0.0001
       },
       {
         "upgradeCost": 4000000,
@@ -90,15 +90,15 @@
     "constructRequiredDays": 7,
     "scrapPrice": 2500000,
     "batchSize": 1,
-    "dailyProductionRate": 500,
+    "dailyProductionRate": 400,
     "efficiencyLevels":
     [
       {
-        "efficiencyPercentage": 50,
+        "efficiencyPercentage": 70,
         "upgradeCost": 0
       },
       {
-        "efficiencyPercentage": 75,
+        "efficiencyPercentage": 85,
         "upgradeCost": 3000000
       },
       {
@@ -113,14 +113,14 @@
     [
       {
         "upgradeCost": 0,
-        "brandIncreaseRatioPerProduct": 0
+        "brandIncreaseRatioPerProduct": 0.0001
       },
       {
-        "upgradeCost": 10000,
+        "upgradeCost": 4000000,
         "brandIncreaseRatioPerProduct": 0.0003
       },
       {
-        "upgradeCost": 10000,
+        "upgradeCost": 4000000,
         "brandIncreaseRatioPerProduct": 0.0006
       }
     ]
@@ -128,19 +128,19 @@
   {
     "id": 4,
     "name": "EnergyDrink",
-    "constructionCost": 5000000,
+    "constructionCost": 6000000,
     "constructRequiredDays": 7,
-    "scrapPrice": 2500000,
+    "scrapPrice": 3000000,
     "batchSize": 1,
-    "dailyProductionRate": 500,
+    "dailyProductionRate": 400,
     "efficiencyLevels":
     [
       {
-        "efficiencyPercentage": 50,
+        "efficiencyPercentage": 70,
         "upgradeCost": 0
       },
       {
-        "efficiencyPercentage": 75,
+        "efficiencyPercentage": 85,
         "upgradeCost": 3000000
       },
       {
@@ -155,7 +155,7 @@
     [
       {
         "upgradeCost": 0,
-        "brandIncreaseRatioPerProduct": 0
+        "brandIncreaseRatioPerProduct": 0.0001
       },
       {
         "upgradeCost": 4000000,
@@ -170,19 +170,19 @@
   {
     "id": 5,
     "name": "GlassBottle",
-    "constructionCost": 5000000,
+    "constructionCost": 7000000,
     "constructRequiredDays": 5,
-    "scrapPrice": 2500000,
+    "scrapPrice": 3500000,
     "batchSize": 1,
-    "dailyProductionRate": 500,
+    "dailyProductionRate": 400,
     "efficiencyLevels":
     [
       {
-        "efficiencyPercentage": 50,
+        "efficiencyPercentage": 70,
         "upgradeCost": 0
       },
       {
-        "efficiencyPercentage": 75,
+        "efficiencyPercentage": 85,
         "upgradeCost": 3000000
       },
       {
@@ -197,34 +197,34 @@
     [
       {
         "upgradeCost": 0,
-        "brandIncreaseRatioPerProduct": 0
+        "brandIncreaseRatioPerProduct": 0.00005
       },
       {
         "upgradeCost": 4000000,
-        "brandIncreaseRatioPerProduct": 0.001
+        "brandIncreaseRatioPerProduct": 0.0001
       },
       {
         "upgradeCost": 4000000,
-        "brandIncreaseRatioPerProduct": 0.002
+        "brandIncreaseRatioPerProduct": 0.0002
       }
     ]
   },
   {
     "id": 6,
     "name": "AluminiumCan",
-    "constructionCost": 5000000,
+    "constructionCost": 7000000,
     "constructRequiredDays": 5,
-    "scrapPrice": 2500000,
+    "scrapPrice": 3500000,
     "batchSize": 1,
-    "dailyProductionRate": 500,
+    "dailyProductionRate": 400,
     "efficiencyLevels":
     [
       {
-        "efficiencyPercentage": 50,
+        "efficiencyPercentage": 70,
         "upgradeCost": 0
       },
       {
-        "efficiencyPercentage": 75,
+        "efficiencyPercentage": 85,
         "upgradeCost": 3000000
       },
       {
@@ -239,34 +239,34 @@
     [
       {
         "upgradeCost": 0,
-        "brandIncreaseRatioPerProduct": 0
+        "brandIncreaseRatioPerProduct": 0.00005
       },
       {
         "upgradeCost": 4000000,
-        "brandIncreaseRatioPerProduct": 0.001
+        "brandIncreaseRatioPerProduct": 0.0001
       },
       {
         "upgradeCost": 4000000,
-        "brandIncreaseRatioPerProduct": 0.002
+        "brandIncreaseRatioPerProduct": 0.0002
       }
     ]
   },
   {
     "id": 7,
     "name": "PlasticBottle",
-    "constructionCost": 5000000,
+    "constructionCost": 7000000,
     "constructRequiredDays": 5,
-    "scrapPrice": 2500000,
+    "scrapPrice": 3500000,
     "batchSize": 1,
-    "dailyProductionRate": 500,
+    "dailyProductionRate": 400,
     "efficiencyLevels":
     [
       {
-        "efficiencyPercentage": 50,
+        "efficiencyPercentage": 70,
         "upgradeCost": 0
       },
       {
-        "efficiencyPercentage": 75,
+        "efficiencyPercentage": 85,
         "upgradeCost": 3000000
       },
       {
@@ -281,15 +281,15 @@
     [
       {
         "upgradeCost": 0,
-        "brandIncreaseRatioPerProduct": 0
+        "brandIncreaseRatioPerProduct": 0.00005
       },
       {
         "upgradeCost": 4000000,
-        "brandIncreaseRatioPerProduct": 0.001
+        "brandIncreaseRatioPerProduct": 0.0001
       },
       {
         "upgradeCost": 4000000,
-        "brandIncreaseRatioPerProduct": 0.002
+        "brandIncreaseRatioPerProduct": 0.0002
       }
     ]
   },
@@ -300,15 +300,15 @@
     "constructRequiredDays": 3,
     "scrapPrice": 2500000,
     "batchSize": 1,
-    "dailyProductionRate": 5000,
+    "dailyProductionRate": 4000,
     "efficiencyLevels":
     [
       {
-        "efficiencyPercentage": 50,
+        "efficiencyPercentage": 70,
         "upgradeCost": 0
       },
       {
-        "efficiencyPercentage": 75,
+        "efficiencyPercentage": 85,
         "upgradeCost": 3000000
       },
       {
@@ -323,15 +323,15 @@
     [
       {
         "upgradeCost": 0,
-        "brandIncreaseRatioPerProduct": 0
+        "brandIncreaseRatioPerProduct": 0.00005
       },
       {
         "upgradeCost": 4000000,
-        "brandIncreaseRatioPerProduct": 0.001
+        "brandIncreaseRatioPerProduct": 0.0001
       },
       {
         "upgradeCost": 4000000,
-        "brandIncreaseRatioPerProduct": 0.002
+        "brandIncreaseRatioPerProduct": 0.0002
       }
     ]
   },
@@ -342,15 +342,15 @@
     "constructRequiredDays": 3,
     "scrapPrice": 2500000,
     "batchSize": 1,
-    "dailyProductionRate": 5000,
+    "dailyProductionRate": 4000,
     "efficiencyLevels":
     [
       {
-        "efficiencyPercentage": 50,
+        "efficiencyPercentage": 70,
         "upgradeCost": 0
       },
       {
-        "efficiencyPercentage": 75,
+        "efficiencyPercentage": 85,
         "upgradeCost": 3000000
       },
       {
@@ -365,15 +365,15 @@
     [
       {
         "upgradeCost": 0,
-        "brandIncreaseRatioPerProduct": 0
+        "brandIncreaseRatioPerProduct": 0.00005
       },
       {
         "upgradeCost": 4000000,
-        "brandIncreaseRatioPerProduct": 0.001
+        "brandIncreaseRatioPerProduct": 0.0001
       },
       {
         "upgradeCost": 4000000,
-        "brandIncreaseRatioPerProduct": 0.002
+        "brandIncreaseRatioPerProduct": 0.0002
       }
     ]
   },
@@ -384,15 +384,15 @@
     "constructRequiredDays": 3,
     "scrapPrice": 2500000,
     "batchSize": 1,
-    "dailyProductionRate": 5000,
+    "dailyProductionRate": 4000,
     "efficiencyLevels":
     [
       {
-        "efficiencyPercentage": 50,
+        "efficiencyPercentage": 70,
         "upgradeCost": 0
       },
       {
-        "efficiencyPercentage": 75,
+        "efficiencyPercentage": 85,
         "upgradeCost": 3000000
       },
       {
@@ -407,15 +407,15 @@
     [
       {
         "upgradeCost": 0,
-        "brandIncreaseRatioPerProduct": 0
+        "brandIncreaseRatioPerProduct": 0.00005
       },
       {
         "upgradeCost": 4000000,
-        "brandIncreaseRatioPerProduct": 0.001
+        "brandIncreaseRatioPerProduct": 0.0001
       },
       {
         "upgradeCost": 4000000,
-        "brandIncreaseRatioPerProduct": 0.002
+        "brandIncreaseRatioPerProduct": 0.0002
       }
     ]
   },
@@ -426,15 +426,15 @@
     "constructRequiredDays": 3,
     "scrapPrice": 2500000,
     "batchSize": 1,
-    "dailyProductionRate": 5000,
+    "dailyProductionRate": 4000,
     "efficiencyLevels":
     [
       {
-        "efficiencyPercentage": 50,
+        "efficiencyPercentage": 70,
         "upgradeCost": 0
       },
       {
-        "efficiencyPercentage": 75,
+        "efficiencyPercentage": 85,
         "upgradeCost": 3000000
       },
       {
@@ -449,15 +449,15 @@
     [
       {
         "upgradeCost": 0,
-        "brandIncreaseRatioPerProduct": 0
+        "brandIncreaseRatioPerProduct": 0.00005
       },
       {
         "upgradeCost": 4000000,
-        "brandIncreaseRatioPerProduct": 0.001
+        "brandIncreaseRatioPerProduct": 0.0001
       },
       {
         "upgradeCost": 4000000,
-        "brandIncreaseRatioPerProduct": 0.002
+        "brandIncreaseRatioPerProduct": 0.0002
       }
     ]
   },
@@ -472,11 +472,11 @@
     "efficiencyLevels":
     [
       {
-        "efficiencyPercentage": 50,
+        "efficiencyPercentage": 70,
         "upgradeCost": 0
       },
       {
-        "efficiencyPercentage": 75,
+        "efficiencyPercentage": 85,
         "upgradeCost": 3000000
       },
       {
@@ -491,15 +491,15 @@
     [
       {
         "upgradeCost": 0,
-        "brandIncreaseRatioPerProduct": 0
+        "brandIncreaseRatioPerProduct": 0.00005
       },
       {
         "upgradeCost": 4000000,
-        "brandIncreaseRatioPerProduct": 0.001
+        "brandIncreaseRatioPerProduct": 0.0001
       },
       {
-        "upgradeCost": 8000000,
-        "brandIncreaseRatioPerProduct": 0.002
+        "upgradeCost": 4000000,
+        "brandIncreaseRatioPerProduct": 0.0002
       }
     ]
   }

@@ -54,8 +54,8 @@ public class LocalPushMessageManager implements PushMessageManagerInterface {
             return;
         }
         try {
-            String encryptedMessage = encryptDecryptManager.encryptMessage(message);
-            session.sendMessage(new TextMessage(encryptedMessage));
+            //String encryptedMessage = encryptDecryptService.encryptMessage(message);
+            session.sendMessage(new TextMessage(message));
         } catch (Exception ignored) {
         }
     }
@@ -65,7 +65,7 @@ public class LocalPushMessageManager implements PushMessageManagerInterface {
             return;
         }
 
-        String encryptedMessage = encryptDecryptManager.encryptMessage(message);
+        //String encryptedMessage = encryptDecryptService.encryptMessage(message);
 
         for (WebSocketSession session : sessions) {
             if (session == null || !session.isOpen()) {
@@ -73,7 +73,7 @@ public class LocalPushMessageManager implements PushMessageManagerInterface {
             }
 
             try {
-                session.sendMessage(new TextMessage(encryptedMessage));
+                session.sendMessage(new TextMessage(message));
             } catch (IOException e) {
                 logger.debug(e);
             }

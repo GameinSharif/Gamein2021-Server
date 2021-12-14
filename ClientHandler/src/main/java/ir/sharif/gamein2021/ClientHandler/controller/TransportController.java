@@ -17,6 +17,7 @@ import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
 import ir.sharif.gamein2021.core.manager.TransportManager;
 import ir.sharif.gamein2021.core.service.*;
 import ir.sharif.gamein2021.core.util.Enums;
+import ir.sharif.gamein2021.core.util.RequestTypeConstant;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import ir.sharif.gamein2021.core.util.models.Product;
 import lombok.AllArgsConstructor;
@@ -62,16 +63,19 @@ public class TransportController
             Integer teamId = user.getTeamId();
             TeamDto teamDto = teamService.loadById(teamId);
 
-            checkIfTransportSourceHasEnoughProduct(request);
-            checkSourceAndDestinationIsForTeam(teamId, request);
-            checkDestinationCapacity(request);
-            checkTeamMoney(request, teamDto);
+            Enums.TransportNodeType sourceType = Enums.TransportNodeType.values()[request.getSourceType()];
+            Enums.TransportNodeType destinationType = Enums.TransportNodeType.values()[request.getDestinationType()];
+
+            checkIfTransportSourceHasEnoughProduct(request, sourceType);
+            checkSourceAndDestinationIsForTeam(teamId, request, sourceType, destinationType);
+            checkDestinationCapacity(request, destinationType);
+            checkTeamMoney(request, teamDto, sourceType, destinationType);
 
             TransportDto transportDto = transportManager.createTransport(
                     request.getVehicleType(),
-                    request.getSourceType(),
+                    sourceType,
                     request.getSourceId(),
-                    request.getDestinationType(),
+                    destinationType,
                     request.getDestinationId(),
                     gameCalendar.getCurrentDate(),
                     request.isHasInsurance(),
@@ -90,9 +94,9 @@ public class TransportController
         pushMessageManager.sendMessageByTeamId(userService.loadById(playerId).getTeamId().toString(), gson.toJson(response));
     }
 
-    private void checkTeamMoney(StartTransportForPlayerStoragesRequest request, TeamDto team)
+    private void checkTeamMoney(StartTransportForPlayerStoragesRequest request, TeamDto team, Enums.TransportNodeType sourceType, Enums.TransportNodeType destinationType)
     {
-        int distance = transportManager.getTransportDistance(request.getSourceType(), request.getSourceId(), request.getDestinationType(), request.getDestinationId(), request.getVehicleType());
+        int distance = transportManager.getTransportDistance(sourceType, request.getSourceId(), destinationType, request.getDestinationId(), request.getVehicleType());
         float transportCost = transportManager.calculateTransportCost(
                 request.getVehicleType(),
                 distance,
@@ -114,12 +118,12 @@ public class TransportController
         }
     }
 
-    private void checkDestinationCapacity(StartTransportForPlayerStoragesRequest request)
+    private void checkDestinationCapacity(StartTransportForPlayerStoragesRequest request, Enums.TransportNodeType destinationType)
     {
         Product product = ReadJsonFilesManager.findProductById(request.getProductId());
         if (storageService.calculateTransportCapacity(
                 request.getDestinationId(),
-                isDc(request.getDestinationType()),
+                isDc(destinationType),
                 product.getProductType()) <
                 request.getAmount() * product.getVolumetricUnit())
         {
@@ -127,10 +131,10 @@ public class TransportController
         }
     }
 
-    private void checkSourceAndDestinationIsForTeam(Integer teamId, StartTransportForPlayerStoragesRequest request)
+    private void checkSourceAndDestinationIsForTeam(Integer teamId, StartTransportForPlayerStoragesRequest request, Enums.TransportNodeType sourceType, Enums.TransportNodeType destinationType)
     {
-        int sourceTeamId = findTeamByStorage(request.getSourceId(), request.getSourceType());
-        int destinationTeamId = findTeamByStorage(request.getDestinationId(), request.getDestinationType());
+        int sourceTeamId = findTeamByStorage(request.getSourceId(), sourceType);
+        int destinationTeamId = findTeamByStorage(request.getDestinationId(), destinationType);
         if (!(sourceTeamId == teamId && destinationTeamId == teamId))
         {
             throw new InvalidRequestException("Both source and destination storages must be yours!");
@@ -141,9 +145,9 @@ public class TransportController
         }
     }
 
-    private void checkIfTransportSourceHasEnoughProduct(StartTransportForPlayerStoragesRequest request)
+    private void checkIfTransportSourceHasEnoughProduct(StartTransportForPlayerStoragesRequest request, Enums.TransportNodeType sourceType)
     {
-        StorageProductDto storageProductDto = storageService.getStorageProductWithBuildingId(request.getSourceId(), isDc(request.getSourceType()), request.getProductId());
+        StorageProductDto storageProductDto = storageService.getStorageProductWithBuildingId(request.getSourceId(), isDc(sourceType), request.getProductId());
         if (storageProductDto == null || storageProductDto.getAmount() < request.getAmount())
         {
             throw new InvalidRequestException("You don't have enough of this product !");

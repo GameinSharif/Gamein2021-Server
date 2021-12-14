@@ -11,9 +11,9 @@ import java.io.Serializable;
 @Getter
 public class StartTransportForPlayerStoragesRequest extends RequestObject implements Serializable {
     private final int sourceId;
-    private final Enums.TransportNodeType sourceType;
+    private final int sourceType;
     private final int destinationId;
-    private final Enums.TransportNodeType destinationType;
+    private final int destinationType;
     private final Integer productId;
     private final Integer amount;
     private boolean hasInsurance;

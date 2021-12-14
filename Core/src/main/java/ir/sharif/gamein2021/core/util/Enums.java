@@ -53,7 +53,17 @@ public class Enums
 
     public enum TransportNodeType
     {
-        SUPPLIER, GAMEIN_CUSTOMER, DC, FACTORY
+        SUPPLIER (0),
+        GAMEIN_CUSTOMER (1),
+        DC (2),
+        FACTORY (3);
+
+        private int value;
+
+        TransportNodeType(int value)
+        {
+            this.value = value;
+        }
     }
 
     public enum TransportState

@@ -59,7 +59,7 @@ public class UserController
 
         String username = loginRequest.getUsername();
         String password = loginRequest.getPassword();
-        //password = encryptDecryptService.decryptMessage(password);
+        password = encryptDecryptManager.decryptMessage(password);
 
         LoginResponse loginResponse;
         try

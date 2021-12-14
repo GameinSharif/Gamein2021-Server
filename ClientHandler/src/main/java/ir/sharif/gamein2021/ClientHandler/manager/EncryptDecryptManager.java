@@ -74,6 +74,7 @@ public class EncryptDecryptManager
             decryptedMessage = new String(plainText);
 
         } catch (Exception e) {
+            e.printStackTrace();
             logger.debug(e);
         }
         return decryptedMessage;

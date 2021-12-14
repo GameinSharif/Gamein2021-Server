@@ -46,7 +46,7 @@ public class WeekSupplyService extends AbstractCrudService<WeekSupplyDto, WeekSu
     {
         Product product = ReadJsonFilesManager.findProductById(productId);
 
-        float changeAmount = (lastWeekSale / (twoWeeksAgoSale + GameConstants.ConstantOneWeekSupplyPrice) +
+        float changeAmount = (lastWeekSale / (twoWeeksAgoSale + GameConstants.ConstantOneWeekSupplyPrice) -
                 twoWeeksAgoSale / (lastWeekSale + GameConstants.ConstantOneWeekSupplyPrice)) *
                 GameConstants.ConstantTwoWeekSupplyPrice;
 

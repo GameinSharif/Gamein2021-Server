@@ -33,8 +33,8 @@ public class GameConstants {
     public static final float lostSalePenalty = 0.51f;
     public static final float noMoneyPenalty = 0.51f;
 
-    public final int AuctionStartValue = 1000;
-    public final int AuctionInitialStepValue = 100;
+    public final int AuctionStartValue = 1000000;
+    public final int AuctionInitialStepValue = 100000;
     public final int AuctionRoundDurationSeconds = 180;
     public final LocalDateTime[] AuctionRoundsStartTime = new LocalDateTime[]{
             LocalDateTime.of(2021, 12, 13, 19, 0, 0),

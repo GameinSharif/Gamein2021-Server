@@ -6,7 +6,7 @@ services:
     command:
       - --default-authentication-plugin=mysql_native_password
     environment:
-      MYSQL_ROOT_PASSWORD: 12345
+      MYSQL_ROOT_PASSWORD: eihdea32o3q@%2
       MYSQL_DATABASE: gamein_test
     networks:
       - db_net
@@ -50,7 +50,7 @@ services:
       DB_PORT: 3306
       DB_DATABASE: gamein_test
       DB_USER: root
-      DB_PASS: 12345
+      DB_PASS: eihdea32o3q@%2
       APP_PORT: 8081
       APP_PROFILES: "production,microservice"
       RABBIT_HOSTNAME: rabbitmq
@@ -85,7 +85,7 @@ services:
       DB_PORT: 3306
       DB_DATABASE: gamein_test
       DB_USER: root
-      DB_PASS: 12345
+      DB_PASS: eihdea32o3q@%2
       APP_PORT: 8081
       APP_PROFILES: "microservice,scheduled,production"
       SPRING_PROFILES_ACTIVE: production,microservice,scheduled

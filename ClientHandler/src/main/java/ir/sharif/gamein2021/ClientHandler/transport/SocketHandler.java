@@ -43,8 +43,8 @@ public class SocketHandler extends TextWebSocketHandler {
     @Override
     public void handleTextMessage(WebSocketSession session, TextMessage message) {
         try {
-            //String encryptedMessage = message.getPayload();
-            //String decryptedMessage = encryptDecryptService.decryptMessage(encryptedMessage);
+            String encryptedMessage = message.getPayload();
+            String decryptedMessage = encryptDecryptManager.decryptMessage(encryptedMessage);
             ProcessedRequest processedRequest = new ProcessedRequest(session, message.getPayload(), socketSessionManager);
             mainController.HandleMessage(processedRequest);
         } catch (Exception exception) {

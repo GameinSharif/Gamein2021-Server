@@ -20,7 +20,8 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Component
 @Profile(value = {"scheduled"})
-public class DailySchedule {
+public class DailySchedule
+{
     private final GameCalendar gameCalendar;
     private final GameStatusSchedule gameStatusSchedule;
     private final ProductionLineProductService productService;
@@ -41,16 +42,21 @@ public class DailySchedule {
     private static boolean isSeeded = false;
 
     @Scheduled(fixedRateString = "${dayLengthMilliSecond}")
-    public void scheduledTask() {
-        if (!isSeeded) {
+    public void scheduledTask()
+    {
+        if (!isSeeded)
+        {
             isSeeded = true;
 //            databaseSeeder.seed();
         }
 
-        if (GameConstants.gameStatus == GameStatus.RUNNING) {
-            try {
+        if (GameConstants.gameStatus == GameStatus.RUNNING)
+        {
+            try
+            {
                 DoRunningStateTasks();
-            } catch (Exception e) {
+            } catch (Exception e)
+            {
                 e.printStackTrace();
             }
         }
@@ -58,56 +64,67 @@ public class DailySchedule {
         updateConfigs();
     }
 
-    private void DoRunningStateTasks() {
+    private void DoRunningStateTasks()
+    {
         gameCalendar.increaseOneDay();
         System.out.println(gameCalendar.getCurrentDate());
 
-        doDailyTasks();
-        if (gameCalendar.getCurrentDate().getDayOfWeek() == DayOfWeek.SATURDAY) {
+        if (gameCalendar.getCurrentDate().getDayOfWeek() == DayOfWeek.SATURDAY)
+        {
             doWeeklyTasks();
         }
+        doDailyTasks();
     }
 
-    private void doDailyTasks() {
+    private void doDailyTasks()
+    {
         gameDateManager.SendGameDateToAllUsers();
         productionLineService.enableProductionLines();
         productService.finishProductCreation(gameCalendar.getCurrentDate());
         transportManager.updateTransports();
         contractManager.updateContracts();
         teamManager.updateAllTeamsMoneyOnClient();
-        try {
+        try
+        {
             storageManager.MaintenanceCost();
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             e.printStackTrace();
         }
     }
 
-    private void doWeeklyTasks() {
+    private void doWeeklyTasks()
+    {
+        weekSupplyManager.updateWeekSupplyPrices(gameCalendar.getCurrentWeek());
         contractManager.updateGameinCustomerContracts();
         productionLineService.decreaseWeeklyMaintenanceCost();
         teamManager.updateTeamsBrands(GameConstants.brandWeeklyDecrease);
-        weekSupplyManager.updateWeekSupplyPrices(gameCalendar.getCurrentWeek());
         demandAndSupplyManager.SendCurrentWeekSupplyAndDemandsToAllUsers();
         newsManager.SendNews();
         businessIntelligenceService.prepareWeeklyReport();
         coronaManager.SendCoronaInfoToAllUsers();
     }
 
-    private void updateConfigs() {
-        if (GameConstants.gameStatus != GameStatus.RUNNING) {
+    private void updateConfigs()
+    {
+        if (GameConstants.gameStatus != GameStatus.RUNNING)
+        {
             LocalDate newCurrentDate = dynamicConfigService.getCurrentDate();
-            if (newCurrentDate != null) {
+            if (newCurrentDate != null)
+            {
                 gameCalendar.setCurrentDate(newCurrentDate);
             }
 
             Integer newCurrentWeek = dynamicConfigService.getCurrentWeek();
-            if (newCurrentWeek != null) {
+            if (newCurrentWeek != null)
+            {
                 gameCalendar.setCurrentWeek(newCurrentWeek);
             }
         }
 
         GameStatus newGameStatus = dynamicConfigService.getGameStatus();
-        if (newGameStatus != null) {
+        if (newGameStatus != null)
+        {
             gameStatusSchedule.setGameStatus(newGameStatus);
         }
     }

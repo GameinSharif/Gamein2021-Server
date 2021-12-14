@@ -13,6 +13,8 @@ import lombok.AllArgsConstructor;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
+import java.time.Period;
+
 @AllArgsConstructor
 
 @Component
@@ -30,7 +32,9 @@ public class TeamController
         TeamDto team = teamService.loadById(request.teamId);
         if (team.getBanEnd() != null && team.getBanEnd().isAfter(gameCalendar.getCurrentDate()))
         {
-            BanResponse banResponse = new BanResponse(ResponseTypeConstant.BAN, team.getBanEnd());
+            Period period = Period.between(gameCalendar.getCurrentDate(), team.getBanEnd());
+            int minutes = period.getYears() * 365 + period.getMonths() * 30 + period.getDays();
+            BanResponse banResponse = new BanResponse(ResponseTypeConstant.BAN, minutes);
             pushMessageManager.sendMessageByTeamId(request.teamId.toString(), gson.toJson(banResponse));
             return false;
         }

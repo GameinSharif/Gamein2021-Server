@@ -53,6 +53,11 @@ public class ContractSupplierController
             Integer weeks = newContractSupplierRequest.getWeeks();
             Integer amount = newContractSupplierRequest.getAmount();
 
+            if (weeks < 1 || weeks > 10)
+            {
+                throw new Exception();
+            }
+
             int currentWeek = gameCalendar.getCurrentWeek();
             Supplier supplier = contractSupplierService.SupplierIdValidation(newContractSupplierRequest.getSupplierId());
             if (!supplier.getMaterials().contains(newContractSupplierRequest.getMaterialId()))

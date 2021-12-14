@@ -5,6 +5,7 @@ import ir.sharif.gamein2021.core.dao.ProductionLineRepository;
 import ir.sharif.gamein2021.core.dao.TeamRepository;
 import ir.sharif.gamein2021.core.domain.dto.ProductionLineDto;
 import ir.sharif.gamein2021.core.domain.dto.StorageProductDto;
+import ir.sharif.gamein2021.core.domain.dto.TeamDto;
 import ir.sharif.gamein2021.core.domain.entity.ProductionLine;
 import ir.sharif.gamein2021.core.domain.entity.ProductionLineProduct;
 import ir.sharif.gamein2021.core.domain.entity.Team;
@@ -30,13 +31,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ProductionLineService extends AbstractCrudService<ProductionLineDto, ProductionLine, Integer> {
+public class ProductionLineService extends AbstractCrudService<ProductionLineDto, ProductionLine, Integer>
+{
     private final ProductionLineRepository productionLineRepository;
     private final ProductionLineProductRepository productRepository;
     private final ModelMapper modelMapper;
     private final GameCalendar gameCalendar;
     private final TeamRepository teamRepository;
     private final StorageService storageService;
+    private final TeamService teamService;
     private final ClientHandlerRequestSenderInterface clientHandlerRequestSender;
 
     public ProductionLineService(ProductionLineRepository productionLineRepository,
@@ -45,7 +48,8 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
                                  GameCalendar gameCalendar,
                                  TeamRepository teamRepository,
                                  StorageService storageService,
-                                 ClientHandlerRequestSenderInterface clientHandlerRequestSender) {
+                                 TeamService teamService, ClientHandlerRequestSenderInterface clientHandlerRequestSender) {
+        this.teamService = teamService;
         setRepository(productionLineRepository);
         this.clientHandlerRequestSender = clientHandlerRequestSender;
         this.storageService = storageService;
@@ -296,13 +300,25 @@ public class ProductionLineService extends AbstractCrudService<ProductionLineDto
     }
 
     @Transactional
-    public void decreaseWeeklyMaintenanceCost() {
+    public void decreaseWeeklyMaintenanceCost()
+    {
         List<ProductionLine> productionLines = productionLineRepository.findProductionLinesByStatusEquals(Enums.ProductionLineStatus.ACTIVE);
-        for (ProductionLine productionLine : productionLines) {
-            Team team = productionLine.getTeam();
+        outer: for (ProductionLine productionLine : productionLines)
+        {
+            for (ProductionLineProduct productionLineProduct : productionLine.getProducts())
+            {
+                if (productionLineProduct.getEndDate().isAfter(gameCalendar.getCurrentDate()))
+                {
+                    continue outer;
+                }
+            }
+
             ProductionLineTemplate template = ReadJsonFilesManager.ProductionLineTemplateHashMap.get(productionLine.getProductionLineTemplateId());
-            team.setCredit(team.getCredit() - template.getWeeklyMaintenanceCost());
-            team.setWealth(team.getWealth() - template.getWeeklyMaintenanceCost());
+
+            TeamDto teamDto = teamService.loadById(productionLine.getTeam().getId());
+            teamDto.setCredit(teamDto.getCredit() - template.getWeeklyMaintenanceCost());
+            teamDto.setWealth(teamDto.getWealth() - template.getWeeklyMaintenanceCost());
+            teamService.saveOrUpdate(teamDto);
         }
 
         productionLineRepository.saveAllAndFlush(productionLines);

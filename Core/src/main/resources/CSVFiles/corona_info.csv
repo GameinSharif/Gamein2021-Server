@@ -1,7 +1,7 @@
 id,amount_to_be_collect,country,current_collected_amount,is_corona_over
-1,10000,France,0,0
-2,10000,Germany,0,0
-3,10000,UnitedKingdom,0,0
-4,10000,Netherlands,0,0
-5,10000,Belgium,0,0
-6,10000,Switzerland,0,0
+1,1000000000,France,0,0
+2,760000000,Germany,0,0
+3,380000000,UnitedKingdom,0,0
+4,190000000,Netherlands,0,0
+5,190000000,Belgium,0,0
+6,190000000,Switzerland,0,0

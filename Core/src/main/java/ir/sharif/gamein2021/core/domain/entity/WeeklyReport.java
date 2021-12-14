@@ -4,13 +4,13 @@ import lombok.*;
 
 import javax.persistence.*;
 
+@Table(indexes = @Index(columnList = "week_number, team_id"))
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class WeeklyReport implements BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

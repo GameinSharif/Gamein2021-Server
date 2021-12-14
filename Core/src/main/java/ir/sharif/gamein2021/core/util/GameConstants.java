@@ -19,7 +19,7 @@ public class GameConstants {
     public static final float ShareAllocationAlphaBeer = 0.002f;
     public static final float ShareAllocationAlphaJuice = 0.002f;
     public static final float ShareAllocationAlphaEnergy = 0.003f;
-    public static final float ShareAllocationBeta = 0.005f;
+    public static final float ShareAllocationBeta = 0.0025f;
 
     public static final int brandMax = 100;
     public static final int brandMin = 1;
@@ -37,9 +37,9 @@ public class GameConstants {
     public final int AuctionInitialStepValue = 100;
     public final int AuctionRoundDurationSeconds = 180;
     public final LocalDateTime[] AuctionRoundsStartTime = new LocalDateTime[]{
-            LocalDateTime.of(2021, 12, 12, 14, 30, 0),
-            LocalDateTime.of(2021, 12, 12, 14, 33, 0),
-            LocalDateTime.of(2021, 12, 12, 14, 36, 0),
+            LocalDateTime.of(2021, 12, 13, 19, 0, 0),
+            LocalDateTime.of(2021, 12, 13, 19, 3, 0),
+            LocalDateTime.of(2021, 12, 13, 19, 6, 0),
     };
     public final int rawMaterialCapacity = 2000000;
     public final int semiFinishedProductCapacity = 2000000;

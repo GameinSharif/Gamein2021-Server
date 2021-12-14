@@ -56,7 +56,8 @@ public class MainController {
     {
         if (!gameStatusController.validateGameStatus(processedRequest)) return;
         if (!accessManagementController.validateAccess(processedRequest)) return;
-        if (processedRequest.requestType != RequestTypeConstant.LOGIN)
+
+        if (processedRequest.requestType != RequestTypeConstant.LOGIN && processedRequest.requestType != RequestTypeConstant.GET_GAME_STATUS)
             if (!teamController.validateTeamAccess(processedRequest)) return;
 
         String requestData = processedRequest.requestData;

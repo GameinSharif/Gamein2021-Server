@@ -66,8 +66,8 @@ public class TransportController
             Enums.TransportNodeType sourceType = Enums.TransportNodeType.values()[request.getSourceType()];
             Enums.TransportNodeType destinationType = Enums.TransportNodeType.values()[request.getDestinationType()];
 
-            checkIfTransportSourceHasEnoughProduct(request, sourceType);
             checkSourceAndDestinationIsForTeam(teamId, request, sourceType, destinationType);
+            checkIfTransportSourceHasEnoughProduct(request, sourceType);
             checkDestinationCapacity(request, destinationType);
             checkTeamMoney(request, teamDto, sourceType, destinationType);
 

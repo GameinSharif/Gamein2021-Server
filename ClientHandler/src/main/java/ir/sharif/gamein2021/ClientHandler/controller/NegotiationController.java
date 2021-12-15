@@ -38,7 +38,6 @@ public class NegotiationController
 
     private final PushMessageManagerInterface pushMessageManager;
     private final TransportManager transportManager;
-    private final UserService userService;
     private final TeamService teamService;
     private final NegotiationService negotiationService;
     private final ProviderService providerService;
@@ -54,9 +53,7 @@ public class NegotiationController
         GetNegotiationsResponse getNegotiationsResponse;
         try
         {
-            int playerId = request.playerId;
-            UserDto user = userService.loadById(playerId);
-            Team userTeam = teamService.findTeamById(user.getTeamId());
+            Team userTeam = teamService.findTeamById(request.teamId);
 
             ArrayList<NegotiationDto> negotiations = negotiationService.findByTeam(userTeam);
             getNegotiationsResponse = new GetNegotiationsResponse(ResponseTypeConstant.GET_NEGOTIATIONS, negotiations);
@@ -76,7 +73,6 @@ public class NegotiationController
         {
             ProviderDto provider = providerService.findProviderById(newProviderNegotiationRequest.getProviderId());
             Team team = teamService.findTeamById(request.teamId);
-            UserDto user = userService.loadById(request.playerId);
 
             if (newProviderNegotiationRequest.getAmount() <= 0)
             {
@@ -93,7 +89,7 @@ public class NegotiationController
             else
             {
                 NegotiationDto newNegotiation = new NegotiationDto();
-                newNegotiation.setDemanderId(user.getTeamId());
+                newNegotiation.setDemanderId(request.teamId);
                 newNegotiation.setSupplierId(provider.getTeamId());
                 newNegotiation.setCostPerUnitDemander(newProviderNegotiationRequest.getCostPerUnitDemander());
                 newNegotiation.setCostPerUnitSupplier(provider.getPrice());
@@ -138,12 +134,11 @@ public class NegotiationController
 
     public void editNegotiationCostPerUnit(ProcessedRequest request, EditNegotiationCostPerUnitRequest editRequest)
     {
-        UserDto user = userService.loadById(request.playerId);
         EditNegotiationCostPerUnitResponse editResponse;
         try
         {
             NegotiationDto negotiationDto = negotiationService.findById(editRequest.getNegotiationId());
-            Team userTeam = teamService.findTeamById(user.getTeamId());
+            Team userTeam = teamService.findTeamById(request.teamId);
             if (editRequest.getNewCostPerUnit() < 0)
             {
                 editResponse = new EditNegotiationCostPerUnitResponse(ResponseTypeConstant.EDIT_NEGOTIATION_COST_PER_UNIT, null, "Price in negative");
@@ -208,12 +203,11 @@ public class NegotiationController
 
     public void rejectNegotiation(ProcessedRequest request, RejectNegotiationRequest rejectNegotiationRequest)
     {
-        UserDto user = userService.loadById(request.playerId);
         RejectNegotiationResponse response;
         try
         {
             NegotiationDto negotiationDto = negotiationService.findById(rejectNegotiationRequest.getNegotiationId());
-            Team userTeam = teamService.findTeamById(user.getTeamId());
+            Team userTeam = teamService.findTeamById(request.teamId);
             if (userTeam.getId().equals(negotiationDto.getDemanderId()) || userTeam.getId().equals(negotiationDto.getSupplierId()))
             {
                 negotiationDto.setState(NegotiationState.CLOSED);

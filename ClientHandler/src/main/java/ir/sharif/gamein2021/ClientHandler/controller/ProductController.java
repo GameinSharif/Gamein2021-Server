@@ -2,19 +2,19 @@ package ir.sharif.gamein2021.ClientHandler.controller;
 
 import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
-import ir.sharif.gamein2021.ClientHandler.domain.Product.*;
-import ir.sharif.gamein2021.ClientHandler.manager.LocalPushMessageManager;
+import ir.sharif.gamein2021.ClientHandler.domain.Product.GetStorageProductsRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.Product.GetStorageProductsResponse;
+import ir.sharif.gamein2021.ClientHandler.domain.Product.RemoveProductRequest;
+import ir.sharif.gamein2021.ClientHandler.domain.Product.RemoveProductResponse;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
 import ir.sharif.gamein2021.core.domain.dto.DcDto;
 import ir.sharif.gamein2021.core.domain.dto.StorageDto;
 import ir.sharif.gamein2021.core.domain.dto.TeamDto;
-import ir.sharif.gamein2021.core.domain.dto.UserDto;
 import ir.sharif.gamein2021.core.exception.InvalidRequestException;
 import ir.sharif.gamein2021.core.manager.PushMessageManagerInterface;
 import ir.sharif.gamein2021.core.service.DcService;
 import ir.sharif.gamein2021.core.service.StorageService;
 import ir.sharif.gamein2021.core.service.TeamService;
-import ir.sharif.gamein2021.core.service.UserService;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import lombok.AllArgsConstructor;
 import org.apache.log4j.Logger;
@@ -30,20 +30,16 @@ public class ProductController
 
     private final Gson gson;
     private final PushMessageManagerInterface pushMessageManager;
-    private final UserService userService;
     private final TeamService teamService;
     private final StorageService storageService;
     private final DcService dcService;
 
     public void removeProduct(ProcessedRequest request, RemoveProductRequest removeProductRequest)
     {
-        Integer id = request.playerId;
         RemoveProductResponse response;
         try
         {
-            UserDto userDto = userService.loadById(id);
-            Integer teamId = userDto.getTeamId();
-            TeamDto teamDto = teamService.loadById(teamId);
+            TeamDto teamDto = teamService.loadById(request.teamId);
             checkTeamAndStorage(removeProductRequest.getBuildingId(), removeProductRequest.isDc(), teamDto);
             StorageDto storageDto;
             storageDto = storageService.deleteProducts(
@@ -65,13 +61,10 @@ public class ProductController
 
     public void getStorages(ProcessedRequest request, GetStorageProductsRequest getStorageProductsRequest)
     {
-        Integer id = request.playerId;
         GetStorageProductsResponse response;
         try
         {
-            UserDto userDto = userService.loadById(id);
-            Integer teamId = userDto.getTeamId();
-            TeamDto teamDto = teamService.loadById(teamId);
+            TeamDto teamDto = teamService.loadById(request.teamId);
             List<StorageDto> storages = storageService.findAllStorageForTeam(teamDto);
             response = new GetStorageProductsResponse(ResponseTypeConstant.GET_STORAGES, storages, "success");
         }

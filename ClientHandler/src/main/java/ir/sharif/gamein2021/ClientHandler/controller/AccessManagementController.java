@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.AccessDeniedResponse;
 import ir.sharif.gamein2021.ClientHandler.manager.LocalPushMessageManager;
-import ir.sharif.gamein2021.core.util.RequestTypeConstant;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

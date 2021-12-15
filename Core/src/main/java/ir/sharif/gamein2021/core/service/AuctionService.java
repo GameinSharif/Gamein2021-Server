@@ -122,7 +122,7 @@ public class AuctionService extends AbstractCrudService<AuctionDto, Auction, Int
         {
             throw new InvalidOfferForAuction("" + raiseAmount + " is not enough!");
         }
-        if (ReadJsonFilesManager.findFactoryById(auctionDto.getFactoryId()).getCountry() == teamDto.getCountry())
+        if (ReadJsonFilesManager.findFactoryById(factoryId).getCountry() == teamDto.getCountry())
         {
             auctionDto.setFactoryId(factoryId);
             auctionDto.setHighestBidTeamId(teamDto.getId());

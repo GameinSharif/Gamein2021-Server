@@ -28,7 +28,6 @@ public class ProviderController
     static Logger logger = Logger.getLogger(ExecutorThread.class.getName());
 
     private final PushMessageManagerInterface pushMessageManager;
-    private final UserService userService;
     private final TeamService teamService;
     private final ProductionLineService productionLineService;
     private final ProviderService providerService;
@@ -111,9 +110,7 @@ public class ProviderController
         GetProvidersResponse getProvidersResponse;
         try
         {
-            int playerId = processedRequest.playerId;
-            UserDto user = userService.loadById(playerId);
-            Team userTeam = teamService.findTeamById(user.getTeamId());
+            Team userTeam = teamService.findTeamById(processedRequest.teamId);
 
             ArrayList<ProviderDto> teamProviders = providerService.findActiveProvidersByTeam(userTeam);
             ArrayList<ProviderDto> otherProviders = providerService.findActiveProvidersExceptTeam(userTeam);
@@ -131,9 +128,7 @@ public class ProviderController
         RemoveProviderResponse removeProviderResponse;
         try
         {
-            int playerId = processedRequest.playerId;
-            UserDto user = userService.loadById(playerId);
-            Team userTeam = teamService.findTeamById(user.getTeamId());
+            Team userTeam = teamService.findTeamById(processedRequest.teamId);
 
             Integer providerId = removeProviderRequest.getProviderId();
             ProviderDto requestedProvider = providerService.loadById(providerId);
@@ -192,12 +187,11 @@ public class ProviderController
 
     public void editProvider(ProcessedRequest processedRequest, EditProviderRequest editRequest)
     {
-        UserDto user = userService.loadById(processedRequest.playerId);
         EditProviderResponse editResponse;
         try
         {
             ProviderDto providerDto = providerService.findProviderById(editRequest.getProviderId());
-            Team userTeam = teamService.findTeamById(user.getTeamId());
+            Team userTeam = teamService.findTeamById(processedRequest.teamId);
 
             int minPrice = ReadJsonFilesManager.findProductById(providerDto.getProductId()).getMinPrice();
             int maxPrice = ReadJsonFilesManager.findProductById(providerDto.getProductId()).getMaxPrice();

@@ -3,7 +3,6 @@ package ir.sharif.gamein2021.ClientHandler.controller;
 import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.weeklyReport.GetAllWeeklyReportsResponse;
-import ir.sharif.gamein2021.ClientHandler.manager.LocalPushMessageManager;
 import ir.sharif.gamein2021.core.domain.dto.WeeklyReportDto;
 import ir.sharif.gamein2021.core.manager.PushMessageManagerInterface;
 import ir.sharif.gamein2021.core.service.WeeklyReportService;

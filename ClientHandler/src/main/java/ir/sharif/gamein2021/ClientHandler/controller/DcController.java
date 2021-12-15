@@ -12,7 +12,6 @@ import ir.sharif.gamein2021.core.domain.dto.TeamDto;
 import ir.sharif.gamein2021.core.manager.PushMessageManagerInterface;
 import ir.sharif.gamein2021.core.service.DcService;
 import ir.sharif.gamein2021.core.service.TeamService;
-import ir.sharif.gamein2021.core.service.UserService;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import lombok.AllArgsConstructor;
 import org.apache.log4j.Logger;
@@ -27,7 +26,6 @@ public class DcController
     private final DcService dcService;
     private final Gson gson;
     private final PushMessageManagerInterface pushMessageManager;
-    private final UserService userService;
     private final TeamService teamService;
 
     public void buyDc(ProcessedRequest request, BuyingDcRequest buyingDcRequest)

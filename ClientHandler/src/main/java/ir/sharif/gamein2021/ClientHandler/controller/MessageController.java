@@ -4,13 +4,16 @@ import com.google.gson.Gson;
 import ir.sharif.gamein2021.ClientHandler.controller.model.ProcessedRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Messenger.*;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
-import ir.sharif.gamein2021.core.domain.dto.ReportDto;
-import ir.sharif.gamein2021.core.domain.dto.UserDto;
-import ir.sharif.gamein2021.core.domain.entity.Report;
-import ir.sharif.gamein2021.core.manager.PushMessageManagerInterface;
-import ir.sharif.gamein2021.core.service.*;
 import ir.sharif.gamein2021.core.domain.dto.ChatDto;
 import ir.sharif.gamein2021.core.domain.dto.MessageDto;
+import ir.sharif.gamein2021.core.domain.dto.ReportDto;
+import ir.sharif.gamein2021.core.domain.entity.Report;
+import ir.sharif.gamein2021.core.domain.entity.Team;
+import ir.sharif.gamein2021.core.manager.PushMessageManagerInterface;
+import ir.sharif.gamein2021.core.service.ChatService;
+import ir.sharif.gamein2021.core.service.MessageService;
+import ir.sharif.gamein2021.core.service.ReportService;
+import ir.sharif.gamein2021.core.service.TeamService;
 import ir.sharif.gamein2021.core.util.GameConstants;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import org.apache.log4j.Logger;
@@ -28,19 +31,17 @@ public class MessageController
     private final PushMessageManagerInterface pushMessageManager;
     private final ChatService chatService;
     private final ReportService reportService;
-    private final UserService userService;
     private final MessageService messageService;
     private final TeamService teamService;
     private final Gson gson = new Gson();
 
-    public MessageController(PushMessageManagerInterface pushMessageManager, ReportService reportService, TeamService teamService, ChatService chatService, UserService userService, MessageService messageService)
+    public MessageController(PushMessageManagerInterface pushMessageManager, ReportService reportService, TeamService teamService, ChatService chatService, MessageService messageService)
     {
         this.chatService = chatService;
         this.teamService = teamService;
         this.reportService = reportService;
         this.messageService = messageService;
         this.pushMessageManager = pushMessageManager;
-        this.userService = userService;
     }
 
     public void reportMessage(ProcessedRequest request, ReportMessageRequest reportMessageRequest)
@@ -95,9 +96,7 @@ public class MessageController
 
     public void addNewChatMessage(ProcessedRequest request, NewMessageRequest newMessageRequest)
     {
-        Integer id = request.playerId;
-        UserDto userDto = userService.loadById(id);
-        Integer senderTeamId = userDto.getTeamId();
+        Integer senderTeamId = request.teamId;
 
         MessageDto messageDto = MessageDto.builder()
                 .insertedAt(LocalDateTime.now())
@@ -147,7 +146,7 @@ public class MessageController
                 {
                     e.printStackTrace();
                     newMessageResponse = new NewMessageResponse(ResponseTypeConstant.NEW_MESSAGE, null, null, "Failed to Send the Message!");
-                    pushMessageManager.sendMessageByUserId(userDto.getId().toString(), gson.toJson(newMessageResponse));
+                    pushMessageManager.sendMessageByUserId(request.playerId.toString(), gson.toJson(newMessageResponse));
                     return;
                 }
             }
@@ -158,7 +157,7 @@ public class MessageController
             logger.debug(e);
             System.out.println(e.getMessage());
             newMessageResponse = new NewMessageResponse(ResponseTypeConstant.NEW_MESSAGE, null, null, "Failed to Send the Message!");
-            pushMessageManager.sendMessageByUserId(userDto.getId().toString(), gson.toJson(newMessageResponse));
+            pushMessageManager.sendMessageByUserId(request.playerId.toString(), gson.toJson(newMessageResponse));
         }
     }
 
@@ -167,7 +166,8 @@ public class MessageController
         GetAllChatsResponse getAllChatsResponse;
         try
         {
-            List<ChatDto> chatDtos = chatService.getChatsByTeam(teamService.findTeamById(userService.loadById(request.playerId).getTeamId()));
+            Team team = teamService.findTeamById(request.teamId);
+            List<ChatDto> chatDtos = chatService.getChatsByTeam(team);
             getAllChatsResponse = new GetAllChatsResponse(ResponseTypeConstant.GET_ALL_CHATS, chatDtos);
         } catch (Exception e)
         {

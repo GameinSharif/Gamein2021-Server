@@ -32,14 +32,14 @@ public class AuctionSchedule
     private final Gson gson;
     private final GameStatusSchedule gameStatusSchedule;
 
-    @Scheduled(cron = "0 0 20 15 12 ?")
+    @Scheduled(cron = "0 30 7 16 12 ?")
     public void startAuction()
     {
         gameStatusSchedule.setGameStatus(GameStatus.AUCTION);
     }
 
     //Second, Minute, Hour, DayOfMonth, Month, WeekDays
-    @Scheduled(cron = "0 15,30,45 20 15 12 ?")
+    @Scheduled(cron = "0 35,40,45 7 16 12 ?")
     public void endAuctionCurrentRound()
     {
         System.out.println("Complete auction this round.");
@@ -48,7 +48,7 @@ public class AuctionSchedule
         sendAllAuctionsDataToAllClients();
     }
 
-    @Scheduled(cron = "2 45 20 15 12 ?")
+    @Scheduled(cron = "2 45 7 16 12 ?")
     public void endAuctionPhase()
     {
         System.out.println("Auction is Over!");

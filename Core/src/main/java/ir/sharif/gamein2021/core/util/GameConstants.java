@@ -41,9 +41,9 @@ public class GameConstants {
             LocalDateTime.of(2021, 12, 15, 17, 35, 0),
             LocalDateTime.of(2021, 12, 15, 17, 40, 0),
     };
-    public final int rawMaterialCapacity = 2000000;
-    public final int semiFinishedProductCapacity = 2000000;
-    public final int finishedProductCapacity = 2000000;
+    public final int rawMaterialCapacity = 3000000;
+    public final int semiFinishedProductCapacity = 240000;
+    public final int finishedProductCapacity = 60000;
     public final float insuranceCostFactor = 0.05f;
     public final int distanceConstant = 100;
 

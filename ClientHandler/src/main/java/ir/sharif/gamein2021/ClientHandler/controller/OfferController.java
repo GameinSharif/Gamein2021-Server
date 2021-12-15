@@ -38,7 +38,6 @@ public class OfferController
     private PushMessageManagerInterface pushMessageManager;
     private final GameCalendar gameCalendar;
     private final OfferService offerService;
-    private final UserService userService;
     private final TeamService teamService;
     private final ProductionLineService productionLineService;
     private final StorageService storageService;
@@ -51,9 +50,10 @@ public class OfferController
         GetOffersResponse getOffersResponse;
         try
         {
-            List<OfferDto> myTeamOffers = offerService.findActiveOffersByTeam(teamService.findTeamById(userService.loadById(request.playerId).getTeamId()));
-            List<OfferDto> otherTeamsOffers = offerService.findActiveOffersExceptTeam(teamService.findTeamById(userService.loadById(request.playerId).getTeamId()));
-            List<OfferDto> acceptedOffersByMyTeam = offerService.findAcceptedOffersByTeam(userService.loadById(request.playerId).getTeamId());
+            Team team = teamService.findTeamById(request.teamId);
+            List<OfferDto> myTeamOffers = offerService.findActiveOffersByTeam(team);
+            List<OfferDto> otherTeamsOffers = offerService.findActiveOffersExceptTeam(team);
+            List<OfferDto> acceptedOffersByMyTeam = offerService.findAcceptedOffersByTeam(request.teamId);
 
             getOffersResponse = new GetOffersResponse(ResponseTypeConstant.GET_OFFERS, myTeamOffers, otherTeamsOffers, acceptedOffersByMyTeam);
         }
@@ -62,7 +62,7 @@ public class OfferController
             logger.debug(e);
             getOffersResponse = new GetOffersResponse(ResponseTypeConstant.GET_OFFERS, null, null, null);
         }
-        pushMessageManager.sendMessageByUserId(userService.loadById(request.playerId).getId().toString(), gson.toJson(getOffersResponse));
+        pushMessageManager.sendMessageByUserId(request.playerId.toString(), gson.toJson(getOffersResponse));
     }
 
     public void createNewOffer(ProcessedRequest request, NewOfferRequest newOfferRequest)
@@ -101,7 +101,7 @@ public class OfferController
                 offerDto.setInsertedAt(gameCalendar.getCurrentDate());
                 offerDto.setAcceptDate(null);
                 offerDto.setAccepterTeamId(null);
-                offerDto.setTeamId(userService.loadById(request.playerId).getTeamId());
+                offerDto.setTeamId(request.teamId);
                 OfferDto savedOfferDto = offerService.addOffer(offerDto);
 
                 newOfferResponse = new NewOfferResponse(ResponseTypeConstant.NEW_OFFER, savedOfferDto, "OK!");
@@ -127,7 +127,7 @@ public class OfferController
         TerminateOfferResponse terminateOfferResponse;
         try
         {
-            Integer teamId = userService.loadById(request.playerId).getTeamId();
+            Integer teamId = request.teamId;
             int offerTeamId = offerService.findById(terminateOfferRequest.getOfferId()).getTeamId();
             if (teamId != offerTeamId)
             {
@@ -147,13 +147,13 @@ public class OfferController
         {
             //TODO cheating response
             terminateOfferResponse = new TerminateOfferResponse(ResponseTypeConstant.TERMINATE_OFFER, null);
-            pushMessageManager.sendMessageByUserId(userService.loadById(request.playerId).getId().toString(), gson.toJson(terminateOfferResponse));
+            pushMessageManager.sendMessageByUserId(request.playerId.toString(), gson.toJson(terminateOfferResponse));
         }
         catch (Exception e)
         {
             logger.debug(e);
             terminateOfferResponse = new TerminateOfferResponse(ResponseTypeConstant.TERMINATE_OFFER, null);
-            pushMessageManager.sendMessageByUserId(userService.loadById(request.playerId).getId().toString(), gson.toJson(terminateOfferResponse));
+            pushMessageManager.sendMessageByUserId(request.playerId.toString(), gson.toJson(terminateOfferResponse));
         }
     }
 
@@ -163,7 +163,7 @@ public class OfferController
         try
         {
             OfferDto acceptedOffer = offerService.findById(acceptOfferRequest.getOfferId());
-            Team accepterTeam = teamService.findTeamById(userService.loadById(request.playerId).getTeamId());
+            Team accepterTeam = teamService.findTeamById(request.teamId);
             Team acceptedTeam = teamService.findTeamById(offerService.findById(acceptOfferRequest.getOfferId()).getTeamId());
 
             float transportationCost = transportManager.calculateTransportCost(
@@ -241,12 +241,12 @@ public class OfferController
 
         if (acceptOfferResponse.getAcceptedOffer() == null)
         {
-            pushMessageManager.sendMessageByUserId(userService.loadById(request.playerId).getId().toString(), gson.toJson(acceptOfferResponse));
+            pushMessageManager.sendMessageByUserId(request.playerId.toString(), gson.toJson(acceptOfferResponse));
         }
         else
         {
             pushMessageManager.sendMessageByTeamId(offerService.findById(acceptOfferRequest.getOfferId()).getTeamId().toString(), gson.toJson(acceptOfferResponse));
-            pushMessageManager.sendMessageByTeamId(userService.loadById(request.playerId).getTeamId().toString(), gson.toJson(acceptOfferResponse));
+            pushMessageManager.sendMessageByTeamId(request.teamId.toString(), gson.toJson(acceptOfferResponse));
         }
 
     }

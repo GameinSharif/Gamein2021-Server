@@ -32,7 +32,6 @@ public class ContractController
     private final PushMessageManagerInterface pushMessageManager;
     private final TeamManager teamManager;
     private final ContractService contractService;
-    private final UserService userService;
     private final TeamService teamService;
     private final StorageService storageService;
     private final GameinCustomerService gameinCustomerService;
@@ -41,9 +40,7 @@ public class ContractController
 
     public void getContracts(ProcessedRequest request, GetContractsRequest getContractsRequest)
     {
-        int playerId = request.playerId;
-        UserDto user = userService.loadById(playerId);
-        Team userTeam = teamService.findTeamById(user.getTeamId());
+        Team userTeam = teamService.findTeamById(request.teamId);
 
         List<ContractDto> contracts = contractService.findByTeamAndTerminatedIsFalse(userTeam);
         GetContractsResponse getContractsResponse = new GetContractsResponse(
@@ -51,14 +48,12 @@ public class ContractController
                 contracts
         );
 
-        pushMessageManager.sendMessageByUserId(user.getId().toString(), gson.toJson(getContractsResponse));
+        pushMessageManager.sendMessageByUserId(request.playerId.toString(), gson.toJson(getContractsResponse));
     }
 
     public void newContract(ProcessedRequest request, NewContractRequest newContractRequest)
     {
-        int playerId = request.playerId;
-        UserDto user = userService.loadById(playerId);
-        TeamDto userTeam = teamService.loadById(user.getTeamId());
+        TeamDto userTeam = teamService.loadById(request.teamId);
 
         NewContractResponse newContractResponse;
         try
@@ -115,15 +110,13 @@ public class ContractController
         {
             e.printStackTrace();
             newContractResponse = new NewContractResponse(ResponseTypeConstant.NEW_CONTRACT, null);
-            pushMessageManager.sendMessageByUserId(user.getId().toString(), gson.toJson(newContractResponse));
+            pushMessageManager.sendMessageByUserId(request.playerId.toString(), gson.toJson(newContractResponse));
         }
     }
 
     public void terminateLongtermContract(ProcessedRequest request, TerminateLongtermContractRequest terminateLongtermContractRequest)
     {
-        int playerId = request.playerId;
-        UserDto user = userService.loadById(playerId);
-        TeamDto userTeam = teamService.loadById(user.getTeamId());
+        TeamDto userTeam = teamService.loadById(request.teamId);
 
         TerminateLongtermContractResponse terminateLongtermContractResponse;
         try
@@ -156,7 +149,7 @@ public class ContractController
         {
             System.out.println("Not valid request");
             terminateLongtermContractResponse = new TerminateLongtermContractResponse(ResponseTypeConstant.TERMINATE_CONTRACT, null);
-            pushMessageManager.sendMessageByUserId(user.getId().toString(), gson.toJson(terminateLongtermContractResponse));
+            pushMessageManager.sendMessageByUserId(request.playerId.toString(), gson.toJson(terminateLongtermContractResponse));
         }
     }
 }

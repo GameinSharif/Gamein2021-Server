@@ -31,7 +31,6 @@ public class ContractSupplierController
 
     private final PushMessageManagerInterface pushMessageManager;
     private final ContractSupplierService contractSupplierService;
-    private final UserService userService;
     private final WeekSupplyService weekSupplyService;
     private final TeamService teamService;
     private final GameCalendar gameCalendar;
@@ -147,9 +146,7 @@ public class ContractSupplierController
 
     public void getContractsSupplier(ProcessedRequest request, GetContractsSupplierRequest getContractsSupplierRequest)
     {
-        int playerId = request.playerId;
-        UserDto user = userService.loadById(playerId);
-        Team userTeam = teamService.findTeamById(user.getTeamId());
+        Team userTeam = teamService.findTeamById(request.teamId);
 
         GetContractsSupplierResponse getContractsSupplierResponse;
         if (userTeam == null)
@@ -162,6 +159,6 @@ public class ContractSupplierController
             getContractsSupplierResponse = new GetContractsSupplierResponse(ResponseTypeConstant.GET_CONTRACTS_WITH_SUPPLIER, contractSupplierDtos);
         }
 
-        pushMessageManager.sendMessageByUserId(user.getId().toString(), gson.toJson(getContractsSupplierResponse));
+        pushMessageManager.sendMessageByUserId(request.playerId.toString(), gson.toJson(getContractsSupplierResponse));
     }
 }

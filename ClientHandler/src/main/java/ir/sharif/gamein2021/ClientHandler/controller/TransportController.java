@@ -7,7 +7,10 @@ import ir.sharif.gamein2021.ClientHandler.domain.Transport.GetTeamTransportsResp
 import ir.sharif.gamein2021.ClientHandler.domain.Transport.StartTransportForPlayerStoragesRequest;
 import ir.sharif.gamein2021.ClientHandler.domain.Transport.StartTransportForPlayerStoragesResponse;
 import ir.sharif.gamein2021.ClientHandler.transport.thread.ExecutorThread;
-import ir.sharif.gamein2021.core.domain.dto.*;
+import ir.sharif.gamein2021.core.domain.dto.DcDto;
+import ir.sharif.gamein2021.core.domain.dto.StorageProductDto;
+import ir.sharif.gamein2021.core.domain.dto.TeamDto;
+import ir.sharif.gamein2021.core.domain.dto.TransportDto;
 import ir.sharif.gamein2021.core.exception.InvalidRequestException;
 import ir.sharif.gamein2021.core.exception.NotEnoughCapacityException;
 import ir.sharif.gamein2021.core.exception.NotEnoughMoneyException;
@@ -15,9 +18,11 @@ import ir.sharif.gamein2021.core.mainThread.GameCalendar;
 import ir.sharif.gamein2021.core.manager.PushMessageManagerInterface;
 import ir.sharif.gamein2021.core.manager.ReadJsonFilesManager;
 import ir.sharif.gamein2021.core.manager.TransportManager;
-import ir.sharif.gamein2021.core.service.*;
+import ir.sharif.gamein2021.core.service.DcService;
+import ir.sharif.gamein2021.core.service.StorageService;
+import ir.sharif.gamein2021.core.service.TeamService;
+import ir.sharif.gamein2021.core.service.TransportService;
 import ir.sharif.gamein2021.core.util.Enums;
-import ir.sharif.gamein2021.core.util.RequestTypeConstant;
 import ir.sharif.gamein2021.core.util.ResponseTypeConstant;
 import ir.sharif.gamein2021.core.util.models.Product;
 import lombok.AllArgsConstructor;
@@ -35,7 +40,6 @@ public class TransportController
     static Logger logger = Logger.getLogger(ExecutorThread.class.getName());
     private final PushMessageManagerInterface pushMessageManager;
     private final TransportService transportService;
-    private final UserService userService;
     private final GameCalendar gameCalendar;
     private final StorageService storageService;
     private final DcService dcService;
@@ -45,22 +49,18 @@ public class TransportController
 
     public void getTeamTransports(ProcessedRequest processedRequest, GetTeamTransportsRequest getTeamTransportsRequest)
     {
-        int playerId = processedRequest.playerId;
-        UserDto user = userService.loadById(playerId);
-        Integer teamId = user.getTeamId();
+        Integer teamId = processedRequest.teamId;
         ArrayList<TransportDto> transportDtos = transportService.getTransportsByTeam(teamId);
         GetTeamTransportsResponse response = new GetTeamTransportsResponse(ResponseTypeConstant.GET_TEAM_TRANSPORTS, transportDtos);
-        pushMessageManager.sendMessageByUserId(user.getId().toString(), gson.toJson(response));
+        pushMessageManager.sendMessageByUserId(processedRequest.playerId.toString(), gson.toJson(response));
     }
 
     public void startTransportForPlayersStorages(ProcessedRequest processedRequest, StartTransportForPlayerStoragesRequest request)
     {
-        int playerId = processedRequest.playerId;
         StartTransportForPlayerStoragesResponse response;
         try
         {
-            UserDto user = userService.loadById(playerId);
-            Integer teamId = user.getTeamId();
+            Integer teamId = processedRequest.teamId;
             TeamDto teamDto = teamService.loadById(teamId);
 
             Enums.TransportNodeType sourceType = Enums.TransportNodeType.values()[request.getSourceType()];
@@ -91,7 +91,7 @@ public class TransportController
             response = new StartTransportForPlayerStoragesResponse(ResponseTypeConstant.TRANSPORT_TO_STORAGE, null, e.getMessage());
             logger.debug(e);
         }
-        pushMessageManager.sendMessageByTeamId(userService.loadById(playerId).getTeamId().toString(), gson.toJson(response));
+        pushMessageManager.sendMessageByTeamId(processedRequest.playerId.toString(), gson.toJson(response));
     }
 
     private void checkTeamMoney(StartTransportForPlayerStoragesRequest request, TeamDto team, Enums.TransportNodeType sourceType, Enums.TransportNodeType destinationType)
@@ -176,6 +176,4 @@ public class TransportController
     {
         return transportNodeType.equals(Enums.TransportNodeType.DC);
     }
-
-
 }

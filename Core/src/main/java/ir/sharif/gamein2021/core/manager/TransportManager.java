@@ -114,7 +114,7 @@ public class TransportManager
         switch (transportDto.getDestinationType())
         {
             case DC:
-                return dcService.loadById(transportDto.getSourceId()).getOwnerId();
+                return dcService.loadById(transportDto.getDestinationId()).getOwnerId();
             case FACTORY:
                 return teamService.findTeamIdByFactoryId(transportDto.getDestinationId());
             default:

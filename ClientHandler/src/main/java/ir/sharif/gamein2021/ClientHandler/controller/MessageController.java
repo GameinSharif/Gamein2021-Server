@@ -55,13 +55,13 @@ public class MessageController
             {
                 reportMessageResponse = new ReportMessageResponse(ResponseTypeConstant.REPORT_MESSAGE, "NOT Successful", null);
             }
-            else if (!isChatAndTeamIdsValid(reportMessageRequest.getChatId(), request.playerId, reportMessageRequest.getReportedTeamId()))
+            else if (!isChatAndTeamIdsValid(reportMessageRequest.getChatId(), request.teamId, reportMessageRequest.getReportedTeamId()))
             {
-                reportMessageResponse = new ReportMessageResponse(ResponseTypeConstant.REPORT_MESSAGE, "NOT Successful", null);
+                reportMessageResponse = new ReportMessageResponse(ResponseTypeConstant.REPORT_MESSAGE, "NOT Successful 2", null);
             }
             else if (isReportDuplicated(messageDto, reportMessageRequest, request.teamId))
             {
-                reportMessageResponse = new ReportMessageResponse(ResponseTypeConstant.REPORT_MESSAGE, "NOT Successful", null);
+                reportMessageResponse = new ReportMessageResponse(ResponseTypeConstant.REPORT_MESSAGE, "NOT Successful 3", null);
             }
             else
             {

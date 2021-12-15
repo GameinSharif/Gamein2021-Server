@@ -31,7 +31,7 @@ public class MessageService extends AbstractCrudService<MessageDto, Message, Int
         ChatDto chatDto = chatService.loadById(chatId);
         for (MessageDto messageDto : chatDto.getMessages())
         {
-            if (messageDto.getSenderTeamId().equals(reportedTeamId) && messageDto.getText().equals(messageText) && messageDto.getInsertedAt() == insertedAt)
+            if (messageDto.getSenderTeamId().equals(reportedTeamId) && messageDto.getText().equals(messageText) && messageDto.getInsertedAt().equals(insertedAt))
             {
                 return messageDto;
             }

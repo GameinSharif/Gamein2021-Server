@@ -168,16 +168,6 @@ public class MessageController
         try
         {
             List<ChatDto> chatDtos = chatService.getChatsByTeam(teamService.findTeamById(userService.loadById(request.playerId).getTeamId()));
-            for (ChatDto chatDto : chatDtos)
-            {
-                for (MessageDto messageDto : chatDto.getMessages())
-                {
-                    messageDto.setId(null);
-                    messageDto.setChatId(null);
-                }
-                chatDto.setId(null);
-            }
-
             getAllChatsResponse = new GetAllChatsResponse(ResponseTypeConstant.GET_ALL_CHATS, chatDtos);
         } catch (Exception e)
         {

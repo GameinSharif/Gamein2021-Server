@@ -41,7 +41,10 @@ public class GameDataController {
     private final NewsService newsService;
     private final GameCalendar gameCalendar;
     private final CoronaService coronaService;
+    private final DynamicConfigService dynamicConfigService;
     private final Gson gson = new Gson();
+
+    private static GetLeaderboardResponse cachedLeaderboardResponse;
 
     public void getGameData(ProcessedRequest request) {
         List<TeamDto> teams = teamService.findAllTeams();
@@ -115,22 +118,27 @@ public class GameDataController {
         pushMessageManager.sendMessageBySession(processedRequest.session, gson.toJson(response));
     }
 
-    public void getLeaderboard(ProcessedRequest request)
-    {
+    public void getLeaderboard(ProcessedRequest request) {
+        try {
+            if (dynamicConfigService.isLeaderBoardFreeze() && cachedLeaderboardResponse != null) {
+                pushMessageManager.sendMessageBySession(request.session, gson.toJson(cachedLeaderboardResponse));
+                return;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         List<TeamDto> teamsOrderedByWealthDesc = teamService.getTeamsOrderByWealthDesc();
         List<Ranking> ranks = new ArrayList<>();
-        for (int i=0;i < 20; i++)
-        {
+        for (int i = 0; i < 20; i++) {
             TeamDto teamDto = teamsOrderedByWealthDesc.get(i);
             ranks.add(new Ranking(teamDto.getId(), teamDto.getWealth()));
         }
 
         int rank = 0;
         TeamDto myTeam = null;
-        for (TeamDto teamDto : teamsOrderedByWealthDesc)
-        {
-            if (teamDto.getId().equals(request.teamId))
-            {
+        for (TeamDto teamDto : teamsOrderedByWealthDesc) {
+            if (teamDto.getId().equals(request.teamId)) {
                 rank = teamsOrderedByWealthDesc.indexOf(teamDto) + 1;
                 myTeam = teamDto;
             }
@@ -142,6 +150,9 @@ public class GameDataController {
                 rank,
                 myTeam.getWealth()
         );
+
+        cachedLeaderboardResponse = getLeaderboardResponse;
+
         pushMessageManager.sendMessageBySession(request.session, gson.toJson(getLeaderboardResponse));
     }
 }

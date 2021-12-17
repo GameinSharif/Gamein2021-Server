@@ -16,6 +16,7 @@ public class DynamicConfigService extends AbstractCrudService<DynamicConfigDto, 
     private static final String GAME_STATUS_KEY = "gameStatus";
     private static final String CURRENT_WEEK_KEY = "currentWeek";
     private static final String CORONA_STARTING_WEEK_KEY = "coronaStartingWeek";
+    private static final String FREEZE_LEADER_BOARD = "freezeLeaderBoard";
 
     private final DynamicConfigRepository repository;
 
@@ -88,5 +89,13 @@ public class DynamicConfigService extends AbstractCrudService<DynamicConfigDto, 
     @Transactional
     public void setCurrentWeek(Integer currentWeek) {
         setConfig(CURRENT_WEEK_KEY, currentWeek.toString());
+    }
+
+    @Transactional(readOnly = true)
+    public boolean isLeaderBoardFreeze(){
+        DynamicConfig freeze_leader_board = getConfig(FREEZE_LEADER_BOARD);
+        if(freeze_leader_board == null)
+            return false;
+        return Boolean.parseBoolean(freeze_leader_board.getValue());
     }
 }

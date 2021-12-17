@@ -122,6 +122,7 @@ public class GameDataController {
         try {
             if (dynamicConfigService.isLeaderBoardFreeze() && cachedLeaderboardResponse != null) {
                 pushMessageManager.sendMessageBySession(request.session, gson.toJson(cachedLeaderboardResponse));
+                System.out.println("cached leaderBoard");
                 return;
             }
         } catch (Exception e) {
